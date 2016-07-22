@@ -1,0 +1,17 @@
+﻿@model PassPast.ViewModels.PapersViewModel
+@{
+    Layout = "~/Views/Shared/_PapersLayout.cshtml";
+}
+
+<div class="paper-title">
+    <h1>@ViewBag.CourseCode</h1>
+    <h2>Add New Paper</h2>
+</div>
+<form action="/Papers/AddPaper" method="post">
+
+    <label>Paper Name</label><br /><input type="text" title="Please only enter numbers." pattern="[0-9]" name="PaperName" placeholder="eg 101" />
+
+
+    <input type="hidden" name="CourseCode" value="@ViewBag.CourseCode" />
+    <input type="submit" name="submit" class="btn btn-default submit-button" value="submit" />
+</form>

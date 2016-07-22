@@ -1,0 +1,60 @@
+﻿@model PassPast.ViewModels.ExamsViewModel
+
+@{
+    Layout = "~/Views/Shared/_ExamsLayout.cshtml";
+}
+
+<div class="paper-title">
+	<h1>@ViewBag.CourseCode @ViewBag.PaperName</h1>
+	<h2>Add New Exam</h2>
+</div>
+
+<form action="/Exams/AddExam" method="post">
+	<div>
+		<label>Year:</label>
+		<select name="Year">
+			@{
+				int currentYear = DateTime.Now.Year;
+				<!-- Shows dates from current year back to 2000 in reverse order -->
+				IEnumerable<int> years = Enumerable.Range(2000, (currentYear - 1999)).Reverse();
+
+				foreach (int number in years)
+				{
+					<option value="@number">@number</option>
+				}
+			}
+		</select>
+	</div>
+	<div>
+		<label>Semester:</label>
+		<select name="Semester">
+			<option value="1">Semester 1</option>
+			<option value="2">Semester 2</option>
+			<option value="3">Summer Semester</option>
+		</select>
+	</div>
+	<div>
+		<label>Exam type:</label>
+		<select name="TypeOfExam">
+			<option value="MCQ">Multiple Choice Exam</option>
+			<option value="Written">Written Exam</option>
+		</select>
+	</div>
+	<div>
+		<label>Number of questions:</label> <input name="NumberOfQuestions" type="number" max="100" />
+	</div>
+	<div>
+		<label>(MCQ only) Format of answers:</label>
+		<select name="MCQFormatOfAnswers">
+			<option value="ABC">A, B, C, D</option>
+			<option value="123">1, 2, 3, 4</option>
+			<option value="Roman">I, II, III, IV</option>
+		</select>
+	</div>
+	<div>
+		<label>(MCQ only) Number of answers per question:</label> <input name="MCQNumberOfAnswers" type="number" min="3" max="6" />
+	</div>		
+	<input type="hidden" name="CourseCode" value="@ViewBag.CourseCode" />
+	<input type="hidden" name="PaperName" value="@ViewBag.PaperName" />
+	<input type="submit" name="submit" class="btn btn-default submit-button" value="submit" />
+</form>

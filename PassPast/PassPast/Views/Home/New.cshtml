@@ -1,0 +1,16 @@
+﻿@model PassPast.ViewModels.CoursesViewModel
+@{
+    Layout = "~/Views/Shared/_HomeLayout.cshtml";
+}
+
+<div class="paper-title">
+    <h1>Add A New Course</h1>
+    <h2>Add New Course</h2>
+</div>
+<form action="/Home/AddCourse" method="post">
+    <label>Course Name</label><br /><input type="text" title="Please only enter letters." pattern="[a-zA-Z]" name="CourseName" placeholder="eg Computer Science"/>
+    <br />
+    <label>Course Code</label><br /><input type="text" title="Please only enter letters." pattern="[a-zA-Z]" name="CourseCode" style="text-transform:uppercase" placeholder="eg COMPSCI"/>
+    <br />
+    <input type="submit" name="submit" class="btn btn-default submit-button" value="submit" />
+</form>

@@ -1,0 +1,14 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+
+namespace PassPast.Data.DataModels
+{
+    public class Answer : BaseDataModel
+    {
+        public string Name { get; set; }
+        public int Votes { get; set; }
+        public Question Question { get; set; }
+    }
+}

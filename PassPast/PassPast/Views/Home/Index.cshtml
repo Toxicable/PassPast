@@ -1,0 +1,47 @@
+﻿
+
+@{
+    Layout = "~/Views/Shared/_HomeLayout.cshtml";
+}
+
+<div class="paper-title">
+	<h1>Pass Past</h1>
+	<p><br />Please select a course from the menu.</p>
+</div>
+
+
+@*This is the page corrisponging the controller: Home/Index
+
+            First off, cshtml means that this page is a mix of C# abd HTML, right now this quote is a C# quote
+            To  start using C# just use the @ symbol
+            eg if you want to display a viewbag variable that you passed in through the controller you would do something like this
+            @ViewBag.FabiansName
+            and then C# will compile this and render the output to the user
+
+            But you can do more complex C# inside this page if you need
+            eg
+
+            @for (int i = 0; i < 10; i++)
+            {
+                @i
+            }
+        what this will do is render each i for each iteration, this is very handy if you want to display a list of objects
+
+        @foreach (var cat in ViewBag.CollectionOfCats)
+    {
+        <div>
+            <div>
+                <strong>
+                    @cat.name
+                </strong>
+            </div>
+            <div>
+                @cat.age
+            </div>
+            <div>
+                @cat.owner
+            </div>
+        </div>
+    }
+
+    What this will do is for each cat in the collection is display the code block corrisponign to the cat with the data inserted into it*@
