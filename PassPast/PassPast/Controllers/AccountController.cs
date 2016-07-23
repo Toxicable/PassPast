@@ -70,5 +70,29 @@ namespace PassPast.Controllers
 			var loginInfo = await AuthenticationManager.GetExternalLoginInfoAsync();
 			return View();
 		}
+
+		private ApplicationSignInManager _signInManager;
+
+		public AccountController()
+		{
+		}
+
+		public AccountController(ApplicationUserManager userManager, ApplicationSignInManager signInManager)
+		{
+			UserManager = userManager;
+			SignInManager = signInManager;
+		}
+
+		public ApplicationSignInManager SignInManager
+		{
+			get
+			{
+				return _signInManager ?? HttpContext.GetOwinContext().Get<ApplicationSignInManager>();
+			}
+			private set
+			{
+				_signInManager = value;
+			}
+		}
 	}
 }

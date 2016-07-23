@@ -203,6 +203,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Api\ValuesController.cs" />
+    <Compile Include="ApplicationSignInManager.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
@@ -216,6 +217,7 @@
     <Compile Include="Data\DataModels\Exam.cs" />
     <Compile Include="Data\DataModels\Paper.cs" />
     <Compile Include="Data\DataModels\Question.cs" />
+    <Compile Include="Data\DataModels\User.cs" />
     <Compile Include="Data\PassPastDbContext.cs" />
     <Compile Include="Data\DataModels\BaseDataModel.cs" />
     <Compile Include="Data\DataModels\Course.cs" />

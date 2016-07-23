@@ -19,6 +19,7 @@ namespace PassPast
 		{
 			app.SetDefaultSignInAsAuthenticationType(CookieAuthenticationDefaults.AuthenticationType);
 			app.UseExternalSignInCookie(DefaultAuthenticationTypes.ExternalCookie);
+			app.CreatePerOwinContext<ApplicationSignInManager>(ApplicationSignInManager.Create);
 
 			app.UseCookieAuthentication(new CookieAuthenticationOptions
 			{
