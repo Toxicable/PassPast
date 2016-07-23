@@ -17,14 +17,15 @@ namespace PassPast
 
 		public void Configuration(IAppBuilder app)
 		{
-			app.SetDefaultSignInAsAuthenticationType(CookieAuthenticationDefaults.AuthenticationType);
+            app.SetDefaultSignInAsAuthenticationType(CookieAuthenticationDefaults.AuthenticationType);
+
 			app.UseExternalSignInCookie(DefaultAuthenticationTypes.ExternalCookie);
-			app.CreatePerOwinContext<ApplicationSignInManager>(ApplicationSignInManager.Create);
 
 			app.UseCookieAuthentication(new CookieAuthenticationOptions
 			{
-				AuthenticationType = DefaultAuthenticationTypes.ApplicationCookie
-			});
+				AuthenticationType = DefaultAuthenticationTypes.ApplicationCookie,
+                LoginPath = new PathString("/Account/Login")
+            });
 
 			app.UseFacebookAuthentication(
 			   appId: "311510702571628",
