@@ -73,7 +73,8 @@ namespace PassPast.Controllers
 		public ActionResult Secret()
 		{
 			// Don't touch or death shall be your only ally
-			return Redirect("https://www.youtube.com/watch?v=d_YcqxLfOYo");
+            // I shall /empower/ death.
+			return Redirect("https://www.youtube.com/watch?v=wLM1NLrXorc");
 		}
     }
 }

@@ -32,23 +32,24 @@
 
                 <br /><br />
                 <h3>Exams</h3>
-                @foreach (var exam in ViewBag.Exams)
-                {                               
-                    if (ViewBag.ExamName == @exam.Year + @exam.Semester)
+                @{ 
+                    int checkYearSmall = 0;
+                    foreach (var exam in ViewBag.Exams)
                     {
+                        if (ViewBag.ExamName == @exam.Year + @exam.Semester)
                         {
-                            <div class="active-sidebar-page">
-                                <h4>
-                                    @exam.Year Semester @exam.Semester
-                                </h4>
-                            </div>
+                        <div class="active-sidebar-page">
+                            <h4>
+                                @exam.Year Semester @exam.Semester
+                            </h4>
+                        </div>
                         }
-                    }
-                    else
-                    {
-                        <a href="../Exams/@exam.Type?CourseCode=@ViewBag.CourseCode&PaperName=@ViewBag.PaperName&ExamName=@exam.Year@exam.Semester">
-                            <h4 class="sidebar-div">@exam.Year Semester @exam.Semester</h4>
-                        </a>
+                        else
+                        {
+                            <a href="../Exams/@exam.Type?CourseCode=@ViewBag.CourseCode&PaperName=@ViewBag.PaperName&ExamName=@exam.Year@exam.Semester">
+                                <h4 class="sidebar-div">@exam.Year Semester @exam.Semester</h4>
+                            </a>
+                        }
                     }
                 }
 				<p class="sidebar-tip"><br />Don't see your exam?</p>
@@ -59,6 +60,7 @@
 </div>
 
 <!-- Normal sidebar -->
+
 <div class="col-md-2 sidebar">
     <div><h3>Pass Past</h3></div>
     <br />
@@ -67,23 +69,32 @@
 
     <br /><br /><br />
     <h3>Exams</h3><br />
-    @foreach (var exam in ViewBag.Exams)
-    {
-        if (ViewBag.ExamName == @exam.Year + @exam.Semester)
+    @{
+        int checkYear = 0;
+        foreach (var exam in ViewBag.Exams)
         {
+            if (checkYear != exam.Year)
+            {
+                <br />
+            }
+            checkYear = exam.Year;
+            if (ViewBag.ExamName == exam.Year + exam.Semester)
+            {
             <div class="active-sidebar-page">
-                <h4>
-                    @exam.Year Semester @exam.Semester
-                </h4>
+                    <h4>
+                        @exam.Year Semester @exam.Semester
+                    </h4>
+
             </div>
-        }
-        else
-        {
+            }
+            else
+            {
             <a href="../Exams/@exam.Type?CourseCode=@ViewBag.CourseCode&PaperName=@ViewBag.PaperName&ExamName=@exam.Year@exam.Semester">
                 <h4 class="sidebar-div">@exam.Year Semester @exam.Semester</h4>
             </a>
+                }
+            }
         }
-    }
 	<p class="sidebar-tip"><br />Don't see your exam?</p>
 	<a href="../Exams/New?CourseCode=@ViewBag.CourseCode&PaperName=@ViewBag.PaperName" class="sidebar-btn btn btn-default" role="button">add new</a>
 </div>
