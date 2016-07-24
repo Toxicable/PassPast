@@ -9,7 +9,7 @@
 </div>
 <form action="/Papers/AddPaper" method="post">
 
-    <label>Paper Name</label><br /><input type="text" title="Please only enter numbers." pattern="[0-9]" name="PaperName" placeholder="eg 101" />
+    <label>Paper Name</label><br /><input type="text" title="Please only enter numbers." pattern="[0-9]+" name="PaperName" placeholder="eg 101" />
 
 
     <input type="hidden" name="CourseCode" value="@ViewBag.CourseCode" />

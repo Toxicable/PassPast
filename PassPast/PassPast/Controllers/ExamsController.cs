@@ -30,7 +30,7 @@ namespace PassPast.Controllers
 			// Finds all exams with the specified CourseCode and PaperName
             model.Exams = db.Exams.Include(exam => exam.Paper).Where(exam => exam.Paper.Course.Code == CourseCode & exam.Paper.Name == PaperName).ToList();
 
-			ViewBag.Exams = model.Exams.OrderByDescending(exam => exam.Year);
+			ViewBag.Exams = model.Exams.OrderByDescending(exam => exam.Year).ThenBy(exam => exam.Semester);
             ViewBag.CourseCode = CourseCode;
             ViewBag.PaperName = PaperName;
             ViewBag.ExamName = ExamName;
