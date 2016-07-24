@@ -48,7 +48,7 @@ namespace PassPast.Controllers
 			model.Questions = db.Questions.Include(question => question.Exam).Where(question => question.Exam.Year+question.Exam.Semester == ExamName).ToList();
             model.Answers = db.Answers.Include(answer => answer.Question).ToList();
 
-            ViewBag.Exams = model.Exams.OrderByDescending(exam => exam.Year);
+            ViewBag.Exams = model.Exams.OrderByDescending(exam => exam.Year).ThenBy(exam => exam.Semester);
             ViewBag.Questions = model.Questions;
             ViewBag.Answers = model.Answers;
             ViewBag.CourseCode = CourseCode;
@@ -68,7 +68,7 @@ namespace PassPast.Controllers
 			// it's listed as separate items in the database for ordering purposes
 			model.Answers = db.Answers.Include(answer => answer.Question).Where(answer => answer.Question.Exam.Year + answer.Question.Exam.Semester == ExamName && answer.Question.Exam.Paper.Name == PaperName && answer.Question.Exam.Paper.Course.Code == CourseCode).ToList();
 
-			ViewBag.Exams = model.Exams.OrderByDescending(exam => exam.Year);
+            ViewBag.Exams = model.Exams.OrderByDescending(exam => exam.Year).ThenBy(exam => exam.Semester);
             ViewBag.Questions = model.Questions;
 			ViewBag.Answers = model.Answers;
 			ViewBag.CourseCode = CourseCode;
@@ -88,7 +88,7 @@ namespace PassPast.Controllers
 			var model = new ExamsViewModel();
 			model.Exams = db.Exams.Include(exam => exam.Paper).Where(exam => exam.Paper.Course.Code == CourseCode & exam.Paper.Name == PaperName).ToList();
 
-			ViewBag.Exams = model.Exams.OrderByDescending(exam => exam.Year+exam.Semester);
+            ViewBag.Exams = model.Exams.OrderByDescending(exam => exam.Year).ThenBy(exam => exam.Semester);
             ViewBag.CourseCode = CourseCode;
 			ViewBag.PaperName = PaperName;
 			ViewBag.ExamName = ExamName;
