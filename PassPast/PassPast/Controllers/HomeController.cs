@@ -12,7 +12,7 @@ namespace PassPast.Controllers
     //This is a controller
     //A controller is the C part of MVC
     //This controller can be access through the route /Home/Index
-    //Then part Return View() will render the page found inside Views/Home/Index.cshtml to the user
+    //Then part Return View() will render the page found inside Views/Home/Index.cshtml to the userr
     public class HomeController : Controller
     {
         PassPastDbContext db;
