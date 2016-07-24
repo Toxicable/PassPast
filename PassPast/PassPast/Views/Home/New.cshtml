@@ -8,9 +8,9 @@
     <h2>Add New Course</h2>
 </div>
 <form action="/Home/AddCourse" method="post">
-    <label>Course Name</label><br /><input type="text" title="Please only enter letters." pattern="[a-zA-Z]+" name="CourseName" placeholder="eg Computer Science"/>
+    <label>Course Name</label><br /><input type="text" title="Please only enter letters/spaces." pattern="[a-zA-Z][a-zA-Z\s]+" name="CourseName" placeholder="eg Computer Science"/>
     <br />
-    <label>Course Code</label><br /><input type="text" title="Please only enter letters." pattern="[a-zA-Z]+" name="CourseCode" style="text-transform:uppercase" placeholder="eg COMPSCI"/>
+    <label>Course Code</label><br /><input type="text" title="Please only enter letters/spaces." pattern="[a-zA-Z][a-zA-Z\s]+" name="CourseCode" style="text-transform:uppercase" placeholder="eg COMPSCI"/>
     <br />
     <input type="submit" name="submit" class="btn btn-default submit-button" value="submit" />
 </form>
