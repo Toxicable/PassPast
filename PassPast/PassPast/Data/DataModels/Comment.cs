@@ -13,6 +13,6 @@ namespace PassPast.Data.DataModels
 
 		public int VoteCount { get; set; }
 
-		public DateTimeOffset Timestamp { get; set; }
+		public string Timestamp { get; set; }
 	}
 }
