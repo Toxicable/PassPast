@@ -10,7 +10,7 @@ namespace PassPast.ViewModels
     {
         public string Content { get; set; }
         public int VoteCount { get; set; }
-        public string Timestamp { get; set; }
+        public DateTimeOffset Timestamp { get; set; }
 		public int QuestionId { get; set; }
     }
 }

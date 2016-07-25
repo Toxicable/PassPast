@@ -269,7 +269,7 @@ namespace PassPast.Controllers
         [HttpPost]
         public ActionResult AddComment(int questionId, string content)
         {
-			var currentTime = DateTime.Now.ToString("dd'/'MM'/'yyyy");
+			var currentTime = DateTimeOffset.Now;
 
 			var newComment = new Comment { Content = content, VoteCount = 0, Timestamp = currentTime };
 			var fetchQuestionFromDb = db.Questions.SingleOrDefault(x => x.Id == questionId);
