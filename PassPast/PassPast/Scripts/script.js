@@ -17,8 +17,33 @@ function viewComments(id) {
 		var commentString = "<h4 class='right-comments'>Comments:</h4>";
 		for (var i = 0; i < data.length; i++) {
 		    console.log(data[i].DateTime);
-		    value = new Date(parseInt(data[i].DateTime.replace("/Date(", "").replace(")/", ""), 10));
-		    commentString += "<div class='row'><div class='text-center vote-row right-vote-row col-xs-1'><form action='/Exams/AddCommentVote' method='post'><input type='hidden' name='QuestionId' value='" + id + "' /><input type='hidden' name='AnswerId' value='" + data[i].Id + "' /><input type='hidden' name='TypeOfVote' value='Up' /><input type='submit' name='submit' class='btn vote-submit-button upvote-submit-button btn-default submit-button' value='▲' /></form>" + data[i].VoteCount + "<form action='/Exams/AddCommentVote' method='post'><input type='hidden' name='QuestionId' value='" + id + "' /><input type='hidden' name='AnswerId' value='" + data[i].Id + "' /><input type='hidden' name='TypeOfVote' value='Down' /><input type='submit' name='submit' class='btn btn-default vote-submit-button downvote-submit-button submit-button' value='▼' /></form></div><div class='answer-row col-xs-10'>" + data[i].Content + " <div class='comment-timestamp'>" + value.toTimeString() + "</div> </div></div>"
+		    commentDateTime = new Date(parseInt(data[i].DateTime.replace("/Date(", "").replace(")/", ""), 10));
+
+		    currentDateTime = new Date();
+
+		    console.log(currentDateTime);
+
+		    var mSecDiff = currentDateTime - commentDateTime;
+		    var secDiff = mSecDiff / 1000
+
+            var Days = Math.floor(secDiff / 60 / 60 / 24);
+            secDiff -= Days * 60 * 60 * 24;
+
+            var Hours = Math.floor(secDiff / 60 / 60);
+            secDiff -= Hours * 60 * 60;
+
+            var Minutes = Math.floor(secDiff / 60);
+            secDiff -= Minutes * 60;
+
+            var Seconds = Math.floor(secDiff);
+            value = Seconds.toString() + " Seconds Ago";
+            value = Minutes.toString() + " Minutes and " + value;
+            value = Hours.toString() + " Hours, " + value;
+            value = Days.toString() + " Days, " + value;
+
+            value = "Posted "+value;
+
+		    commentString += "<div class='row'><div class='text-center vote-row right-vote-row col-xs-1'><form action='/Exams/AddCommentVote' method='post'><input type='hidden' name='QuestionId' value='" + id + "' /><input type='hidden' name='AnswerId' value='" + data[i].Id + "' /><input type='hidden' name='TypeOfVote' value='Up' /><input type='submit' name='submit' class='btn vote-submit-button upvote-submit-button btn-default submit-button' value='▲' /></form>" + data[i].VoteCount + "<form action='/Exams/AddCommentVote' method='post'><input type='hidden' name='QuestionId' value='" + id + "' /><input type='hidden' name='AnswerId' value='" + data[i].Id + "' /><input type='hidden' name='TypeOfVote' value='Down' /><input type='submit' name='submit' class='btn btn-default vote-submit-button downvote-submit-button submit-button' value='▼' /></form></div><div class='answer-row col-xs-10'>" + data[i].Content + " <div class='comment-timestamp'>" + value.toString() + "</div> </div></div>"
 		};
 		commentString += "<div class='row'><div class='vote-row col-xs-1'></div><div class='col-xs-10'><form id='comment-box'><textarea rows='6' name='Content' class='comment' placeholder='Click here to add a comment...'></textarea><br /><input type='hidden' name='QuestionId' value='" + id + "' /><input type='button' name='submit' class='btn btn-default submit-button comment-submit-button' value='add comment' onclick='addComment(" + id + ");' /></form></div></div>";
 		

@@ -270,7 +270,7 @@ namespace PassPast.Controllers
         [HttpPost]
         public ActionResult AddComment(int questionId, string content)
         {
-			var currentTime = DateTimeOffset.Now;
+			var currentTime = DateTimeOffset.UtcNow;
 			//var currentTime = DateTime.UtcNow; ?? Would have to delete database
 
 			var newComment = new Comment { Content = content, VoteCount = 0, Timestamp = currentTime };
