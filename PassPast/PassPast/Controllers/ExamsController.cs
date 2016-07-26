@@ -254,9 +254,10 @@ namespace PassPast.Controllers
 		{
 			// Fabian never said what Select does, but it does.
 			var comments = db.Comments.Where(x => x.Question.Id == questionId).Select(comment => new { comment.Content, comment.VoteCount, comment.Timestamp, comment.Id }).ToList();
-			
-			// Returns a Json string thing, but jQuery turns it into a list you can iterate through
-			return Json(comments, JsonRequestBehavior.AllowGet);
+            var finalComments = comments.Select(x => new { x.Content, x.VoteCount, x.Timestamp.DateTime, x.Id });
+
+            // Returns a Json string thing, but jQuery turns it into a list you can iterate through
+            return Json(finalComments, JsonRequestBehavior.AllowGet);
 		}
 
 
