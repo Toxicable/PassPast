@@ -43,15 +43,24 @@
                                 @exam.Year Semester @exam.Semester
                             </h4>
                         </div>
-                        }
-                        else
-                        {
-                            <a href="../Exams/@exam.Type?CourseCode=@ViewBag.CourseCode&PaperName=@ViewBag.PaperName&ExamName=@exam.Year@exam.Semester">
-                                <h4 class="sidebar-div">@exam.Year Semester @exam.Semester</h4>
-                            </a>
-                        }
-                    }
-                }
+						}
+						else
+						{
+							if (exam.Semester == "3")
+							{
+								<a href="../Exams/@exam.Type?CourseCode=@ViewBag.CourseCode&PaperName=@ViewBag.PaperName&ExamName=@exam.Year@exam.Semester">
+									<h4 class="sidebar-div">@exam.Year Summer School</h4>
+								</a>
+							}
+							else
+							{
+								<a href="../Exams/@exam.Type?CourseCode=@ViewBag.CourseCode&PaperName=@ViewBag.PaperName&ExamName=@exam.Year@exam.Semester">
+									<h4 class="sidebar-div">@exam.Year Semester @exam.Semester</h4>
+								</a>
+							}
+						}
+					}
+				}
 				<p class="sidebar-tip"><br />Don't see your exam?</p>
 				<a href="../Exams/New?CourseCode=@ViewBag.CourseCode&PaperName=@ViewBag.PaperName" class="sidebar-btn btn btn-default" role="button">add new</a>
             </div>
@@ -86,15 +95,24 @@
                     </h4>
 
             </div>
-            }
-            else
-            {
-            <a href="../Exams/@exam.Type?CourseCode=@ViewBag.CourseCode&PaperName=@ViewBag.PaperName&ExamName=@exam.Year@exam.Semester">
-                <h4 class="sidebar-div">@exam.Year Semester @exam.Semester</h4>
-            </a>
-                }
-            }
-        }
+			}
+			else
+			{
+				if (exam.Semester == "3")
+				{
+					<a href="../Exams/@exam.Type?CourseCode=@ViewBag.CourseCode&PaperName=@ViewBag.PaperName&ExamName=@exam.Year@exam.Semester">
+						<h4 class="sidebar-div">@exam.Year Summer School</h4>
+					</a>
+				}
+				else
+				{
+					<a href="../Exams/@exam.Type?CourseCode=@ViewBag.CourseCode&PaperName=@ViewBag.PaperName&ExamName=@exam.Year@exam.Semester">
+						<h4 class="sidebar-div">@exam.Year Semester @exam.Semester</h4>
+					</a>
+				}
+			}
+		}
+	}
 	<p class="sidebar-tip"><br />Don't see your exam?</p>
 	<a href="../Exams/New?CourseCode=@ViewBag.CourseCode&PaperName=@ViewBag.PaperName" class="sidebar-btn btn btn-default" role="button">add new</a>
 </div>

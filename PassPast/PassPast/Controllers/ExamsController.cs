@@ -271,6 +271,7 @@ namespace PassPast.Controllers
         public ActionResult AddComment(int questionId, string content)
         {
 			var currentTime = DateTimeOffset.Now;
+			//var currentTime = DateTime.UtcNow; ?? Would have to delete database
 
 			var newComment = new Comment { Content = content, VoteCount = 0, Timestamp = currentTime };
 			var fetchQuestionFromDb = db.Questions.SingleOrDefault(x => x.Id == questionId);

@@ -144,6 +144,7 @@ a:hover {
 .answer-row {
 	white-space: pre-line; /* Lets you add breaks to comments, otherwise it's all one long paragraph no matter what formatting you do */
 	margin-bottom: 20px;
+	overflow: hidden;
 }
 
 .comment {
@@ -211,6 +212,13 @@ a:hover {
 .downvote-submit-button:hover {
 	color: #f86c1d;
 	background-color: transparent;
+}
+
+.comment-timestamp {
+	margin-top: 7px;
+	font-style: italic;
+	font-size: smaller;
+	color: #b1b0b0;
 }
 
 /* When screen width smaller than 990 */
