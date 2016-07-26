@@ -16,18 +16,20 @@ function viewComments(id) {
 		$(".right-sidebar-div").css("margin-top", scrollPosition + "px");
 		var commentString = "<h4 class='right-comments'>Comments:</h4>";
 		for (var i = 0; i < data.length; i++) {
-		    console.log(data[i].DateTime);
+		    //console.log(data[i].DateTime);
 		    commentDateTime = new Date(parseInt(data[i].DateTime.replace("/Date(", "").replace(")/", ""), 10));
 
 		    currentDateTime = new Date();
 
-		    console.log(currentDateTime);
+		    //console.log(currentDateTime);
 
 		    var mSecDiff = currentDateTime - commentDateTime;
 		    var secDiff = mSecDiff / 1000
 
             var Days = Math.floor(secDiff / 60 / 60 / 24);
             secDiff -= Days * 60 * 60 * 24;
+
+            //console.log(Days, secDiff, commentDateTime, currentDateTime); //Uncomment to check stuff ;)
 
             var Hours = Math.floor(secDiff / 60 / 60);
             secDiff -= Hours * 60 * 60;
@@ -37,9 +39,15 @@ function viewComments(id) {
 
             var Seconds = Math.floor(secDiff);
             value = Seconds.toString() + " Seconds Ago";
-            value = Minutes.toString() + " Minutes and " + value;
-            value = Hours.toString() + " Hours, " + value;
-            value = Days.toString() + " Days, " + value;
+            if (Minutes != 0) {
+                value = Minutes.toString() + " Minutes and " + value;
+            }
+            if (Hours != 0) {
+                value = Hours.toString() + " Hours, " + value;
+            }
+            if (Days != 0) {
+                value = Days.toString() + " Days, " + value;
+            }
 
             value = "Posted "+value;
 
