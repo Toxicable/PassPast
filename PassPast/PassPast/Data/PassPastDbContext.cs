@@ -30,6 +30,10 @@ namespace PassPast.Data
 		protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             modelBuilder.Conventions.Remove<PluralizingTableNameConvention>();
+
+            modelBuilder.Entity<User>().HasMany(x => x.AnswersCreated).WithOptional(x => x.CreatedBy);
+            modelBuilder.Entity<User>().HasMany(x => x.CommentsCreated).WithOptional(x => x.CreatedBy);
+
         }
         
 
