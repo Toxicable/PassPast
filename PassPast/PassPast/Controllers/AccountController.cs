@@ -65,11 +65,18 @@ namespace PassPast.Controllers
 
             //db interactions here pls
 
+
             // when all good make sure to sign in user
             IdentitySignin("the persons ID, this should also be from the db :D", "The persons name, this should be form the db", providerKey);
 
 
             return View();
+		}
+
+		public ActionResult Login()
+		{
+			ViewBag.Title = "Login";
+			return View();
 		}
 
         #region Signin Logic

@@ -10,5 +10,7 @@ namespace PassPast.Data.DataModels
         public string Name { get; set; }
         public int Votes { get; set; }
         public Question Question { get; set; }
+		public User CreatedBy { get; set; }
+		public ICollection<User> VotedBy { get; set; }
     }
 }
