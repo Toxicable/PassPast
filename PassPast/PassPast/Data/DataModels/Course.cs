@@ -13,6 +13,7 @@ namespace PassPast.Data.DataModels
         //The above commented out field is correct, but you will have to make more table classes to complete the Database for it to work
 
         public ICollection<Paper> Papers { get; set; }
+		public User CreatedBy { get; set; }
 
 
     }

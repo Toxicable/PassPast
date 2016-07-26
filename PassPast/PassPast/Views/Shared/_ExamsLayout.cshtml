@@ -32,17 +32,28 @@
 
                 <br /><br />
                 <h3>Exams</h3>
-                @{ 
-                    int checkYearSmall = 0;
-                    foreach (var exam in ViewBag.Exams)
-                    {
-                        if (ViewBag.ExamName == @exam.Year + @exam.Semester)
-                        {
-                        <div class="active-sidebar-page">
-                            <h4>
-                                @exam.Year Semester @exam.Semester
-                            </h4>
-                        </div>
+                @{
+					int checkYearSmall = 0;
+					foreach (var exam in ViewBag.Exams)
+					{
+						if (ViewBag.ExamName == @exam.Year + @exam.Semester)
+						{
+							if (exam.Semester == "3")
+							{
+								<div class="active-sidebar-page">
+									<h4>
+										@exam.Year Summer School
+									</h4>
+								</div>
+							}
+							else
+							{
+								<div class="active-sidebar-page">
+									<h4>
+										@exam.Year Semester @exam.Semester
+									</h4>
+								</div>
+							}
 						}
 						else
 						{
@@ -85,16 +96,26 @@
             if (checkYear != exam.Year)
             {
                 <br />
-            }
-            checkYear = exam.Year;
-            if (ViewBag.ExamName == exam.Year + exam.Semester)
-            {
-            <div class="active-sidebar-page">
-                    <h4>
-                        @exam.Year Semester @exam.Semester
-                    </h4>
-
-            </div>
+			}
+			checkYear = exam.Year;
+			if (ViewBag.ExamName == exam.Year + exam.Semester)
+			{
+				if (exam.Semester == "3")
+				{
+					<div class="active-sidebar-page">
+						<h4>
+							@exam.Year Summer School
+						</h4>
+					</div>
+				}
+				else
+				{
+					<div class="active-sidebar-page">
+						<h4>
+							@exam.Year Semester @exam.Semester
+						</h4>
+					</div>
+				}
 			}
 			else
 			{

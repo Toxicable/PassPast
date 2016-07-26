@@ -199,7 +199,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Views\Account\" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Api\ValuesController.cs" />
@@ -263,6 +262,7 @@
     <Content Include="Scripts\respond.min.js" />
     <Content Include="Scripts\script.js" />
     <Content Include="Service References\Application Insights\ConnectedService.json" />
+    <Content Include="Views\Account\Login.cshtml" />
     <None Include="Views\Home\Secret.cshtml" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
@@ -292,6 +292,7 @@
     <Content Include="Views\Exams\New.cshtml" />
     <Content Include="Views\Home\New.cshtml" />
     <Content Include="Views\Papers\New.cshtml" />
+    <Content Include="Views\Shared\_Layout.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Service References\" />
