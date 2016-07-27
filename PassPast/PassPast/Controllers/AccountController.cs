@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
+using PassPast.Data;
+using PassPast.Data.DataModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,36 +13,44 @@ using System.Web.Mvc;
 
 namespace PassPast.Controllers
 {
+	[AllowAnonymous]
     public class AccountController : Controller
     {
-        #region Fields and Contructors
-        //private ApplicationSignInManager _signInManager;
+		PassPastDbContext db;
 
-        //public AccountController()
-        //{
-        //}
+		public AccountController()
+		{
+			db = new PassPastDbContext();
+		}
 
-        //public AccountController(ApplicationSignInManager signInManager)
-        //{
-        //    SignInManager = signInManager;
-        //}
+		#region Fields and Contructors
+		//private ApplicationSignInManager _signInManager;
 
-        //public ApplicationSignInManager SignInManager
-        //{
-        //    get
-        //    {
-        //        return _signInManager ?? HttpContext.GetOwinContext().Get<ApplicationSignInManager>();
-        //    }
-        //    private set
-        //    {
-        //        _signInManager = value;
-        //    }
-        //}
+		//public AccountController()
+		//{
+		//}
 
-        #endregion
+		//public AccountController(ApplicationSignInManager signInManager)
+		//{
+		//    SignInManager = signInManager;
+		//}
 
-        // GET: Account
-        public ActionResult Index()
+		//public ApplicationSignInManager SignInManager
+		//{
+		//    get
+		//    {
+		//        return _signInManager ?? HttpContext.GetOwinContext().Get<ApplicationSignInManager>();
+		//    }
+		//    private set
+		//    {
+		//        _signInManager = value;
+		//    }
+		//}
+
+		#endregion
+
+		// GET: Account
+		public ActionResult Index()
         {
             return View();
         }	
@@ -53,24 +63,40 @@ namespace PassPast.Controllers
 		public ActionResult ExternalLogin(string provider, string returnUrl)
 		{
 			// Request a redirect to the external login provider
-			return new ChallengeResult(provider, Url.Action("ExternalLoginCallback", "Account", new { ReturnUrl = returnUrl }));
+			return new ChallengeResult(provider, Url.Action("ExternalLoginCallback", "Account", new { returnUrl, provider }));
 		}		
 
 		[AllowAnonymous]
-		public async Task<ActionResult> ExternalLoginCallback(string returnUrl)
+		public async Task<ActionResult> ExternalLoginCallback(string returnUrl, string provider)
 		{
 			var loginInfo = await AuthenticationManager.GetExternalLoginInfoAsync();
 
-            var providerKey = loginInfo.Login.ProviderKey;
+			if (loginInfo == null)
+			{
+				return RedirectToAction("Login", "Account");
+			}
 
-            //db interactions here pls
+			var providerKey = loginInfo.Login.ProviderKey;
 
+			var checkIfAlreadySignedUp = db.Users.SingleOrDefault(x => x.ProviderId == providerKey);
+			if (checkIfAlreadySignedUp != null)
+			{
+				IdentitySignin(checkIfAlreadySignedUp.Id, checkIfAlreadySignedUp.Name, providerKey);
+				return RedirectToAction("Index", "Home");
+			}
+
+			//db interactions here pls
+			var user = new User { ProviderId = providerKey, Name = loginInfo.ExternalIdentity.Name, Provider = provider };
+			db.Users.Add(user);
+			db.SaveChanges();
+
+			var fetchUserFromDb = db.Users.SingleOrDefault(x => x.ProviderId == providerKey);
 
             // when all good make sure to sign in user
-            IdentitySignin("the persons ID, this should also be from the db :D", "The persons name, this should be form the db", providerKey);
+            IdentitySignin(fetchUserFromDb.Id, fetchUserFromDb.Name, providerKey);
 
 
-            return View();
+            return RedirectToAction("Index", "Home");
 		}
 
 		public ActionResult Login()
@@ -79,13 +105,21 @@ namespace PassPast.Controllers
 			return View();
 		}
 
+		[HttpPost]
+		public ActionResult Logout()
+		{
+			IdentitySignout();
+
+			return RedirectToAction("Index", "Home");
+		}
+
         #region Signin Logic
-        public void IdentitySignin(string userId, string name, string providerKey )
+        public void IdentitySignin(int userId, string name, string providerKey )
         {
             var claims = new List<Claim>();
 
             // create *required* claims
-            claims.Add(new Claim(ClaimTypes.NameIdentifier, userId));
+            claims.Add(new Claim(ClaimTypes.NameIdentifier, userId.ToString()));
             claims.Add(new Claim(ClaimTypes.Name, name));
 
             ///creates the user and identity so we can use their stuff later on
@@ -148,6 +182,8 @@ namespace PassPast.Controllers
             }
         }
         #endregion
+
+
 
     }
 }

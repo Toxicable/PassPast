@@ -12,13 +12,9 @@ namespace PassPast.Data.DataModels
 {
 	public class User : BaseDataModel
 	{      
-		public string LastName { get; set; }
-		public string FirstName { get; set; }
-		public string FullName
-		{
-			get { return $"{FirstName} {LastName}"; }
-		}
+		public string Name { get; set; }
 		public string ProviderId { get; set; }
+		public string Provider { get; set; }
 		public ICollection<Course> CoursesCreated { get; set; }
 		public ICollection<Paper> PapersCreated { get; set; }
 		public ICollection<Exam> ExamsCreated { get; set; }

@@ -10,6 +10,7 @@ using PassPast.Data.DataModels;
 
 namespace PassPast.Controllers
 {
+	[Authorize]
     public class PapersController : Controller
     {
         PassPastDbContext db;
@@ -17,7 +18,8 @@ namespace PassPast.Controllers
         {
             db = new PassPastDbContext();
         }
-        public ActionResult Index(string CourseCode, string PaperName)
+		
+		public ActionResult Index(string CourseCode, string PaperName)
         {
 			if (CourseCode == null)
 			{
