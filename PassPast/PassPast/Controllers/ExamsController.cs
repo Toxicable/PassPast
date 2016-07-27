@@ -112,7 +112,12 @@ namespace PassPast.Controllers
 				return Redirect(Request.UrlReferrer.ToString());
 			}
 
-			var ExamList = db.Exams.ToList();
+            //checking to make sure Questions do not go over 100, and answers don't go over 6, as to not go over O(600)
+            if (model.NumberOfQuestions > 100 || model.MCQNumberOfAnswers > 6 || model.MCQNumberOfAnswers < 2)
+            {
+                return Redirect(Request.UrlReferrer.ToString());
+            }
+            var ExamList = db.Exams.ToList();
 			foreach (var dbexam in ExamList)
 			{
 				// That concatenation stuff comin' right back atcha

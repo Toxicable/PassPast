@@ -52,7 +52,8 @@
 		</select>
 	</div>
 	<div>
-		<label>(MCQ only) Number of answers per question:</label> <input name="MCQNumberOfAnswers" type="number" pattern="[0-9]+" min="3" max="6" />
+        <!-- Min is 2 for TRUE/FALSE Questions, Max at 6.-->
+		<label>(MCQ only) Number of answers per question:</label> <input name="MCQNumberOfAnswers" type="number" pattern="[0-9]+" min="2" max="6" />
 	</div>		
 	<input type="hidden" name="CourseCode" value="@ViewBag.CourseCode" />
 	<input type="hidden" name="PaperName" value="@ViewBag.PaperName" />
