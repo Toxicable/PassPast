@@ -9,7 +9,8 @@ using System.Web.Mvc;
 
 namespace PassPast.Controllers
 {
-    public class CoursesController : Controller
+	[Authorize]
+	public class CoursesController : Controller
     {
         PassPastDbContext db;
 

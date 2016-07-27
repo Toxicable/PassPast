@@ -5,12 +5,14 @@ using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
+using System.Security.Claims;
 using System.Web;
 using System.Web.Mvc;
 
 namespace PassPast.Controllers
 {
-    public class ExamsController : Controller
+	[Authorize]
+	public class ExamsController : Controller
     {
         PassPastDbContext db;
         public ExamsController()
@@ -286,6 +288,9 @@ namespace PassPast.Controllers
 			{
 				return Redirect(Request.UrlReferrer.ToString());
 			}
+
+			var user = (ClaimsIdentity)User.Identity;
+			var userid = user.Claims.Single(x => x.Type == ClaimTypes.NameIdentifier);
 
 			newComment.Question = fetchQuestionFromDb;
 			db.Comments.Add(newComment);
