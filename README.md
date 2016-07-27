@@ -1,8 +1,10 @@
 # PassPast  
 # http://passpast.azurewebsites.net/
 
+Domain Names: Voice your opinions!
 
-Peer review guidlines
+
+Peer review guidelines
 
 
 -Commented, tidy and maintainable code  
