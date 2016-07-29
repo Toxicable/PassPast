@@ -104,8 +104,7 @@ namespace PassPast.Controllers
 			ViewBag.Title = "Login";
 			return View();
 		}
-
-		[HttpPost]
+		//[HttpPost]
 		public ActionResult Logout()
 		{
 			IdentitySignout();
