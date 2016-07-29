@@ -7,6 +7,10 @@ namespace PassPast.Data.DataModels
 {
 	public class Comment : BaseDataModel
 	{
+		public Comment()
+		{
+			VotedBy = new HashSet<User>();
+		}
 		public Question Question { get; set; }
 		public string Content { get; set; }
 		public int VoteCount { get; set; }

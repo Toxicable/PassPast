@@ -1,9 +1,11 @@
-﻿using PassPast.Data;
+﻿using PassPast.CommonManagers;
+using PassPast.Data;
 using PassPast.Data.DataModels;
 using PassPast.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Web;
 using System.Web.Mvc;
 
@@ -66,7 +68,13 @@ namespace PassPast.Controllers
                 }
             }         
             var course = new Course { Name = model.CourseName, Code = model.CourseCode };
-            db.Courses.Add(course);
+
+			// Attach the author to the course
+			var userId = UserManager.GetActiveUserId((ClaimsIdentity)User.Identity);
+			var user = UserManager.GetUserFromDb(db, userId);
+			course.CreatedBy = user;
+
+			db.Courses.Add(course);
             db.SaveChanges();
 
             return RedirectToAction("Index", "Home");
@@ -74,9 +82,8 @@ namespace PassPast.Controllers
 
 		public ActionResult Secret()
 		{
-			// Don't touch or death shall be your only ally
-            // I shall /empower/ death.
-			return Redirect("https://www.youtube.com/watch?v=FNSuYQ0mYUE");
+			// i seel what you did
+			return Redirect("https://www.youtube.com/watch?v=-OK8IpxR3s8");
 		}
     }
 }

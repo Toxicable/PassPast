@@ -7,6 +7,8 @@ using System.Web;
 using System.Web.Mvc;
 using System.Data.Entity;
 using PassPast.Data.DataModels;
+using PassPast.CommonManagers;
+using System.Security.Claims;
 
 namespace PassPast.Controllers
 {
@@ -70,7 +72,13 @@ namespace PassPast.Controllers
             var fetchCourseFromDb = db.Courses.SingleOrDefault(x => x.Code == model.CourseCode);
             var paper = new Paper { Name = model.PaperName };
             paper.Course = fetchCourseFromDb;
-            db.Papers.Add(paper);
+
+			// Attach the author to the paper
+			var userId = UserManager.GetActiveUserId((ClaimsIdentity)User.Identity);
+			var user = UserManager.GetUserFromDb(db, userId);
+			paper.CreatedBy = user;
+
+			db.Papers.Add(paper);
             db.SaveChanges();
 
             return RedirectToAction("Index", "Papers", new { CourseCode = model.CourseCode});
