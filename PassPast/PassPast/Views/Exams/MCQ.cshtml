@@ -64,19 +64,45 @@
                                 </td>
 							    @if (answer.Votes == 0)
 							    {
-								    <td class="col-md-9 col-sm-9 col-xs-9"><div class="poll-bar-grey" style="width: 0.5%;">&nbsp;</div></td>
+								    <td class="col-md-9 col-sm-9 col-xs-9"><div class="poll-bar-grey" style="width: 0.5%;"></div>
+                                        <form id="McqVote" action="/Exams/AddVote" method="post">
+                                            <!---->
+                                            <input type="hidden" name="QuestionId" value="@question.Id" />
+                                            <input type="hidden" name="AnswerId" value="@answer.Id" />
+                                            <input type="submit" name="submit" style="width: 100%; height: 100%;" class="btn btn-default submit-button vote-submit-button mcq-name" value="&nbsp;" />
+                                        </form>
+                                    </td>
+
 								    <td class="col-md-1 col-sm-1 col-xs-1">@answer.Votes</td>
                                     
                                 }
                                 else if (answer.Votes > (question.TotalVotes / 2))
                                 {
 								    <!-- Sets the poll bar to be coloured for only a percentage of the width -->
-								    <td class="col-md-9 col-sm-9 col-xs-9"><div class="poll-bar-green" style="width: @Math.Ceiling(((double)answer.Votes / (double)question.TotalVotes) * 100)%;">&nbsp;</div></td>
-								    <td class="col-md-1 col-sm-1 col-xs-1"><strong>@answer.Votes</strong></td>
-							    }
-							    else
-							    {
-								    <td class="col-md-9 col-sm-9 col-xs-9"><div class="poll-bar-red" style="width: @Math.Ceiling(((double)answer.Votes / (double)question.TotalVotes) * 100)%;">&nbsp;</div></td>
+                                    <td class="col-md-9 col-sm-9 col-xs-9">
+                                        <div class="poll-bar-green" style="width: @Math.Ceiling(((double)answer.Votes / (double)question.TotalVotes) * 100)%;">
+                                            <form id="McqVote" action="/Exams/AddVote" method="post">
+                                                <!---->
+                                                <input type="hidden" name="QuestionId" value="@question.Id" />
+                                                <input type="hidden" name="AnswerId" value="@answer.Id" />
+                                                <input type="submit" name="submit" style="width: 100%; height: 100%;" class="btn btn-default submit-button vote-submit-button mcq-name" value="&nbsp;" />
+                                            </form>
+                                        </div>
+                                    </td>
+                                    <td class="col-md-1 col-sm-1 col-xs-1"><strong>@answer.Votes</strong></td>
+                                }
+                                else
+                                {
+								    <td class="col-md-9 col-sm-9 col-xs-9">
+                                        <div class="poll-bar-red" style="width: @Math.Ceiling(((double)answer.Votes / (double)question.TotalVotes) * 100)%;">
+                                            <form id="McqVote" action="/Exams/AddVote" method="post">
+                                                <!---->
+                                                <input type="hidden" name="QuestionId" value="@question.Id" />
+                                                <input type="hidden" name="AnswerId" value="@answer.Id" />
+                                                <input type="submit" name="submit" style="width: 100%; height: 100%;" class="btn btn-default submit-button vote-submit-button mcq-name" value="&nbsp;" />
+                                            </form>
+                                        </div>
+                                    </td>
 								    <td class="col-md-1 col-sm-1 col-xs-1">@answer.Votes</td>
 							    }
 						    </tr>
