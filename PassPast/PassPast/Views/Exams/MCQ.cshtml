@@ -117,8 +117,9 @@
 							<!-- Comments are not displayed by default -->
 							<button class="btn btn-default" role="button" onclick="viewComments(@question.Id);">view comments</button>
 							<!-- Calls the toggleVisibility function in script.js -->
+                            @*<!--
 							<button class="btn btn-default" role="button" onclick="toggleVisibility('comment-form-@question.Id');">vote</button>
-							<form class="comment-form" id="comment-form-@question.Id" action="/Exams/AddVote" method="post">
+                            <form class="comment-form" id="comment-form-@question.Id" action="/Exams/AddVote" method="post">
 								<select name="AnswerId">
 									@foreach (var answer in question.Answers)
 									{
@@ -128,6 +129,7 @@
 								<input type="hidden" name="QuestionId" value="@question.Id" />
 								<input type="submit" name="submit" class="btn btn-default submit-button" value="submit" />
 							</form>
+                            -->*@
 						</td>
 					</tr>
 				</tbody>
