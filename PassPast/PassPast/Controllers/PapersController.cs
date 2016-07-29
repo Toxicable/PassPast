@@ -26,7 +26,8 @@ namespace PassPast.Controllers
 				return RedirectToAction("Index", "Home");
 			}
             var model = new PapersViewModel();
-            model.Papers = db.Papers.Include(paper => paper.Course).Where(paper => paper.Course.Code == CourseCode).ToList();
+            //Papers are now displayed in numerical order
+            model.Papers = db.Papers.Include(paper => paper.Course).Where(paper => paper.Course.Code == CourseCode).OrderBy(paper => paper.Name).ToList();
 
             ViewBag.Papers = model.Papers;
             ViewBag.CourseCode = CourseCode;
@@ -43,7 +44,8 @@ namespace PassPast.Controllers
             }
 
             var model = new PapersViewModel();
-            model.Papers = db.Papers.Include(paper => paper.Course).Where(paper => paper.Course.Code == CourseCode).ToList();
+            //When a new paper is being added, papers are displayed in numerical order
+            model.Papers = db.Papers.Include(paper => paper.Course).Where(paper => paper.Course.Code == CourseCode).OrderBy(paper => paper.Name).ToList();
 
             ViewBag.Papers = model.Papers;
             ViewBag.CourseCode = CourseCode;

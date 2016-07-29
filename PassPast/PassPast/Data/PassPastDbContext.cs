@@ -6,7 +6,7 @@ namespace PassPast.Data
 {
     public class PassPastDbContext : DbContext
     {
-        //done change the contructor base, it's your conenction string to the DB
+        //dont change the contructor base, it's your conenction string to the DB
         public PassPastDbContext() : base("PassPastContextConnectionString")
         {
         }
