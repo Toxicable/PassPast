@@ -30,6 +30,10 @@ namespace PassPast
 			app.UseFacebookAuthentication(
 			   appId: "311510702571628",
 			   appSecret: "1c9ea7be9ff9fd3a1986e812967d3df3");
+
+			app.UseGoogleAuthentication(
+				clientId: "137170270322-3ik6cl5m55i4ft3ff6t7l9tm2f1abkvh.apps.googleusercontent.com",
+				clientSecret: "doD3vfJda8FArt9Apva9Plxu");
 		}
 	}
 }
