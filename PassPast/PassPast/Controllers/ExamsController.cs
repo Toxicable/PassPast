@@ -261,7 +261,7 @@ namespace PassPast.Controllers
 
 			// Check if person already voted
 			int userIdInt = int.Parse(userId);
-			var userAlreadyVoted = fetchAnswerFromDb.VotedBy.Any(x => x.Id == userIdInt);
+			var userAlreadyVoted = db.Answers.Any(x => x.Id == fetchAnswerFromDb.Id && x.VotedBy.Any(y => y.Id == userIdInt));
 			if (userAlreadyVoted)
 			{
 				return Redirect(Request.UrlReferrer.ToString());
@@ -274,8 +274,21 @@ namespace PassPast.Controllers
 				fetchQuestionFromDb.TotalVotes -= 1;
 				fetchAnswerFromDb.VotedBy.Add(user);
 			}
-			else
+			else if (model.TypeOfVote == "Up")
 			{
+				fetchAnswerFromDb.Votes += 1;
+				fetchQuestionFromDb.TotalVotes += 1;
+				fetchAnswerFromDb.VotedBy.Add(user);
+			}
+			else // is a MCQ vote
+			{
+				// Check if question's been voted on yet
+				var userAlreadyVotedForQuestion = db.Answers.Any(x => x.Question.Id == fetchQuestionFromDb.Id && x.VotedBy.Any(y => y.Id == userIdInt));
+				if (userAlreadyVotedForQuestion)
+				{
+					return Redirect(Request.UrlReferrer.ToString());
+				}
+
 				fetchAnswerFromDb.Votes += 1;
 				fetchQuestionFromDb.TotalVotes += 1;
 				fetchAnswerFromDb.VotedBy.Add(user);
@@ -343,6 +356,14 @@ namespace PassPast.Controllers
 			// Attach the author to the comment
 			var userId = UserManager.GetActiveUserId((ClaimsIdentity)User.Identity);
 			var user = UserManager.GetUserFromDb(db, userId);
+
+			// Check if person already voted
+			int userIdInt = int.Parse(userId);
+			var userAlreadyVoted = db.Comments.Any(x => x.Id == fetchAnswerFromDb.Id && x.VotedBy.Any(y => y.Id == userIdInt));
+			if (userAlreadyVoted)
+			{
+				return Redirect(Request.UrlReferrer.ToString());
+			}
 
 			if (model.TypeOfVote == "Down")
 			{
