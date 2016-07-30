@@ -259,6 +259,14 @@ namespace PassPast.Controllers
 			var userId = UserManager.GetActiveUserId((ClaimsIdentity)User.Identity);
 			var user = UserManager.GetUserFromDb(db, userId);
 
+			// Check if person already voted
+			int userIdInt = int.Parse(userId);
+			var userAlreadyVoted = fetchAnswerFromDb.VotedBy.Any(x => x.Id == userIdInt);
+			if (userAlreadyVoted)
+			{
+				return Redirect(Request.UrlReferrer.ToString());
+			}
+
 			// For comment votes, check if upvote or downvote
 			if (model.TypeOfVote == "Down")
 			{
