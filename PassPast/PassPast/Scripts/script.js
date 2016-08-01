@@ -26,33 +26,38 @@ function viewComments(id) {
 		    var mSecDiff = currentDateTime - commentDateTime;
             //Getting the seconds difference.
 		    var secDiff = mSecDiff / 1000;
-  
-            //Number of days.
-		    var Days = Math.floor(secDiff / 60 / 60 / 24);
-            //Removing the number of days from secDiff in Seconds.
-		    secDiff -= Days * 60 * 60 * 24;
-  
-		    //console.log(Days, secDiff, commentDateTime, currentDateTime); //Uncomment to check stuff ;)
-            var Hours = Math.floor(secDiff / 60 / 60);
-		    secDiff -= Hours * 60 * 60;
+		    if (secDiff > 60) {
+		        //Number of days.
+		        var Days = Math.floor(secDiff / 60 / 60 / 24);
+		        //Removing the number of days from secDiff in Seconds.
+		        secDiff -= Days * 60 * 60 * 24;
 
-		    var Minutes = Math.floor(secDiff / 60);
-		    secDiff -= Minutes * 60;
+		        //console.log(Days, secDiff, commentDateTime, currentDateTime); //Uncomment to check stuff ;)
+		        var Hours = Math.floor(secDiff / 60 / 60);
+		        secDiff -= Hours * 60 * 60;
 
-            //Assigning remaining seconds to secDiff
-		    var Seconds = Math.floor(secDiff);
+		        var Minutes = Math.floor(secDiff / 60);
+		        secDiff -= Minutes * 60;
 
-		    value = Seconds.toString() + " Seconds Ago";
+		        //Assigning remaining seconds to secDiff
+		        //var Seconds = Math.floor(secDiff);
 
-            //if statements to make a sentence out of the datetime we got.
-		    if (Minutes != 0) {
-		        value = Minutes.toString() + " Minutes and " + value;
+                //Removed seconds from the timestamp.
+		        //value = Seconds.toString() + " Seconds Ago";
+		        value = "";
+		        //if statements to make a sentence out of the datetime we got.
+		        if (Minutes != 0) {
+		            value = " and " + Minutes.toString() + " Minutes Ago" + value;
+		        }
+		        if (Hours != 0) {
+		            value = Hours.toString() + " Hours, " + value;
+		        }
+		        if (Days != 0) {
+		            value = Days.toString() + " Days, " + value;
+		        }
 		    }
-		    if (Hours != 0) {
-		    value = Hours.toString() + " Hours, " + value;
-		    }
-		    if (Days != 0) {
-		        value = Days.toString() + " Days, " + value;
+		    else {
+		        value = "Just Now";
 		    }
 
             //final DateTime is named dateTimeValue
