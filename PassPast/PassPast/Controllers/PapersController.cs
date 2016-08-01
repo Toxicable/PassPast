@@ -59,15 +59,14 @@ namespace PassPast.Controllers
         [HttpPost]
         public ActionResult AddPaper(AddPaperViewModel model)
         {
-            //ForLoop testing if the paper already in the db
-            var fetchPapersFromDb = db.Papers.ToList();
-            foreach (var dbpaper in fetchPapersFromDb)
+            //Testing if the paper already in the db
+            var paperInDb = db.Papers.SingleOrDefault(x => x.Name == model.PaperName);
+            
+            if (paperInDb != null)
             {
-                if (dbpaper.Name == model.PaperName)
-                {
-                    return RedirectToAction("New", "Papers", new { CourseCode = model.CourseCode });
-                }
+                return RedirectToAction("New", "Papers", new { CourseCode = model.CourseCode });
             }
+            
             //Gets singular course from db with the CourseCode
             var fetchCourseFromDb = db.Courses.SingleOrDefault(x => x.Code == model.CourseCode);
             var paper = new Paper { Name = model.PaperName };
