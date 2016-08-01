@@ -268,17 +268,6 @@
     <Content Include="Service References\Application Insights\ConnectedService.json" />
     <Content Include="Views\Account\Login.cshtml" />
     <None Include="Views\Home\Secret.cshtml" />
-    <Content Include="Web.config">
-      <SubType>Designer</SubType>
-    </Content>
-    <Content Include="Web.Debug.config">
-      <DependentUpon>Web.config</DependentUpon>
-      <SubType>Designer</SubType>
-    </Content>
-    <Content Include="Web.Release.config">
-      <DependentUpon>Web.config</DependentUpon>
-      <SubType>Designer</SubType>
-    </Content>
     <Content Include="Content\Site.css" />
     <Content Include="Scripts\_references.js" />
     <Content Include="Views\Web.config">
