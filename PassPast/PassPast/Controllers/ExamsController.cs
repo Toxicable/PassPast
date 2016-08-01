@@ -70,8 +70,12 @@ namespace PassPast.Controllers
 			// it's listed as separate items in the database for ordering purposes
 			model.Answers = db.Answers.Include(answer => answer.Question).Where(answer => answer.Question.Exam.Year + answer.Question.Exam.Semester == ExamName && answer.Question.Exam.Paper.Name == PaperName && answer.Question.Exam.Paper.Course.Code == CourseCode).ToList();
 
+            //Ordering the exams on the left by the year, then by the semester
             ViewBag.Exams = model.Exams.OrderByDescending(exam => exam.Year).ThenByDescending(exam => exam.Semester);
-            ViewBag.Questions = model.Questions;
+
+            //ordering the questions by the number
+            ViewBag.Questions = model.Questions.OrderBy(question => question.Number);
+
 			ViewBag.Answers = model.Answers;
 			ViewBag.CourseCode = CourseCode;
 			ViewBag.PaperName = PaperName;
