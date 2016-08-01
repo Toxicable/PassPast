@@ -26,6 +26,10 @@
                 <div>
                     <br />
                     <a href="../Home/Index" class="sidebar-btn btn btn-default" role="button">< home</a>
+                    <br />
+                    <form action="/Account/Logout" method="post">
+                        <input type="submit" name="submit" class="sidebar-btn btn btn-default" value="Logout" />
+                    </form>
                     <br /><br />
                     <h3>Papers</h3>
                     @foreach (var paper in ViewBag.Papers)
@@ -45,6 +49,10 @@
         <div><h3>Pass Past</h3></div>
         <br />
         <a href="../Home/Index" class="sidebar-btn btn btn-default" role="button">< home</a>
+        <br />
+        <form action="/Account/Logout" method="post">
+            <input type="submit" name="submit" class="sidebar-btn btn btn-default" value="Logout" />
+        </form>
         <br /><br /><br />
         <h3>Papers</h3><br />
             @foreach (var paper in ViewBag.Papers)

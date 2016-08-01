@@ -26,6 +26,11 @@
         <div id="collapse1" class="panel-collapse collapse">
             <div>
                 <br />
+                <br />
+                <form action="/Account/Logout" method="post">
+                    <input type="submit" name="submit" class="sidebar-btn btn btn-default" value="Logout" />
+                </form>
+                <br />
                 <h3>Courses</h3>
                 @foreach (var course in ViewBag.Courses)
                 {
@@ -43,6 +48,10 @@
 <div class="col-md-2 sidebar">
     <h3>Pass Past</h3>
     <br />
+    <br />
+    <form action="/Account/Logout" method="post">
+        <input type="submit" name="submit" class="sidebar-btn btn btn-default" value="Logout" />
+    </form>
     <br />
     <br />
     <h3>Courses</h3><br />

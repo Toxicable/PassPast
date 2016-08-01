@@ -29,6 +29,10 @@
                 <br />
                 <a href="../Home/Index" class="sidebar-btn btn btn-default" role="button">< home</a> 
                 <a href="../Papers/Index?CourseCode=@ViewBag.CourseCode" class="sidebar-btn btn btn-default" role="button">< back</a>
+                <br />
+                <form action="/Account/Logout" method="post">
+                    <input type="submit" name="submit" class="sidebar-btn btn btn-default" value="Logout" />
+                </form>
 
                 <br /><br />
                 <h3>Exams</h3>
@@ -86,6 +90,10 @@
     <br />
     <a href="../Home/Index" class="sidebar-btn btn btn-default" role="button">< home</a>
     <a href="../Papers/Index?CourseCode=@ViewBag.CourseCode" class="sidebar-btn btn btn-default" role="button">< back</a>
+    <br />
+    <form action="/Account/Logout" method="post">
+        <input type="submit" name="submit" class="sidebar-btn btn btn-default" value="Logout" />
+    </form>
 
     <br /><br /><br />
     <h3>Exams</h3><br />
