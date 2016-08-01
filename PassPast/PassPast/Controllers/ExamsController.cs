@@ -1,4 +1,5 @@
-﻿using PassPast.Data;
+﻿using PassPast.CommonManagers;
+using PassPast.Data;
 using PassPast.Data.DataModels;
 using PassPast.ViewModels;
 using System;
