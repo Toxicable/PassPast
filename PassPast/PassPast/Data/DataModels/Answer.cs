@@ -7,7 +7,11 @@ namespace PassPast.Data.DataModels
 {
     public class Answer : BaseDataModel
     {
-        public string Name { get; set; }
+		public Answer()
+		{
+			VotedBy = new HashSet<User>();
+		}
+		public string Name { get; set; }
         public int Votes { get; set; }
         public Question Question { get; set; }
 		public User CreatedBy { get; set; }
