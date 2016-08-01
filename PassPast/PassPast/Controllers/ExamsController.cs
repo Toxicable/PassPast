@@ -123,7 +123,7 @@ namespace PassPast.Controllers
             {
                 return Redirect(Request.UrlReferrer.ToString());
             }
-            var ExamList = db.Exams.ToList();
+            var ExamList = db.Exams.Where(x => x.Paper.Name == model.PaperName).ToList();
 			foreach (var dbexam in ExamList)
 			{
 				// That concatenation stuff comin' right back atcha
