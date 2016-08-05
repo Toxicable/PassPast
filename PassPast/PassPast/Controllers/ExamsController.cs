@@ -82,6 +82,8 @@ namespace PassPast.Controllers
 			ViewBag.PaperName = PaperName;
 			ViewBag.ExamName = ExamName;
 
+			ViewBag.Title = CourseCode + PaperName + " " + ExamName + " - Pass Past";
+
 			return View(model);
 		}
 

@@ -1,49 +1,112 @@
-﻿@model PassPast.ViewModels.CoursesViewModel
-
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html>
 <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width" />
-    <title>@ViewBag.Title</title>
-    <script src="~/Scripts/modernizr-2.6.2.js"></script>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width" />
+	<title>@ViewBag.Title</title>
+	<script src="~/Scripts/modernizr-2.6.2.js"></script>
 	<script src="~/Scripts/script.js"></script>
-    <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
-    <link href="~/Content/Site.css" rel="stylesheet" />    
-    
-    <!--This is the application insights inistialsation script, it'll collect information about how the website is used-->
-    <script src="~/Scripts/ai.0.22.19-build00125.min.js"></script>
+	<link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+	<link href="~/Content/Site.css" rel="stylesheet" />
+
+	<!--This is the application insights inistialsation script, it'll collect information about how the website is used-->
+	<script src="~/Scripts/ai.0.22.19-build00125.min.js"></script>
 </head>
 <body>
 
-<div class="panel-group hidden-top-sidebar">
-    <div class="panel panel-default">
-        <div class="panel-heading">
-            <h4 class="panel-title">
-                <a data-toggle="collapse" href="#collapse1">Show/Hide Menu</a>
-            </h4>
-        </div>
-        <div id="collapse1" class="panel-collapse collapse">
-            <div>
-            </div>
-        </div>
-    </div>
-</div>
-   
-<div class="col-md-2 sidebar">
-    <h3>Pass Past</h3>
-    <br />
-    <br />
-    <br />
-</div>
+	<nav class="navbar navbar-inverse">
+		<div class="container-fluid">
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+				</button>
+				<a class="navbar-brand" href="../Home/Index">Pass Past</a>
+			</div>
+			<div class="collapse navbar-collapse" id="myNavbar">
+				<ul class="nav navbar-nav">
+					@if (ViewBag.CourseCode != null)
+					{
+						<li><a href="../Papers/Index?CourseCode=@ViewBag.CourseCode">@ViewBag.CourseCode</a></li>
+					}	
+					@if (ViewBag.PaperName != null)
+					{
+						<li><a href="../Exams/Index?CourseCode=@ViewBag.CourseCode&PaperName=@ViewBag.PaperName">@ViewBag.PaperName</a></li>
+					}				
+					<li class="dropdown">
+						@if (@ViewBag.ExamName == null) { }
+						else if (@ViewBag.ExamName.Substring(4, 1) == "3")
+						{
+							<a class="dropdown-toggle active" data-toggle="dropdown" href="#">@ViewBag.ExamName.Substring(0, 4) Summer Semester <span class="caret"></span></a>
+						}
+						else
+						{
+							<a class="dropdown-toggle active" data-toggle="dropdown" href="#">@ViewBag.ExamName.Substring(0, 4) Semester @ViewBag.ExamName.Substring(4, 1) <span class="caret"></span></a>
+						}
+						<ul class="dropdown-menu">
+							@{  if (@ViewBag.ExamName == null) { }
+								else
+								{
+									int checkYear2 = 0;
+									foreach (var exam in ViewBag.Exams)
+									{
+										if (checkYear2 != exam.Year)
+										{
 
-<div class="body-content col-md-10">
-	@RenderBody()
-</div>
+										}
+										checkYear2 = exam.Year;
+										if (ViewBag.ExamName == exam.Year + exam.Semester)
+										{
 
-<script src="~/Scripts/jquery-1.10.2.min.js"></script>
-<script src="~/Scripts/bootstrap.min.js"></script>
-@RenderSection("scripts", required: false)
+										}
+										else
+										{
+											if (exam.Semester == "3")
+											{
+												<li><a href="../Exams/@exam.Type?CourseCode=@ViewBag.CourseCode&PaperName=@ViewBag.PaperName&ExamName=@exam.Year@exam.Semester">@exam.Year Summer School</a></li>
+											}
+											else
+											{
+												<li><a href="../Exams/@exam.Type?CourseCode=@ViewBag.CourseCode&PaperName=@ViewBag.PaperName&ExamName=@exam.Year@exam.Semester">@exam.Year Semester @exam.Semester</a></li>
+											}
+										}
+									}
+								}
+							}								
+						</ul>
+					</li>
+				</ul>
+
+				<ul class="nav navbar-nav navbar-right">
+						@if (User.Identity.Name == "")
+						{
+							<li><a href="../Account/ExternalLogin?provider=Facebook&returnUrl=/" class="btn btn-default logout-button" role="button">Facebook Login</a></li>
+							<li><a href="../Account/ExternalLogin?provider=Google&returnUrl=/" class="btn btn-default logout-button" role="button">Google Login</a></li>
+						}
+						else
+						{
+							<li><form action="/Account/Logout" method="post">
+								<input type="submit" name="submit" class="btn btn-default logout-button" value="Hi, @User.Identity.Name.Substring(0, User.Identity.Name.IndexOf(' '))! (logout)" />
+							</form></li>
+						}
+				</ul>
+
+			</div>
+		</div>
+	</nav>
+
+	<!-- All content renders here -->
+	<div class="body-content col-md-12">
+		<div class="col-md-10 col-md-offset-1">
+			@RenderBody()
+		</div>
+		
+	</div>
+
+	<script src="~/Scripts/jquery-1.10.2.min.js"></script>
+	<script src="~/Scripts/bootstrap.min.js"></script>
+	@RenderSection("scripts", required: false)
 
 </body>
 </html>

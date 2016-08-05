@@ -1,12 +1,30 @@
-﻿
-
-@{
-    Layout = "~/Views/Shared/_HomeLayout.cshtml";
+﻿@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<div class="paper-title">
-	<h1>Pass Past</h1>
-	<p><br />Please select a course from the menu.</p>
+<div class="papers">
+	<div class="paper-title">
+		<h2>Pass Past</h2>
+
+		<h4 class="select-heading">Select a Course</h4>
+
+		<div>
+			@foreach (var course in ViewBag.Courses)
+			{
+				<a href="../Papers/Index?CourseCode=@course.Code" class="btn btn-default paper-button" role="button">
+					@course.Name
+				</a>
+			}
+		</div>
+
+		<div>
+			<h4 class="add-new-heading">or</h4>
+			<a href="../Home/New" class="btn btn-default paper-button" role="button">
+				Add new Course
+			</a>
+		</div>
+
+	</div>
 </div>
 
 

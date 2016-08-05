@@ -2,18 +2,27 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<div class="paper-title">
-	<h1>Pass Past - Login</h1>
+<div class="papers">
+	<div class="paper-title">
+		<h2>Pass Past</h2>
 
-	<div>
-		<a href="ExternalLogin?provider=Facebook&returnUrl=/" class="sidebar-btn btn btn-default" role="button">Login with Facebook</a>
-	</div>
-	<div>
-		<a href="ExternalLogin?provider=Google&returnUrl=/" class="sidebar-btn btn btn-default" role="button">Login with Google</a>
-	</div>
-	<div>
-		<form action="/Account/Logout" method="post">
-			<input type="submit" name="submit" class="btn btn-default submit-button" value="Logout" />
-		</form>
+		<h4 class="select-heading">Please Login</h4>
+
+		<div>
+			<a href="ExternalLogin?provider=Facebook&returnUrl=/" class="btn btn-default paper-button" role="button">
+				Login with Facebook
+			</a>
+			<a href="ExternalLogin?provider=Google&returnUrl=/" class="btn btn-default paper-button" role="button">
+				Login with Google
+			</a>
+		</div>
+
+		<div>
+			<h4 class="add-new-heading">Why?</h4>
+			<p>Pass Past is designed for students to share their answers from previous exams in preparation for upcoming exams.</p>
+			<p>Because of this, we want everyone's answers to be equally considered, so preventing vote skewing is very important!</p>
+			<p>Thanks for helping make Pass Past great!</p>
+		</div>
+
 	</div>
 </div>

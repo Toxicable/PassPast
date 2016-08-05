@@ -1,7 +1,7 @@
 ﻿body {
     padding-top: 0px;
     padding-bottom: 20px;
-    background: #464646;
+    background: #ffffff;
     height: 100vh; /* Makes the left sidebar stretch all the way down if the page doesn't scroll */
 }
 
@@ -219,6 +219,60 @@ a:hover {
 	font-style: italic;
 	font-size: smaller;
 	color: #b1b0b0;
+}
+
+/* Navigation bar customisation */
+.navbar-inverse {
+	background: #464646;
+	border-radius: 0 !important;
+}
+
+.breadcrumb-arrow {
+	width: 0; 
+    height: 0; 
+    border-top: 25px solid transparent;
+    border-bottom: 25px solid transparent;  
+    border-left: 25px solid #464646;
+	background: black;
+}
+
+.logout-button {
+	background: none;
+	color: #999;
+	height: 50px;
+	margin-right: 25px;
+}
+
+.logout-button:hover {
+	background: none;
+	color: #eeeeee;
+}
+
+.paper-button {
+	padding: 10px 20px 10px 20px;
+	margin: 25px 5px 5px 5px;
+}
+
+.paper-button:link,
+.paper-button:visited,
+.paper-button:active {
+	color: #464646;
+}
+
+.paper-button:hover {
+	color: #ed9b3b;
+}
+
+.papers {
+	text-align: center;
+}
+
+.add-new-heading {
+	margin-top: 50px;
+}
+
+.select-heading {
+	margin-top: 40px;
 }
 
 /* When screen width smaller than 990 */
