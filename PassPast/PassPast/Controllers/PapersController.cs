@@ -38,7 +38,7 @@ namespace PassPast.Controllers
             return View(model);
         }
 		
-        public ActionResult New(string CourseCode, string PaperName)
+        public ActionResult New(string CourseCode, string PaperName, string error)
         {
             if (CourseCode == null)
             {
@@ -50,6 +50,7 @@ namespace PassPast.Controllers
             model.Papers = db.Papers.Include(paper => paper.Course).Where(paper => paper.Course.Code == CourseCode).OrderBy(paper => paper.Name).ToList();
 
             ViewBag.Papers = model.Papers;
+            ViewBag.Error = error;
             ViewBag.CourseCode = CourseCode;
             ViewBag.PaperName = PaperName;
 
@@ -60,11 +61,11 @@ namespace PassPast.Controllers
         public ActionResult AddPaper(AddPaperViewModel model)
         {
             //Testing if the paper already in the db
-            var paperInDb = db.Papers.SingleOrDefault(x => x.Name == model.PaperName);
+            var paperInDb = db.Papers.SingleOrDefault(x => x.Name == model.PaperName && x.Course.Code == model.CourseCode);
             
             if (paperInDb != null)
             {
-                return RedirectToAction("New", "Papers", new { CourseCode = model.CourseCode });
+                return RedirectToAction("New", "Papers", new { CourseCode = model.CourseCode, error = "Paper Exists" });
             }
             
             //Gets singular course from db with the CourseCode

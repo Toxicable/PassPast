@@ -7,7 +7,12 @@
 <div class="papers">
 	<div class="paper-title">
 		<h2>Add New Course</h2>
-
+        @{ 
+            if (ViewBag.Error != null)
+            {
+                <h3 style="color:darkred">@ViewBag.Error</h3>
+            }
+        }
 		<h4 class="select-heading">Select a Course</h4>
 
 		<div>

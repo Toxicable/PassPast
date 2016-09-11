@@ -6,7 +6,12 @@
 <div class="papers">
 	<div class="paper-title">
 		<h2>Add New Paper</h2>
-
+        @{
+            if (ViewBag.Error != null)
+            {
+                <h3 style="color:darkred">@ViewBag.Error</h3>
+            }
+        }
 		<div>
 			<form action="/Papers/AddPaper" method="post">
 				<label>Paper Name</label><br /><input type="text" title="Please only enter numbers." pattern="[0-9]+" name="PaperName" placeholder="eg 101" />

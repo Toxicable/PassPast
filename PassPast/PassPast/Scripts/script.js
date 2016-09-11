@@ -81,3 +81,16 @@ function addComment(questionId) {
 		viewComments(questionId);
 	})
 }
+
+$(function () {
+    $("#examType").change(function () {
+        var val = $(this).val();
+        if (val = "MCQ") {
+            $("#MCQ_Format").show();
+            $("#MCQ_Number_Of_Questions").show();
+        } else {
+            $("#MCQ_Format").hide();
+            $("#MCQ_Number_Of_Questions").show();
+        }
+    }), trigger('change');
+});

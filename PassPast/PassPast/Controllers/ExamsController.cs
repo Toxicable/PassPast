@@ -88,7 +88,7 @@ namespace PassPast.Controllers
 		}
 
 		[HttpGet]
-		public ActionResult New(string CourseCode, string PaperName, string ExamName)
+		public ActionResult New(string CourseCode, string PaperName, string ExamName, string error)
 		{
 			if (CourseCode == null)
 			{
@@ -98,6 +98,7 @@ namespace PassPast.Controllers
 			model.Exams = db.Exams.Include(exam => exam.Paper).Where(exam => exam.Paper.Course.Code == CourseCode & exam.Paper.Name == PaperName).ToList();
 
             ViewBag.Exams = model.Exams.OrderByDescending(exam => exam.Year).ThenByDescending(exam => exam.Semester);
+            ViewBag.Error = error;
             ViewBag.CourseCode = CourseCode;
 			ViewBag.PaperName = PaperName;
 			ViewBag.ExamName = ExamName;
@@ -118,22 +119,19 @@ namespace PassPast.Controllers
 			var fetchPaperFromDb = db.Papers.SingleOrDefault(x => x.Name == model.PaperName && x.Course.Code == model.CourseCode);
 			if (fetchPaperFromDb == null)
 			{
-				return Redirect(Request.UrlReferrer.ToString());
-			}
+                return RedirectToAction("Index", "Exams", new { CourseCode = model.CourseCode, PaperName = model.PaperName});
+            }
 
             //checking to make sure Questions do not go over 100, and answers don't go over 6, as to not go over O(600)
             if (model.NumberOfQuestions > 100 || model.MCQNumberOfAnswers > 6 || model.MCQNumberOfAnswers < 2)
             {
-                return Redirect(Request.UrlReferrer.ToString());
+                return RedirectToAction("New", "Exams", new { CourseCode = model.CourseCode, PaperName = model.PaperName, error = "Too Many Questions Or Answers" });
             }
-            var ExamList = db.Exams.Where(x => x.Paper.Name == model.PaperName).ToList();
-			foreach (var dbexam in ExamList)
+            var ExamList = db.Exams.SingleOrDefault(x => x.Year + x.Semester == model.Year + model.Semester && x.Paper.Name == model.PaperName && x.Paper.Course.Code == model.CourseCode);
+		    //Checks to see if Year + Semester + Paper + Course exists already.
+			if (ExamList != null)
 			{
-				// That concatenation stuff comin' right back atcha
-				if (dbexam.Year + dbexam.Semester == model.Year + model.Semester)
-				{
-					return RedirectToAction("New", "Exams", new { CourseCode = model.CourseCode, PaperName = model.PaperName, });
-				}
+				return RedirectToAction("New", "Exams", new { CourseCode = model.CourseCode, PaperName = model.PaperName, error = "Exam Already Exists"});
 			}
 
 			var exam = new Exam { Year = model.Year, Semester = model.Semester, Type = model.TypeOfExam };
@@ -209,8 +207,8 @@ namespace PassPast.Controllers
 			}
 			db.SaveChanges();
 
-			return Redirect(Request.UrlReferrer.ToString());
-		}
+			return RedirectToAction("Index", "Course", new { CourseCode = model.CourseCode, PaperName = model.PaperName});
+        }
 
 		[HttpGet]
 		public ActionResult AddAnswer()

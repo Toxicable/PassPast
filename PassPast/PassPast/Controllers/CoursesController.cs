@@ -64,6 +64,9 @@ namespace PassPast.Controllers
         public ActionResult AddCourse(AddCourseViewModel model)
         {
 			// Checks whether the course already exists to prevent multiples
+
+
+
             var fetchCourseFromDb = db.Courses.Where(x => x.Code == model.CourseCode);
             if (fetchCourseFromDb != null)
             {

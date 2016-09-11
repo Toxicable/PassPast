@@ -7,7 +7,12 @@
 <div class="papers">
 	<div class="paper-title">
 		<h2>Add New Exam</h2>
-
+        @{
+            if (ViewBag.Error != null)
+            {
+                <h3 style="color:darkred">@ViewBag.Error</h3>
+            }
+        }
 		<div>
 			<form action="/Exams/AddExam" method="post">
 				<div>
@@ -35,15 +40,15 @@
 				</div>
 				<div>
 					<label>Exam type:</label>
-					<select name="TypeOfExam">
-						<option value="MCQ">Multiple Choice Exam</option>
-						<option value="Written">Written Exam</option>
+					<select id="examType" name="TypeOfExam">
+						<option id="MCQ" value="MCQ">Multiple Choice Exam</option>
+						<option id="WE" value="Written">Written Exam</option>
 					</select>
 				</div>
 				<div>
 					<label>Number of questions:</label> <input name="NumberOfQuestions" type="number" pattern="[0-9]+" max="100" />
 				</div>
-				<div>
+				<div id="MCQ_Format">
 					<label>(MCQ only) Format of answers:</label>
 					<select name="MCQFormatOfAnswers">
 						<option value="ABC">A, B, C, D</option>
@@ -51,7 +56,7 @@
 						<option value="Roman">I, II, III, IV</option>
 					</select>
 				</div>
-				<div>
+				<div id="MCQ_Number_Of_Questions">
 					<!-- Min is 2 for TRUE/FALSE Questions, Max at 6.-->
 					<label>(MCQ only) Number of answers per question:</label> <input name="MCQNumberOfAnswers" type="number" pattern="[0-9]+" min="2" max="6" />
 				</div>

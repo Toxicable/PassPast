@@ -39,12 +39,12 @@ namespace PassPast.Controllers
             return View();
         }
 
-        public ActionResult New()
+        public ActionResult New(string error)
         {
             var model = new CoursesViewModel();
             model.Courses = db.Courses.ToList();
             ViewBag.Courses = model.Courses;
-
+            ViewBag.Error = error;
             return View(model);
         }
 
@@ -60,9 +60,13 @@ namespace PassPast.Controllers
             var fetchCoursesFromDb = db.Courses.ToList();
             foreach (var dbcourse in fetchCoursesFromDb)
             {
+                if (dbcourse.Name == model.CourseName)
+                {
+                    return RedirectToAction("New", "Home", new { error = "Course Name Exists" });
+                }
                 if (dbcourse.Code == model.CourseCode)
                 {
-                    return RedirectToAction("New", "Home");
+                    return RedirectToAction("New", "Home", new { error = "Course Code Exists" });
                 }
             }         
             var course = new Course { Name = model.CourseName, Code = model.CourseCode };
