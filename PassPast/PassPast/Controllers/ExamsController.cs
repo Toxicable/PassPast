@@ -207,7 +207,7 @@ namespace PassPast.Controllers
 			}
 			db.SaveChanges();
 
-			return RedirectToAction("Index", "Course", new { CourseCode = model.CourseCode, PaperName = model.PaperName});
+			return RedirectToAction("Index", "Exam", new { CourseCode = model.CourseCode, PaperName = model.PaperName});
         }
 
 		[HttpGet]
