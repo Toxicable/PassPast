@@ -21,7 +21,6 @@ h4 {
 .body-content {
     padding: 20px;
     background: #ffffff;
-    min-height: 100vh;
     height: auto;
 }
 
@@ -279,25 +278,37 @@ a:hover {
 	width: 100px;
 }
 
+.navbar-inverse .navbar-brand {
+	color: #f5f2f2;
+    background-color: #ed9b3b;
+}
+
+.navbar-inverse .navbar-brand:hover {
+    background-color: #ed9b3b;
+}
+
+#active-menu-item {
+	color: #ed9b3b;
+    border-bottom: 3px solid #ed9b3b;
+    padding-bottom: 12px;
+}
+
+.navbar-inverse .navbar-nav>li>a:hover {
+	border-bottom: 3px solid #eeeeee;
+    padding-bottom: 12px;
+}
+
+/* The drop down arrow colour */
+.navbar-inverse .navbar-nav>.dropdown>a .caret,
+.navbar-inverse .navbar-nav>.dropdown>a:hover .caret {
+	border-top-color: #ed9b3b;
+    border-bottom-color: #ed9b3b;
+}
+
 /* When screen width smaller than 990 */
-@media (max-width: 990px) {
-    .sidebar {
-        margin-top: 0px;
-        visibility: hidden;
-        height: 0px;
-    }
-
-    .hidden-top-sidebar {
-        visibility: visible;
-        height: auto;
-        padding-top: 20px;
-    }
-
-    .paper-title {
-        margin: 0;
-    }
-
-    .written-test-table {
-        margin-bottom: 25px;
-    }
+@media (max-width: 991px) {
+    .navbar-inverse .navbar-nav>li>a:hover {
+	border-bottom: none;
+    padding-bottom: 10px;
+	}
 }
