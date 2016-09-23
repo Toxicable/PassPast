@@ -1,4 +1,16 @@
-﻿function toggleVisibility(id) {
+﻿function toggleMCQOptions() {
+	var e = document.getElementById('examType');
+	if (e.value == "MCQ") {
+		document.getElementById('mcq-option1').style.display = 'block';
+		document.getElementById('mcq-option2').style.display = 'block';
+	}
+	else {
+		document.getElementById('mcq-option1').style.display = 'none';
+		document.getElementById('mcq-option2').style.display = 'none';
+	}
+}
+
+function toggleVisibility(id) {
 	var e = document.getElementById(id);
 	if (e.style.display == 'block') {
 		e.style.display = 'none';
@@ -47,22 +59,33 @@ function viewComments(id) {
 		        //value = Seconds.toString() + " Seconds Ago";
 		        value = "";
 		        //if statements to make a sentence out of the datetime we got.
-		        if (Minutes != 0) {
-		            value = " and " + Minutes.toString() + " Minutes Ago" + value;
+		        if (Days == 1) {
+		        	value = Days.toString() + " day ago";
 		        }
-		        if (Hours != 0) {
-		            value = Hours.toString() + " Hours, " + value;
+		        else if (Days != 0) {
+		            value = Days.toString() + " days ago";
 		        }
-		        if (Days != 0) {
-		            value = Days.toString() + " Days, " + value;
+		        else if (Hours == 1) {
+		        	value = Hours.toString() + " hour ago";
 		        }
+		        else if (Hours != 0) {
+		            value = Hours.toString() + " hours ago";
+		        }
+		        else if (Minutes == 1) {
+		        	value = +Minutes.toString() + " minute ago";
+		        }
+		        else if (Minutes != 0) {
+		            value = + Minutes.toString() + " minutes ago";
+		        }
+		        
+		        
 		    }
 		    else {
-		        value = "Just Now";
+		        value = "just now";
 		    }
 
             //final DateTime is named dateTimeValue
-		    dateTimeValue = "Posted " + value;
+		    dateTimeValue = "posted " + value;
 
 
 		    //value = new Date(parseInt(data[i].DateTime.replace("/Date(", "").replace(")/", ""), 10));

@@ -6,24 +6,32 @@
 
 <div class="papers">
 	<div class="paper-title">
-		<h2>Add New Course</h2>
+		<h2>Add new course</h2>
         @{ 
             if (ViewBag.Error != null)
             {
                 <h3 style="color:darkred">@ViewBag.Error</h3>
             }
         }
-		<h4 class="select-heading">Select a Course</h4>
-
-		<div>
-			<form action="/Home/AddCourse" method="post">
-				<label>Course Name</label><br /><input type="text" title="Please only enter letters/spaces." pattern="[a-zA-Z][a-zA-Z\s]+" name="CourseName" placeholder="eg Computer Science" />
-				<br />
-				<label>Course Code</label><br /><input type="text" title="Please only enter letters/spaces." pattern="[a-zA-Z][a-zA-Z\s]+" name="CourseCode" style="text-transform:uppercase" placeholder="eg COMPSCI" />
-				<br />
-				<input type="submit" name="submit" class="btn btn-default submit-button" value="submit" />
-			</form>
-		</div>
-
+		<form class="form-horizontal select-heading" action="/Home/AddCourse" method="post">
+			<div class="form-group">
+				<label class="control-label col-sm-5">Name:</label>
+				<div class="col-sm-7">
+					<input class="form-control" type="text" title="Please only enter letters/spaces." pattern="[a-zA-Z][a-zA-Z\s]+" name="CourseName" placeholder="eg Computer Science" />
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="control-label col-sm-5">Course code:</label>
+				<div class="col-sm-7">
+					<input class="form-control" type="text" title="Please only enter letters/spaces." pattern="[a-zA-Z][a-zA-Z\s]+" name="CourseCode" style="text-transform:uppercase" placeholder="eg COMPSCI" />
+				</div>
+			</div>
+			<div class="form-group">
+				<div class="col-sm-12">
+					<input type="submit" name="submit" value="Submit" class="btn btn-primary btn-md form-button">
+					<a href="../Home/Index" class="btn btn-danger btn-md form-button">Cancel</a>
+				</div>
+			</div>
+		</form>
 	</div>
 </div>

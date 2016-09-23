@@ -275,6 +275,10 @@ a:hover {
 	margin-top: 40px;
 }
 
+.form-button {
+	width: 100px;
+}
+
 /* When screen width smaller than 990 */
 @media (max-width: 990px) {
     .sidebar {
