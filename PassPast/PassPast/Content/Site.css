@@ -294,7 +294,7 @@ a:hover {
 }
 
 .navbar-inverse .navbar-nav>li>a:hover {
-	border-bottom: 3px solid #eeeeee;
+	border-bottom: 3px solid #ebebeb;
     padding-bottom: 12px;
 }
 
@@ -303,6 +303,24 @@ a:hover {
 .navbar-inverse .navbar-nav>.dropdown>a:hover .caret {
 	border-top-color: #ed9b3b;
     border-bottom-color: #ed9b3b;
+}
+
+.poll-box-content {
+	padding: 5px;
+}
+
+.mcq-button {
+	background: transparent;
+	border: none;
+	width: 100%;
+	padding: 0;
+	margin: 0;
+}
+
+.mcq-button:hover {
+	font-weight: bold;
+	background: #eeeeee;
+	border: none;
 }
 
 /* When screen width smaller than 990 */

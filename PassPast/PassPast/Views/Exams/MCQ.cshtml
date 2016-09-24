@@ -33,109 +33,56 @@
 	<!-- End headings, begin MCQ content -->
 
 
+	<!-- Displays a table-like cell for each question/answer poll set. -->
+	<!-- Clicking anywhere in each answer's div to vote for that answer (once per registered account). -->
 	@foreach (var question in ViewBag.Questions)
 	{
-		var firstIteration = true;
 		<div class="col-md-5 poll-box">
-                <input type="hidden" name="TypeOfVote" value="Down" />
-			    <table class="table table-condensed table-borderless">
-				    <tbody>
-					    @foreach (var answer in question.Answers)
-					    {
-						    <tr>
-							    <!-- So the question number is only displayed once -->
-							    @if (firstIteration)
-							    {
-								    <th class="col-md-1 col-sm-1 col-xs-1">@question.Number.</th>
+			<div class="col-xs-1 poll-box-content">
+				<div class="col-xs-1 mcq-question-number poll-box-content">@question.Number.</div>
+			</div>
 
-								    firstIteration = false;
-							    }
-							    else
-							    {
-								    <th class="col-md-1 col-sm-1 col-xs-1">&nbsp;</th>
-							    }
-							    <!-- Name is A, B, C etc. -->
-							    <td class="col-md-1 col-sm-1 col-xs-1">
-                                    <form id="McqVote" action = "/Exams/AddVote" method="post"> <!---->
-                                        <input type="hidden" name="QuestionId" value="@question.Id" />
-                                        <input type="hidden" name="AnswerId" value="@answer.Id" />
-                                        <input type="submit" name="submit" class="btn btn-default submit-button vote-submit-button mcq-name" value="@answer.Name" />
-                                    </form>
-                                </td>
-							    @if (answer.Votes == 0)
-							    {
-								    <td class="col-md-9 col-sm-9 col-xs-9"><div class="poll-bar-grey" style="width: 0.5%;"></div>
-                                        <form id="McqVote" action="/Exams/AddVote" method="post">
-                                            <!---->
-                                            <input type="hidden" name="QuestionId" value="@question.Id" />
-                                            <input type="hidden" name="AnswerId" value="@answer.Id" />
-                                            <input type="submit" name="submit" style="width: 100%; height: 100%;" class="btn btn-default submit-button vote-submit-button mcq-name" value="&nbsp;" />
-                                        </form>
-                                    </td>
+			<div class="col-xs-11 poll-box-content">
+				@foreach (var answer in question.Answers)
+				{
+					<form id="McqVote" action = "/Exams/AddVote" method="post">
+						<input type="hidden" name="QuestionId" value="@question.Id" />
+						<input type="hidden" name="AnswerId" value="@answer.Id" />
+						<button type="submit" name="submit" class="mcq-button">
+							<div class="col-xs-1 mcq-answer-count poll-box-content">@answer.Name</div>
 
-								    <td class="col-md-1 col-sm-1 col-xs-1">@answer.Votes</td>
-                                    
-                                }
-                                else if (answer.Votes > (question.TotalVotes / 2))
-                                {
-								    <!-- Sets the poll bar to be coloured for only a percentage of the width -->
-                                    <td class="col-md-9 col-sm-9 col-xs-9">
-                                        <div class="poll-bar-green" style="width: @Math.Ceiling(((double)answer.Votes / (double)question.TotalVotes) * 100)%;">
-                                            <form id="McqVote" action="/Exams/AddVote" method="post">
-                                                <!---->
-                                                <input type="hidden" name="QuestionId" value="@question.Id" />
-                                                <input type="hidden" name="AnswerId" value="@answer.Id" />
-                                                <input type="submit" name="submit" style="width: 100%; height: 100%;" class="btn btn-default submit-button vote-submit-button mcq-name" value="&nbsp;" />
-                                            </form>
-                                        </div>
-                                    </td>
-                                    <td class="col-md-1 col-sm-1 col-xs-1"><strong>@answer.Votes</strong></td>
-                                }
-                                else
-                                {
-								    <td class="col-md-9 col-sm-9 col-xs-9">
-                                        <div class="poll-bar-red" style="width: @Math.Ceiling(((double)answer.Votes / (double)question.TotalVotes) * 100)%;">
-                                            <form id="McqVote" action="/Exams/AddVote" method="post">
-                                                <!---->
-                                                <input type="hidden" name="QuestionId" value="@question.Id" />
-                                                <input type="hidden" name="AnswerId" value="@answer.Id" />
-                                                <input type="submit" name="submit" style="width: 100%; height: 100%;" class="btn btn-default submit-button vote-submit-button mcq-name" value="&nbsp;" />
-                                            </form>
-                                        </div>
-                                    </td>
-								    <td class="col-md-1 col-sm-1 col-xs-1">@answer.Votes</td>
-							    }
-						    </tr>
-					    }
-				    </tbody>
-			    </table>
-			<table class="table table-condensed table-borderless">
-				<tbody>
-					<tr>
-						<td class="col-md-1 col-sm-1 col-xs-1">&nbsp;</td>
-						<td>
-							<!-- Comments are not displayed by default -->
-							<button class="btn btn-default" role="button" onclick="viewComments(@question.Id);">view comments</button>
-							<!-- Calls the toggleVisibility function in script.js -->
-                            @*<!--
-							<button class="btn btn-default" role="button" onclick="toggleVisibility('comment-form-@question.Id');">vote</button>
-                            <form class="comment-form" id="comment-form-@question.Id" action="/Exams/AddVote" method="post">
-								<select name="AnswerId">
-									@foreach (var answer in question.Answers)
-									{
-										<option value="@answer.Id">@answer.Name</option>
-									}
-								</select>
-								<input type="hidden" name="QuestionId" value="@question.Id" />
-								<input type="submit" name="submit" class="btn btn-default submit-button" value="submit" />
-							</form>
-                            -->*@
-						</td>
-					</tr>
-				</tbody>
-			</table>
+							<div class="col-xs-10 mcq-answer-bar poll-box-content">
+								@if (answer.Votes == 0) /* Grey wedge for no votes */
+								{
+									<div class="poll-bar-grey" style="width: 2px;">&nbsp;</div>
+								}
+								else if (answer.Votes > (question.TotalVotes / 2)) /* Green long bar for the most votes */
+								{
+									<div class="poll-bar-green" style="width: @Math.Ceiling(((double)answer.Votes / (double)question.TotalVotes) * 100)%;">&nbsp;</div>
+								}
+								else /* Red smaller bar for some votes, but not the most voted */
+								{
+									<div class="poll-bar-red" style="width: @Math.Ceiling(((double)answer.Votes / (double)question.TotalVotes) * 100)%;">&nbsp;</div>
+								}
+							</div>
+
+							<div class="col-xs-1 mcq-answer-count poll-box-content">@answer.Votes</div>
+						</button>	
+					</form>		
+				}
+			</div>
+			
+			<!-- Comments are not displayed by default -->
+			<div>
+				<div class="col-xs-2"></div>
+				<div class="col-xs-10">
+					<button class="btn btn-default" role="button" onclick="viewComments(@question.Id);">view comments</button>
+				</div>
+			</div>
+			
 		</div>
 	}
+
 </div>
 
 <!-- Comments Column -->

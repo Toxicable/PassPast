@@ -29,7 +29,7 @@ function viewComments(id) {
 		var commentString = "<h4 class='right-comments'>Comments:</h4>";
 		for (var i = 0; i < data.length; i++) {
 
-		    console.log(data[i].DateTime);
+		    //console.log(data[i].DateTime);
             //Taking the date from the DB of the comment
 		    commentDateTime = new Date(parseInt(data[i].DateTime.replace("/Date(", "").replace(")/", ""), 10));
             //Getting the current Date/Time
@@ -105,7 +105,13 @@ function addComment(questionId) {
 	})
 }
 
-$(function () {
+function showSomething() {
+	console.log("bananas!")
+}
+
+$(".answer-div").click(function () { console.log("you clicked the div") });
+
+/*$(function () {
     $("#examType").change(function () {
         var val = $(this).val();
         if (val = "MCQ") {
@@ -116,4 +122,4 @@ $(function () {
             $("#MCQ_Number_Of_Questions").show();
         }
     }), trigger('change');
-});
+});*/
