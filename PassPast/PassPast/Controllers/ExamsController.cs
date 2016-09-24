@@ -123,7 +123,7 @@ namespace PassPast.Controllers
             }
 
             //checking to make sure Questions do not go over 100, and answers don't go over 6, as to not go over O(600)
-            if (model.NumberOfQuestions > 100 || model.MCQNumberOfAnswers > 6 || model.MCQNumberOfAnswers < 2)
+            if (model.NumberOfQuestions > 100 || model.MCQNumberOfAnswers > 6 || (model.MCQNumberOfAnswers < 2 && model.TypeOfExam == "MCQ"))
             {
                 return RedirectToAction("New", "Exams", new { CourseCode = model.CourseCode, PaperName = model.PaperName, error = "Too Many Questions Or Answers" });
             }
