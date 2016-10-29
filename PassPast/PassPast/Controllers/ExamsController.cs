@@ -276,7 +276,7 @@ namespace PassPast.Controllers
             // Check if person already voted
             int userIdInt = int.Parse(userId);
             var userAlreadyVoted = db.Answers.Any(x => x.Id == fetchAnswerFromDb.Id && x.VotedBy.Any(y => y.Id == userIdInt));
-            
+
 
             // For comment votes, check if upvote or downvote
             if (model.TypeOfVote == "Down")
@@ -301,29 +301,21 @@ namespace PassPast.Controllers
             }
             else // is a MCQ vote
             {
-                // Check if question's been voted on yet
-                var userAlreadyVotedForQuestion = db.Answers.Any(x => x.Question.Id == fetchQuestionFromDb.Id && x.VotedBy.Any(y => y.Id == userIdInt));
-                if (userAlreadyVotedForQuestion)
+                // Check if question's been voted on yet by Get the old answer from DB. If null then no old answer.
+                var oldAnswer = db.Answers.Include(x=>x.VotedBy)
+                .SingleOrDefault(x => x.Question.Id == fetchQuestionFromDb.Id && x.VotedBy.Any(y => y.Id == userIdInt));
+                if (oldAnswer != null)
                 {
-                    //var oldAnswer = fetchQuestionFromDb.Answers.FirstOrDefault(
-                    //    answer => answer.Question.Id == fetchQuestionFromDb.Id && 
-                    //    answer.VotedBy.Any(y => y.Id == userIdInt));
-
-                    //Get the old answer from DB
-                    //Match Question ID. Make sure not same as new answer, and then located which one has the VotedBy ID.
-                    var oldAnswer = db.Answers.SingleOrDefault(x => x.Question.Id == model.QuestionId && x.Name != fetchAnswerFromDb.Name &&x.VotedBy.Any(y => y.Id == userIdInt));
                     oldAnswer.Votes -= 1;
                     oldAnswer.VotedBy.Remove(user);
-                    //fetchAnswerFromDb.Votes += 1;
-                    //fetchAnswerFromDb.VotedBy.Add(user);
-
                 }
                 else
                 {
                     fetchQuestionFromDb.TotalVotes += 1;
                 }
-                fetchAnswerFromDb.Votes += 1;
                 fetchAnswerFromDb.VotedBy.Add(user);
+                fetchAnswerFromDb.Votes += 1;
+
             }
             db.SaveChanges();
 
