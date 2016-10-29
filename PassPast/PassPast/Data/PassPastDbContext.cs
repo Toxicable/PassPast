@@ -7,7 +7,7 @@ namespace PassPast.Data
     public class PassPastDbContext : DbContext
     {
         //dont change the contructor base, it's your conenction string to the DB
-        public PassPastDbContext() : base("PassPastContextConnectionString")
+        public PassPastDbContext() : base("Server=tcp:passpastsqlserver.database.windows.net,1433;Initial Catalog=passpast-dev;Persist Security Info=False;User ID=Fabian;Password=CityTOothbrush34PeopleafYwekf8354lfq37M;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;")
         {
         }
 
