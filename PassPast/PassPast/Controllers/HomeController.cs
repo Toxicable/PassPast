@@ -80,7 +80,8 @@ namespace PassPast.Controllers
 		{
 			// Don't touch or death shall be your only ally
             // I shall /empower/ death.
-			return Redirect("https://www.youtube.com/watch?v=lIES3ii-IOg");
+			// Get out
+			return Redirect("https://www.youtube.com/watch?v=3Nfo3H_9pFs");
 		}
     }
 }
