@@ -31,7 +31,11 @@ namespace PassPast.Controllers
             //Papers are now displayed in numerical order
             model.Papers = db.Papers.Include(paper => paper.Course).Where(paper => paper.Course.Code == CourseCode).OrderBy(paper => paper.Name).ToList();
 
-            ViewBag.Papers = model.Papers;
+			ViewBag.Stage1Papers = model.Papers.Where(paper => paper.Name.Substring(0,1).Equals("1"));
+			ViewBag.Stage2Papers = model.Papers.Where(paper => paper.Name.Substring(0, 1).Equals("2"));
+			ViewBag.Stage3Papers = model.Papers.Where(paper => paper.Name.Substring(0, 1).Equals("3"));
+
+			ViewBag.Papers = model.Papers;
             ViewBag.CourseCode = CourseCode;
             ViewBag.PaperName = PaperName;
 
