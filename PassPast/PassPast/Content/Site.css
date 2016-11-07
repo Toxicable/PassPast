@@ -49,7 +49,7 @@ h4 {
 }
 
 .active-sidebar-page {
-    background: #ed9b3b;
+    background: #fb9925;
 }
 
 .sidebar-div:hover {
@@ -68,7 +68,7 @@ a:visited {
 }
 
 a:hover {
-    color: #ed9b3b;
+    color: #fb9925;
 }
 
 .hidden-top-sidebar {
@@ -95,7 +95,7 @@ a:hover {
 .poll-box {
     margin: 25px;
     margin-left: 0px;
-    padding: 10px;
+    padding: 5px;
 }
 
 .poll-bar-green {
@@ -249,7 +249,7 @@ a:hover {
 
 .paper-button {
 	padding: 10px 20px 10px 20px;
-	margin: 25px 5px 5px 5px;
+	margin: 5px 5px 25px 5px;
 }
 
 .paper-button:link,
@@ -259,7 +259,7 @@ a:hover {
 }
 
 .paper-button:hover {
-	color: #ed9b3b;
+	color: #fb9925;
 }
 
 .papers {
@@ -280,16 +280,16 @@ a:hover {
 
 .navbar-inverse .navbar-brand {
 	color: #f5f2f2;
-    background-color: #ed9b3b;
+    background-color: #fb9925;
 }
 
 .navbar-inverse .navbar-brand:hover {
-    background-color: #ed9b3b;
+    background-color: #fb9925;
 }
 
 #active-menu-item {
-	color: #ed9b3b;
-    border-bottom: 3px solid #ed9b3b;
+	color: #fb9925;
+    border-bottom: 3px solid #fb9925;
     padding-bottom: 12px;
 }
 
@@ -301,12 +301,12 @@ a:hover {
 /* The drop down arrow colour */
 .navbar-inverse .navbar-nav>.dropdown>a .caret,
 .navbar-inverse .navbar-nav>.dropdown>a:hover .caret {
-	border-top-color: #ed9b3b;
-    border-bottom-color: #ed9b3b;
+	border-top-color: #fb9925;
+    border-bottom-color: #fb9925;
 }
 
 .poll-box-content {
-	padding: 5px;
+	padding: 3px;
 }
 
 .mcq-button {
