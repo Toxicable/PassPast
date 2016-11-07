@@ -1,0 +1,74 @@
+﻿@model PassPast.ViewModels.PapersViewModel
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>@ViewBag.Title</title>
+    <script src="~/Scripts/modernizr-2.6.2.js"></script>
+	<script src="~/Scripts/script.js"></script>
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+    <link href="~/Content/Site.css" rel="stylesheet" />
+
+    <!--This is the application insights inistialsation script, it'll collect information about how the website is used-->
+    <script src="~/Scripts/ai.0.22.19-build00125.min.js"></script>
+</head>
+<body>
+
+    <div class="panel-group hidden-top-sidebar">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h4 class="panel-title">
+                    <a data-toggle="collapse" href="#collapse1">Show/Hide Menu</a>
+                </h4>
+            </div>
+            <div id="collapse1" class="panel-collapse collapse">
+                <div>
+                    <br />
+                    <a href="../Home/Index" class="sidebar-btn btn btn-default" role="button">< home</a>
+                    <br />
+                    <form action="/Account/Logout" method="post">
+                        <input type="submit" name="submit" class="sidebar-btn btn btn-default" value="Logout" />
+                    </form>
+                    <br /><br />
+                    <h3>Papers</h3>
+                    @foreach (var paper in ViewBag.Papers)
+                    {
+                        <a href="../Exams/Index?CourseCode=@ViewBag.CourseCode&PaperName=@paper.Name">
+                            <h4 class="sidebar-div">@ViewBag.CourseCode @paper.Name</h4>
+                        </a>
+                    }
+					<p class="sidebar-tip"><br />Don't see your paper?</p>
+					<a href="../Papers/New?CourseCode=@ViewBag.CourseCode" class="sidebar-btn btn btn-default" role="button">add new</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-2 sidebar">
+        <div><h3>Pass Past</h3></div>
+        <br />
+        <a href="../Home/Index" class="sidebar-btn btn btn-default" role="button">< home</a>
+        <br />
+        <form action="/Account/Logout" method="post">
+            <input type="submit" name="submit" class="sidebar-btn btn btn-default" value="Logout" />
+        </form>
+        <br /><br /><br />
+        <h3>Papers</h3><br />
+            @foreach (var paper in ViewBag.Papers)
+            {
+                <a href="../Exams/Index?CourseCode=@ViewBag.CourseCode&PaperName=@paper.Name">
+                    <h4 class="sidebar-div">@ViewBag.CourseCode @paper.Name</h4>
+                </a>
+            }
+        <p class="sidebar-tip"><br />Don't see your paper?</p>
+        <a href="../Papers/New?CourseCode=@ViewBag.CourseCode" class="sidebar-btn btn btn-default" role="button">add new</a>
+    </div>
+    <div class="body-content col-md-10">
+		@RenderBody()
+    </div>
+    <script src="~/Scripts/jquery-1.10.2.min.js"></script>
+    <script src="~/Scripts/bootstrap.min.js"></script>
+    @RenderSection("scripts", required: false)
+</body>
+</html>

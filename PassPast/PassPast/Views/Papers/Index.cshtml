@@ -1,0 +1,31 @@
+﻿@model PassPast.ViewModels.PapersViewModel
+
+@{
+	Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="papers">
+	<div class="paper-title">
+		<h2>@ViewBag.CourseCode</h2>
+
+		<h4 class="select-heading">Select a paper</h4>
+
+		<div>
+			@foreach (var paper in ViewBag.Papers)
+			{
+				<a href="../Exams/Index?CourseCode=@ViewBag.CourseCode&PaperName=@paper.Name" class="btn btn-default paper-button" role="button">
+					@ViewBag.CourseCode @paper.Name
+				</a>
+			}
+		</div>
+
+		<div>
+			<h4 class="add-new-heading">or</h4>
+			<a href="../Papers/New?CourseCode=@ViewBag.CourseCode" class="btn btn-default paper-button" role="button">
+				Add new paper
+			</a>
+		</div>
+
+	</div>
+</div>
+
