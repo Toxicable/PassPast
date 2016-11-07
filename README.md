@@ -1,8 +1,5 @@
 # PassPast  
-# http://passpast.azurewebsites.net/
-
-Domain Names: Voice your opinions!
-[https://github.com/Toxicable/PassPast/issues/15](Domain Name Thread)
+# http://www.passpast.net
 
 
 Peer review guidelines
