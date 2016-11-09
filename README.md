@@ -1,5 +1,5 @@
 # PassPast  
-# http://passpast.azurewebsites.net/
+# http://passpast.net
 
 Domain Names: Voice your opinions!
 [https://github.com/Toxicable/PassPast/issues/15](Domain Name Thread)
