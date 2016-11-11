@@ -59,13 +59,13 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Domain\Answer.cs" />
-    <Compile Include="Domain\BaseDataModel.cs" />
+    <Compile Include="Domain\AnswerTypeEntity.cs" />
     <Compile Include="Domain\Comment.cs" />
     <Compile Include="Domain\Course.cs" />
     <Compile Include="Domain\Exam.cs" />
     <Compile Include="Domain\Paper.cs" />
     <Compile Include="Domain\Question.cs" />
-    <Compile Include="Domain\User.cs" />
+    <Compile Include="Domain\VoteEntity.cs" />
     <Compile Include="Entity.cs" />
     <Compile Include="Identity\ApplicationUser.cs" />
     <Compile Include="Identity\Client.cs" />
