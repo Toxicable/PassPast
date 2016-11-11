@@ -17,8 +17,9 @@ using Microsoft.Owin.Security.Facebook;
 using Microsoft.AspNet.Identity;
 using Microsoft.Owin.StaticFiles;
 using Microsoft.Owin.FileSystems;
+using OAuthAPI.WebApi;
 
-namespace OAuthAPI.WebApi
+namespace PassPast.Web
 {
     public class Startup
     {

@@ -1,8 +1,8 @@
-namespace OAuthAPI.WebApi.Migrations
+namespace PassPast.Web.Migrations
 {
-    using Data.Identity;
     using Microsoft.AspNet.Identity;
     using Microsoft.AspNet.Identity.EntityFramework;
+    using OAuthAPI.Data.Identity;
     using System;
     using System.Data.Entity;
     using System.Data.Entity.Migrations;
@@ -15,7 +15,7 @@ namespace OAuthAPI.WebApi.Migrations
             AutomaticMigrationsEnabled = true;
         }
 
-        protected override void Seed(ApplicationDbContext context)
+        protected override void Seed(OAuthAPI.WebApi.ApplicationDbContext context)
         {
             var manager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(context));
 
@@ -35,7 +35,7 @@ namespace OAuthAPI.WebApi.Migrations
             {
                 roleManager.Create(new IdentityRole { Name = "SuperAdmin" });
                 roleManager.Create(new IdentityRole { Name = "Admin" });
-                roleManager.Create(new IdentityRole { Name = "User" });
+                roleManager.Create(new IdentityRole { Name = "GeneralUser" });
             }
 
             var adminUser = manager.FindByName("fabianwiles@live.com");
@@ -57,7 +57,6 @@ namespace OAuthAPI.WebApi.Migrations
 
                 context.SaveChanges();
             }
-
         }
     }
 }

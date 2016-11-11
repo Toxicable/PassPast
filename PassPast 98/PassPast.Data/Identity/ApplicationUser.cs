@@ -6,6 +6,8 @@ using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
+using PassPast.Data;
+using PassPast.Data.Domain;
 
 namespace OAuthAPI.Data.Identity
 {
@@ -21,7 +23,10 @@ namespace OAuthAPI.Data.Identity
 
         public string FirstName { get; set; }
         public string LastName { get; set; }
-
+        
+        public ICollection<ExamEntity> ExamsCreated { get; set; }
+        public ICollection<CommentEntity> CommentsCreated { get; set; }
+        public ICollection<VoteEntity> Votes { get; set; }
         public ICollection<ExternalAccount> ExternalAccounts { get; set; }
 
         public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<ApplicationUser> manager, string authenticationType)
