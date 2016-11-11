@@ -17,7 +17,7 @@
 
         <div *ngIf="loggedIn$ | async" >
             Welcome {{username$ | async}}
-            <a routerLink]="/" (click)="account.logout()">Logout</a>
+            <a [routerLink]="['/']" (click)="account.logout()">Logout</a>
         </div>
     </div>
 </div>

@@ -222,6 +222,9 @@
   <ItemGroup>
     <Compile Include="Api\BaseApiController.cs" />
     <Compile Include="Api\BaseManager.cs" />
+    <Compile Include="Api\Courses\CoursesController.cs" />
+    <Compile Include="Api\Courses\CoursesManager.cs" />
+    <Compile Include="Api\Courses\CourseViewModel.cs" />
     <Compile Include="Api\Helpers\AuthHelper.cs" />
     <Compile Include="Api\Identity\Controllers\AccountController.cs" />
     <Compile Include="Api\Identity\Controllers\ClaimsController.cs" />

@@ -2,9 +2,9 @@ import { Injectable } from '@angular/core';
 import { AuthApiService } from '../../core/services/auth-api.service';
 import { Observable } from 'rxjs/Observable';
 import { Course } from '../models/course';
-import * as course from '../actions/course';
+import * as courseActions from './course.actions';
 import { Store } from '@ngrx/store';
-import { AppState } from '../app-store';
+import { AppState } from '../../app/app-store';
 
 @Injectable()
 export class CourseService {
@@ -14,7 +14,7 @@ export class CourseService {
     getCourses(): Observable<Course[]>{
         return this.authApi.get('courses/getAll')
             .do((courses: Course[]) => { 
-                let action = new course.LoadAction(courses);
+                let action = new courseActions.LoadAction(courses);
                 this.store.dispatch(action);
             })
     }

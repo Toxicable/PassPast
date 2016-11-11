@@ -97,9 +97,15 @@ namespace OAuthAPI.WebApi.Api.Identity.Providers
 
 
             ClaimsIdentity oAuthIdentity = await user.GenerateUserIdentityAsync(userManager, "JWT");
-            
 
-            var ticket = new AuthenticationTicket(oAuthIdentity, new AuthenticationProperties());
+            var props = new AuthenticationProperties(new Dictionary<string, string>
+             {
+                 {
+                     "as:client_id", context.ClientId ?? string.Empty
+                 }
+             });
+
+            var ticket = new AuthenticationTicket(oAuthIdentity, props);
             
             context.Validated(ticket);
            

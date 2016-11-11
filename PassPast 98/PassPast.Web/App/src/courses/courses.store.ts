@@ -1,8 +1,8 @@
-import * as course from './reducers/course'
 import { ActionReducer, combineReducers } from '@ngrx/store';
+import * as course from './courses/course.reducer'
 
 export interface State {
-    course: course.State
+    course: course.State,
 }
 
 

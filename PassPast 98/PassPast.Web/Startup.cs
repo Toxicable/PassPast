@@ -18,6 +18,10 @@ using Microsoft.AspNet.Identity;
 using Microsoft.Owin.StaticFiles;
 using Microsoft.Owin.FileSystems;
 using OAuthAPI.WebApi;
+using AutoMapper;
+using OAuthAPI.Data.Identity;
+using Microsoft.AspNet.Identity.EntityFramework;
+using OAuthAPI.WebApi.Api.Identity.Models.ViewModels;
 
 namespace PassPast.Web
 {
