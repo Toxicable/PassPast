@@ -15,5 +15,6 @@ if (process.env.ENV === 'production') {
         document.addEventListener('DOMContentLoaded', main);
     }
 }else{
+    console.clear();
     bootloader(main);
 }

@@ -8,12 +8,15 @@ import { loadingBarReducer } from '../shared/loading-bar/loading-bar.reducer';
 import { usersReducer }      from '../+admin/users/user-reducer';
 import { authReducer, Auth } from '../core/stores/auth.store';
 
+import * as courses from '../courses/courses.store'
+
 export interface AppState{
     users: User[],
     alerts: Alert[],
     auth: Auth,
     loading: boolean,
     appStarting: boolean,
+    courses: courses.State
 }
 
 export const providedStore = StoreModule
@@ -21,5 +24,6 @@ export const providedStore = StoreModule
         users: usersReducer,
         alerts: alertsReducer,
         loading: loadingBarReducer,
-        auth: authReducer
+        auth: authReducer,
+        courses: courses.reducer
     });
