@@ -30,6 +30,11 @@ export const reducer = (state = initalState, action: courseActions.Actions): Sta
                     action.payload
                 ]
             }
+        case courseActions.ActionTypes.SELECT:
+            return {
+                selected: action.payload,
+                entities: state.entities
+            }
 
         default:
             return state;

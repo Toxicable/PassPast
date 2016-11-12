@@ -8,6 +8,9 @@ import { QuestionsComponent } from './questions/questions.component';
 import { CourseService } from './courses/course.service';
 import { SharedModule } from '../shared/shared.module';
 import { AddCourseComponent } from './courses/add-course/add-course.component';
+import { PaperService } from './papers/paper.service';
+import { AddPaperComponent } from './papers/add-paper/add-paper.component';
+import { CourseResolveService } from './courses/course-resolve.service';
 
 @NgModule({
     imports: [
@@ -20,12 +23,14 @@ import { AddCourseComponent } from './courses/add-course/add-course.component';
         CoursesComponent, 
         AddCourseComponent,
         PapersComponent, 
+        AddPaperComponent,
         ExamsComponent,
-        QuestionsComponent
-        
+        QuestionsComponent        
     ],
     providers: [
-        CourseService
+        CourseService,
+        PaperService,
+        CourseResolveService
     ]
 })
 export class CourseModule { }

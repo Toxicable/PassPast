@@ -19,6 +19,10 @@ export class CourseService {
             })
     }
 
+    getCourse(id: number): Observable<Course>{
+        return this.authApi.get('/courses/get/'+ id)
+    }
+
     create(course: Course): Observable<Course>{
         return this.authApi.post('/courses/create', course)
             .do((newCourse: Course) => {

@@ -6,6 +6,8 @@ import { PapersComponent } from './papers/papers.component';
 import { ExamsComponent } from './exams/exams.component';
 import { QuestionsComponent } from './questions/questions.component';
 import { AddCourseComponent } from './courses/add-course/add-course.component';
+import { AddPaperComponent } from './papers/add-paper/add-paper.component';
+import { CourseResolveService } from './courses/course-resolve.service';
 
 const routes: Routes = [
     {
@@ -13,23 +15,29 @@ const routes: Routes = [
         component: CoursesComponent
     },
     {
-        path: 'add-course',
+        path: 'courses/add-course',
         component: AddCourseComponent
     },
     {
         path: 'courses/:courseId',
-        component: PapersComponent
+        component: PapersComponent,
+        resolve: {
+            courseExists: CourseResolveService
+        }
     },
     {
-        path: 'add-paper',
-        component: AddCourseComponent
+        path: 'courses/:courseId/add-paper',
+        component: AddPaperComponent,
+        resolve: {
+            courseExists: CourseResolveService
+        }
     },
     {
         path: 'courses/:courseId/:paperId',
         component: ExamsComponent
-    },
+    },    
     {
-        path: 'add-exam',
+        path: 'courses/:courseId/:paperId/add-exam',
         component: AddCourseComponent
     },
     {

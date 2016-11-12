@@ -12,7 +12,9 @@
         <a  class="header-navigation__link" [routerLink]="['/courses', 1, 2]" routerLinkActive="active-router-link">Exams</a>        
         <a  class="header-navigation__link" [routerLink]="['/courses', 1, 2, 3]" routerLinkActive="active-router-link">Questions</a>
         
-        <a  class="header-navigation__link" [routerLink]="['/add-course']" routerLinkActive="active-router-link">Add Course</a>
+        <a  class="header-navigation__link" [routerLink]="['/courses', 'add-course']" routerLinkActive="active-router-link">Add Course</a>
+        
+        <a  class="header-navigation__link" [routerLink]="['/courses', 1, 'add-paper']" routerLinkActive="active-router-link">Add Paper</a>
     </div>
 
     <div class="right">
