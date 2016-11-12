@@ -11,6 +11,14 @@ namespace PassPast.Web.Api.Papers
 {
     public class PapersManager : BaseManager
     {
+        public async Task<PaperViewModel> Get(int id)
+        {
+            var paper = (await Context.Papers
+                .FirstOrDefaultAsync(c => c.Id == id));
+
+            return AutoMapper.Map<PaperViewModel>(paper);
+        }
+
         public async Task<ICollection<PaperViewModel>> GetAll()
         {
             var papers = (await Context.Papers

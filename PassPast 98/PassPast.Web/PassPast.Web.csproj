@@ -227,7 +227,11 @@
     <Compile Include="Api\Courses\CoursesController.cs" />
     <Compile Include="Api\Courses\CoursesManager.cs" />
     <Compile Include="Api\Courses\CourseViewModel.cs" />
-    <Compile Include="Api\Helpers\AuthHelper.cs" />
+    <Compile Include="Api\Exams\ExamBindingModel.cs" />
+    <Compile Include="Api\Exams\ExamsController.cs" />
+    <Compile Include="Api\Exams\ExamsManager.cs" />
+    <Compile Include="Api\Exams\ExamViewModel.cs" />
+    <Compile Include="Helpers\AuthHelper.cs" />
     <Compile Include="Api\Identity\Controllers\AccountController.cs" />
     <Compile Include="Api\Identity\Controllers\ClaimsController.cs" />
     <Compile Include="Api\Identity\Controllers\ManageController.cs" />
@@ -237,7 +241,6 @@
     <Compile Include="Api\Identity\ExternalLoginModels.cs" />
     <Compile Include="Api\Identity\Managers\ApplicationRoleManager.cs" />
     <Compile Include="Api\Identity\Managers\ApplicationUserManager.cs" />
-    <Compile Include="Api\Attributes\ClaimsAuthorizationAttribute.cs" />
     <Compile Include="Api\Identity\Managers\ClientManager.cs" />
     <Compile Include="Api\Identity\Managers\RefreshTokenManager.cs" />
     <Compile Include="Api\Identity\Models\BindingModels\AccountBindingModels.cs" />

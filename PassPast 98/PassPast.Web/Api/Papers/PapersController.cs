@@ -17,6 +17,13 @@ namespace PassPast.Web.Api.Papers
             _papersManager = new PapersManager();
         }
 
+        public async Task<IHttpActionResult> Get(int id)
+        {
+            var course = await _papersManager.Get(id);
+
+            return Ok(course);
+        }
+
         public async Task<IHttpActionResult> GetAll()
         {
             var courses = await _papersManager.GetAll();
