@@ -1,5 +1,4 @@
 import { NgModule } from '@angular/core';
-
 import { CoursesComponent }   from './courses/courses.component';
 import { coursesRouting } from './courses.routing';
 import { PapersComponent } from './papers/papers.component';
@@ -11,13 +10,16 @@ import { AddCourseComponent } from './courses/add-course/add-course.component';
 import { PaperService } from './papers/paper.service';
 import { AddPaperComponent } from './papers/add-paper/add-paper.component';
 import { CourseResolveService } from './courses/course-resolve.service';
+import { AddExamComponent } from './exams/add-exam/add-exam.component';
+import { PaperResolveService } from './papers/paper-resolve.service';
+import { ExamService } from './exams/exam.service';
 
 @NgModule({
     imports: [
         SharedModule,
         coursesRouting
-        
-        ],
+
+    ],
     exports: [],
     declarations: [
         CoursesComponent, 
@@ -25,12 +27,15 @@ import { CourseResolveService } from './courses/course-resolve.service';
         PapersComponent, 
         AddPaperComponent,
         ExamsComponent,
+        AddExamComponent,
         QuestionsComponent        
     ],
     providers: [
         CourseService,
         PaperService,
-        CourseResolveService
+        ExamService,
+        CourseResolveService,
+        PaperResolveService
     ]
 })
 export class CourseModule { }

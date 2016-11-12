@@ -8,6 +8,8 @@ import { QuestionsComponent } from './questions/questions.component';
 import { AddCourseComponent } from './courses/add-course/add-course.component';
 import { AddPaperComponent } from './papers/add-paper/add-paper.component';
 import { CourseResolveService } from './courses/course-resolve.service';
+import { PaperResolveService } from './papers/paper-resolve.service';
+import { AddExamComponent } from './exams/add-exam/add-exam.component';
 
 const routes: Routes = [
     {
@@ -34,11 +36,17 @@ const routes: Routes = [
     },
     {
         path: 'courses/:courseId/:paperId',
-        component: ExamsComponent
+        component: ExamsComponent,
+        resolve: {
+            paperExists: PaperResolveService
+        }
     },    
     {
         path: 'courses/:courseId/:paperId/add-exam',
-        component: AddCourseComponent
+        component: AddExamComponent,
+        resolve: {
+            paperExists: PaperResolveService
+        }
     },
     {
         path: 'courses/:courseId/:paperId/:examId',
