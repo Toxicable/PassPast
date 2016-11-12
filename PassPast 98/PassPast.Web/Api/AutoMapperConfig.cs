@@ -4,6 +4,7 @@ using OAuthAPI.Data.Identity;
 using OAuthAPI.WebApi.Api.Identity.Models.ViewModels;
 using PassPast.Data;
 using PassPast.Web.Api.Courses;
+using PassPast.Web.Api.Exams;
 using PassPast.Web.Api.Papers;
 using System;
 using System.Collections.Generic;
@@ -27,6 +28,9 @@ namespace PassPast.Web.Api
 
                 x.CreateMap<PaperEntity, PaperViewModel>();
                 x.CreateMap<PaperBindingModel, PaperEntity>();
+                
+                x.CreateMap<ExamEntity, ExamViewModel>();
+                x.CreateMap<ExamBindingModel, ExamEntity>();
 
             });
 
