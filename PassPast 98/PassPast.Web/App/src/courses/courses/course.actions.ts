@@ -1,8 +1,15 @@
 import { type } from '../../app/util';
 import { Action } from '@ngrx/store';
 import { Course } from '../models/course';
+
 export const ActionTypes = {
-    LOAD: type('[Course] Load')
+    LOAD: type('[Course] Load'),
+    ADD_COURSE: type('[Course] Add')
+}
+
+export class AddAction implements Action{
+    type = ActionTypes.ADD_COURSE;
+    constructor(public payload: Course){}
 }
 
 export class LoadAction implements Action{
@@ -11,4 +18,4 @@ export class LoadAction implements Action{
 }
 
 
-export type Actions = LoadAction;
+export type Actions = LoadAction | AddAction;

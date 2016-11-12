@@ -1,4 +1,5 @@
 ﻿using OAuthAPI.WebApi.Api;
+using PassPast.Data;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,6 +22,15 @@ namespace PassPast.Web.Api.Courses
             var courses =  await _coursesManager.GetAll();
 
             return Ok(courses);
+        }
+
+        public async Task<IHttpActionResult> Create(CourseBindingModel course)
+        {
+            var newCourse = _mapper.Map<CourseEntity>(course);
+
+            await _coursesManager.Create(newCourse);
+
+            return Ok(newCourse);
         }
     }
 }

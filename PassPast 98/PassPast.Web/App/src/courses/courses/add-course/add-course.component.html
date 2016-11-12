@@ -1,2 +1,13 @@
-<md-input placeholder="Name"></md-input>
-<md-input placeholder="Code"></md-input>
+<form [formGroup]="newCourseForm" (ngSubmit)="onSubmit()" >
+    <div>
+        <md-input placeholder="Name" formControlName="name"></md-input>
+        <control-messages [control]="newCourseForm.controls.name"></control-messages>
+    </div>
+
+    <div>
+        <md-input placeholder="Code" formControlName="code"></md-input>
+        <control-messages [control]="newCourseForm.controls.code"></control-messages>
+    </div>
+
+    <button md-raised-button color="primary" type="submit" [disabled]="!newCourseForm.valid" >Submit</button>
+</form>

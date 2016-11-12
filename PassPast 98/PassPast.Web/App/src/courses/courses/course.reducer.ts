@@ -22,7 +22,15 @@ export const reducer = (state = initalState, action: courseActions.Actions): Sta
                 selected: state.selected,
                 entities: action.payload
             }
-            
+          case courseActions.ActionTypes.ADD_COURSE:
+            return {
+                selected: state.selected,
+                entities: [
+                    ...state.entities,
+                    action.payload
+                ]
+            }
+
         default:
             return state;
     }

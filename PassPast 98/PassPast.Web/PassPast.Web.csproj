@@ -220,8 +220,10 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Api\AutoMapperConfig.cs" />
     <Compile Include="Api\BaseApiController.cs" />
     <Compile Include="Api\BaseManager.cs" />
+    <Compile Include="Api\Courses\CourseBindingModel.cs" />
     <Compile Include="Api\Courses\CoursesController.cs" />
     <Compile Include="Api\Courses\CoursesManager.cs" />
     <Compile Include="Api\Courses\CourseViewModel.cs" />

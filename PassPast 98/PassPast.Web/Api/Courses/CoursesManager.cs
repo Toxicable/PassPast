@@ -1,4 +1,5 @@
 ﻿using OAuthAPI.WebApi.Api;
+using PassPast.Data;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -20,6 +21,13 @@ namespace PassPast.Web.Api.Courses
                 .ToList();
 
             return courses;
+        }
+
+        public async Task Create(CourseEntity newCourse)
+        {
+            Context.Courses.Add(newCourse);
+
+            await Context.SaveChangesAsync();
         }
     }
 }

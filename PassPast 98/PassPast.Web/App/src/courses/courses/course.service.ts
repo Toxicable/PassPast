@@ -18,4 +18,12 @@ export class CourseService {
                 this.store.dispatch(action);
             })
     }
+
+    create(course: Course): Observable<Course>{
+        return this.authApi.post('/courses/create', course)
+            .do((newCourse: Course) => {
+                let action = new courseActions.AddAction(newCourse);
+                this.store.dispatch(action);
+            })
+    }
 }
