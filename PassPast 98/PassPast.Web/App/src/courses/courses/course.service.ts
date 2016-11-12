@@ -12,7 +12,7 @@ export class CourseService {
     private store: Store<AppState>) { }
 
     getCourses(): Observable<Course[]>{
-        return this.authApi.get('courses/getAll')
+        return this.authApi.get('/courses/getAll')
             .do((courses: Course[]) => { 
                 let action = new courseActions.LoadAction(courses);
                 this.store.dispatch(action);

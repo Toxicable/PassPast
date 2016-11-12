@@ -28,6 +28,6 @@ export const reducer = (state = initalState, action: courseActions.Actions): Sta
     }
 };
 
-export const getCourses = (state$: Observable<State>) => {
+export const getCourses = (state$: Observable<State>): Observable<Course[]> => {
     return state$.map(state => state.entities);
 }

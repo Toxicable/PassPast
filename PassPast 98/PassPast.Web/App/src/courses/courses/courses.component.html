@@ -1,1 +1,9 @@
-courses
+<h1>Courses</h1>
+<div>
+    <div *ngFor="let course of courses$ | async">
+        {{course.id}}
+        {{course.name}}
+        {{course.code}}
+    </div>
+
+</div>
