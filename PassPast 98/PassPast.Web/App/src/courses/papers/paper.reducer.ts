@@ -21,14 +21,22 @@ export const reducer = (state = initalState, action: paperActions.Actions): Stat
                 selected: state.selected,
                 entities: action.payload
             }
-          case paperActions.ActionTypes.ADD:
+
+        case paperActions.ActionTypes.ADD:
+        return {
+            selected: state.selected,
+            entities: [
+                ...state.entities,
+                action.payload
+            ]
+        }
+
+        case paperActions.ActionTypes.SELECT:
             return {
-                selected: state.selected,
-                entities: [
-                    ...state.entities,
-                    action.payload
-                ]
+                selected: action.payload,
+                entities: state.entities
             }
+
         default:
             return state;
     }

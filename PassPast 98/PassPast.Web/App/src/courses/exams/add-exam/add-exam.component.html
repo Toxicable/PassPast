@@ -1,0 +1,13 @@
+<form [formGroup]="newExamForm" (ngSubmit)="onSubmit()" >
+    <div>
+        <md-input placeholder="Name" formControlName="name"></md-input>
+        <control-messages [control]="newExamForm.controls.name"></control-messages>
+    </div>
+
+    <div>
+        <md-input placeholder="Code" formControlName="code"></md-input>
+        <control-messages [control]="newExamForm.controls.code"></control-messages>
+    </div>
+
+    <button md-raised-button color="primary" type="submit" [disabled]="!newExamForm.valid" >Submit</button>
+</form>

@@ -3,7 +3,13 @@ import { type } from '../../app/util';
 import { Paper } from '../models/paper';
 export const ActionTypes = {
     LOAD: type('[Papers] Load'),
-    ADD: type('[Papers] Add')
+    ADD: type('[Papers] Add'),
+    SELECT: type('[Paper] Select')
+}
+
+export class SelectAction implements Action{
+    type = ActionTypes.SELECT;
+    constructor(public payload: Paper){}
 }
 
 export class LoadAction implements Action{
@@ -16,4 +22,4 @@ export class AddAction implements Action{
     constructor(public payload: Paper){}
 }
 
-export type Actions = LoadAction | AddAction;
+export type Actions = LoadAction | AddAction | SelectAction;

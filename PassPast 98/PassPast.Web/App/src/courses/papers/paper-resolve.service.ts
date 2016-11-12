@@ -10,27 +10,27 @@ import { PaperService } from './paper.service';
 import { Paper } from '../models/paper';
 
 @Injectable()
-export class CourseResolveService implements Resolve<void> {
+export class PaperResolveService implements Resolve<void> {
 
-  constructor(private courses: PaperService, 
+  constructor(private papers: PaperService, 
               private router: Router,
               private store: Store<AppState>
               
               ) {}
 
   resolve(route: ActivatedRouteSnapshot): Observable<boolean> {
-    let courseId = route.params['paperId'];
+    let paperId = route.params['paperId'];
 
     return this.store.map(state => state.courses.paper.entities)
       .first()
-      .flatMap( (courses: Paper[]) => {
-        let localCourse = courses.find( c => c.id == courseId)
-        if(localCourse){
-          let action = new paperActions.SelectAction(localCourse);
+      .flatMap( (papers: Paper[]) => {
+        let localPapers = papers.find( c => c.id == paperId)
+        if(localPapers){
+          let action = new paperActions.SelectAction(localPapers);
           this.store.dispatch(action);
           return Observable.of(true);
         }
-        return this.courses.getCourse(courseId)
+        return this.papers.getPaper(paperId)
           .map((paper: Paper) => {
             if(paper != null){
               let addAction = new paperActions.AddAction(paper);

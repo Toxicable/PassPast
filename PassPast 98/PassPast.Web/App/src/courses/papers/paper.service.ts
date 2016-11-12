@@ -13,7 +13,11 @@ export class PaperService {
                 private store: Store<AppState>
                 ) { }
 
-    getCourses(): Observable<Paper[]>{
+    getPaper(id: number): Observable<Paper>{
+        return this.authApi.get('/papers/get/'+ id)
+    }
+
+    getPapers(): Observable<Paper[]>{
         return this.authApi.get('/papers/getAll')
             .do((papers: Paper[]) => { 
                 let action = new paperActions.LoadAction(papers);
@@ -21,8 +25,8 @@ export class PaperService {
             })
     }
 
-    create(course: Course): Observable<Paper>{
-        return this.authApi.post('/papers/create', course)
+    create(paper: Paper): Observable<Paper>{
+        return this.authApi.post('/papers/create', paper)
             .do((newPaper: Paper) => {
                 let action = new paperActions.AddAction(newPaper);
                 this.store.dispatch(action);
