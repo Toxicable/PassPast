@@ -252,6 +252,10 @@
     <Compile Include="Api\Identity\Providers\OAuthProvider.cs" />
     <Compile Include="Api\Identity\Providers\RefreshTokenProvider.cs" />
     <Compile Include="Api\Identity\Results\ChallangeResult.cs" />
+    <Compile Include="Api\Papers\PaperBindingModel.cs" />
+    <Compile Include="Api\Papers\PapersController.cs" />
+    <Compile Include="Api\Papers\PapersManager.cs" />
+    <Compile Include="Api\Papers\PaperViewModel.cs" />
     <Compile Include="Api\Services\EmailService.cs" />
     <Compile Include="Infrastructure\ApplicationDbContext.cs" />
     <Compile Include="Migrations\Configuration.cs" />

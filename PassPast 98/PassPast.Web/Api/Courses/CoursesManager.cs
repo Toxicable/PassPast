@@ -12,6 +12,14 @@ namespace PassPast.Web.Api.Courses
 {
     public class CoursesManager : BaseManager
     {
+        public async Task<CourseViewModel> Get(int id)
+        {
+            var course = (await Context.Courses
+                .FirstOrDefaultAsync(c => c.Id == id));
+
+            return AutoMapper.Map<CourseViewModel>(course);                
+        }
+
         public async Task<ICollection<CourseViewModel>> GetAll()
         {
             var courses = (await Context.Courses

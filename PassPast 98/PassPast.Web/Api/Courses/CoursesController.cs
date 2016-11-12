@@ -17,6 +17,13 @@ namespace PassPast.Web.Api.Courses
             _coursesManager = new CoursesManager();
         }
 
+        public async Task<IHttpActionResult> Get(int id)
+        {
+            var course = await _coursesManager.Get(id);
+
+            return Ok(course);
+        }
+
         public async Task<IHttpActionResult> GetAll()
         {
             var courses =  await _coursesManager.GetAll();
