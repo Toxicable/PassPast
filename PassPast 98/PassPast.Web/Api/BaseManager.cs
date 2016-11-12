@@ -8,6 +8,7 @@ using Microsoft.AspNet.Identity.EntityFramework;
 using OAuthAPI.WebApi.Api.Identity.Models.ViewModels;
 using PassPast.Data;
 using PassPast.Web.Api.Courses;
+using PassPast.Web.Api;
 
 namespace OAuthAPI.WebApi.Api
 {
@@ -20,13 +21,8 @@ namespace OAuthAPI.WebApi.Api
         {
             Context = HttpContext.Current.GetOwinContext().Get<ApplicationDbContext>();
 
-            
-            var config = new MapperConfiguration(x =>
-            {
-                x.CreateMap<CourseEntity, CourseViewModel>();
-            });
 
-            AutoMapper = config.CreateMapper();
+            AutoMapper = AutoMapperConfig.Create();
         }
     
 

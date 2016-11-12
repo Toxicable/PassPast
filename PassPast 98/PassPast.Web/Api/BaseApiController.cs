@@ -7,6 +7,7 @@ using Microsoft.AspNet.Identity.Owin;
 using OAuthAPI.Data.Identity;
 using OAuthAPI.WebApi.Api.Identity.Managers;
 using OAuthAPI.WebApi.Api.Identity.Models.ViewModels;
+using PassPast.Web.Api;
 
 namespace OAuthAPI.WebApi.Api
 {
@@ -22,15 +23,7 @@ namespace OAuthAPI.WebApi.Api
 
         public BaseApiController()
         {
-            var config = new MapperConfiguration(x =>
-            {
-                x.CreateMap<ApplicationUser, UserViewModel>();
-                x.CreateMap<IdentityRole, RoleViewModel>();
-                x.CreateMap<IdentityUserRole, RoleViewModel>();
-
-            });
-
-            _mapper = config.CreateMapper();
+            _mapper = AutoMapperConfig.Create();
         }
 
         protected IHttpActionResult GetIdentityErrorResult(IdentityResult result)
