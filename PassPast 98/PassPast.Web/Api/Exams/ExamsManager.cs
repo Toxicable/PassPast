@@ -34,7 +34,15 @@ namespace PassPast.Web.Api.Exams
         {
             Context.Exams.Add(newExam);
 
-            await Context.SaveChangesAsync();
+            try
+            {
+                await Context.SaveChangesAsync();
+
+            }
+            catch(Exception e)
+            {
+
+            }
         }
     }
 }
