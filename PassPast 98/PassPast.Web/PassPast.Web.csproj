@@ -231,6 +231,10 @@
     <Compile Include="Api\Exams\ExamsController.cs" />
     <Compile Include="Api\Exams\ExamsManager.cs" />
     <Compile Include="Api\Exams\ExamViewModel.cs" />
+    <Compile Include="Api\Questions\QuestionBindingModel.cs" />
+    <Compile Include="Api\Questions\QuestionsController.cs" />
+    <Compile Include="Api\Questions\QuestionsManger.cs" />
+    <Compile Include="Api\Questions\QuestionViewModel.cs" />
     <Compile Include="Helpers\AuthHelper.cs" />
     <Compile Include="Api\Identity\Controllers\AccountController.cs" />
     <Compile Include="Api\Identity\Controllers\ClaimsController.cs" />

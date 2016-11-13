@@ -20,5 +20,12 @@ namespace PassPast.Data
         public int ExamId { get; set; }
         public ExamEntity Exam { get; set; }
 		public ICollection<CommentEntity> Comments { get; set; }
+        public QuestionTypes Type { get; set; }
+    }
+
+    public enum QuestionTypes
+    {
+        Mcq,
+        ShortAnswer
     }
 }

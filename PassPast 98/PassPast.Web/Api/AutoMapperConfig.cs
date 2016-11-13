@@ -6,6 +6,7 @@ using PassPast.Data;
 using PassPast.Web.Api.Courses;
 using PassPast.Web.Api.Exams;
 using PassPast.Web.Api.Papers;
+using PassPast.Web.Api.Questions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -31,6 +32,9 @@ namespace PassPast.Web.Api
                 
                 x.CreateMap<ExamEntity, ExamViewModel>();
                 x.CreateMap<ExamBindingModel, ExamEntity>();
+
+                x.CreateMap<QuestionEntity, QuestionViewModel>();
+                x.CreateMap<QuestionBindingModel, QuestionEntity>();
 
             });
 

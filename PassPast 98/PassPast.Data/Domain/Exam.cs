@@ -20,6 +20,7 @@ namespace PassPast.Data
         public ApplicationUser CreatedBy { get; set; }
 
 	}
+
     public enum UniversitySemesters {
         Semester1,
         Semester2,
