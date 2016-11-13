@@ -36,10 +36,10 @@ namespace PassPast.Web.Api.Questions
             return AutoMapper.Map<QuestionViewModel>(exam);
         }
 
-        public async Task<ICollection<QuestionViewModel>> GetAll()
+        public async Task<ICollection<QuestionViewModel>> GetAll(int examId)
         {
             var exams = (await Context.Questions
-                // .OrderByDescending(c => c.)
+                .Where( q => q.ExamId == examId)
                 .ToListAsync())
                 .Select(c => AutoMapper.Map<QuestionViewModel>(c))
                 .ToList();

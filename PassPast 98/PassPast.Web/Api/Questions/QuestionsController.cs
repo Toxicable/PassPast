@@ -27,7 +27,7 @@ namespace PassPast.Web.Api.Questions
 
         public async Task<IHttpActionResult> GetAll(int id)
         {
-            var courses = await _questionsManager.GetAll();
+            var courses = await _questionsManager.GetAll(id);
 
             return Ok(courses);
         }

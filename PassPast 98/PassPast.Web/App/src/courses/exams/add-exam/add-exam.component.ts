@@ -5,7 +5,7 @@ import { AlertService } from '../../../core/services/alert.service';
 import { AppState } from '../../../app/app-store';
 import { Store } from '@ngrx/store';
 import { Exam } from '../../models/exam';
-import { QuestionService } from '../../questions/questions.service';
+import { QuestionService } from '../../questions/question.service';
 
 @Component({
     selector: 'add-exam',

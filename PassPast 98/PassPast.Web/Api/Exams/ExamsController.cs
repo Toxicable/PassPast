@@ -10,7 +10,7 @@ using System.Web.Http;
 
 namespace PassPast.Web.Api.Exams
 {
-    [Authorize]
+
     public class ExamsController : BaseApiController
     {
         private ExamsManager _examsManager;
@@ -33,6 +33,7 @@ namespace PassPast.Web.Api.Exams
             return Ok(courses);
         }
 
+        [Authorize]
         public async Task<IHttpActionResult> Create(ExamBindingModel course)
         {
 

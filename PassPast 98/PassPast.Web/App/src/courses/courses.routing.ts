@@ -10,6 +10,7 @@ import { AddPaperComponent } from './papers/add-paper/add-paper.component';
 import { CourseResolveService } from './courses/course-resolve.service';
 import { PaperResolveService } from './papers/paper-resolve.service';
 import { AddExamComponent } from './exams/add-exam/add-exam.component';
+import { ExamResolveService } from './exams/exam-resolve.service';
 
 const routes: Routes = [
     {
@@ -50,7 +51,10 @@ const routes: Routes = [
     },
     {
         path: 'courses/:courseId/:paperId/:examId',
-        component: QuestionsComponent
+        component: QuestionsComponent,
+        resolve: {
+            examExists: ExamResolveService
+        }
     },
 ];
 

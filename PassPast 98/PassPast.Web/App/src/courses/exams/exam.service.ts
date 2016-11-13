@@ -11,7 +11,7 @@ export class ExamService {
   constructor(private authApi: AuthApiService,
     private store: Store<AppState>) { }
 
-    getCourses(): Observable<Exam[]>{
+    getExams(): Observable<Exam[]>{
         return this.authApi.get('/exams/getAll')
             .do((exams: Exam[]) => { 
                 let action = new examActions.LoadAction(exams);
@@ -19,7 +19,7 @@ export class ExamService {
             })
     }
 
-    getCourse(id: number): Observable<Exam>{
+    getExam(id: number): Observable<Exam>{
         return this.authApi.get('/exams/get/'+ id)
     }
 

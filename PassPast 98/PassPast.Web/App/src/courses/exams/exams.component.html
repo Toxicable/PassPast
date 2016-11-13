@@ -1,1 +1,10 @@
-exams
+<h1>Exams</h1>
+
+<div>
+    <div *ngFor="let exam of exams$ | async" [routerLink]="exam.id">
+        {{exam.id}}
+        {{exam.year}}
+        {{exam.semester}}
+        {{exam.paperId}}
+    </div>
+</div>
