@@ -13,6 +13,10 @@ import {ResetPasswordModel} from '../models/reser-password.model';
 import {TokenActions} from '../stores/token.store';
 import {ProfileActions} from '../stores/profile.store';
 import {ExternalRegistrationModel} from '../models/external-registration-model';
+import { Tokens } from '../models/tokens';
+import { JwtHelper } from 'angular2-jwt';
+import { ProfileModel } from '../models/profile-model';
+import { Storage } from '../storage';
 
 @Injectable()
 export class AccountService {
@@ -24,7 +28,8 @@ export class AccountService {
                 private authApi: AuthApiService,
                 private authActions: AuthActions,
                 private tokenActions: TokenActions,
-                private profileActions: ProfileActions
+                private profileActions: ProfileActions,
+                private storage: Storage
     ) { }
 
     register(data: RegisterModel): Observable<Response> {
@@ -32,9 +37,28 @@ export class AccountService {
             .catch( this.httpExceptions.handleError )
     }
 
-    externalRegister(model: ExternalRegistrationModel){
-        return this.http.post('/api/account/CreateExternal', model)
+
+    externalRegister(accessToken: string, provider: string){
+        return this.http.post(`/api/account/CreateExternal?accessToken=${accessToken}&providerString=${provider}`, {})
             .catch( this.httpExceptions.handleError )
+    }
+
+    externalLogin(accessToken: string, provider: string){
+        return this.http.post(`/api/account/loginExternal?accessToken=${accessToken}&providerString=${provider}`, {})
+            .map( res => res.json())
+            .map( (tokens: Tokens) => {
+                let jwtHelper: JwtHelper = new JwtHelper();
+                this.tokenActions.setTokens(tokens);
+                this.authActions.isLoggedIn();
+
+                let profile = jwtHelper.decodeToken(tokens.access_token) as ProfileModel;
+                this.profileActions.storeProfile(profile);
+                
+                this.tokens.scheduleRefresh();
+
+                this.storage.setItem("tokens", JSON.stringify(tokens));
+            })
+            .catch( this.httpExceptions.handleError )      
     }
 
     login(user: LoginModel)  {

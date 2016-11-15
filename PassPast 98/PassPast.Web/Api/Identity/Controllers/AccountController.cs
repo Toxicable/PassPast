@@ -24,6 +24,7 @@ using OAuthAPI.WebApi.Api.Results;
 using SendGrid;
 using System.Configuration;
 using OAuthAPI.WebApi.Api.Identity.Providers;
+using PassPast.Web.Api.Identity;
 
 namespace OAuthAPI.WebApi.Api.Identity.Controllers
 {
@@ -70,22 +71,35 @@ namespace OAuthAPI.WebApi.Api.Identity.Controllers
 
         //GET: api/account/CreateExternal
         [HttpPost, AllowAnonymous]
-        public async Task<IHttpActionResult> CreateExternal(CreateExternalBindingModel createExternalModel)
+        public async Task<IHttpActionResult> CreateExternal(string accessToken,string providerString)
         {
+            ExternalAuthProviders provider;
+
+            var providerExists = Enum.TryParse(providerString, out provider);
+            if (!providerExists)
+            {
+                ModelState.AddModelError("", "The mandatory 'provider' parameter was missing.");
+                return BadRequest(ModelState);
+            }
+
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            if(! await VerifyExternalAccessToken(createExternalModel.AccessToken, createExternalModel.Provider))
+            var externalAuthManager = new ExternalAuthorizationManager();
+
+            if (!await externalAuthManager.VerifyExternalAccessToken(accessToken, provider))
             {
                 return BadRequest(ModelState);
             }
 
+            var profile = await externalAuthManager.GetProfile(accessToken, provider);
+
             var user = new ApplicationUser()
             {
-                UserName = createExternalModel.Email,
-                Email = createExternalModel.Email,
+                UserName = profile.email,
+                Email = profile.email,
                 AccountCreated = DateTimeOffset.Now
             };
 
@@ -98,94 +112,40 @@ namespace OAuthAPI.WebApi.Api.Identity.Controllers
 
             var externalAccount = new ExternalAccount()
             {
-                Provider = createExternalModel.Provider,
-                ProviderId = createExternalModel.ProviderId
+                Provider = provider.ToString(),
+                ProviderId = profile.id
             };
 
             await AppUserManager.AddExternalLogin(externalAccount, user);
-            
+
             return Ok();
 
         }
 
-        private async Task<bool> VerifyExternalAccessToken(string accessToken, string provider)
+        [HttpPost, AllowAnonymous]
+        public async Task<IHttpActionResult> LoginExternal(string providerString, string accessToken)
         {
-            var verifyEndpoint = string.Empty;
+            ExternalAuthProviders provider;
 
-            if (provider == "facebook")
+            var providerExists = Enum.TryParse(providerString, out provider);
+
+            if (!providerExists )
             {
-                var appToken = ConfigurationManager.AppSettings["external:facebook:apptoken"];
-                verifyEndpoint = $"https://graph.facebook.com/debug_token?input_token={ accessToken }&access_token={ appToken }";
-            }
-
-            if (provider == "google")
-            {
-                verifyEndpoint = $"https://www.googleapis.com/oauth2/v3/tokeninfo?access_token={ accessToken }";
-            }
-
-            if (string.IsNullOrWhiteSpace(verifyEndpoint))
-            {
-                ModelState.AddModelError("", "Provider not supported");
-            }
-
-            var client = new HttpClient();
-            var uri = new Uri(verifyEndpoint);
-            var response = await client.GetAsync(uri);
-
-            if (response.IsSuccessStatusCode)
-            {
-                var userEmail = "";
-
-                var content = await response.Content.ReadAsStringAsync();
-
-                dynamic jObj = (JObject)Newtonsoft.Json.JsonConvert.DeserializeObject(content);
-
-                string tokenAppId = "";
-
-                if (provider == "facebook")
-                {
-                    tokenAppId = jObj["data"]["app_id"]; 
-                    if(!ConfigurationManager.AppSettings["external:facebook:appid"].Equals(tokenAppId, StringComparison.OrdinalIgnoreCase))
-                    {
-                        return false;
-                    }
-
-                    var userInfoUrl = $"https://graph.facebook.com/v2.8/me?fields=email,first_name,last_name&access_token={ accessToken }";
-                    var userInfoUri = new Uri(userInfoUrl);
-                    var userInfoResponse = await client.GetAsync(userInfoUri);
-
-                    //TODO: get the users details then put it in a class and return it or something
-                }
-                else if (provider == "google")
-                {
-                    tokenAppId = jObj["audience"];
-                    if(!ConfigurationManager.AppSettings["external:facebook:clientid"].Equals(tokenAppId, StringComparison.OrdinalIgnoreCase))
-                    {
-                        return false;
-                    }
-                }   
-            }
-
-            return true;
-        }
-
-        public async Task<IHttpActionResult> LoginExternal(string provider, string externalAccessToken, string email)
-        {
-
-            if (string.IsNullOrWhiteSpace(provider) || string.IsNullOrWhiteSpace(externalAccessToken))
-            {
-                ModelState.AddModelError("", "Provider or external access token is not sent");
+                ModelState.AddModelError("", "The mandatory 'provider' parameter was missing.");
                 return BadRequest(ModelState);
             }
+            var externalAuthManager = new ExternalAuthorizationManager();
 
-            var verifiedAccessToken = await VerifyExternalAccessToken(provider, externalAccessToken);
+            var verifiedAccessToken = await externalAuthManager.VerifyExternalAccessToken(accessToken, provider);
             if (!verifiedAccessToken)
             {
                 ModelState.AddModelError("","Invalid Provider or External Access Token");
                 return BadRequest(ModelState);
             }
 
-            IdentityUser user = await AppUserManager.FindByExternal(email, provider);
+            var profile = await externalAuthManager.GetProfile(accessToken, provider);
+
+            IdentityUser user = await AppUserManager.FindByEmailAsync(profile.email);
             
 
             if (user == null)
@@ -195,7 +155,7 @@ namespace OAuthAPI.WebApi.Api.Identity.Controllers
             }
 
             //generate access token response
-            var accessTokenResponse = GenerateLocalAccessTokenResponse(user.UserName);
+            var accessTokenResponse = await GenerateLocalAccessTokenResponse(user.UserName);
 
             return Ok(accessTokenResponse);
 
@@ -222,12 +182,11 @@ namespace OAuthAPI.WebApi.Api.Identity.Controllers
                  {
                     //TODO: Fix this
                      "as:client_id",  string.Empty
-                }, {
-                    "IssuedUtc", DateTime.UtcNow.ToString()
-                }, {
-                    "ExpiresUtc", DateTime.UtcNow.Add(tokenExpiration).ToString()
                 }
-             });
+             })
+            {
+                IssuedUtc = DateTime.UtcNow, ExpiresUtc = DateTime.UtcNow.Add(tokenExpiration)
+            };
 
             var ticket = new AuthenticationTicket(identity, props);
 

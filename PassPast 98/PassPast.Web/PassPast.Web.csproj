@@ -231,6 +231,10 @@
     <Compile Include="Api\Exams\ExamsController.cs" />
     <Compile Include="Api\Exams\ExamsManager.cs" />
     <Compile Include="Api\Exams\ExamViewModel.cs" />
+    <Compile Include="Api\Identity\ExternalAuthorizationManager.cs" />
+    <Compile Include="Api\Identity\Models\ExternalProfileBindingModel.cs" />
+    <Compile Include="Api\Identity\Models\FacebookDebugTokenBindingModel.cs" />
+    <Compile Include="Api\Identity\Models\GoogleTokenInfoBindingModel.cs" />
     <Compile Include="Api\Questions\QuestionBindingModel.cs" />
     <Compile Include="Api\Questions\QuestionsController.cs" />
     <Compile Include="Api\Questions\QuestionsManger.cs" />

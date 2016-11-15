@@ -21,7 +21,7 @@ namespace OAuthAPI.WebApi.Api.Identity.Models.BindingModels
         public string LastName { get; set; }
 
         [Required]
-        public string Provider { get; set; }
+        public string ProviderString { get; set; }
 
         [Required]
         public string ProviderId { get; set; }

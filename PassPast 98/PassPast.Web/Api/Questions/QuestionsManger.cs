@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Web;
 
@@ -13,6 +14,13 @@ namespace PassPast.Web.Api.Questions
     {
         public async Task CreateMultiple(QuestionEntity question, int copies)
         {
+
+
+
+
+
+
+
             for (int i = 1; i < copies + 1; i++)
             {
                 var newQuestion = new QuestionEntity

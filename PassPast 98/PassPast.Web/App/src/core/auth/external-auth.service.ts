@@ -1,8 +1,9 @@
 import {Injectable} from '@angular/core';
 import {Http} from '@angular/http';
 import {Logger} from '../logger';
-import {ExternalRegistrationModel} from '../models/external-registration-model';
 import {AccountService} from './account.service';
+import { Observable } from 'rxjs/Observable';
+import { Observer } from 'rxjs'
 
 declare let FB: any;
 declare let gapi: any;
@@ -17,62 +18,72 @@ export class ExternalAuthService {
 
     init(){
         FB.init({
-            appId      : '',
+            appId      : '311510702571628',
             status     : true,
             cookie     : true,
-            xfbml      : false,  // parse social plugins on this page
-            version    : 'v2.8' // use graph api version 2.5
+            xfbml      : false,
+            version    : 'v2.8' 
         });
 
-        gapi.load('auth2', () => {
+        gapi.load('auth', () => {});
+    }
 
-            gapi.auth2.init({
-                client_id: '',
-                scope: 'profile'
-            })
+    register(provider: string){
+        let accessToken$: Observable<any>;
+        if(provider == "Facebook"){
+            accessToken$ = this.authorizeFacebook();
+        }
+        if(provider == "Google"){
+            accessToken$ = this.authorizeGoogle();
+        }
 
+        return accessToken$.flatMap((accessToken: string) => {
+            return this.account.externalRegister(accessToken,provider);
+        })
+    }
+    
+    login(provider: string){
+        let accessToken$: Observable<any>;
+        if(provider == "Facebook"){
+            accessToken$ = this.authorizeFacebook();
+        }
+        if(provider == "Google"){
+            accessToken$ = this.authorizeGoogle();
+        }
+
+        return accessToken$.flatMap((accessToken: string)=>{
+            return this.account.externalLogin(accessToken,provider);
         })
     }
 
-    authorizeFacebook() {
-        //TODO: make these into observables
-        FB.login(response => {
-            FB.api('/me',  { locale: 'en_US', fields: 'first_name,last_name,email' }, next =>{
+    private authorizeFacebook(): Observable<any> {
+        return Observable.create( (observer: Observer<any>) => {
+            try{
+                FB.login(response => {
+                observer.next(response.authResponse.accessToken)
+                observer.complete
+            },{scope: 'email'})
+            }catch(error){
+                observer.error(error);
+            }        
+        });
 
-                //noinspection TypeScriptUnresolvedVariable
-                this.register({
-                    accessToken: response.authResponse.accessToken,
-                    providerId: next.id,
-                    email: next.email,
-                    provider: "facebook",
-                    firstName: next.first_name,
-                    lastName: next.last_name
-                } as ExternalRegistrationModel)
-            })
-        },{scope: 'email'});
     }
 
-    authorizeGoogle() {
-
-        let auth = gapi.auth2.getAuthInstance();
-
-        auth.signIn().then((response) =>{
-
-            this.register({
-                accessToken: response.Zi.access_token,
-                providerId: response.w3.Eea,
-                email: response.w3.U3,
-                provider: "google",
-                firstName: response.w3.ofa,
-                lastName: response.w3.wea
-            } as ExternalRegistrationModel)
-        })
+    private authorizeGoogle(): Observable<any> {
+        return Observable.create((observer: Observer<any>) => {
+            try{
+                gapi.auth.authorize({
+                    client_id: "137170270322-3ik6cl5m55i4ft3ff6t7l9tm2f1abkvh.apps.googleusercontent.com",
+                    scope: 'profile'
+                }, token => {
+                    observer.next(token.access_token)
+                    observer.complete()
+                });
+            }catch(error){
+                observer.error(error);
+            }
+        })          
     }
-
-    private register(model: ExternalRegistrationModel){
-        this.account.externalRegister(model)
-            .subscribe( res => console.log(res))
-    }
-
 
 }
