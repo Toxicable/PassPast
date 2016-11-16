@@ -1,23 +1,25 @@
-import {NgModule, Optional, SkipSelf} from "@angular/core";
-import {SuperAdminAuthGuard} from "./guards/super-admin-auth-guard.service";
-import {AuthenticatedAuthGuard} from "./guards/authenticated-auth-guard.service";
-import {Title} from "@angular/platform-browser";
-import {LocalStorageBackend, Storage, StorageBackend} from "./storage";
-import {authProvider} from "./auth-factory";
-import {LoadingBarService} from "./services/loading-bar.service";
-import {AlertService} from "./services/alert.service";
-import {ProfileService} from "./profile/profile.service";
-import {HttpExceptionService} from "./services/http-exceptions.service";
-import {AuthApiService} from "./services/auth-api.service";
-import {FormValidationService} from "./services/form-validation.service";
-import {AuthGuard} from './guards/auth-guard.service';
-import {TokenService} from './auth/token.service';
-import {AccountService} from './auth/account.service';
-import {AuthActions} from './stores/auth.store';
-import {ProfileActions} from './stores/profile.store';
-import {Logger, ConsoleLoggerBackend, LoggingBackend} from './logger';
-import {TokenActions} from './stores/token.store';
-import {ExternalAuthService} from './auth/external-auth.service';
+import { NgModule, Optional, SkipSelf } from "@angular/core";
+import { SuperAdminAuthGuard } from "./guards/super-admin-auth-guard.service";
+import { AuthenticatedAuthGuard } from "./guards/authenticated-auth-guard.service";
+import { Title } from "@angular/platform-browser";
+import { LocalStorageBackend, Storage, StorageBackend } from "./storage";
+import { AlertService } from "./alert/alert.service";
+import { ProfileService } from "./profile/profile.service";
+import { HttpExceptionService } from "./services/http-exceptions.service";
+import { FormValidationService } from "./services/form-validation.service";
+import { AuthGuard } from './guards/auth-guard.service';
+import { Logger, ConsoleLoggerBackend, LoggingBackend } from './logger';
+import { ExternalAuthService } from './auth-token/external-auth.service';
+import { AuthTokenService } from './auth-token/auth-token.service';
+import { AccountService } from './account/account.service';
+import { LoadingBarService } from './loading-bar/loading-bar.service';
+import { AuthHttp } from './auth-http/auth-http.service';
+import { LoggedInActions } from './auth-store/logged-in.actions';
+import { ProfileActions } from './profile/profile.actions';
+import { AuthTokenActions } from './auth-token/auth-token.actions';
+import { AlertActions } from './alert/alert.actions';
+import { LoadingBarActions } from './loading-bar/loading-bar.actions';
+import { AuthReadyActions } from './auth-store/auth-ready.actions';
 
 
 @NgModule({
@@ -28,23 +30,25 @@ import {ExternalAuthService} from './auth/external-auth.service';
         SuperAdminAuthGuard,
         AuthenticatedAuthGuard,
         Title,
-        AuthApiService,
         HttpExceptionService,
         FormValidationService,
         AuthGuard,
-        TokenService,
+        AuthTokenService,
         AccountService,
         ExternalAuthService,
+        AuthHttp,
 
-        AuthActions,
-        TokenActions,
+        LoggedInActions,
         ProfileActions,
-
+        AuthTokenActions,
+        AlertActions,
+        LoadingBarActions,
+        AuthReadyActions,
+        
         { provide: StorageBackend, useClass: LocalStorageBackend },
         { provide: LoggingBackend, useClass: ConsoleLoggerBackend },
         Logger,
         Storage,
-        authProvider
     ]
 
 })

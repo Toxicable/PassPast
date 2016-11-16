@@ -2,9 +2,9 @@ import { Component } from '@angular/core'
 import { OnInit } from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {FormValidationService} from "../../core/services/form-validation.service";
-import {AccountService} from '../../core/auth/account.service';
-import {AlertService} from '../../core/services/alert.service';
-import {ExternalAuthService} from '../../core/auth/external-auth.service';
+import {AlertService} from '../../core/alert/alert.service';
+import { AccountService } from '../../core/account/account.service';
+import { ExternalAuthService } from '../../core/auth-token/external-auth.service';
 
 @Component({
     selector: 'login',
@@ -23,7 +23,7 @@ export class LoginComponent implements OnInit{
 
     ngOnInit(): void {
         this.loginForm = this.formBuilder.group({
-            userName: ['', [Validators.required, this.formValidator.emailValidator]],
+            username: ['', [Validators.required, this.formValidator.emailValidator]],
             password: ['', [Validators.required, this.formValidator.passwordValidator]],
         });
         this.externalAuth.init();
@@ -44,15 +44,16 @@ export class LoginComponent implements OnInit{
     facebookAuthorize(){
         this.externalAuth.login("Facebook")
         .subscribe( x => {
-                this.alert.sendSuccess("Successfully logged in");
+                this.alert.sendSuccess("Successfully registered");
             })
     }
 
     googleAuthorize(){
         this.externalAuth.login("Google")
-        .subscribe( x => {
-                this.alert.sendSuccess("Successfully logged in");
+            .subscribe( x => {
+                this.alert.sendSuccess("Successfully registered");
             })
     }
+    
 
 }

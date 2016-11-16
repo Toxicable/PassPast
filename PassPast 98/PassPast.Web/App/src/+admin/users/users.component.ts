@@ -1,5 +1,5 @@
 import {Component, OnInit, Input} from '@angular/core';
-import {LoadingBarService} from "../../core/services/loading-bar.service";
+import {LoadingBarService} from "../../core/loading-bar/loading-bar.service";
 import {UserService} from "./user.service";
 import {RoleService} from "../roles.service";
 import {Store} from '@ngrx/store';

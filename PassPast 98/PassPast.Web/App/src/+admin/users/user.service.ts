@@ -1,12 +1,12 @@
-import {Injectable} from "@angular/core";
-import {AuthApiService} from "../../core/services/auth-api.service";
-import {AppState} from '../../app/app-store';
-import {Store} from '@ngrx/store';
-import {LoadingBarService} from '../../core/services/loading-bar.service';
+import { Injectable } from "@angular/core"
+import { AppState } from '../../app/app-store';
+import { Store } from '@ngrx/store';
+import { LoadingBarService } from '../../core/loading-bar/loading-bar.service';
+import { AuthHttp } from '../../core/auth-http/auth-http.service';
 
 @Injectable()
 export class UserService{
-    constructor(private api: AuthApiService,
+    constructor(private authHttp: AuthHttp,
                 private loadingBar: LoadingBarService,
                 private store: Store<AppState>
     ){}
@@ -14,11 +14,9 @@ export class UserService{
     path: string = '/users';
 
     getUsers(){
-        return this.loadingBar.doWithLoader(
-            this.api.get(this.path + '/getUsers')
-                .do( users => this.store.dispatch({ type: "GET_USERS", payload: users})
-                )
-        )
+        return this.authHttp.get(this.path + '/getUsers')
+            .do( users => this.store.dispatch({ type: "GET_USERS", payload: users}) )
+        
     }
 
 }

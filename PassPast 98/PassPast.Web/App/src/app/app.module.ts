@@ -7,12 +7,11 @@ import {SharedModule}                                         from "../shared/sh
 import {CoreModule}                                           from "../core/core.module";
 import {createNewHosts, createInputTransfer, removeNgStyles}  from "@angularclass/hmr";
 import {HomeComponent}                                        from "./home/home.component";
+import {NotFoundComponent}                                    from "./not-found/not-found.component";
 import {NavigationComponent}                                  from "./navigation/navigation.component";
+import {UnauthorizedComponent}                                from "./unauthorized/unauthorized.component";
 import {StoreDevtoolsModule} from '@ngrx/store-devtools';
 import {providedStore} from './app-store';
-import { NotFoundComponent } from './not-found/not-found.component';
-import { UnauthorizedComponent } from './unauthorized/unauthorized.component';
-import { CourseModule } from '../courses/courses.module';
 
 
 @NgModule({
@@ -21,7 +20,6 @@ import { CourseModule } from '../courses/courses.module';
         ReactiveFormsModule,
         SharedModule,
         CoreModule,
-        CourseModule,
         routing,
         providedStore,
         StoreDevtoolsModule.instrumentOnlyWithExtension()
@@ -31,7 +29,7 @@ import { CourseModule } from '../courses/courses.module';
         HomeComponent,
         NotFoundComponent,
         NavigationComponent,
-        UnauthorizedComponent,
+        UnauthorizedComponent
     ],
 
     bootstrap:    [ AppComponent ]
@@ -50,6 +48,7 @@ export class AppModule {
         this.appRef.tick();
         delete store.state;
         delete store.restoreInputValues;
+        console.clear();
     }
     hmrOnDestroy(store: any) {
         var cmpLocation = this.appRef.components.map(cmp => cmp.location.nativeElement);

@@ -1,0 +1,9 @@
+<h1>Courses</h1>
+<div>
+    <div *ngFor="let course of courses$ | async" [routerLink]="[course.id]">
+        {{course.id}}
+        {{course.name}}
+        {{course.code}}
+    </div>
+
+</div>

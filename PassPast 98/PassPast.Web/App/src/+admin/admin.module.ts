@@ -1,5 +1,4 @@
 import {adminRouting} from "./admin.routes";
-import {RolesComponent} from "./roles/roles.component";
 import { NgModule }          from '@angular/core';
 import {AdminComponent} from "./admin.component";
 import {UsersComponent} from "./users/users.component";
@@ -16,7 +15,6 @@ import {UserListComponent} from './users/user-list.component';
     ],
     declarations: [
         AdminComponent,
-        RolesComponent,
         UsersComponent,
         UserListComponent
     ],

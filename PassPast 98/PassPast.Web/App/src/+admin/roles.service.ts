@@ -1,17 +1,14 @@
 import {Injectable} from "@angular/core"
-import {AuthApiService} from "../core/services/auth-api.service";
 import { Observable }           from 'rxjs/Observable';
+import { AuthHttp } from '../core/auth-http/auth-http.service';
 
 @Injectable()
 export class RoleService{
     constructor(
-                private api: AuthApiService
+                private authHttp: AuthHttp
     ){}
-
-
-
     removeFromRole(userId: string, roleId: string): Observable<any>{
-        return this.api.post('/api/roles/removeFromRole', {userId, roleId})
+        return this.authHttp.post('/api/roles/removeFromRole', {userId, roleId})
     }
 
 }

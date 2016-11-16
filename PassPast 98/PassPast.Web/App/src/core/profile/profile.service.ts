@@ -1,8 +1,8 @@
 import { Injectable, OnInit } from '@angular/core';
 import { Observable } from "rxjs";
-import {AppState} from '../../app/app-store';
-import {Store} from '@ngrx/store';
-import {ProfileModel} from '../models/profile-model';
+import { AppState } from '../../app/app-store';
+import { Store } from '@ngrx/store';
+import { ProfileModel } from '../models/profile-model';
 import { Storage } from '../storage'
 
 @Injectable()

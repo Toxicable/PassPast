@@ -1,8 +1,8 @@
 import {Component, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {FormValidationService} from "../../core/services/form-validation.service";
-import {AlertService} from "../../core/services/alert.service";
-import {AccountService} from '../../core/auth/account.service';
+import {AlertService} from "../../core/alert/alert.service";
+import { AccountService } from '../../core/account/account.service';
 
 @Component({
     selector: 'forgot-password',
@@ -29,7 +29,5 @@ export class ForgotPasswordComponent implements OnInit{
                 () => this.alert.sendSuccess("Please check your email")
 
             )
-
     }
-
 }

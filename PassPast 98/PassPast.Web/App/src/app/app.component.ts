@@ -1,9 +1,8 @@
 ﻿import {Component, ViewEncapsulation, OnInit, OnDestroy} from '@angular/core'
 import {Store} from '@ngrx/store';
 import {AppState} from './app-store';
-import {TokenService} from '../core/auth/token.service';
-import {AuthActions} from '../core/stores/auth.store';
-import {AlertService} from '../core/services/alert.service';
+import {AlertService} from '../core/alert/alert.service';
+import { AuthTokenService } from '../core/auth-token/auth-token.service';
 
 @Component({
     selector: 'my-app',
@@ -18,9 +17,8 @@ import {AlertService} from '../core/services/alert.service';
 })
 export class AppComponent implements OnInit, OnDestroy{
 
-    constructor(private tokens: TokenService,
+    constructor(private tokens: AuthTokenService,
                 private store: Store<AppState>,
-                private authActions: AuthActions,
                 private alert: AlertService
     ){    }
 
@@ -33,9 +31,6 @@ export class AppComponent implements OnInit, OnDestroy{
                 this.tokens.scheduleRefresh();
             }, error => {
                 console.error(error);
-                this.authActions.isNotLoggedIn();
-                this.authActions.authReady();
-
                 //keep it silent if there's nothing in storage
                 if(error != "No token in Storage")
                     this.alert.sendWarning("error");

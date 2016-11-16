@@ -1,13 +1,13 @@
-import {Component, OnInit} from "@angular/core";
-import {ProfileService} from "../../core/profile/profile.service";
-import {AlertService} from "../../core/services/alert.service";
-import {ActivatedRoute} from "@angular/router";
-import {Http} from "@angular/http";
-import {LoadingBarService} from "../../core/services/loading-bar.service";
-import {AuthHttp} from "angular2-jwt";
-import {AppState} from '../../app/app-store';
-import {Store} from '@ngrx/store';
-import {TokenService} from '../../core/auth/token.service';
+import { Component, OnInit } from "@angular/core";
+import { ProfileService } from "../../core/profile/profile.service";
+import { AlertService } from "../../core/alert/alert.service";
+import { ActivatedRoute } from "@angular/router";
+import { Http } from "@angular/http";
+import { LoadingBarService } from "../../core/loading-bar/loading-bar.service";
+import { AppState } from '../../app/app-store';
+import { Store } from '@ngrx/store';
+import { AuthTokenService } from '../../core/auth-token/auth-token.service';
+import { AuthHttp } from '../../core/auth-http/auth-http.service';
 
 @Component({
     selector: 'verify',
@@ -20,7 +20,7 @@ export class VerifyComponent implements OnInit{
                 private route: ActivatedRoute,
                 private http: Http,
                 private loadingBar: LoadingBarService,
-                private tokens: TokenService,
+                private tokens: AuthTokenService,
                 private store: Store<AppState>
     ){}
     ngOnInit(): void {
@@ -39,6 +39,7 @@ export class VerifyComponent implements OnInit{
     confirmEmail(code: string, id: string): void{
         code = encodeURIComponent(code);
 
+        //TODO: put this in a service
         this.http.get("api/account/ConfirmEmail?userId=" + id + "&code=" + code)
             .subscribe(
                 (res) => {
@@ -53,13 +54,10 @@ export class VerifyComponent implements OnInit{
     }
 
     sendConfirmationEmail(): void{
-        this.loadingBar.load()
-
         this.authHttp.get("api/account/SendConfirmEmail")
             .subscribe(
                 () => this.alert.sendSuccess("A confirmation email has been send"),
                 (error) => this.alert.sendError(error),
-                () => this.loadingBar.done()
         )
     }
 

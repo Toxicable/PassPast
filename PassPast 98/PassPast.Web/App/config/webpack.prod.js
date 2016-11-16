@@ -15,8 +15,8 @@ module.exports  = webpackMerge(common, {
     output: {
         path: wwwroot,
         publicPath: '/',
-        filename: '[name].js',
-        chunkFilename: '[id].chunk.js'
+        filename: '[name].[hash].js',
+        chunkFilename: '[id].[hash].chunk.js'
     },
 
     htmlLoader: {

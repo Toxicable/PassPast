@@ -1,47 +1,27 @@
-﻿using System.Data.Entity;
-using Microsoft.AspNet.Identity.EntityFramework;
-using OAuthAPI.Data.Identity;
-using PassPast.Data;
-using PassPast.Data.Domain;
+﻿using Microsoft.EntityFrameworkCore;
+using OAuthApi.AuthServer.Infrastructure.Entities;
+using OpenIddict;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
-namespace OAuthAPI.WebApi
+namespace OAuthApi.AuthServer
 {
-    public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
+    public class ApplicationDbContext : OpenIddictDbContext<ApplicationUser>
     {
-        public ApplicationDbContext()
-            : base("DefaultConnection", throwIfV1Schema: false)
-        {
-            Configuration.ProxyCreationEnabled = false;
-            Configuration.LazyLoadingEnabled = false;
-        }
+        public ApplicationDbContext(DbContextOptions options)
+            : base(options) { }
 
-        public DbSet<RefreshToken> RefreshTokens { get; set; }
-        public DbSet<Client> Clients { get; set; }
         public DbSet<ExternalAccount> ExternalAccounts { get; set; }
 
-        public DbSet<AnswerEntity> Answers {get;set;}
-        public DbSet<AnswerTypeEntity> AnswerTypes {get;set;}
-        public DbSet<CommentEntity> Comments {get;set;}
-        public DbSet<CourseEntity> Courses {get;set;}
-        public DbSet<ExamEntity> Exams {get;set;}
-        public DbSet<PaperEntity> Papers {get;set;}
-        public DbSet<QuestionEntity> Questions {get;set;}
-        public DbSet<VoteEntity> Votes {get;set; }
-
-        public static ApplicationDbContext Create()
+        protected override void OnModelCreating(ModelBuilder builder)
         {
-            return new ApplicationDbContext();
+            base.OnModelCreating(builder);
+
+            // Customize the ASP.NET Identity model and override the defaults if needed.
+            // For example, you can rename the ASP.NET Identity table names and more.
+            // Add your customizations after calling base.OnModelCreating(builder);
         }
-
-        protected override void OnModelCreating(DbModelBuilder modelBuilder)
-        {
-            base.OnModelCreating(modelBuilder);
-            
-            modelBuilder.Entity<CommentEntity>().HasRequired(x => x.CreatedBy);
-            modelBuilder.Entity<ExamEntity>().HasRequired(x => x.CreatedBy).WithMany(x => x.ExamsCreated).WillCascadeOnDelete(false);
-            modelBuilder.Entity<VoteEntity>().HasRequired(x => x.VotedBy);
-
-        }
-
     }
 }

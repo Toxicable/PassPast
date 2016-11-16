@@ -1,8 +1,13 @@
 export interface ProfileModel{
-    aud: string;
+    sub: string;
+    jti: string;
+    useage: string;
+    at_hash: string;
+    nbf: number;
     exp: number;
+    iat: number;
     iss: string;
-    nameid: string;
+
     unique_name: string;
     email_confirmed: boolean;
     role: string[];

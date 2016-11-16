@@ -1,10 +1,10 @@
-import {Component, OnInit, ChangeDetectionStrategy} from '@angular/core';
-import {UserService} from './user.service';
-import {RoleService} from '../roles.service';
-import {AppState} from '../../app/app-store';
-import {Store} from '@ngrx/store';
-import {User} from '../models/user';
-import {Observable} from 'rxjs/Observable';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
+import { RoleService } from '../roles.service';
+import { UserService } from './user.service';
+import { Store } from '@ngrx/store';
+import { AppState } from '../../app/app-store';
+import { Observable } from 'rxjs/Observable';
+import { User } from '../models/user';
 
 @Component({
     selector: 'user-list',

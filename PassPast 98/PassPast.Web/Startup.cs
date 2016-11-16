@@ -1,110 +1,158 @@
-﻿using System;
-using System.Configuration;
-using System.Net.Http.Headers;
-using System.Web.Http;
-using Microsoft.Owin;
-using Microsoft.Owin.Security;
-using Microsoft.Owin.Security.DataHandler.Encoder;
-using Microsoft.Owin.Security.Jwt;
-using Microsoft.Owin.Security.OAuth;
-using Newtonsoft.Json.Serialization;
-using OAuthAPI.Data;
-using OAuthAPI.WebApi.Api.Identity.Managers;
-using OAuthAPI.WebApi.Api.Identity.Providers;
-using Owin;
-using Microsoft.Owin.Security.Google;
-using Microsoft.Owin.Security.Facebook;
-using Microsoft.AspNet.Identity;
-using Microsoft.Owin.StaticFiles;
-using Microsoft.Owin.FileSystems;
-using OAuthAPI.WebApi;
-using AutoMapper;
-using OAuthAPI.Data.Identity;
-using Microsoft.AspNet.Identity.EntityFramework;
-using OAuthAPI.WebApi.Api.Identity.Models.ViewModels;
+﻿using System.Linq;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
+using System.IO;
+using OpenIddict;
+using CryptoHelper;
+using OAuthApi.AuthServer.Extentions;
 
-namespace PassPast.Web
+namespace OAuthApi.AuthServer
 {
     public class Startup
     {
-        public void Configuration(IAppBuilder app)
+
+        public Startup(IHostingEnvironment env)
         {
-            
-            HttpConfiguration httpConfig = new HttpConfiguration();
+            var builder = new ConfigurationBuilder()
+                .SetBasePath(env.ContentRootPath)
+                //.AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
+                .AddJsonFile($"appsettings.{env.EnvironmentName}.json", optional: true)
+                .AddEnvironmentVariables();
 
-            ConfigureOAuthTokenGeneration(app);
-            ConfigureOAuthTokenConsumption(app);
-            ConfigureWebApi(httpConfig);
-
-            app.UseWebApi(httpConfig);
-
-
-            app.Use((context, next) =>
+            if (env.IsDevelopment())
             {
-                context.Request.Path = new PathString("/wwwroot/index.html");
+                // For more details on using the user secret store see http://go.microsoft.com/fwlink/?LinkID=532709
+                builder.AddUserSecrets();
+            }
 
-                return next();
+            Configuration = builder.Build();
+        }
+
+        public IConfigurationRoot Configuration { get; }
+
+        // This method gets called by the runtime. Use this method to add services to the container.
+        public void ConfigureServices(IServiceCollection services)
+        {
+            //TODO: stringly ttype this
+            services.AddSingleton<IConfiguration>(Configuration);
+            services.AddTransient< IExternalAuthorizationManager, ExternalAuthorizationManager>();
+
+            services.AddMvc();
+
+            services.AddEntityFramework()
+                .AddDbContext<ApplicationDbContext>(options =>
+                options.UseSqlServer("Server=(localdb)\\mssqllocaldb;Database=aspnet5-openiddict-sample;Trusted_Connection=True;MultipleActiveResultSets=true"));
+
+
+
+            // Register the Identity services.
+            services.AddIdentity<ApplicationUser, IdentityRole>()
+                .AddEntityFrameworkStores<ApplicationDbContext>()
+                .AddDefaultTokenProviders();
+
+            // Register the OpenIddict services, including the default Entity Framework stores.
+            services.AddOpenIddict<ApplicationDbContext>()
+                // Register the ASP.NET Core MVC binder used by OpenIddict.
+                // Note: if you don't call this method, you won't be able to
+                // bind OpenIdConnectRequest or OpenIdConnectResponse parameters.
+                .AddMvcBinders()
+                // Enable the token endpoint.
+                .EnableTokenEndpoint("/connect/token")
+
+                // Enable the password and the refresh token flows.
+                .AllowPasswordFlow()
+                .AllowRefreshTokenFlow()                                   //or should this just be external then check in the controller
+                .AllowCustomFlow("urn:ietf:params:oauth:grant-type:external_identity_token")
+                // During development, you can disable the HTTPS requirement.
+                .DisableHttpsRequirement()
+
+                // Register a new ephemeral key, that is discarded when the application
+                // shuts down. Tokens signed using this key are automatically invalidated.
+                // This method should only be used during development.
+                .AddEphemeralSigningKey();
+
+            // Note: if you don't explicitly register a signing key, one is automatically generated and
+            // persisted on the disk. If the key cannot be persisted, an exception is thrown.
+            // 
+            // On production, using a X.509 certificate stored in the machine store is recommended.
+            // You can generate a self-signed certificate using Pluralsight's self-cert utility:
+            // https://s3.amazonaws.com/pluralsight-free/keith-brown/samples/SelfCert.zip
+            // 
+            // services.AddOpenIddict<ApplicationDbContext>()
+            //     .AddSigningCertificate("7D2A741FE34CC2C7369237A5F2078988E17A6A75");
+            // 
+            // Alternatively, you can also store the certificate as an embedded .pfx resource
+            // directly in this assembly or in a file published alongside this project:
+            // 
+            // services.AddOpenIddict<ApplicationDbContext>()
+            //     .AddSigningCertificate(
+            //          assembly: typeof(Startup).GetTypeInfo().Assembly,
+            //          resource: "AuthorizationServer.Certificate.pfx",
+            //          password: "OpenIddict");
+        }
+
+        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
+        {
+            app.UseDeveloperExceptionPage();            
+
+            app.Map("/api", apiApp =>
+            {
+                apiApp.UseOAuthValidation();
+                apiApp.UseSignalR2();
+                apiApp.UseOpenIddict();
+                apiApp.UseMvc(routes =>
+                {
+                    // Matches requests that correspond to an existent controller/action pair
+                    routes.MapRoute(
+                        name: "default",
+                        template: "{controller}/{action}/{id?}");
+                });
             });
 
-            app.UseStaticFiles();
-        }
 
-        private void ConfigureOAuthTokenGeneration(IAppBuilder app)
-        {            
-            // Configure the db context and user manager to use a single instance per request
-            app.CreatePerOwinContext(ApplicationDbContext.Create);
-            app.CreatePerOwinContext<ApplicationUserManager>(ApplicationUserManager.Create);
-            app.CreatePerOwinContext<ApplicationRoleManager>(ApplicationRoleManager.Create);
-
-            OAuthAuthorizationServerOptions OAuthServerOptions = new OAuthAuthorizationServerOptions()
+            app.Use(async (context, next) =>
             {
-                //For Dev enviroment only (on production should be AllowInsecureHttp = false)
-                AllowInsecureHttp = true,
-                TokenEndpointPath = new PathString("/api/token"),
-                AccessTokenExpireTimeSpan = TimeSpan.FromMinutes(double.Parse(ConfigurationManager.AppSettings["as:AccessTokenExpireTimeSpanMinutes"])),
-                Provider = new OAuthProvider(),
-                AccessTokenFormat = new CustomJwtFormat(ConfigurationManager.AppSettings["as:Issuer"]),
-                RefreshTokenProvider = new RefreshTokenProvider()
-            };
+                await next();
 
-            // OAuth 2.0 Bearer Access Token Generation
-            app.UseOAuthAuthorizationServer(OAuthServerOptions);            
-
-        }
-
-        private void ConfigureOAuthTokenConsumption(IAppBuilder app) {
-            
-            string audienceId = ConfigurationManager.AppSettings["as:AudienceId"];
-            byte[] audienceSecret = TextEncodings.Base64Url.Decode(ConfigurationManager.AppSettings["as:AudienceSecret"]);
-
-            // Api controllers with an [Authorize] attribute will be validated with JWT
-            app.UseJwtBearerAuthentication(
-                new JwtBearerAuthenticationOptions
+                if (context.Response.StatusCode == 404
+                    && !Path.HasExtension(context.Request.Path.Value))
                 {
-                    AuthenticationMode = AuthenticationMode.Active,
-                    AllowedAudiences = new[] { audienceId },
-                    IssuerSecurityTokenProviders = new IIssuerSecurityTokenProvider[]
-                    {
-                        new SymmetricKeyIssuerSecurityTokenProvider(ConfigurationManager.AppSettings["as:Issuer"], audienceSecret)
-                    }
-                });
+                    context.Request.Path = "/index.html";
+                    await next();
+                }
+            });            
+
+            DefaultFilesOptions options = new DefaultFilesOptions();
+            options.DefaultFileNames.Clear();
+            options.DefaultFileNames.Add("index.html");
+
+            app.UseDefaultFiles(options);
+            app.UseStaticFiles();
+
+            SeedDatabase(app);
         }
 
-        private void ConfigureWebApi(HttpConfiguration config)
+        private void SeedDatabase(IApplicationBuilder app)
         {
-            config.MapHttpAttributeRoutes();
+            var options = app
+                .ApplicationServices
+                .GetRequiredService<DbContextOptions<ApplicationDbContext>>();
 
-              config.Routes.MapHttpRoute(
-                   name: "DefaultApi",
-                  routeTemplate: "api/{controller}/{action}/{id}",
-                   defaults: new { id = RouteParameter.Optional }
-              );
-            config.Formatters.JsonFormatter.SupportedMediaTypes.Add(new MediaTypeHeaderValue("text/html"));
-            config.Formatters.JsonFormatter.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
-            config.Formatters.JsonFormatter.UseDataContractJsonSerializer = false;
+            using (var context = new ApplicationDbContext(options))
+            {
+                //context.Database.EnsureDeleted();
+                context.Database.EnsureCreated();
 
-            config.EnableSystemDiagnosticsTracing();
-
+                
+            }
         }
+
     }
 }

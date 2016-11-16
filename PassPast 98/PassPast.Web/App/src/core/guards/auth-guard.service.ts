@@ -1,11 +1,13 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import {AlertService} from "../services/alert.service";
-import {ProfileService} from "../profile/profile.service";
-import {AppState} from '../../app/app-store';
-import {Store} from '@ngrx/store';
-import {Observable} from 'rxjs';
-import {Auth} from '../stores/auth.store';
+import { AlertService } from "../alert/alert.service";
+import { ProfileService } from "../profile/profile.service";
+import { AppState } from '../../app/app-store';
+import { Store } from '@ngrx/store';
+import { Observable } from 'rxjs';
+import * as authReadyActions from '../auth-store/auth-ready.actions';
+import * as loggedInActions from '../auth-store/logged-in.actions';
+import { AuthState } from '../auth-store/auth.store';
 
 
 @Injectable()
@@ -20,8 +22,8 @@ export class AuthGuard {
 
     isLoggedIn(): Observable<boolean>{
         return this.store.map(state => state.auth)
-            .first( (auth: Auth) => auth.authReady)
-            .map( (auth: Auth) => auth.loggedIn)
+            .first( (auth: AuthState) => auth.authReady)
+            .map( (auth: AuthState) => auth.loggedIn)
             .do( (loggedIn: boolean) => {
                 if (!loggedIn) {
                     this.alertService.sendError("You are not logged in");
@@ -33,8 +35,8 @@ export class AuthGuard {
     isInRole(role: string): Observable<boolean>{
 
         return this.store.map( state => state.auth)
-            .first( (auth: Auth) => auth.authReady)
-            .flatMap( (auth: Auth) =>{
+            .first( (auth: AuthState) => auth.authReady)
+            .flatMap( (auth: AuthState) =>{
                 if(!auth.loggedIn){
                     this.alertService.sendError("Unauthorized");
                     this.router.navigate(['unauthorized']);

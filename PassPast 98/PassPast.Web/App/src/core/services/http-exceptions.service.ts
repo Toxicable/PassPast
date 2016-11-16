@@ -19,7 +19,7 @@ export class HttpExceptionService{
             case 500:
                 return this.handleInternalServerError(res);
             default:
-                Observable.throw(["an Unhandled error occured"])
+                Observable.throw(["an Unhandled error occured" + res.status])
         }
     }
 

@@ -22,7 +22,7 @@ module.exports = webpackMerge(common, {
         stats: 'minimal',
         port: 3000,
         proxy: {
-            '/api/' : "http://localhost:59822/"
+            '/api/' : "http://localhost:5000/"
         }
     }
 });
