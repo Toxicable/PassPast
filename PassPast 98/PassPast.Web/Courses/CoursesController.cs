@@ -25,8 +25,9 @@ namespace PassPast.Web.Api.Courses
 
             return Ok(course);
         }
+
         [HttpGet]
-        public async Task<IActionResult> GetAll()
+        public async Task<IActionResult> Get()
         {
             var courses = await _courseManager.GetAll();
 

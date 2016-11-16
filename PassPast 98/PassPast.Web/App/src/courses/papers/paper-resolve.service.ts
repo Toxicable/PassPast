@@ -8,6 +8,7 @@ import { Course } from '../models/course';
 import { PaperService } from './paper.service';
 import { Paper } from '../models/paper';
 import { PaperActions } from './paper.actions';
+import { AlertService } from '../../core/alert/alert.service';
 
 @Injectable()
 export class PaperResolveService implements Resolve<void> {
@@ -15,7 +16,8 @@ export class PaperResolveService implements Resolve<void> {
   constructor(private papers: PaperService, 
               private router: Router,
               private store: Store<AppState>,
-              private paperActions: PaperActions
+              private paperActions: PaperActions,
+              private alert: AlertService
   ) {}
 
   resolve(route: ActivatedRouteSnapshot): Observable<boolean> {
@@ -36,6 +38,8 @@ export class PaperResolveService implements Resolve<void> {
               this.store.dispatch(this.paperActions.Select(paper));
               return true;
             }
+
+            this.alert.sendWarning("Paper does not exist");
             return false;
           })
       });

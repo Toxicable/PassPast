@@ -17,6 +17,8 @@ using PassPast.Web.Api.Courses;
 using PassPast.Web.Api.Papers;
 using IConfiguration = Microsoft.Extensions.Configuration.IConfiguration;
 using OAuthApi.AuthServer.Controllers;
+using System;
+using Microsoft.AspNetCore.Mvc;
 
 namespace PassPast.Web
 {
@@ -27,13 +29,15 @@ namespace PassPast.Web
         {
             var builder = new ConfigurationBuilder()
                 .SetBasePath(env.ContentRootPath)
-                //.AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
+                .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
                 .AddJsonFile($"appsettings.{env.EnvironmentName}.json", optional: true)
                 .AddEnvironmentVariables();
 
             if (env.IsDevelopment())
-            {
-                // For more details on using the user secret store see http://go.microsoft.com/fwlink/?LinkID=532709
+            {   
+                // should contain
+                //ConnectionStrings:DefaultConnection
+                //Authentication:External:Facebook:appToken
                 builder.AddUserSecrets();
             }
 
@@ -41,11 +45,13 @@ namespace PassPast.Web
         }
 
         public IConfigurationRoot Configuration { get; }
-
-        // This method gets called by the runtime. Use this method to add services to the container.
+        
         public void ConfigureServices(IServiceCollection services)
         {
-            //TODO: stringly ttype this
+            services.AddMvc(options => { options.Filters.Add(new RequireHttpsAttribute()); });
+
+            var env = services.BuildServiceProvider().GetRequiredService<IHostingEnvironment>();
+
             services.AddSingleton<IConfiguration>(Configuration);
             services.AddTransient<IExternalAuthorizationManager, ExternalAuthorizationManager>();
             services.AddTransient<ICourseManager, CourseManager>();
@@ -71,7 +77,7 @@ namespace PassPast.Web
 
             });
 
-            services.AddSingleton<IMapper>(sp => config.CreateMapper());
+            services.AddSingleton(sp => config.CreateMapper());
 
             services.AddMvc();
 
@@ -79,52 +85,41 @@ namespace PassPast.Web
                 .AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(Configuration["ConnectionStrings:DefaultConnection"]));
 
-
-
-            // Register the Identity services.
             services.AddIdentity<ApplicationUser, IdentityRole>()
                 .AddEntityFrameworkStores<ApplicationDbContext>()
                 .AddDefaultTokenProviders();
+            
+            var builder = services.AddOpenIddict<ApplicationDbContext>()
+               .AddMvcBinders()
+               .EnableTokenEndpoint("/connect/token")
+               .AllowPasswordFlow()
+               .AllowRefreshTokenFlow()                                   //or should this just be external then check in the controller
+               .AllowCustomFlow("urn:ietf:params:oauth:grant-type:external_identity_token");
 
-            // Register the OpenIddict services, including the default Entity Framework stores.
-            services.AddOpenIddict<ApplicationDbContext>()
-                // Register the ASP.NET Core MVC binder used by OpenIddict.
-                // Note: if you don't call this method, you won't be able to
-                // bind OpenIdConnectRequest or OpenIdConnectResponse parameters.
-                .AddMvcBinders()
-                // Enable the token endpoint.
-                .EnableTokenEndpoint("/connect/token")
+            if (env.IsDevelopment())
+            {
+                builder.AddEphemeralSigningKey();
+            }
+            else
+            {
+                //add in cert fingerprint
+                builder.AddSigningCertificate(Configuration[$"AppSettings:CertFingerPrint"]);
+            }
 
-                // Enable the password and the refresh token flows.
-                .AllowPasswordFlow()
-                .AllowRefreshTokenFlow()                                   //or should this just be external then check in the controller
-                .AllowCustomFlow("urn:ietf:params:oauth:grant-type:external_identity_token")
-                // During development, you can disable the HTTPS requirement.
-                .DisableHttpsRequirement()
+            builder.Configure(options =>
+            {
+                options.AllowInsecureHttp = env.IsDevelopment();
+                options.ApplicationCanDisplayErrors = env.IsDevelopment();
 
-                // Register a new ephemeral key, that is discarded when the application
-                // shuts down. Tokens signed using this key are automatically invalidated.
-                // This method should only be used during development.
-                .AddEphemeralSigningKey();
+                options.TokenEndpointPath = "/connect/token";
 
-            // Note: if you don't explicitly register a signing key, one is automatically generated and
-            // persisted on the disk. If the key cannot be persisted, an exception is thrown.
-            // 
-            // On production, using a X.509 certificate stored in the machine store is recommended.
-            // You can generate a self-signed certificate using Pluralsight's self-cert utility:
-            // https://s3.amazonaws.com/pluralsight-free/keith-brown/samples/SelfCert.zip
-            // 
+               // options.AccessTokenLifetime =
+                //todo sort this out
+                //    new TimeSpan(0, int.Parse(Configuration[$"AppSettings:AccessTokenLifetime"]), 0);
+            });
+
             // services.AddOpenIddict<ApplicationDbContext>()
             //     .AddSigningCertificate("7D2A741FE34CC2C7369237A5F2078988E17A6A75");
-            // 
-            // Alternatively, you can also store the certificate as an embedded .pfx resource
-            // directly in this assembly or in a file published alongside this project:
-            // 
-            // services.AddOpenIddict<ApplicationDbContext>()
-            //     .AddSigningCertificate(
-            //          assembly: typeof(Startup).GetTypeInfo().Assembly,
-            //          resource: "AuthorizationServer.Certificate.pfx",
-            //          password: "OpenIddict");
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -166,7 +161,7 @@ namespace PassPast.Web
             app.UseDefaultFiles(options);
             app.UseStaticFiles();
 
-            SeedDatabase(app);
+            //SeedDatabase(app);
         }
 
         private void SeedDatabase(IApplicationBuilder app)
@@ -178,11 +173,10 @@ namespace PassPast.Web
             using (var context = new ApplicationDbContext(options))
             {
                 //context.Database.EnsureDeleted();
-                context.Database.EnsureCreated();
+                //context.Database.EnsureCreated();
 
                 
             }
         }
-
     }
 }

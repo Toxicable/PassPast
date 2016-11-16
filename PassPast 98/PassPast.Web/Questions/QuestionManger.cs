@@ -15,7 +15,6 @@ namespace PassPast.Web.Api.Questions
     public interface IQuestionManger
     {
         Task CreateMultiple(QuestionEntity question, int copies);
-        Task<QuestionViewModel> Get(int id);
         Task<ICollection<QuestionViewModel>> GetAll(int id);
     }
 
@@ -45,14 +44,6 @@ namespace PassPast.Web.Api.Questions
 
             await _context.SaveChangesAsync();
 
-        }
-
-        public async Task<QuestionViewModel> Get(int id)
-        {
-            var exam = (await _context.Questions
-                .FirstOrDefaultAsync(c => c.Id == id));
-
-            return _mapper.Map<QuestionViewModel>(exam);
         }
 
         public async Task<ICollection<QuestionViewModel>> GetAll(int examId)

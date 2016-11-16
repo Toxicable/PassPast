@@ -53,7 +53,7 @@ export class RegisterComponent  implements OnInit {
             });
     }
 
-    fuckinggoogleauth(){
+    googleAuthorize(){
         let y = this.externalAuth.register("Google")
             .subscribe( x => {
                 this.alert.sendSuccess("Successfully registered");

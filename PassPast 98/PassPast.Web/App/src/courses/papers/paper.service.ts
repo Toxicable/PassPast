@@ -16,18 +16,18 @@ export class PaperService {
     ) { }
 
     getPaper(id: number): Observable<Paper>{
-        return this.authHttp.get('/papers/get/'+ id)
+        return this.authHttp.get('/papers/'+ id)
     }
 
     getPapers(): Observable<Paper[]>{
-        return this.authHttp.get('/papers/getAll')
+        return this.authHttp.get('/papers')
             .do((papers: Paper[]) => { 
                 this.store.dispatch(this.paperActions.Load(papers));
             })
     }
 
     create(paper: Paper): Observable<Paper>{
-        return this.authHttp.post('/papers/create', paper)
+        return this.authHttp.post('/papers', paper)
             .do((newPaper: Paper) => {
                 this.store.dispatch(this.paperActions.Add(newPaper));
             })

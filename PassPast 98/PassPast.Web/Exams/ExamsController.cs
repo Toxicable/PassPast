@@ -4,11 +4,12 @@ using Microsoft.AspNetCore.Mvc;
 using OAuthApi.AuthServer;
 using OAuthAPI.WebApi.Api;
 using PassPast.Data;
+using PassPast.Web.Api.Courses;
 using System.Threading.Tasks;
 
 namespace PassPast.Web.Api.Exams
 {
-
+    [Route("[controller]")]
     public class ExamsController : Controller
     {
         private IExamManager _examsManager;
@@ -22,6 +23,7 @@ namespace PassPast.Web.Api.Exams
             _examsManager = examManger;
         }
 
+        [HttpGet("{id}")]
         public async Task<IActionResult> Get(int id)
         {
             var course = await _examsManager.Get(id);
@@ -29,14 +31,16 @@ namespace PassPast.Web.Api.Exams
             return Ok(course);
         }
 
-        public async Task<IActionResult> GetAll()
+        [HttpGet]
+        public async Task<IActionResult> Get()
         {
             var courses = await _examsManager.GetAll();
 
             return Ok(courses);
         }
         
-        public async Task<IActionResult> Create(ExamBindingModel course)
+        [HttpPost]
+        public async Task<IActionResult> Create([FromBody]ExamBindingModel course)
         {
 
             var newCourse = _mapper.Map<ExamEntity>(course);
@@ -47,7 +51,9 @@ namespace PassPast.Web.Api.Exams
 
             await _examsManager.Create(newCourse);
 
-            return Ok(newCourse);
+            var a = _mapper.Map<ExamViewModel>(newCourse);
+
+            return Ok(a);
         }
     }
 }

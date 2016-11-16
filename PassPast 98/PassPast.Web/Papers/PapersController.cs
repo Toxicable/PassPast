@@ -1,15 +1,11 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
-using OAuthAPI.WebApi.Api;
 using PassPast.Data;
-using PassPast.Web.Api.Papers;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace PassPast.Web.Api.Papers
 {
+    [Route("[controller]")]
     public class PapersController : Controller
     {
         private IPaperManager _papersManager;
@@ -21,6 +17,7 @@ namespace PassPast.Web.Api.Papers
             _papersManager = paperManager;
         }
 
+        [HttpGet("{id}")]
         public async Task<IActionResult> Get(int id)
         {
             var course = await _papersManager.Get(id);
@@ -28,14 +25,15 @@ namespace PassPast.Web.Api.Papers
             return Ok(course);
         }
 
-        public async Task<IActionResult> GetAll()
+        [HttpGet]
+        public async Task<IActionResult> Get()
         {
             var courses = await _papersManager.GetAll();
 
             return Ok(courses);
         }
 
-        public async Task<IActionResult> Create(PaperBindingModel course)
+        public async Task<IActionResult> Create([FromBody]PaperBindingModel course)
         {
             var newCourse = _mapper.Map<PaperEntity>(course);
 

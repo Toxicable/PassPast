@@ -14,7 +14,7 @@ using AspNet.Security.OpenIdConnect.Extensions;
 namespace OAuthApi.AuthServer.Controllers
 {
     [Authorize]
-    [Route("api/[controller]")]
+    [Route("[controller]")]
     public class AccountController : Controller
     {
         private readonly UserManager<ApplicationUser> _userManager;

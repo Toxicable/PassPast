@@ -29,8 +29,6 @@ export class AddExamComponent implements OnInit {
                 this.newSection()
             ])
         })        
-        
-        console.log(this.newExamForm)
     }
 
     addSection(){
@@ -59,8 +57,10 @@ export class AddExamComponent implements OnInit {
                 delete newExam["sections"];
                 return this.exams.create(newExam)
                     .flatMap((exam: Exam) => {
-                        
+                        debugger
                         let data = Object.assign({}, {examId: exam.id},this.newExamForm.value)
+                        delete data["semester"];
+                        delete data["year"];
                         return this.questions.create(data)
                     })
 

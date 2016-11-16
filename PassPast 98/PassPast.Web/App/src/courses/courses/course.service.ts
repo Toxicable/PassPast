@@ -23,7 +23,7 @@ export class CourseService {
     }
 
     getCourse(id: number): Observable<Course>{
-        return this.authHttp.get('/courses/get/'+ id)
+        return this.authHttp.get('/courses/'+ id)
     }
 
     create(course: Course): Observable<Course>{

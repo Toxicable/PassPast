@@ -16,18 +16,18 @@ export class ExamService {
     ) { }
 
     getExams(): Observable<Exam[]>{
-        return this.authHttp.get('/exams/getAll')
+        return this.authHttp.get('/exams')
             .do((exams: Exam[]) => { 
                 this.store.dispatch(this.examActions.Load(exams));
             })
     }
 
     getExam(id: number): Observable<Exam>{
-        return this.authHttp.get('/exams/get/'+ id)
+        return this.authHttp.get('/exams'+ id)
     }
 
     create(exam: Exam): Observable<Exam>{
-        return this.authHttp.post('/exams/create', exam)
+        return this.authHttp.post('/exams', exam)
             .do((newExam: Exam) => {
                 this.store.dispatch(this.examActions.Add(newExam));
             })

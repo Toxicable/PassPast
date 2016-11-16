@@ -16,7 +16,7 @@ export class QuestionService {
     ) { }
 
     getQuestions(examId: number): Observable<Question[]>{
-        return this.authHttp.get('/questions/getAll/' + examId)
+        return this.authHttp.get('/questions/' + examId)
             .do((questions: Question[]) => {
                 this.store.dispatch(this.questionActions.Load(questions));
             })
@@ -24,7 +24,7 @@ export class QuestionService {
 
     //todo: make this a proper model
     create(course: any): Observable<Question>{
-        return this.authHttp.post('/questions/create', course)
+        return this.authHttp.post('/questions', course)
             .do((newCourse: Question) => {
                 //let action = new courseActions.AddAction(newCourse);
                 //this.store.dispatch(action);

@@ -1,8 +1,8 @@
 export const appSettings: AppSettings = {
     auth:{
         external:{
-            facebookAppId:"1841204649444154",
-            googleClientId:"163400937643-kh0h9ojo2bhb0n7mtao0dfqdgrklpseu.apps.googleusercontent.com"
+            facebookAppId:"311510702571628",
+            googleClientId:"137170270322-3ik6cl5m55i4ft3ff6t7l9tm2f1abkvh.apps.googleusercontent.com"
 
         }
     }
