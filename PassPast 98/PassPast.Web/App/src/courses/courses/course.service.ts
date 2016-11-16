@@ -1,33 +1,35 @@
 import { Injectable } from '@angular/core';
-import { AuthApiService } from '../../core/services/auth-api.service';
 import { Observable } from 'rxjs/Observable';
 import { Course } from '../models/course';
 import * as courseActions from './course.actions';
 import { Store } from '@ngrx/store';
 import { AppState } from '../../app/app-store';
+import { AuthHttp } from '../../core/auth-http/auth-http.service';
+import { CourseActions } from './course.actions';
 
 @Injectable()
 export class CourseService {
-    constructor(private authApi: AuthApiService,
-    private store: Store<AppState>) { }
+    constructor(private authHttp: AuthHttp,
+                private store: Store<AppState>,
+                private courseActions: CourseActions
+                
+    ) { }
 
     getCourses(): Observable<Course[]>{
-        return this.authApi.get('/courses/getAll')
+        return this.authHttp.get('/courses')
             .do((courses: Course[]) => { 
-                let action = new courseActions.LoadAction(courses);
-                this.store.dispatch(action);
+                this.store.dispatch(this.courseActions.Load(courses));
             })
     }
 
     getCourse(id: number): Observable<Course>{
-        return this.authApi.get('/courses/get/'+ id)
+        return this.authHttp.get('/courses/get/'+ id)
     }
 
     create(course: Course): Observable<Course>{
-        return this.authApi.post('/courses/create', course)
+        return this.authHttp.post('/courses', course)
             .do((newCourse: Course) => {
-                let action = new courseActions.AddAction(newCourse);
-                this.store.dispatch(action);
+                this.store.dispatch(this.courseActions.Add(newCourse));
             })
     }
 }

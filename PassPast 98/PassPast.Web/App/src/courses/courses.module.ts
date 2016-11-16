@@ -15,6 +15,10 @@ import { PaperResolveService } from './papers/paper-resolve.service';
 import { ExamService } from './exams/exam.service';
 import { QuestionService } from './questions/question.service';
 import { ExamResolveService } from './exams/exam-resolve.service';
+import { CourseActions } from './courses/course.actions';
+import { PaperActions } from './papers/paper.actions';
+import { ExamActions } from './exams/exam.actions';
+import { QuestionActions } from './questions/question.actions';
 
 @NgModule({
     imports: [
@@ -39,8 +43,12 @@ import { ExamResolveService } from './exams/exam-resolve.service';
         QuestionService,
         CourseResolveService,
         PaperResolveService,
-        ExamResolveService
+        ExamResolveService,
 
+        CourseActions,
+        PaperActions,
+        ExamActions,
+        QuestionActions,
     ]
 })
 export class CourseModule { }

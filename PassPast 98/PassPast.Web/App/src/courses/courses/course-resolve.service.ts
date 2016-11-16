@@ -6,17 +6,16 @@ import { CourseService } from './course.service'
 import { AppState } from '../../app/app-store';
 import { Store } from '@ngrx/store';
 import { Course } from '../models/course';
-import * as courseActions from './course.actions'
-import { AddAction } from './course.actions';
+import { CourseActions } from './course.actions';
 
 @Injectable()
 export class CourseResolveService implements Resolve<void> {
 
   constructor(private courses: CourseService, 
               private router: Router,
-              private store: Store<AppState>
-              
-              ) {}
+              private store: Store<AppState>,
+              private courseActions: CourseActions
+  ) {}
 
   resolve(route: ActivatedRouteSnapshot): Observable<boolean> {
     let courseId = route.params['courseId'];
@@ -26,17 +25,14 @@ export class CourseResolveService implements Resolve<void> {
       .flatMap( (courses: Course[]) => {
         let localCourse = courses.find( c => c.id == courseId)
         if(localCourse){
-          let action = new courseActions.SelectAction(localCourse);
-          this.store.dispatch(action);
+          this.store.dispatch(this.courseActions.Select(localCourse));
           return Observable.of(true);
         }
         return this.courses.getCourse(courseId)
           .map((course: Course) => {
             if(course != null){
-              let addAction = new courseActions.AddAction(course);
-              this.store.dispatch(addAction);
-              let action = new courseActions.SelectAction(course);
-              this.store.dispatch(action);
+              this.store.dispatch(this.courseActions.Add(course));
+              this.store.dispatch(this.courseActions.Select(course));
               return true;
             }
             return false;

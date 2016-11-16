@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators, FormGroup, FormArray } from '@angular/forms';
 import { ExamService } from '../exam.service';
-import { AlertService } from '../../../core/services/alert.service';
 import { AppState } from '../../../app/app-store';
 import { Store } from '@ngrx/store';
 import { Exam } from '../../models/exam';
 import { QuestionService } from '../../questions/question.service';
+import { AlertService } from '../../../core/alert/alert.service';
 
 @Component({
     selector: 'add-exam',

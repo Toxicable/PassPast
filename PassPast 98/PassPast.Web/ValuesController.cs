@@ -4,17 +4,22 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
+using AutoMapper;
 
 // For more information on enabling Web API for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace OAuthApi.AuthServer.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("[controller]")]
     public class ValuesController : Controller
     {
+        public ValuesController(IMapper mapper, ApplicationDbContext ctx, IMyService a)
+        {
+
+        }
+
         // GET: api/values
         [HttpGet]
-        [Authorize]
         public IEnumerable<string> Get()
         {
             return new string[] { "value1", "value2" };
@@ -44,5 +49,17 @@ namespace OAuthApi.AuthServer.Controllers
         public void Delete(int id)
         {
         }
+    }
+
+    public interface IMyService { string GetHi(); }
+
+    public class MyService: IMyService
+    {
+        public MyService(IMapper mapper, ApplicationDbContext ctx)
+        {
+
+        }
+
+        public string GetHi() => "Hi";
     }
 }

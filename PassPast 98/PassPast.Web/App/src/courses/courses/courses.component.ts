@@ -1,11 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { CourseService } from './course.service';
-import { AlertService } from '../../core/services/alert.service';
 import { Observable } from 'rxjs/Observable';
 import { Course } from '../models/course';
-import * as courseStore from './course.reducer';
 import { AppState } from '../../app/app-store';
 import { Store } from '@ngrx/store';
+import { AlertService } from '../../core/alert/alert.service';
 
 @Component({
     selector: 'courses',

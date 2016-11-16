@@ -1,28 +1,27 @@
 import { ActionReducer, Action, Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
-import * as paperActions from './paper.actions'
 import { Paper } from '../models/paper';
+import { PaperActions, PaperActionTypes } from './paper.actions';
  
-export interface State{
+export interface PaperState{
     entities: Paper[],
     selected: Paper
 }
 
-const initalState: State ={
+const initalState: PaperState ={
     entities: [],
     selected: null
 }
 
-export const reducer = (state = initalState, action: paperActions.Actions): State => {
+export const paperReducer = (state = initalState, action: Action): PaperState => {
     switch (action.type){
-        case paperActions.ActionTypes.LOAD:
-            case paperActions.ActionTypes.LOAD:
-            return {
-                selected: state.selected,
-                entities: action.payload
-            }
+        case PaperActionTypes.LOAD:
+        return {
+            selected: state.selected,
+            entities: action.payload
+        }
 
-        case paperActions.ActionTypes.ADD:
+        case PaperActionTypes.ADD:
         return {
             selected: state.selected,
             entities: [
@@ -31,7 +30,7 @@ export const reducer = (state = initalState, action: paperActions.Actions): Stat
             ]
         }
 
-        case paperActions.ActionTypes.SELECT:
+        case PaperActionTypes.SELECT:
             return {
                 selected: action.payload,
                 entities: state.entities

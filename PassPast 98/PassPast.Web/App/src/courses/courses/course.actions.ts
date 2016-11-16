@@ -1,27 +1,32 @@
-import { type } from '../../app/util';
 import { Action } from '@ngrx/store';
 import { Course } from '../models/course';
+import { type } from '../../util/action-name-helper';
 
-export const ActionTypes = {
+export const CourseActionTypes = {
     LOAD: type('[Course] Load'),
-    ADD_COURSE: type('[Course] Add'),
+    ADD: type('[Course] Add'),
     SELECT: type('[Course] Select')
 }
 
-export class SelectAction implements Action{
-    type = ActionTypes.SELECT;
-    constructor(public payload: Course){}
+export class CourseActions{
+    Select(payload: Course): Action{
+        return{
+            type: CourseActionTypes.SELECT,
+            payload
+        }
+    }
+
+    Add(payload: Course): Action{
+        return{
+            type: CourseActionTypes.ADD,
+            payload
+        }
+    }
+
+    Load(payload: Course[]): Action{
+        return{
+            type: CourseActionTypes.LOAD,
+            payload
+        }
+    }
 }
-
-export class AddAction implements Action{
-    type = ActionTypes.ADD_COURSE;
-    constructor(public payload: Course){}
-}
-
-export class LoadAction implements Action{
-    type = ActionTypes.LOAD;
-    constructor(public payload: Course[]){}
-}
-
-
-export type Actions = LoadAction | AddAction | SelectAction;

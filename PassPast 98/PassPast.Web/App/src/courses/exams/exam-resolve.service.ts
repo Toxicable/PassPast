@@ -9,15 +9,16 @@ import * as examActions from './exam.actions'
 import { Paper } from '../models/paper';
 import { ExamService } from './exam.service';
 import { Exam } from '../models/exam';
+import { ExamActions } from './exam.actions';
 
 @Injectable()
 export class ExamResolveService implements Resolve<void> {
 
   constructor(private exams: ExamService, 
               private router: Router,
-              private store: Store<AppState>
-              
-              ) {}
+              private store: Store<AppState>,
+              private examActions: ExamActions
+  ) {}
 
   resolve(route: ActivatedRouteSnapshot): Observable<boolean> {
     let examId = route.params['examId'];
@@ -27,17 +28,14 @@ export class ExamResolveService implements Resolve<void> {
       .flatMap( (exams: Exam[]) => {
         let localExams = exams.find( c => c.id == examId)
         if(localExams){
-          let action = new examActions.SelectAction(localExams);
-          this.store.dispatch(action);
+          this.store.dispatch(this.examActions.Select(localExams));
           return Observable.of(true);
         }
         return this.exams.getExam(examId)
           .map((exam: Exam) => {
             if(exam != null){
-              let addAction = new examActions.AddAction(exam);
-              this.store.dispatch(addAction);
-              let action = new examActions.SelectAction(exam);
-              this.store.dispatch(action);
+              this.store.dispatch(this.examActions.Add(exam));
+              this.store.dispatch(this.examActions.Select(exam));
               return true;
             }
             return false;

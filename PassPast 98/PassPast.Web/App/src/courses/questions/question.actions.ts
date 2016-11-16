@@ -1,14 +1,19 @@
 import { Action } from '@ngrx/store';
-import { type } from '../../app/util';
 import { Paper } from '../models/paper';
 import { Question } from '../models/question';
-export const ActionTypes = {
+import { type } from '../../util/action-name-helper';
+import { Injectable } from '@angular/core';
+
+export const QuestionActionTypes = {
     LOAD: type('[Questions] Load')
 }
 
-export class LoadAction implements Action{
-    type = ActionTypes.LOAD;
-    constructor(public payload: Question[]){}
+@Injectable()
+export class QuestionActions{
+    Load(payload: Question[]): Action{
+        return {
+            type: QuestionActionTypes.LOAD,
+            payload
+        }
+    }
 }
-
-export type Actions = LoadAction

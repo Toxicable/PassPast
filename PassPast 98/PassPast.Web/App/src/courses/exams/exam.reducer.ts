@@ -2,28 +2,28 @@ import { ActionReducer, Action, Store, combineReducers } from '@ngrx/store';
 import { Injectable } from '@angular/core';
 import { AppState } from '../../app/app-store';
 import { Exam } from '../models/exam';
-import * as examActions from './exam.actions'
 import { Observable } from 'rxjs';
+import { ExamActionTypes } from './exam.actions';
 
-export interface State{
+export interface ExamState{
     selected: Exam,
     entities: Exam[]
 }
 
-const initalState: State ={
+const initalState: ExamState ={
     selected: null,
     entities: []
 }
 
-export const reducer = (state = initalState, action: examActions.Actions): State => {
+export const examReducer = (state = initalState, action: Action): ExamState => {
     switch (action.type){
-        case examActions.ActionTypes.LOAD:
+        case ExamActionTypes.LOAD:
             return {
                 selected: state.selected,
                 entities: action.payload
             }
             
-        case examActions.ActionTypes.ADD:
+        case ExamActionTypes.ADD:
         return {
             selected: state.selected,
             entities: [
@@ -32,7 +32,7 @@ export const reducer = (state = initalState, action: examActions.Actions): State
             ]
         }
 
-        case examActions.ActionTypes.SELECT:
+        case ExamActionTypes.SELECT:
             return {
                 selected: action.payload,
                 entities: state.entities
@@ -42,7 +42,3 @@ export const reducer = (state = initalState, action: examActions.Actions): State
             return state;
     }
 };
-
-export const getCourses = (state$: Observable<State>): Observable<Exam[]> => {
-    return state$.map(state => state.entities);
-}

@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { PaperService } from '../paper.service';
-import { AlertService } from '../../../core/services/alert.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AppState } from '../../../app/app-store';
 import { Store } from '@ngrx/store';
+import { AlertService } from '../../../core/alert/alert.service';
 
 @Component({
     selector: 'add-paper',

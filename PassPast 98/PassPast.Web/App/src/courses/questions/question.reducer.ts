@@ -1,21 +1,21 @@
 import { ActionReducer, Action, Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
-import * as questionActions from './question.actions'
 import { Paper } from '../models/paper';
 import { Question } from '../models/question';
+import { QuestionActionTypes } from './question.actions';
  
-export interface State{
+export interface QuestionState{
     entities: Question[]
 }
 
-const initalState: State ={
+const initalState: QuestionState ={
     entities: []
 }
 
-export const reducer = (state = initalState, action: questionActions.Actions): State => {
+export const questionReducer = (state = initalState, action: Action): QuestionState => {
     switch (action.type){
 
-        case questionActions.ActionTypes.LOAD:
+        case QuestionActionTypes.LOAD:
             return {
                 entities: action.payload
             }

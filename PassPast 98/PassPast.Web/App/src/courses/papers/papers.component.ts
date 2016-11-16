@@ -1,12 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { PaperService } from './paper.service';
-import { AlertService } from '../../core/services/alert.service';
 import { Observable } from 'rxjs';
 import { Paper } from '../models/paper';
 import { AppState } from '../../app/app-store';
 import { Store } from '@ngrx/store';
 import { Course } from '../models/course';
 import { ActivatedRoute, Params } from '@angular/router';
+import { AlertService } from '../../core/alert/alert.service';
 
 @Component({
     selector: 'papers',

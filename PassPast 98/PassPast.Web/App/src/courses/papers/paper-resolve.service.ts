@@ -5,18 +5,18 @@ import { Router, Resolve,
 import { AppState } from '../../app/app-store';
 import { Store } from '@ngrx/store';
 import { Course } from '../models/course';
-import * as paperActions from './paper.actions'
 import { PaperService } from './paper.service';
 import { Paper } from '../models/paper';
+import { PaperActions } from './paper.actions';
 
 @Injectable()
 export class PaperResolveService implements Resolve<void> {
 
   constructor(private papers: PaperService, 
               private router: Router,
-              private store: Store<AppState>
-              
-              ) {}
+              private store: Store<AppState>,
+              private paperActions: PaperActions
+  ) {}
 
   resolve(route: ActivatedRouteSnapshot): Observable<boolean> {
     let paperId = route.params['paperId'];
@@ -26,17 +26,14 @@ export class PaperResolveService implements Resolve<void> {
       .flatMap( (papers: Paper[]) => {
         let localPapers = papers.find( c => c.id == paperId)
         if(localPapers){
-          let action = new paperActions.SelectAction(localPapers);
-          this.store.dispatch(action);
+          this.store.dispatch(this.paperActions.Select(localPapers));
           return Observable.of(true);
         }
         return this.papers.getPaper(paperId)
           .map((paper: Paper) => {
             if(paper != null){
-              let addAction = new paperActions.AddAction(paper);
-              this.store.dispatch(addAction);
-              let action = new paperActions.SelectAction(paper);
-              this.store.dispatch(action);
+              this.store.dispatch(this.paperActions.Add(paper));
+              this.store.dispatch(this.paperActions.Select(paper));
               return true;
             }
             return false;

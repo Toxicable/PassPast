@@ -1,25 +1,34 @@
 import { Action } from '@ngrx/store';
-import { type } from '../../app/util';
 import { Paper } from '../models/paper';
-export const ActionTypes = {
+import { type } from '../../util/action-name-helper';
+import { Injectable } from '@angular/core';
+
+export const PaperActionTypes = {
     LOAD: type('[Papers] Load'),
     ADD: type('[Papers] Add'),
     SELECT: type('[Paper] Select')
 }
 
-export class SelectAction implements Action{
-    type = ActionTypes.SELECT;
-    constructor(public payload: Paper){}
-}
+@Injectable()
+export class PaperActions{
+    Select(payload: Paper): Action{
+        return {
+            type: PaperActionTypes.SELECT,
+            payload
+        }
+    }
 
-export class LoadAction implements Action{
-    type = ActionTypes.LOAD;
-    constructor(public payload: Paper[]){}
-}
+    Load(payload: Paper[]): Action{
+        return {
+            type: PaperActionTypes.LOAD,
+            payload
+        }
+    }
 
-export class AddAction implements Action{
-    type = ActionTypes.ADD;
-    constructor(public payload: Paper){}
+    Add(payload:Paper): Action{
+        return{
+            type: PaperActionTypes.ADD,
+            payload
+        }
+    }
 }
-
-export type Actions = LoadAction | AddAction | SelectAction;

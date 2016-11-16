@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 
-namespace OAuthApi.AuthServer
+namespace PassPast.Web
 {
     public class Program
     {

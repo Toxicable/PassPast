@@ -34,7 +34,7 @@ constructor (private http: Http,
             )))
     }
 
-    get(url:string):Observable<Response>{
+    get(url:string):Observable<any>{
         return this.loadingBar.doWithLoader(
             this.getHeaders()
                 .flatMap((headers: Headers) =>{
@@ -47,12 +47,12 @@ constructor (private http: Http,
         )
     }
 
-    post(url: string, data: any):Observable<Response>{
+    post(url: string, data: any):Observable<any>{
         return this.loadingBar.doWithLoader(
             this.getHeaders()
                 .flatMap((headers: Headers) =>{
                     let options = new RequestOptions({headers});
-                    return this.http.post(url, data, options)
+                    return this.http.post(this.baseUrl + url, data, options)
                         .map( this.checkForError)
                         .catch( error => this.httpExceptions.handleError(error))
                         .map(this.getJson)

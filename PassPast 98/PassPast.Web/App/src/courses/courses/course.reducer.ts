@@ -2,27 +2,27 @@ import { ActionReducer, Action, Store, combineReducers } from '@ngrx/store';
 import { Injectable } from '@angular/core';
 import { AppState } from '../../app/app-store';
 import { Course } from '../models/course';
-import * as courseActions from './course.actions'
 import { Observable } from 'rxjs';
+import { CourseActionTypes } from './course.actions';
 
-export interface State{
+export interface CourseState{
     selected: Course,
     entities: Course[]
 }
 
-const initalState: State ={
+const initalState: CourseState ={
     selected: null,
     entities: []
 }
 
-export const reducer = (state = initalState, action: courseActions.Actions): State => {
+export const courseReducer = (state = initalState, action: Action): CourseState => {
     switch (action.type){
-        case courseActions.ActionTypes.LOAD:
+        case CourseActionTypes.LOAD:
             return {
                 selected: state.selected,
                 entities: action.payload
             }
-          case courseActions.ActionTypes.ADD_COURSE:
+          case CourseActionTypes.ADD:
             return {
                 selected: state.selected,
                 entities: [
@@ -30,7 +30,7 @@ export const reducer = (state = initalState, action: courseActions.Actions): Sta
                     action.payload
                 ]
             }
-        case courseActions.ActionTypes.SELECT:
+        case CourseActionTypes.SELECT:
             return {
                 selected: action.payload,
                 entities: state.entities
@@ -40,7 +40,3 @@ export const reducer = (state = initalState, action: courseActions.Actions): Sta
             return state;
     }
 };
-
-export const getCourses = (state$: Observable<State>): Observable<Course[]> => {
-    return state$.map(state => state.entities);
-}

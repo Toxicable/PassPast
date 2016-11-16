@@ -1,12 +1,6 @@
 import { Action } from '@ngrx/store';
-import { type } from '../../app/util';
 import { Comment } from '../models/comment';
-export const ActionTypes = {
-    type: type('')
-}
+import { type } from '../../util/action-name-helper';
 
-export class nameAction implements Action{
-    type = ActionTypes.type;
-    constructor(public payload: Comment[]){}
+export const CommentActionTypes = {
 }
-export type Actions = nameAction;

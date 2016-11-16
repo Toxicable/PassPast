@@ -16,7 +16,7 @@
         "ASPNETCORE_ENVIRONMENT": "Development"
       }
     },
-    "OAuthApi.AuthServer": {
+    "PassPast.Web": {
       "commandName": "Project",
       "launchUrl": "http://localhost:5000/api/values",
       "environmentVariables": {

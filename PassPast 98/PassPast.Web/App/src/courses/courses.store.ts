@@ -1,20 +1,20 @@
 import { ActionReducer, combineReducers } from '@ngrx/store';
-import * as course from './courses/course.reducer';
-import * as paper from './papers/paper.reducer';
-import * as exam from './exams/exam.reducer';
-import * as question from './questions/questions.reducer';
+import { ExamState, examReducer } from './exams/exam.reducer';
+import { PaperState, paperReducer } from './papers/paper.reducer';
+import { CourseState, courseReducer } from './courses/course.reducer';
+import { QuestionState, questionReducer } from './questions/question.reducer';
 
 export interface State {
-    course: course.State,
-    paper: paper.State,
-    exam: exam.State,
-    question: question.State
+    course: CourseState,
+    paper: PaperState,
+    exam: ExamState,
+    question: QuestionState
 }
 
 
 export const reducer: ActionReducer<State> = combineReducers({
-    course: course.reducer,
-    paper: paper.reducer,
-    exam: exam.reducer,
-    question: question.reducer
+    course: courseReducer,
+    paper: paperReducer,
+    exam: examReducer,
+    question: questionReducer
 });

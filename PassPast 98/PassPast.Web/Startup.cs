@@ -1,5 +1,4 @@
-﻿using System.Linq;
-using Microsoft.AspNetCore.Builder;
+﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.Extensions.Configuration;
@@ -8,11 +7,18 @@ using Microsoft.Extensions.Logging;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using System.IO;
-using OpenIddict;
-using CryptoHelper;
 using OAuthApi.AuthServer.Extentions;
+using OAuthApi.AuthServer;
+using AutoMapper;
+using PassPast.Web.Api.Questions;
+using PassPast.Web.Api.Exams;
+using PassPast.Data;
+using PassPast.Web.Api.Courses;
+using PassPast.Web.Api.Papers;
+using IConfiguration = Microsoft.Extensions.Configuration.IConfiguration;
+using OAuthApi.AuthServer.Controllers;
 
-namespace OAuthApi.AuthServer
+namespace PassPast.Web
 {
     public class Startup
     {
@@ -41,13 +47,37 @@ namespace OAuthApi.AuthServer
         {
             //TODO: stringly ttype this
             services.AddSingleton<IConfiguration>(Configuration);
-            services.AddTransient< IExternalAuthorizationManager, ExternalAuthorizationManager>();
+            services.AddTransient<IExternalAuthorizationManager, ExternalAuthorizationManager>();
+            services.AddTransient<ICourseManager, CourseManager>();
+            services.AddTransient<IExamManager, ExamManager>();
+            services.AddTransient<IPaperManager, PaperManager>();
+            services.AddTransient<IQuestionManger, QuestionManger>();
+
+            services.AddTransient<IMyService, MyService>();
+
+            var config = new MapperConfiguration(x =>
+            {
+                x.CreateMap<CourseEntity, CourseViewModel>();
+                x.CreateMap<CourseBindingModel, CourseEntity>();
+
+                x.CreateMap<PaperEntity, PaperViewModel>();
+                x.CreateMap<PaperBindingModel, PaperEntity>();
+
+                x.CreateMap<ExamEntity, ExamViewModel>();
+                x.CreateMap<ExamBindingModel, ExamEntity>();
+
+                x.CreateMap<QuestionEntity, QuestionViewModel>();
+                x.CreateMap<QuestionBindingModel, QuestionEntity>();
+
+            });
+
+            services.AddSingleton<IMapper>(sp => config.CreateMapper());
 
             services.AddMvc();
 
             services.AddEntityFramework()
                 .AddDbContext<ApplicationDbContext>(options =>
-                options.UseSqlServer("Server=(localdb)\\mssqllocaldb;Database=aspnet5-openiddict-sample;Trusted_Connection=True;MultipleActiveResultSets=true"));
+                options.UseSqlServer(Configuration["ConnectionStrings:DefaultConnection"]));
 
 
 

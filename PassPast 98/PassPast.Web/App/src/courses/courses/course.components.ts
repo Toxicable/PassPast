@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CourseService } from './course.service';
-import { AlertService } from '../../core/services/alert.service';
+import { AlertService } from '../../core/alert/alert.service';
 
 @Component({
     selector: 'course',
