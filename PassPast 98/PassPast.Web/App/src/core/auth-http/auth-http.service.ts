@@ -69,7 +69,7 @@ constructor (private http: Http,
     }
 
     private checkForError(res: Response){
-        if(res.status >= 200 && res.status < 300){
+        if(res.ok){
             return res;
         }
 

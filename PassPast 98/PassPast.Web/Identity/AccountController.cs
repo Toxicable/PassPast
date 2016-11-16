@@ -101,21 +101,7 @@ namespace OAuthApi.AuthServer.Controllers
             return BadRequest(ModelState);
         }
 
-        #region Helpers
-
-        // The following code creates the database and schema if they don't exist.
-        // This is a temporary workaround since deploying database through EF migrations is
-        // not yet supported in this release.
-        // Please see this http://go.microsoft.com/fwlink/?LinkID=615859 for more information on how to do deploy the database
-        // when publishing your application.
-        private static void EnsureDatabaseCreated(ApplicationDbContext context)
-        {
-            if (!_databaseChecked)
-            {
-                _databaseChecked = true;
-                context.Database.EnsureCreated();
-            }
-        }
+        #region Helpers      
 
         private void AddErrors(IdentityResult result)
         {
