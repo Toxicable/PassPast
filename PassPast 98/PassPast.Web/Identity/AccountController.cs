@@ -5,13 +5,13 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Authorization;
-using OAuthApi.AuthServer.Infrastructure.Models;
-using OAuthApi.AuthServer.Infrastructure.Entities;
+using PassPast.Web.Infrastructure.Models;
+using PassPast.Web.Infrastructure.Entities;
 using AspNet.Security.OpenIdConnect.Extensions;
 
 // For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
 
-namespace OAuthApi.AuthServer.Controllers
+namespace PassPast.Web.Controllers
 {
     [Authorize]
     [Route("[controller]")]

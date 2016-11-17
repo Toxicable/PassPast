@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using OAuthApi.AuthServer;
+using PassPast.Web;
 using OAuthAPI.WebApi.Api;
 using PassPast.Data;
 using PassPast.Web.Api.Courses;

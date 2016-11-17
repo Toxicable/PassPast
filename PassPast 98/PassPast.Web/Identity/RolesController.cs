@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 
-namespace OAuthApi.AuthServer.Controllers
+namespace PassPast.Web.Controllers
 {
     [Route("api/[controller]")]
     public class RolesController : Controller

@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
-using OAuthApi.AuthServer.Infrastructure.Entities;
+using PassPast.Web.Infrastructure.Entities;
 using PassPast.Data;
 using PassPast.Data.Domain;
 using System;
@@ -7,7 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace OAuthApi.AuthServer
+namespace PassPast.Web
 {
     public class ApplicationUser : IdentityUser
     {

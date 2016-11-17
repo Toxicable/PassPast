@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 
-namespace OAuthApi.AuthServer.Extentions
+namespace PassPast.Web.Extentions
 {
 
     using Microsoft.Owin.Builder;

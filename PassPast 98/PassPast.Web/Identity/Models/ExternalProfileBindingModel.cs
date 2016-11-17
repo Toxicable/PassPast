@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace OAuthApi.AuthServer.Infrastructure.Models
+namespace PassPast.Web.Infrastructure.Models
 {
     public class ExternalProfileBindingModel
     {

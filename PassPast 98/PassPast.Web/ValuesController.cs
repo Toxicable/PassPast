@@ -8,7 +8,7 @@ using AutoMapper;
 
 // For more information on enabling Web API for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
 
-namespace OAuthApi.AuthServer.Controllers
+namespace PassPast.Web.Controllers
 {
     [Route("[controller]")]
     public class ValuesController : Controller

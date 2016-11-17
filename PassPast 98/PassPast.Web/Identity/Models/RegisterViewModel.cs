@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace OAuthApi.AuthServer
+namespace PassPast.Web
 {
     public class RegisterViewModel
     {

@@ -1,4 +1,4 @@
-﻿using OAuthApi.AuthServer;
+﻿using PassPast.Web;
 using OAuthAPI.Data;
 using PassPast.Data.Domain;
 using System;

@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace OAuthApi.AuthServer.Infrastructure.Entities
+namespace PassPast.Web.Infrastructure.Entities
 {
     public class ExternalAccount
     {

@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace OAuthApi.AuthServer.Hubs
+namespace PassPast.Web.Hubs
 {
     public class EchoHub: Hub
     {

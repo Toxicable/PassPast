@@ -17,7 +17,7 @@ using Newtonsoft.Json;
 
 // For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
 
-namespace OAuthApi.AuthServer.Controllers
+namespace PassPast.Web.Controllers
 {
     public class AuthorizationController : Controller
     {

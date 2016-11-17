@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
-using OAuthApi.AuthServer;
+using PassPast.Web;
 
 namespace PassPast.Web.Migrations
 {
@@ -124,7 +124,7 @@ namespace PassPast.Web.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
-            modelBuilder.Entity("OAuthApi.AuthServer.ApplicationUser", b =>
+            modelBuilder.Entity("PassPast.Web.ApplicationUser", b =>
                 {
                     b.Property<string>("Id");
 
@@ -179,7 +179,7 @@ namespace PassPast.Web.Migrations
                     b.ToTable("AspNetUsers");
                 });
 
-            modelBuilder.Entity("OAuthApi.AuthServer.Infrastructure.Entities.ExternalAccount", b =>
+            modelBuilder.Entity("PassPast.Web.Infrastructure.Entities.ExternalAccount", b =>
                 {
                     b.Property<string>("Id");
 
@@ -424,7 +424,7 @@ namespace PassPast.Web.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.EntityFrameworkCore.IdentityUserClaim<string>", b =>
                 {
-                    b.HasOne("OAuthApi.AuthServer.ApplicationUser")
+                    b.HasOne("PassPast.Web.ApplicationUser")
                         .WithMany("Claims")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);
@@ -432,7 +432,7 @@ namespace PassPast.Web.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.EntityFrameworkCore.IdentityUserLogin<string>", b =>
                 {
-                    b.HasOne("OAuthApi.AuthServer.ApplicationUser")
+                    b.HasOne("PassPast.Web.ApplicationUser")
                         .WithMany("Logins")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);
@@ -445,15 +445,15 @@ namespace PassPast.Web.Migrations
                         .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade);
 
-                    b.HasOne("OAuthApi.AuthServer.ApplicationUser")
+                    b.HasOne("PassPast.Web.ApplicationUser")
                         .WithMany("Roles")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
-            modelBuilder.Entity("OAuthApi.AuthServer.Infrastructure.Entities.ExternalAccount", b =>
+            modelBuilder.Entity("PassPast.Web.Infrastructure.Entities.ExternalAccount", b =>
                 {
-                    b.HasOne("OAuthApi.AuthServer.ApplicationUser", "User")
+                    b.HasOne("PassPast.Web.ApplicationUser", "User")
                         .WithMany("ExternalAccounts")
                         .HasForeignKey("UserId");
                 });
@@ -484,7 +484,7 @@ namespace PassPast.Web.Migrations
 
             modelBuilder.Entity("PassPast.Data.CommentEntity", b =>
                 {
-                    b.HasOne("OAuthApi.AuthServer.ApplicationUser", "CreatedBy")
+                    b.HasOne("PassPast.Web.ApplicationUser", "CreatedBy")
                         .WithMany("CommentsCreated")
                         .HasForeignKey("CreatedById");
 
@@ -504,14 +504,14 @@ namespace PassPast.Web.Migrations
                         .WithMany("Votes")
                         .HasForeignKey("CommentEntityId");
 
-                    b.HasOne("OAuthApi.AuthServer.ApplicationUser", "VotedBy")
+                    b.HasOne("PassPast.Web.ApplicationUser", "VotedBy")
                         .WithMany("Votes")
                         .HasForeignKey("VotedById");
                 });
 
             modelBuilder.Entity("PassPast.Data.ExamEntity", b =>
                 {
-                    b.HasOne("OAuthApi.AuthServer.ApplicationUser", "CreatedBy")
+                    b.HasOne("PassPast.Web.ApplicationUser", "CreatedBy")
                         .WithMany("ExamsCreated")
                         .HasForeignKey("CreatedById");
 

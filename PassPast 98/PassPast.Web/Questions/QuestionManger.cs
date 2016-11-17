@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using Microsoft.EntityFrameworkCore;
-using OAuthApi.AuthServer;
+using PassPast.Web;
 using OAuthAPI.WebApi.Api;
 using PassPast.Data;
 using System;
