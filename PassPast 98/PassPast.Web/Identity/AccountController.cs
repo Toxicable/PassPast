@@ -39,7 +39,6 @@ namespace OAuthApi.AuthServer.Controllers
         [AllowAnonymous]
         public async Task<IActionResult> Register([FromForm]RegisterViewModel model)
         {
-            EnsureDatabaseCreated(_applicationDbContext);
             if (ModelState.IsValid)
             {
                 var user = new ApplicationUser { UserName = model.UserName, Email = model.UserName };
@@ -59,7 +58,6 @@ namespace OAuthApi.AuthServer.Controllers
         [AllowAnonymous]
         public async Task<IActionResult> RegisterExternal([FromBody]RegisterExternalBindingModel model)
         {
-            EnsureDatabaseCreated(_applicationDbContext);
             if (ModelState.IsValid)
             {
                 var isValid = await _externalAuthManager.VerifyExternalAccessToken(model.AccessToken, model.Provider);

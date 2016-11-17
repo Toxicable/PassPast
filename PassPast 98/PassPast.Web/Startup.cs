@@ -109,9 +109,6 @@ namespace PassPast.Web
             builder.Configure(options =>
             {
                 options.AllowInsecureHttp = env.IsDevelopment();
-                options.ApplicationCanDisplayErrors = env.IsDevelopment();
-
-                options.TokenEndpointPath = "/connect/token";
 
                // options.AccessTokenLifetime =
                 //todo sort this out
