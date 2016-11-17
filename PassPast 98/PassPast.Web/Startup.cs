@@ -7,8 +7,8 @@ using Microsoft.Extensions.Logging;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using System.IO;
-using OAuthApi.AuthServer.Extentions;
-using OAuthApi.AuthServer;
+using PassPast.Web.Extentions;
+using PassPast.Web;
 using AutoMapper;
 using PassPast.Web.Api.Questions;
 using PassPast.Web.Api.Exams;
@@ -16,9 +16,13 @@ using PassPast.Data;
 using PassPast.Web.Api.Courses;
 using PassPast.Web.Api.Papers;
 using IConfiguration = Microsoft.Extensions.Configuration.IConfiguration;
-using OAuthApi.AuthServer.Controllers;
+using PassPast.Web.Controllers;
 using System;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Http;
+
+using Microsoft.AspNetCore.Rewrite;
+using System.Reflection;
 
 namespace PassPast.Web
 {
@@ -48,7 +52,8 @@ namespace PassPast.Web
         
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddMvc(options => { options.Filters.Add(new RequireHttpsAttribute()); });
+
+            //services.AddMvc(options => { options.Filters.Add(new RequireHttpsAttribute()); });
 
             var env = services.BuildServiceProvider().GetRequiredService<IHostingEnvironment>();
 
@@ -88,41 +93,41 @@ namespace PassPast.Web
             services.AddIdentity<ApplicationUser, IdentityRole>()
                 .AddEntityFrameworkStores<ApplicationDbContext>()
                 .AddDefaultTokenProviders();
-            
+
             var builder = services.AddOpenIddict<ApplicationDbContext>()
                .AddMvcBinders()
                .EnableTokenEndpoint("/connect/token")
                .AllowPasswordFlow()
                .AllowRefreshTokenFlow()                                   //or should this just be external then check in the controller
-               .AllowCustomFlow("urn:ietf:params:oauth:grant-type:external_identity_token");
-
-            if (env.IsDevelopment())
-            {
-                builder.AddEphemeralSigningKey();
-            }
-            else
-            {
-                //add in cert fingerprint
-                builder.AddSigningCertificate(Configuration[$"AppSettings:CertFingerPrint"]);
-            }
-
+               .AllowCustomFlow("urn:ietf:params:oauth:grant-type:external_identity_token")
+               .SetAccessTokenLifetime(TimeSpan.FromMinutes(double.Parse(Configuration["Authentication:TokenLifespan"])))
+               .AddSigningCertificate(typeof(Startup).GetTypeInfo().Assembly, "PassPast.Web.Certificate.pfx", Configuration["Authentication:CertPassword"]);
+            var t = typeof(Startup).GetTypeInfo().Assembly;
             builder.Configure(options =>
             {
+                //TODO: investigate if we can stop webpack being a shit cunt
                 options.AllowInsecureHttp = env.IsDevelopment();
-
-               // options.AccessTokenLifetime =
-                //todo sort this out
-                //    new TimeSpan(0, int.Parse(Configuration[$"AppSettings:AccessTokenLifetime"]), 0);
             });
-
-            // services.AddOpenIddict<ApplicationDbContext>()
-            //     .AddSigningCertificate("7D2A741FE34CC2C7369237A5F2078988E17A6A75");
+            
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
         {
-            app.UseDeveloperExceptionPage();            
+
+            //TODO: add http -> https redirect
+            var redirectOptions = new RewriteOptions()
+                .AddRedirectToHttps();
+            //var options = new RewriteOptions()
+            //   .AddRedirect("(.*)/$", "$1")                    // Redirect using a regular expression
+            //   .AddRewrite(@"app/(\d+)", "app?id=$1", skipRemainingRules: false) // Rewrite based on a Regular expression
+            //   .AddRedirectToHttps(302, 5001)                  // Redirect to a different port and use HTTPS
+            //   .AddIISUrlRewrite(env.ContentRootFileProvider, "UrlRewrite.xml")        // Use IIS UrlRewriter rules to configure
+            //   .AddApacheModRewrite(env.ContentRootFileProvider, "Rewrite.txt");       // Use Apache mod_rewrite rules to configure
+
+            app.UseRewriter(redirectOptions);
+
+            app.UseDeveloperExceptionPage();
 
             app.Map("/api", apiApp =>
             {
@@ -149,7 +154,7 @@ namespace PassPast.Web
                     context.Request.Path = "/index.html";
                     await next();
                 }
-            });            
+            });
 
             DefaultFilesOptions options = new DefaultFilesOptions();
             options.DefaultFileNames.Clear();
