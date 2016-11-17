@@ -1,10 +1,11 @@
-﻿using Microsoft.EntityFrameworkCore;
-using OAuthApi.AuthServer.Infrastructure.Entities;
+﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
+using PassPast.Web.Infrastructure.Entities;
 using OpenIddict;
 using PassPast.Data;
 using PassPast.Data.Domain;
 
-namespace OAuthApi.AuthServer
+namespace PassPast.Web
 {
     public class ApplicationDbContext : OpenIddictDbContext<ApplicationUser>
     {
@@ -26,13 +27,36 @@ namespace OAuthApi.AuthServer
         {
             base.OnModelCreating(builder);
 
+            //OpenIddict
+            builder.Entity<OpenIddictApplication>().ToTable("ApiIdentity_Applications");
+            builder.Entity<OpenIddictAuthorization>().ToTable("ApiIdentity_Authorizations");
+            builder.Entity<OpenIddictScope>().ToTable("ApiIdentity_Scopes");
+            builder.Entity<OpenIddictToken>().ToTable("ApiIdentity_Tokens");
+            builder.Entity<ExternalAccount>().ToTable("ApiIdentity_ExternalAccounts");
+
+            //Identity
+            builder.Entity<ApplicationUser>().ToTable("ApiIdentity_Users");
+            builder.Entity<IdentityRole<string>>().ToTable("ApiIdentity_Roles");
+            builder.Entity<IdentityRoleClaim<string>>().ToTable("ApiIdentity_RoleClaims");
+            builder.Entity<IdentityUserRole<string>>().ToTable("ApiIdentity_UserRoles");
+            builder.Entity<IdentityUserLogin<string>>().ToTable("ApiIdentity_UserLogins");
+            builder.Entity<IdentityUserClaim<string>>().ToTable("ApiIdentity_UserClaims");
+            builder.Entity<IdentityUserToken<string>>().ToTable("ApiIdentity_UserTokens");
+
+            //Domain
+            builder.Entity<AnswerEntity>().ToTable("Answers");
+            builder.Entity<AnswerTypeEntity>().ToTable("AnswerTypes");
+            builder.Entity<CourseEntity>().ToTable("Courses");
+            builder.Entity<ExamEntity>().ToTable("Exams");
+            builder.Entity<PaperEntity>().ToTable("Papers");
+            builder.Entity<QuestionEntity>().ToTable("Questions");
+            builder.Entity<VoteEntity>().ToTable("Votes");
+
+            //Mappings
             builder.Entity<CommentEntity>().HasOne(x => x.CreatedBy);
             builder.Entity<ExamEntity>().HasOne(x => x.CreatedBy).WithMany(x => x.ExamsCreated);//.casWillCascadeOnDelete(false);
             builder.Entity<VoteEntity>().HasOne(x => x.VotedBy);
 
-            // Customize the ASP.NET Identity model and override the defaults if needed.
-            // For example, you can rename the ASP.NET Identity table names and more.
-            // Add your customizations after calling base.OnModelCreating(builder);
         }
     }
 }
