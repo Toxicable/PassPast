@@ -22,7 +22,7 @@ constructor(    private router: Router,
     ){}
 
     testAuth() {
-        this.authHttp.get("api/values")
+        this.authHttp.get("values")
             .subscribe(
                 x => this.alertService.sendSuccess("all goods"),
                 error => this.alertService.sendWarning(error)
@@ -49,6 +49,9 @@ constructor(    private router: Router,
         this.hub.server.broadcast("I am number 1");
     }
 
+    openAlert(){
+        this.alertService.sendSuccess("Hello", 10000);
+    }
 
     refreshTokens() {
         this.tokens.refreshTokens()

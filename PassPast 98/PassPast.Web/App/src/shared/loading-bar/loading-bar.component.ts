@@ -6,8 +6,8 @@ import {Store} from '@ngrx/store';
 @Component({
     selector: 'loading-bar',
     template: `
-<div *ngIf="loading$ | async">
-    <md-progress-bar mode="indeterminate"></md-progress-bar>
+<div style="height:5px;">
+    <md-progress-bar *ngIf="loading$ | async" mode="indeterminate"></md-progress-bar>
 </div>`,
     styleUrls: ['loading-bar.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush

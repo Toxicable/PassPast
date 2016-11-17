@@ -11,19 +11,23 @@ import { CourseResolveService } from './courses/course-resolve.service';
 import { PaperResolveService } from './papers/paper-resolve.service';
 import { AddExamComponent } from './exams/add-exam/add-exam.component';
 import { ExamResolveService } from './exams/exam-resolve.service';
+import { AuthenticatedAuthGuard } from '../core/guards/authenticated-auth-guard.service';
 
 const routes: Routes = [
     {
         path: 'courses',
-        component: CoursesComponent
+        component: CoursesComponent,
+        canActivate: [AuthenticatedAuthGuard]
     },
     {
         path: 'courses/add-course',
-        component: AddCourseComponent
+        component: AddCourseComponent,
+        canActivate: [AuthenticatedAuthGuard]
     },
     {
         path: 'courses/:courseId',
         component: PapersComponent,
+        canActivate: [AuthenticatedAuthGuard],
         resolve: {
             courseExists: CourseResolveService
         }
@@ -31,6 +35,7 @@ const routes: Routes = [
     {
         path: 'courses/:courseId/add-paper',
         component: AddPaperComponent,
+        canActivate: [AuthenticatedAuthGuard],
         resolve: {
             courseExists: CourseResolveService
         }
@@ -38,6 +43,7 @@ const routes: Routes = [
     {
         path: 'courses/:courseId/:paperId',
         component: ExamsComponent,
+        canActivate: [AuthenticatedAuthGuard],
         resolve: {
             paperExists: PaperResolveService
         }
@@ -45,6 +51,7 @@ const routes: Routes = [
     {
         path: 'courses/:courseId/:paperId/add-exam',
         component: AddExamComponent,
+        canActivate: [AuthenticatedAuthGuard],
         resolve: {
             paperExists: PaperResolveService
         }
@@ -52,6 +59,7 @@ const routes: Routes = [
     {
         path: 'courses/:courseId/:paperId/:examId',
         component: QuestionsComponent,
+        canActivate: [AuthenticatedAuthGuard],
         resolve: {
             examExists: ExamResolveService
         }

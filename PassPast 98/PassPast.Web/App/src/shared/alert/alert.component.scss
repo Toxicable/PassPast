@@ -1,7 +1,7 @@
 .alert-container{
   position: fixed;
-  bottom: 20px;
-  right:20px;
+  top:40%;
+  left: 40%;
   display: flex;
   flex-direction: column;
   align-items: flex-end;
@@ -10,7 +10,7 @@
   width: 300px;
   text-align: center;
   background-color: lightgray;
-  padding: 5px;
+  padding: 30px;
 }
 
 .alert-type-0{
