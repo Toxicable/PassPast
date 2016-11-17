@@ -7,10 +7,9 @@ import { AuthTokenService } from '../core/auth-token/auth-token.service';
 @Component({
     selector: 'my-app',
     template: `
-<loading-bar></loading-bar>
-<alert></alert>
-<navigation></navigation>
+<header></header>
 <router-outlet></router-outlet>
+<alert></alert>
 `,
     encapsulation: ViewEncapsulation.None,
     styleUrls: ['./app.component.scss', './deeppurple-amber.css']

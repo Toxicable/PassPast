@@ -5,7 +5,7 @@ import { AppState } from '../../app/app-store';
 import { ProfileActionTypes } from './profile.actions';
 
 const initialState: ProfileModel = {
-    role: [""],
+    role: [],
     sub: null,
     jti: null,
     at_hash: null,
@@ -16,8 +16,7 @@ const initialState: ProfileModel = {
     iss: null,
     unique_name: null,
     email_confirmed: false,
-    first_name: null,
-    last_name: null
+    given_name: null,
 }
  
 export const profileReducer = (state = initialState, action: Action): ProfileModel => {

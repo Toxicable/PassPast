@@ -6,7 +6,6 @@ import { SharedModule } from "../shared/shared.module";
 import { ResetPasswordComponent } from "./forgot-password/reset-password.component";
 import { LoginComponent } from "./login/login.component";
 import { RegisterComponent } from "./register/register.component";
-import { VerifyComponent } from "./verify/verify.component";
 
 @NgModule({
     imports: [
@@ -17,7 +16,6 @@ import { VerifyComponent } from "./verify/verify.component";
         AuthComponent,
         LoginComponent,
         RegisterComponent,
-        VerifyComponent,
         ForgotPasswordComponent,
         ResetPasswordComponent
     ]
