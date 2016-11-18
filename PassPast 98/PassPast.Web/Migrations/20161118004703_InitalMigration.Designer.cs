@@ -9,9 +9,10 @@ using PassPast.Data;
 namespace PassPast.Web.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20161118004703_InitalMigration")]
+    partial class InitalMigration
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
             modelBuilder
                 .HasAnnotation("ProductVersion", "1.1.0-rtm-22752")
@@ -146,7 +147,7 @@ namespace PassPast.Web.Migrations
                     b.HasIndex("ClientId")
                         .IsUnique();
 
-                    b.ToTable("_AuthApplications");
+                    b.ToTable("_Auth0Applications");
                 });
 
             modelBuilder.Entity("OpenIddict.OpenIddictAuthorization", b =>

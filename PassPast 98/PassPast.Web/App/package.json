@@ -3,7 +3,7 @@
   "name": "auth-api",
   "private": false,
   "scripts": {
-    "start": "webpack-dev-server --config config/webpack.dev.js --hot --inline --progress --https",
+    "start": "webpack-dev-server --config config/webpack.dev.js --hot --inline --progress",
     "test": "karma start",
     "build": "rimraf ../wwwroot && webpack --config config/webpack.prod.js  --progress --profile --bail",
     "build:aot": "ngc -p tsconfig-aot.json"

@@ -5,12 +5,12 @@ using Microsoft.EntityFrameworkCore.Metadata;
 
 namespace PassPast.Web.Migrations
 {
-    public partial class InitialCreate : Migration
+    public partial class InitalMigration : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "AspNetRoles",
+                name: "_AuthRoles",
                 columns: table => new
                 {
                     Id = table.Column<string>(nullable: false),
@@ -20,11 +20,11 @@ namespace PassPast.Web.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_AspNetRoles", x => x.Id);
+                    table.PrimaryKey("PK__AuthRoles", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
-                name: "AspNetUserTokens",
+                name: "_AuthUserTokens",
                 columns: table => new
                 {
                     UserId = table.Column<string>(nullable: false),
@@ -34,39 +34,11 @@ namespace PassPast.Web.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_AspNetUserTokens", x => new { x.UserId, x.LoginProvider, x.Name });
+                    table.PrimaryKey("PK__AuthUserTokens", x => new { x.UserId, x.LoginProvider, x.Name });
                 });
 
             migrationBuilder.CreateTable(
-                name: "AspNetUsers",
-                columns: table => new
-                {
-                    Id = table.Column<string>(nullable: false),
-                    AccessFailedCount = table.Column<int>(nullable: false),
-                    ConcurrencyStamp = table.Column<string>(nullable: true),
-                    CreateAt = table.Column<DateTimeOffset>(nullable: false),
-                    Email = table.Column<string>(maxLength: 256, nullable: true),
-                    EmailConfirmed = table.Column<bool>(nullable: false),
-                    FirstName = table.Column<string>(nullable: true),
-                    LastName = table.Column<string>(nullable: true),
-                    LockoutEnabled = table.Column<bool>(nullable: false),
-                    LockoutEnd = table.Column<DateTimeOffset>(nullable: true),
-                    NormalizedEmail = table.Column<string>(maxLength: 256, nullable: true),
-                    NormalizedUserName = table.Column<string>(maxLength: 256, nullable: true),
-                    PasswordHash = table.Column<string>(nullable: true),
-                    PhoneNumber = table.Column<string>(nullable: true),
-                    PhoneNumberConfirmed = table.Column<bool>(nullable: false),
-                    SecurityStamp = table.Column<string>(nullable: true),
-                    TwoFactorEnabled = table.Column<bool>(nullable: false),
-                    UserName = table.Column<string>(maxLength: 256, nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_AspNetUsers", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "OpenIddictApplications",
+                name: "_Auth0Applications",
                 columns: table => new
                 {
                     Id = table.Column<string>(nullable: false),
@@ -79,11 +51,11 @@ namespace PassPast.Web.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_OpenIddictApplications", x => x.Id);
+                    table.PrimaryKey("PK__Auth0Applications", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
-                name: "OpenIddictAuthorizations",
+                name: "_AuthAuthorizations",
                 columns: table => new
                 {
                     Id = table.Column<string>(nullable: false),
@@ -91,11 +63,11 @@ namespace PassPast.Web.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_OpenIddictAuthorizations", x => x.Id);
+                    table.PrimaryKey("PK__AuthAuthorizations", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
-                name: "OpenIddictScopes",
+                name: "_AuthScopes",
                 columns: table => new
                 {
                     Id = table.Column<string>(nullable: false),
@@ -103,7 +75,7 @@ namespace PassPast.Web.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_OpenIddictScopes", x => x.Id);
+                    table.PrimaryKey("PK__AuthScopes", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -134,114 +106,56 @@ namespace PassPast.Web.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "AspNetRoleClaims",
-                columns: table => new
-                {
-                    Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    ClaimType = table.Column<string>(nullable: true),
-                    ClaimValue = table.Column<string>(nullable: true),
-                    RoleId = table.Column<string>(nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_AspNetRoleClaims", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_AspNetRoleClaims_AspNetRoles_RoleId",
-                        column: x => x.RoleId,
-                        principalTable: "AspNetRoles",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "AspNetUserClaims",
-                columns: table => new
-                {
-                    Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    ClaimType = table.Column<string>(nullable: true),
-                    ClaimValue = table.Column<string>(nullable: true),
-                    UserId = table.Column<string>(nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_AspNetUserClaims", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_AspNetUserClaims_AspNetUsers_UserId",
-                        column: x => x.UserId,
-                        principalTable: "AspNetUsers",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "AspNetUserLogins",
-                columns: table => new
-                {
-                    LoginProvider = table.Column<string>(nullable: false),
-                    ProviderKey = table.Column<string>(nullable: false),
-                    ProviderDisplayName = table.Column<string>(nullable: true),
-                    UserId = table.Column<string>(nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_AspNetUserLogins", x => new { x.LoginProvider, x.ProviderKey });
-                    table.ForeignKey(
-                        name: "FK_AspNetUserLogins_AspNetUsers_UserId",
-                        column: x => x.UserId,
-                        principalTable: "AspNetUsers",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "AspNetUserRoles",
-                columns: table => new
-                {
-                    UserId = table.Column<string>(nullable: false),
-                    RoleId = table.Column<string>(nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_AspNetUserRoles", x => new { x.UserId, x.RoleId });
-                    table.ForeignKey(
-                        name: "FK_AspNetUserRoles_AspNetRoles_RoleId",
-                        column: x => x.RoleId,
-                        principalTable: "AspNetRoles",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_AspNetUserRoles_AspNetUsers_UserId",
-                        column: x => x.UserId,
-                        principalTable: "AspNetUsers",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "ExternalAccounts",
+                name: "_AuthUsers",
                 columns: table => new
                 {
                     Id = table.Column<string>(nullable: false),
-                    AddedAt = table.Column<DateTimeOffset>(nullable: false),
-                    Provider = table.Column<int>(nullable: false),
-                    ProviderUserId = table.Column<string>(nullable: false),
-                    UserId = table.Column<string>(nullable: true)
+                    AccessFailedCount = table.Column<int>(nullable: false),
+                    ConcurrencyStamp = table.Column<string>(nullable: true),
+                    CreateAt = table.Column<DateTimeOffset>(nullable: false),
+                    Email = table.Column<string>(maxLength: 256, nullable: true),
+                    EmailConfirmed = table.Column<bool>(nullable: false),
+                    FirstName = table.Column<string>(nullable: true),
+                    LastName = table.Column<string>(nullable: true),
+                    LockoutEnabled = table.Column<bool>(nullable: false),
+                    LockoutEnd = table.Column<DateTimeOffset>(nullable: true),
+                    NormalizedEmail = table.Column<string>(maxLength: 256, nullable: true),
+                    NormalizedUserName = table.Column<string>(maxLength: 256, nullable: true),
+                    PasswordHash = table.Column<string>(nullable: true),
+                    PhoneNumber = table.Column<string>(nullable: true),
+                    PhoneNumberConfirmed = table.Column<bool>(nullable: false),
+                    SecurityStamp = table.Column<string>(nullable: true),
+                    TwoFactorEnabled = table.Column<bool>(nullable: false),
+                    UserName = table.Column<string>(maxLength: 256, nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_ExternalAccounts", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_ExternalAccounts_AspNetUsers_UserId",
-                        column: x => x.UserId,
-                        principalTable: "AspNetUsers",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                    table.PrimaryKey("PK__AuthUsers", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
-                name: "OpenIddictTokens",
+                name: "_AuthRoleClaims",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    ClaimType = table.Column<string>(nullable: true),
+                    ClaimValue = table.Column<string>(nullable: true),
+                    RoleId = table.Column<string>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK__AuthRoleClaims", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK__AuthRoleClaims__AuthRoles_RoleId",
+                        column: x => x.RoleId,
+                        principalTable: "_AuthRoles",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "_AuthTokens",
                 columns: table => new
                 {
                     Id = table.Column<string>(nullable: false),
@@ -251,17 +165,17 @@ namespace PassPast.Web.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_OpenIddictTokens", x => x.Id);
+                    table.PrimaryKey("PK__AuthTokens", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_OpenIddictTokens_OpenIddictApplications_ApplicationId",
+                        name: "FK__AuthTokens__Auth0Applications_ApplicationId",
                         column: x => x.ApplicationId,
-                        principalTable: "OpenIddictApplications",
+                        principalTable: "_Auth0Applications",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_OpenIddictTokens_OpenIddictAuthorizations_AuthorizationId",
+                        name: "FK__AuthTokens__AuthAuthorizations_AuthorizationId",
                         column: x => x.AuthorizationId,
-                        principalTable: "OpenIddictAuthorizations",
+                        principalTable: "_AuthAuthorizations",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
@@ -287,6 +201,92 @@ namespace PassPast.Web.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "_AuthUserClaims",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    ClaimType = table.Column<string>(nullable: true),
+                    ClaimValue = table.Column<string>(nullable: true),
+                    UserId = table.Column<string>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK__AuthUserClaims", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK__AuthUserClaims__AuthUsers_UserId",
+                        column: x => x.UserId,
+                        principalTable: "_AuthUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "_AuthUserLogins",
+                columns: table => new
+                {
+                    LoginProvider = table.Column<string>(nullable: false),
+                    ProviderKey = table.Column<string>(nullable: false),
+                    ProviderDisplayName = table.Column<string>(nullable: true),
+                    UserId = table.Column<string>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK__AuthUserLogins", x => new { x.LoginProvider, x.ProviderKey });
+                    table.ForeignKey(
+                        name: "FK__AuthUserLogins__AuthUsers_UserId",
+                        column: x => x.UserId,
+                        principalTable: "_AuthUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "_AuthUserRoles",
+                columns: table => new
+                {
+                    UserId = table.Column<string>(nullable: false),
+                    RoleId = table.Column<string>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK__AuthUserRoles", x => new { x.UserId, x.RoleId });
+                    table.ForeignKey(
+                        name: "FK__AuthUserRoles__AuthRoles_RoleId",
+                        column: x => x.RoleId,
+                        principalTable: "_AuthRoles",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK__AuthUserRoles__AuthUsers_UserId",
+                        column: x => x.UserId,
+                        principalTable: "_AuthUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "_AuthExternalAccounts",
+                columns: table => new
+                {
+                    Id = table.Column<string>(nullable: false),
+                    AddedAt = table.Column<DateTimeOffset>(nullable: false),
+                    Provider = table.Column<int>(nullable: false),
+                    ProviderUserId = table.Column<string>(nullable: false),
+                    UserId = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK__AuthExternalAccounts", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK__AuthExternalAccounts__AuthUsers_UserId",
+                        column: x => x.UserId,
+                        principalTable: "_AuthUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Exams",
                 columns: table => new
                 {
@@ -301,9 +301,9 @@ namespace PassPast.Web.Migrations
                 {
                     table.PrimaryKey("PK_Exams", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Exams_AspNetUsers_CreatedById",
+                        name: "FK_Exams__AuthUsers_CreatedById",
                         column: x => x.CreatedById,
-                        principalTable: "AspNetUsers",
+                        principalTable: "_AuthUsers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
@@ -377,9 +377,9 @@ namespace PassPast.Web.Migrations
                 {
                     table.PrimaryKey("PK_Comments", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Comments_AspNetUsers_CreatedById",
+                        name: "FK_Comments__AuthUsers_CreatedById",
                         column: x => x.CreatedById,
-                        principalTable: "AspNetUsers",
+                        principalTable: "_AuthUsers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
@@ -418,73 +418,53 @@ namespace PassPast.Web.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_Votes_AspNetUsers_VotedById",
+                        name: "FK_Votes__AuthUsers_VotedById",
                         column: x => x.VotedById,
-                        principalTable: "AspNetUsers",
+                        principalTable: "_AuthUsers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateIndex(
                 name: "RoleNameIndex",
-                table: "AspNetRoles",
-                column: "NormalizedName");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_AspNetRoleClaims_RoleId",
-                table: "AspNetRoleClaims",
-                column: "RoleId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_AspNetUserClaims_UserId",
-                table: "AspNetUserClaims",
-                column: "UserId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_AspNetUserLogins_UserId",
-                table: "AspNetUserLogins",
-                column: "UserId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_AspNetUserRoles_RoleId",
-                table: "AspNetUserRoles",
-                column: "RoleId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_AspNetUserRoles_UserId",
-                table: "AspNetUserRoles",
-                column: "UserId");
-
-            migrationBuilder.CreateIndex(
-                name: "EmailIndex",
-                table: "AspNetUsers",
-                column: "NormalizedEmail");
-
-            migrationBuilder.CreateIndex(
-                name: "UserNameIndex",
-                table: "AspNetUsers",
-                column: "NormalizedUserName",
+                table: "_AuthRoles",
+                column: "NormalizedName",
                 unique: true);
 
             migrationBuilder.CreateIndex(
-                name: "IX_ExternalAccounts_UserId",
-                table: "ExternalAccounts",
+                name: "IX__AuthRoleClaims_RoleId",
+                table: "_AuthRoleClaims",
+                column: "RoleId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX__AuthUserClaims_UserId",
+                table: "_AuthUserClaims",
                 column: "UserId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_OpenIddictApplications_ClientId",
-                table: "OpenIddictApplications",
+                name: "IX__AuthUserLogins_UserId",
+                table: "_AuthUserLogins",
+                column: "UserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX__AuthUserRoles_RoleId",
+                table: "_AuthUserRoles",
+                column: "RoleId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX__Auth0Applications_ClientId",
+                table: "_Auth0Applications",
                 column: "ClientId",
                 unique: true);
 
             migrationBuilder.CreateIndex(
-                name: "IX_OpenIddictTokens_ApplicationId",
-                table: "OpenIddictTokens",
+                name: "IX__AuthTokens_ApplicationId",
+                table: "_AuthTokens",
                 column: "ApplicationId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_OpenIddictTokens_AuthorizationId",
-                table: "OpenIddictTokens",
+                name: "IX__AuthTokens_AuthorizationId",
+                table: "_AuthTokens",
                 column: "AuthorizationId");
 
             migrationBuilder.CreateIndex(
@@ -541,45 +521,61 @@ namespace PassPast.Web.Migrations
                 name: "IX_Questions_ExamId",
                 table: "Questions",
                 column: "ExamId");
+
+            migrationBuilder.CreateIndex(
+                name: "EmailIndex",
+                table: "_AuthUsers",
+                column: "NormalizedEmail");
+
+            migrationBuilder.CreateIndex(
+                name: "UserNameIndex",
+                table: "_AuthUsers",
+                column: "NormalizedUserName",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX__AuthExternalAccounts_UserId",
+                table: "_AuthExternalAccounts",
+                column: "UserId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "AspNetRoleClaims");
+                name: "_AuthRoleClaims");
 
             migrationBuilder.DropTable(
-                name: "AspNetUserClaims");
+                name: "_AuthUserClaims");
 
             migrationBuilder.DropTable(
-                name: "AspNetUserLogins");
+                name: "_AuthUserLogins");
 
             migrationBuilder.DropTable(
-                name: "AspNetUserRoles");
+                name: "_AuthUserRoles");
 
             migrationBuilder.DropTable(
-                name: "AspNetUserTokens");
+                name: "_AuthUserTokens");
 
             migrationBuilder.DropTable(
-                name: "ExternalAccounts");
+                name: "_AuthScopes");
 
             migrationBuilder.DropTable(
-                name: "OpenIddictScopes");
-
-            migrationBuilder.DropTable(
-                name: "OpenIddictTokens");
+                name: "_AuthTokens");
 
             migrationBuilder.DropTable(
                 name: "Votes");
 
             migrationBuilder.DropTable(
-                name: "AspNetRoles");
+                name: "_AuthExternalAccounts");
 
             migrationBuilder.DropTable(
-                name: "OpenIddictApplications");
+                name: "_AuthRoles");
 
             migrationBuilder.DropTable(
-                name: "OpenIddictAuthorizations");
+                name: "_Auth0Applications");
+
+            migrationBuilder.DropTable(
+                name: "_AuthAuthorizations");
 
             migrationBuilder.DropTable(
                 name: "Answers");
@@ -597,7 +593,7 @@ namespace PassPast.Web.Migrations
                 name: "Exams");
 
             migrationBuilder.DropTable(
-                name: "AspNetUsers");
+                name: "_AuthUsers");
 
             migrationBuilder.DropTable(
                 name: "Papers");

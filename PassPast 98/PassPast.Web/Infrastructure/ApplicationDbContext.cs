@@ -26,22 +26,21 @@ namespace PassPast.Web
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
-
             //OpenIddict
-            builder.Entity<OpenIddictApplication>().ToTable("Identity_Applications");
-            builder.Entity<OpenIddictAuthorization>().ToTable("Identity_Authorizations");
-            builder.Entity<OpenIddictScope>().ToTable("Identity_Scopes");
-            builder.Entity<OpenIddictToken>().ToTable("Identity_Tokens");
-            builder.Entity<ExternalAccount>().ToTable("Identity_ExternalAccounts");
+            builder.Entity<OpenIddictApplication>().ToTable("_AuthApplications");
+            builder.Entity<OpenIddictAuthorization>().ToTable("_AuthAuthorizations");
+            builder.Entity<OpenIddictScope>().ToTable("_AuthScopes");
+            builder.Entity<OpenIddictToken>().ToTable("_AuthTokens");
+            builder.Entity<ExternalAccount>().ToTable("_AuthExternalAccounts");
 
             //Identity
-            builder.Entity<ApplicationUser>().ToTable("Identity_Users");
-            builder.Entity<IdentityRole<string>>().ToTable("Identity_Roles");
-            builder.Entity<IdentityRoleClaim<string>>().ToTable("Identity_RoleClaims");
-            builder.Entity<IdentityUserRole<string>>().ToTable("Identity_UserRoles");
-            builder.Entity<IdentityUserLogin<string>>().ToTable("Identity_UserLogins");
-            builder.Entity<IdentityUserClaim<string>>().ToTable("Identity_UserClaims");
-            builder.Entity<IdentityUserToken<string>>().ToTable("Identity_UserTokens");
+            builder.Entity<ApplicationUser>().ToTable("_AuthUsers");
+            builder.Entity<IdentityRole>().ToTable("_AuthRoles");
+            builder.Entity<IdentityRoleClaim<string>>().ToTable("_AuthRoleClaims");
+            builder.Entity<IdentityUserRole<string>>().ToTable("_AuthUserRoles");
+            builder.Entity<IdentityUserLogin<string>>().ToTable("_AuthUserLogins");
+            builder.Entity<IdentityUserClaim<string>>().ToTable("_AuthUserClaims");
+            builder.Entity<IdentityUserToken<string>>().ToTable("_AuthUserTokens");
 
             //Domain
             builder.Entity<AnswerEntity>().ToTable("Answers");

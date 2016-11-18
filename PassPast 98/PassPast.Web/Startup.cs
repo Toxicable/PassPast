@@ -43,7 +43,7 @@ namespace PassPast.Web
                 //ConnectionStrings:DefaultConnection
                 //Authentication:External:Facebook:appToken
                 //Authentication:CertPassword
-                builder.AddUserSecrets();
+                builder.AddUserSecrets("PassPast.Web");
             }
 
             Configuration = builder.Build();
@@ -115,20 +115,18 @@ namespace PassPast.Web
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
         {
+            if (!env.IsDevelopment())
+            {
+                var redirectOptions = new RewriteOptions()
+                    .AddRedirectToHttps();
+                app.UseRewriter(redirectOptions);
+            }
 
-            //TODO: add http -> https redirect
-            var redirectOptions = new RewriteOptions()
-                .AddRedirectToHttps();
-            //var options = new RewriteOptions()
-            //   .AddRedirect("(.*)/$", "$1")                    // Redirect using a regular expression
-            //   .AddRewrite(@"app/(\d+)", "app?id=$1", skipRemainingRules: false) // Rewrite based on a Regular expression
-            //   .AddRedirectToHttps(302, 5001)                  // Redirect to a different port and use HTTPS
-            //   .AddIISUrlRewrite(env.ContentRootFileProvider, "UrlRewrite.xml")        // Use IIS UrlRewriter rules to configure
-            //   .AddApacheModRewrite(env.ContentRootFileProvider, "Rewrite.txt");       // Use Apache mod_rewrite rules to configure
-
-            app.UseRewriter(redirectOptions);
-
-            app.UseDeveloperExceptionPage();
+            if (env.IsDevelopment())
+            {
+                app.UseDeveloperExceptionPage();
+            }
+            
 
             app.Map("/api", apiApp =>
             {
