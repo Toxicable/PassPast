@@ -38,10 +38,11 @@ namespace PassPast.Web
                 .AddEnvironmentVariables();
 
             if (env.IsDevelopment())
-            {   
+            {
                 // should contain
                 //ConnectionStrings:DefaultConnection
                 //Authentication:External:Facebook:appToken
+                //Authentication:CertPassword
                 builder.AddUserSecrets();
             }
 
@@ -102,7 +103,7 @@ namespace PassPast.Web
                .AllowCustomFlow("urn:ietf:params:oauth:grant-type:external_identity_token")
                .SetAccessTokenLifetime(TimeSpan.FromMinutes(double.Parse(Configuration["Authentication:TokenLifespan"])))
                .AddSigningCertificate(typeof(Startup).GetTypeInfo().Assembly, "PassPast.Web.Certificate.pfx", Configuration["Authentication:CertPassword"]);
-            var t = typeof(Startup).GetTypeInfo().Assembly;
+
             builder.Configure(options =>
             {
                 //TODO: investigate if we can stop webpack being a shit cunt
