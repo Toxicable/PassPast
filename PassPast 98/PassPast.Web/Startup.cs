@@ -99,14 +99,23 @@ namespace PassPast.Web
                .AddMvcBinders()
                .EnableTokenEndpoint("/connect/token")
                .AllowPasswordFlow()
-               .AllowRefreshTokenFlow()                                   //or should this just be external then check in the controller
+               .AllowRefreshTokenFlow() 
                .AllowCustomFlow("urn:ietf:params:oauth:grant-type:external_identity_token")
-               .SetAccessTokenLifetime(TimeSpan.FromMinutes(double.Parse(Configuration["Authentication:TokenLifespan"])))
-               .AddSigningCertificate(typeof(Startup).GetTypeInfo().Assembly, "PassPast.Web.Certificate.pfx", Configuration["Authentication:CertPassword"]);
+               .SetAccessTokenLifetime(TimeSpan.FromMinutes(double.Parse(Configuration["Authentication:TokenLifespan"])));
+            
+               //.AddSigningCertificate(typeof(Startup).GetTypeInfo().Assembly, "PassPast.Web.Certificate.pfx", Configuration["Authentication:CertPassword"]);
+               //builder.AddSigningCertificate
+
+            if (env.IsDevelopment())
+            {
+                builder.AddEphemeralSigningKey();
+            }else
+            {
+                builder.AddSigningCertificate(Configuration["WEBSITE_LOAD_CERTIFICATES"]);
+            }
 
             builder.Configure(options =>
             {
-                //TODO: investigate if we can stop webpack being a shit cunt
                 options.AllowInsecureHttp = env.IsDevelopment();
             });
             

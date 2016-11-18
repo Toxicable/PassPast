@@ -34,12 +34,16 @@ export class AccountService {
 
 
     register(data: RegisterModel): Observable<Response> {
-        return this.http.post("api/account/create", data)
+        return this.loadingBar.doWithLoader(
+            this.http.post("api/account/create", data)
             .catch( this.httpExceptions.handleError )
+        )
     }
 
     externalRegister(model: ExternalRegistrationModel){
-        return this.http.post('/api/account/registerexternal', model)
+        return this.loadingBar.doWithLoader(
+            this.http.post('/api/account/registerexternal', model)
+        )
     }
 
     externalLogin(model: ExternalLoginModel){
