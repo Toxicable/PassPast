@@ -4,6 +4,7 @@ using PassPast.Web.Infrastructure.Entities;
 using OpenIddict;
 using PassPast.Data;
 using PassPast.Data.Domain;
+using PassPast.Web.Infrastructure.Domain;
 
 namespace PassPast.Web
 {
@@ -15,7 +16,8 @@ namespace PassPast.Web
         public DbSet<ExternalAccount> ExternalAccounts { get; set; }
 
         public DbSet<AnswerEntity> Answers { get; set; }
-        public DbSet<AnswerTypeEntity> AnswerTypes { get; set; }
+        public DbSet<McqAnswerEntity> McqAnswers { get; set; }
+        public DbSet<ShortAnswerEntity> ShortAnswers { get; set; }
         public DbSet<CommentEntity> Comments { get; set; }
         public DbSet<CourseEntity> Courses { get; set; }
         public DbSet<ExamEntity> Exams { get; set; }
@@ -43,8 +45,10 @@ namespace PassPast.Web
             builder.Entity<IdentityUserToken<string>>().ToTable("_AuthUserTokens");
 
             //Domain
+
             builder.Entity<AnswerEntity>().ToTable("Answers");
-            builder.Entity<AnswerTypeEntity>().ToTable("AnswerTypes");
+            builder.Entity<ShortAnswerEntity>().ToTable("ShortAnswers");
+            builder.Entity<McqAnswerEntity>().ToTable("McaAnswers");
             builder.Entity<CourseEntity>().ToTable("Courses");
             builder.Entity<ExamEntity>().ToTable("Exams");
             builder.Entity<PaperEntity>().ToTable("Papers");
@@ -52,10 +56,25 @@ namespace PassPast.Web
             builder.Entity<VoteEntity>().ToTable("Votes");
 
             //Mappings
-            builder.Entity<CommentEntity>().HasOne(x => x.CreatedBy);
-            builder.Entity<ExamEntity>().HasOne(x => x.CreatedBy).WithMany(x => x.ExamsCreated);//.casWillCascadeOnDelete(false);
-            builder.Entity<VoteEntity>().HasOne(x => x.VotedBy);
+            builder.Entity<ApplicationUser>().HasMany(x => x.CoursesCreated).WithOne(x => x.CreatedBy);
+            builder.Entity<ApplicationUser>().HasMany(x => x.PapersCreated).WithOne(x => x.CreatedBy);
+            builder.Entity<ApplicationUser>().HasMany(x => x.ExamsCreated).WithOne(x => x.CreatedBy);
+            builder.Entity<ApplicationUser>().HasMany(x => x.QuestionsCreated).WithOne(x => x.CreatedBy);
+            builder.Entity<ApplicationUser>().HasMany(x => x.AnswersCreated).WithOne(x => x.CreatedBy);
+            builder.Entity<ApplicationUser>().HasMany(x => x.McqAnswersCreated).WithOne(x => x.CreatedBy);
+            builder.Entity<ApplicationUser>().HasMany(x => x.ShortAnswersCreated).WithOne(x => x.CreatedBy);
+            builder.Entity<ApplicationUser>().HasMany(x => x.CommentsCreated).WithOne(x => x.CreatedBy);
+            builder.Entity<ApplicationUser>().HasMany(x => x.VotesCreated).WithOne(x => x.CreatedBy);
 
+            builder.Entity<ApplicationUser>().HasMany(x => x.CoursesUpdated).WithOne(x => x.UpdatedBy);
+            builder.Entity<ApplicationUser>().HasMany(x => x.PapersUpdated).WithOne(x => x.UpdatedBy);
+            builder.Entity<ApplicationUser>().HasMany(x => x.ExamsUpdated).WithOne(x => x.UpdatedBy);
+            builder.Entity<ApplicationUser>().HasMany(x => x.QuestionsUpdated).WithOne(x => x.UpdatedBy);
+            builder.Entity<ApplicationUser>().HasMany(x => x.AnswersUpdated).WithOne(x => x.UpdatedBy);
+            builder.Entity<ApplicationUser>().HasMany(x => x.McqAnswersUpdated).WithOne(x => x.UpdatedBy);
+            builder.Entity<ApplicationUser>().HasMany(x => x.ShortAnswersUpdated).WithOne(x => x.UpdatedBy);
+            builder.Entity<ApplicationUser>().HasMany(x => x.CommentsUpdated).WithOne(x => x.UpdatedBy);
+            builder.Entity<ApplicationUser>().HasMany(x => x.VotesUpdated).WithOne(x => x.UpdatedBy);
         }
     }
 }

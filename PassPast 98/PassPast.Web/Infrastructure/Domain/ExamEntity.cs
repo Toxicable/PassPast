@@ -1,5 +1,5 @@
 ﻿using PassPast.Web;
-using OAuthAPI.Data;
+using PassPast.Web.Infrastructure.Data;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -16,8 +16,6 @@ namespace PassPast.Data
         public int PaperId { get; set; }
         public PaperEntity Paper { get; set; }
         public ICollection<QuestionEntity> Questions { get; set; }
-        public string CreatedById { get; set; }
-        public ApplicationUser CreatedBy { get; set; }
 
 	}
 

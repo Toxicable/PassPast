@@ -20,7 +20,6 @@ namespace PassPast.Web.Controllers
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly ApplicationDbContext _applicationDbContext;
         private readonly IExternalAuthorizationManager _externalAuthManager;
-        private static bool _databaseChecked;
 
         public AccountController(
             UserManager<ApplicationUser> userManager,

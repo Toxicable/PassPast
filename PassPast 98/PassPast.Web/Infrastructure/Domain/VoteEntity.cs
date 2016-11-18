@@ -1,11 +1,11 @@
 ﻿using PassPast.Web;
-using OAuthAPI.Data;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using PassPast.Web.Infrastructure.Data;
 
 namespace PassPast.Data.Domain
 {
@@ -13,9 +13,6 @@ namespace PassPast.Data.Domain
     {
         [Range(-1, 1)]
         public int Value { get; set; }
-        public DateTimeOffset VotedAt { get; set; }
-        public string VotedById { get; set; }
-        public ApplicationUser VotedBy { get; set; }
     }
 
     public enum VoteType

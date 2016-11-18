@@ -1,11 +1,11 @@
 ﻿using PassPast.Web;
-using OAuthAPI.Data;
 using PassPast.Data.Domain;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
+using PassPast.Web.Infrastructure.Data;
 
 namespace PassPast.Data
 {
@@ -13,10 +13,7 @@ namespace PassPast.Data
 	{
 		public string Content { get; set; }
         public ICollection<VoteEntity> Votes { get; set; }
-		public DateTimeOffset PostedAt { get; set; }
         public int QuestionId { get; set; }
         public QuestionEntity Question { get; set; }
-        public string CreatedById { get; set; }
-        public ApplicationUser CreatedBy { get; set; }
     }
 }

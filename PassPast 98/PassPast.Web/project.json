@@ -31,9 +31,8 @@
     "Microsoft.AspNet.SignalR.Owin": "1.2.2",
     "Microsoft.EntityFrameworkCore": "1.1.0",
     "Microsoft.EntityFrameworkCore.SqlServer": "1.1.0",
-    "Microsoft.EntityFrameworkCore.Design": "1.1.0",
-    "Microsoft.EntityFrameworkCore.Tools": {
-      "version": "1.1.0-preview4-final",
+    "Microsoft.EntityFrameworkCore.Design": {
+      "version": "1.1.0",
       "type": "build"
     }
   },

@@ -42,7 +42,6 @@ namespace PassPast.Web
                 // should contain
                 //ConnectionStrings:DefaultConnection
                 //Authentication:External:Facebook:appToken
-                //Authentication:CertPassword
                 builder.AddUserSecrets("PassPast.Web");
             }
 
@@ -53,9 +52,6 @@ namespace PassPast.Web
         
         public void ConfigureServices(IServiceCollection services)
         {
-
-            //services.AddMvc(options => { options.Filters.Add(new RequireHttpsAttribute()); });
-
             var env = services.BuildServiceProvider().GetRequiredService<IHostingEnvironment>();
 
             services.AddSingleton<IConfiguration>(Configuration);
@@ -99,18 +95,17 @@ namespace PassPast.Web
                .AddMvcBinders()
                .EnableTokenEndpoint("/connect/token")
                .AllowPasswordFlow()
-               .AllowRefreshTokenFlow() 
+               .AllowRefreshTokenFlow()
                .AllowCustomFlow("urn:ietf:params:oauth:grant-type:external_identity_token")
                .SetAccessTokenLifetime(TimeSpan.FromMinutes(double.Parse(Configuration["Authentication:TokenLifespan"])));
-            
-               //.AddSigningCertificate(typeof(Startup).GetTypeInfo().Assembly, "PassPast.Web.Certificate.pfx", Configuration["Authentication:CertPassword"]);
-               //builder.AddSigningCertificate
 
             if (env.IsDevelopment())
             {
                 builder.AddEphemeralSigningKey();
-            }else
+            }
+            else
             {
+                services.AddMvc(options => { options.Filters.Add(new RequireHttpsAttribute()); });
                 builder.AddSigningCertificate(Configuration["WEBSITE_LOAD_CERTIFICATES"]);
             }
 
@@ -118,7 +113,7 @@ namespace PassPast.Web
             {
                 options.AllowInsecureHttp = env.IsDevelopment();
             });
-            
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

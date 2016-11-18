@@ -1,4 +1,4 @@
-﻿using OAuthAPI.Data;
+﻿using PassPast.Web.Infrastructure.Data;
 using System.Collections.Generic;
 
 namespace PassPast.Data
