@@ -5,8 +5,9 @@ using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using PassPast.Web;
 using PassPast.Data;
+using PassPast.Web.Infrastructure.Entities;
 
-namespace PassPast.Web.Migrations
+namespace PassPast.Database.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
     partial class ApplicationDbContextModelSnapshot : ModelSnapshot
@@ -506,7 +507,7 @@ namespace PassPast.Web.Migrations
 
                     b.HasIndex("UpdatedById");
 
-                    b.ToTable("McqAnswers");
+                    b.ToTable("McaAnswers");
                 });
 
             modelBuilder.Entity("PassPast.Web.Infrastructure.Domain.ShortAnswerEntity", b =>

@@ -1,9 +1,0 @@
-<h1>Papers</h1>
-
-<div>
-    <div *ngFor="let paper of papers$ | async" [routerLink]="paper.id">
-        {{paper.id}}
-        {{paper.name}}
-        {{paper.courseId}}
-    </div>
-</div>

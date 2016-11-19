@@ -5,13 +5,15 @@ using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using PassPast.Web;
 using PassPast.Data;
+using PassPast.Web.Infrastructure.Entities;
 
-namespace PassPast.Web.Migrations
+namespace PassPast.Database.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20161118225227_InitialMigration")]
+    partial class InitialMigration
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
             modelBuilder
                 .HasAnnotation("ProductVersion", "1.1.0-rtm-22752")
@@ -506,7 +508,7 @@ namespace PassPast.Web.Migrations
 
                     b.HasIndex("UpdatedById");
 
-                    b.ToTable("McqAnswers");
+                    b.ToTable("McaAnswers");
                 });
 
             modelBuilder.Entity("PassPast.Web.Infrastructure.Domain.ShortAnswerEntity", b =>

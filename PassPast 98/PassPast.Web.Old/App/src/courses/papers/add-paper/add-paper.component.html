@@ -1,8 +1,0 @@
-<form [formGroup]="newPaperForm" (ngSubmit)="onSubmit()" >
-    <div>
-        <md-input placeholder="Name" formControlName="name"></md-input>
-        <control-messages [control]="newPaperForm.controls.name"></control-messages>
-    </div>
-
-    <button md-raised-button color="primary" type="submit" [disabled]="!newPaperForm.valid" >Submit</button>
-</form>

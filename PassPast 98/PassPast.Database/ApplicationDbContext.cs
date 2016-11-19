@@ -48,7 +48,7 @@ namespace PassPast.Web
 
             builder.Entity<AnswerEntity>().ToTable("Answers");
             builder.Entity<ShortAnswerEntity>().ToTable("ShortAnswers");
-            builder.Entity<McqAnswerEntity>().ToTable("McqAnswers");
+            builder.Entity<McqAnswerEntity>().ToTable("McaAnswers");
             builder.Entity<CourseEntity>().ToTable("Courses");
             builder.Entity<ExamEntity>().ToTable("Exams");
             builder.Entity<PaperEntity>().ToTable("Papers");
