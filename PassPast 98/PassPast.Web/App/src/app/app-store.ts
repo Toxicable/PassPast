@@ -7,6 +7,7 @@ import { usersReducer }       from '../+admin/users/user-reducer';
 import { authReducer, AuthState }  from '../core/auth-store/auth.store';
 import { loadingBarReducer } from '../core/loading-bar/loading-bar.reducer';
 import { alertReducer } from '../core/alert/alert.reducer';
+import { CoursesState, coursesReducer } from '../courses/courses.store';
 
 export interface AppState{
     users: User[],
@@ -14,6 +15,7 @@ export interface AppState{
     auth: AuthState,
     loading: boolean,
     appStarting: boolean,
+    courses: CoursesState
 }
 
 export const appStore = StoreModule
@@ -21,6 +23,6 @@ export const appStore = StoreModule
         users: usersReducer,
         alerts: alertReducer,
         loading: loadingBarReducer,
-        auth: authReducer
-    }
-);
+        auth: authReducer,
+        courses: coursesReducer
+    });

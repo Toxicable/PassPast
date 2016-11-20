@@ -53,6 +53,11 @@
   },
 
   "buildOptions": {
+    "compile": {
+      "exclude": [
+        "App/node_modules"
+      ]
+    },
     "emitEntryPoint": true,
     "preserveCompilationContext": true
   },
