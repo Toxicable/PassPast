@@ -11,13 +11,13 @@ namespace PassPast.Data.Domain
 {
     public class VoteEntity : Entity
     {
-        [Range(-1, 1)]
-        public int Value { get; set; }
+        [Required]
+        public VoteType Type { get; set; }
     }
 
     public enum VoteType
     {
-        Comment,
-        Answer
+        Up,
+        Down
     }
 }

@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace PassPast.Database.Migrations
+namespace PassPast.Web.Migrations
 {
-    public partial class RenameMcaToMcq : Migration
+    public partial class addedingvalidationtothebasemodel : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {

@@ -8,7 +8,6 @@ using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using System.IO;
 using PassPast.Web.Extentions;
-using PassPast.Web;
 using AutoMapper;
 using PassPast.Web.Api.Questions;
 using PassPast.Web.Api.Exams;
@@ -19,16 +18,12 @@ using IConfiguration = Microsoft.Extensions.Configuration.IConfiguration;
 using PassPast.Web.Controllers;
 using System;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Http;
-
 using Microsoft.AspNetCore.Rewrite;
-using System.Reflection;
 
 namespace PassPast.Web
 {
     public class Startup
     {
-
         public Startup(IHostingEnvironment env)
         {
             var builder = new ConfigurationBuilder()

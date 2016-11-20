@@ -4,14 +4,14 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using PassPast.Web;
+using PassPast.Data.Domain;
 using PassPast.Data;
-using PassPast.Web.Infrastructure.Entities;
 
-namespace PassPast.Database.Migrations
+namespace PassPast.Web.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20161118225227_InitialMigration")]
-    partial class InitialMigration
+    [Migration("20161119033704_more validation")]
+    partial class morevalidation
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -202,7 +202,8 @@ namespace PassPast.Database.Migrations
 
                     b.Property<DateTimeOffset>("CreatedAt");
 
-                    b.Property<string>("CreatedById");
+                    b.Property<string>("CreatedById")
+                        .IsRequired();
 
                     b.Property<bool>("Deleted");
 
@@ -230,11 +231,13 @@ namespace PassPast.Database.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<string>("Content");
+                    b.Property<string>("Content")
+                        .IsRequired();
 
                     b.Property<DateTimeOffset>("CreatedAt");
 
-                    b.Property<string>("CreatedById");
+                    b.Property<string>("CreatedById")
+                        .IsRequired();
 
                     b.Property<bool>("Deleted");
 
@@ -262,17 +265,20 @@ namespace PassPast.Database.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<string>("Code");
+                    b.Property<string>("Code")
+                        .IsRequired();
 
                     b.Property<DateTimeOffset>("CreatedAt");
 
-                    b.Property<string>("CreatedById");
+                    b.Property<string>("CreatedById")
+                        .IsRequired();
 
                     b.Property<bool>("Deleted");
 
                     b.Property<bool>("Hidden");
 
-                    b.Property<string>("Name");
+                    b.Property<string>("Name")
+                        .IsRequired();
 
                     b.Property<DateTimeOffset?>("UpdatedAt");
 
@@ -298,17 +304,18 @@ namespace PassPast.Database.Migrations
 
                     b.Property<DateTimeOffset>("CreatedAt");
 
-                    b.Property<string>("CreatedById");
+                    b.Property<string>("CreatedById")
+                        .IsRequired();
 
                     b.Property<bool>("Deleted");
 
                     b.Property<bool>("Hidden");
 
+                    b.Property<int>("Type");
+
                     b.Property<DateTimeOffset?>("UpdatedAt");
 
                     b.Property<string>("UpdatedById");
-
-                    b.Property<int>("Value");
 
                     b.HasKey("Id");
 
@@ -330,7 +337,8 @@ namespace PassPast.Database.Migrations
 
                     b.Property<DateTimeOffset>("CreatedAt");
 
-                    b.Property<string>("CreatedById");
+                    b.Property<string>("CreatedById")
+                        .IsRequired();
 
                     b.Property<bool>("Deleted");
 
@@ -366,13 +374,15 @@ namespace PassPast.Database.Migrations
 
                     b.Property<DateTimeOffset>("CreatedAt");
 
-                    b.Property<string>("CreatedById");
+                    b.Property<string>("CreatedById")
+                        .IsRequired();
 
                     b.Property<bool>("Deleted");
 
                     b.Property<bool>("Hidden");
 
-                    b.Property<string>("Name");
+                    b.Property<string>("Name")
+                        .IsRequired();
 
                     b.Property<DateTimeOffset?>("UpdatedAt");
 
@@ -396,7 +406,8 @@ namespace PassPast.Database.Migrations
 
                     b.Property<DateTimeOffset>("CreatedAt");
 
-                    b.Property<string>("CreatedById");
+                    b.Property<string>("CreatedById")
+                        .IsRequired();
 
                     b.Property<bool>("Deleted");
 
@@ -488,7 +499,8 @@ namespace PassPast.Database.Migrations
 
                     b.Property<DateTimeOffset>("CreatedAt");
 
-                    b.Property<string>("CreatedById");
+                    b.Property<string>("CreatedById")
+                        .IsRequired();
 
                     b.Property<bool>("Deleted");
 
@@ -508,7 +520,7 @@ namespace PassPast.Database.Migrations
 
                     b.HasIndex("UpdatedById");
 
-                    b.ToTable("McaAnswers");
+                    b.ToTable("McqAnswers");
                 });
 
             modelBuilder.Entity("PassPast.Web.Infrastructure.Domain.ShortAnswerEntity", b =>
@@ -518,11 +530,13 @@ namespace PassPast.Database.Migrations
 
                     b.Property<int>("AnswerId");
 
-                    b.Property<string>("Content");
+                    b.Property<string>("Content")
+                        .IsRequired();
 
                     b.Property<DateTimeOffset>("CreatedAt");
 
-                    b.Property<string>("CreatedById");
+                    b.Property<string>("CreatedById")
+                        .IsRequired();
 
                     b.Property<bool>("Deleted");
 
@@ -616,7 +630,8 @@ namespace PassPast.Database.Migrations
                 {
                     b.HasOne("PassPast.Web.ApplicationUser", "CreatedBy")
                         .WithMany("AnswersCreated")
-                        .HasForeignKey("CreatedById");
+                        .HasForeignKey("CreatedById")
+                        .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("PassPast.Data.QuestionEntity", "Question")
                         .WithMany("Answers")
@@ -632,7 +647,8 @@ namespace PassPast.Database.Migrations
                 {
                     b.HasOne("PassPast.Web.ApplicationUser", "CreatedBy")
                         .WithMany("CommentsCreated")
-                        .HasForeignKey("CreatedById");
+                        .HasForeignKey("CreatedById")
+                        .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("PassPast.Data.QuestionEntity", "Question")
                         .WithMany("Comments")
@@ -667,7 +683,8 @@ namespace PassPast.Database.Migrations
 
                     b.HasOne("PassPast.Web.ApplicationUser", "CreatedBy")
                         .WithMany("VotesCreated")
-                        .HasForeignKey("CreatedById");
+                        .HasForeignKey("CreatedById")
+                        .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("PassPast.Web.ApplicationUser", "UpdatedBy")
                         .WithMany("VotesUpdated")
@@ -678,7 +695,8 @@ namespace PassPast.Database.Migrations
                 {
                     b.HasOne("PassPast.Web.ApplicationUser", "CreatedBy")
                         .WithMany("ExamsCreated")
-                        .HasForeignKey("CreatedById");
+                        .HasForeignKey("CreatedById")
+                        .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("PassPast.Data.PaperEntity", "Paper")
                         .WithMany("Exams")
@@ -699,7 +717,8 @@ namespace PassPast.Database.Migrations
 
                     b.HasOne("PassPast.Web.ApplicationUser", "CreatedBy")
                         .WithMany("PapersCreated")
-                        .HasForeignKey("CreatedById");
+                        .HasForeignKey("CreatedById")
+                        .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("PassPast.Web.ApplicationUser", "UpdatedBy")
                         .WithMany("PapersUpdated")
@@ -710,7 +729,8 @@ namespace PassPast.Database.Migrations
                 {
                     b.HasOne("PassPast.Web.ApplicationUser", "CreatedBy")
                         .WithMany("QuestionsCreated")
-                        .HasForeignKey("CreatedById");
+                        .HasForeignKey("CreatedById")
+                        .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("PassPast.Data.ExamEntity", "Exam")
                         .WithMany("Questions")
@@ -731,7 +751,8 @@ namespace PassPast.Database.Migrations
 
                     b.HasOne("PassPast.Web.ApplicationUser", "CreatedBy")
                         .WithMany("McqAnswersCreated")
-                        .HasForeignKey("CreatedById");
+                        .HasForeignKey("CreatedById")
+                        .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("PassPast.Web.ApplicationUser", "UpdatedBy")
                         .WithMany("McqAnswersUpdated")
@@ -747,7 +768,8 @@ namespace PassPast.Database.Migrations
 
                     b.HasOne("PassPast.Web.ApplicationUser", "CreatedBy")
                         .WithMany("ShortAnswersCreated")
-                        .HasForeignKey("CreatedById");
+                        .HasForeignKey("CreatedById")
+                        .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("PassPast.Web.ApplicationUser", "UpdatedBy")
                         .WithMany("ShortAnswersUpdated")

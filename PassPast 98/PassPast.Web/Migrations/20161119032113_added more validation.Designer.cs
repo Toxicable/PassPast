@@ -4,15 +4,16 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using PassPast.Web;
+using PassPast.Data.Domain;
 using PassPast.Data;
-using PassPast.Web.Infrastructure.Entities;
 
-namespace PassPast.Database.Migrations
+namespace PassPast.Web.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20161119032113_added more validation")]
+    partial class addedmorevalidation
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
             modelBuilder
                 .HasAnnotation("ProductVersion", "1.1.0-rtm-22752")
@@ -229,7 +230,8 @@ namespace PassPast.Database.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<string>("Content");
+                    b.Property<string>("Content")
+                        .IsRequired();
 
                     b.Property<DateTimeOffset>("CreatedAt");
 
@@ -261,7 +263,8 @@ namespace PassPast.Database.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<string>("Code");
+                    b.Property<string>("Code")
+                        .IsRequired();
 
                     b.Property<DateTimeOffset>("CreatedAt");
 
@@ -271,7 +274,8 @@ namespace PassPast.Database.Migrations
 
                     b.Property<bool>("Hidden");
 
-                    b.Property<string>("Name");
+                    b.Property<string>("Name")
+                        .IsRequired();
 
                     b.Property<DateTimeOffset?>("UpdatedAt");
 
@@ -303,11 +307,11 @@ namespace PassPast.Database.Migrations
 
                     b.Property<bool>("Hidden");
 
+                    b.Property<int>("Type");
+
                     b.Property<DateTimeOffset?>("UpdatedAt");
 
                     b.Property<string>("UpdatedById");
-
-                    b.Property<int>("Value");
 
                     b.HasKey("Id");
 
@@ -371,7 +375,8 @@ namespace PassPast.Database.Migrations
 
                     b.Property<bool>("Hidden");
 
-                    b.Property<string>("Name");
+                    b.Property<string>("Name")
+                        .IsRequired();
 
                     b.Property<DateTimeOffset?>("UpdatedAt");
 
@@ -507,7 +512,7 @@ namespace PassPast.Database.Migrations
 
                     b.HasIndex("UpdatedById");
 
-                    b.ToTable("McaAnswers");
+                    b.ToTable("McqAnswers");
                 });
 
             modelBuilder.Entity("PassPast.Web.Infrastructure.Domain.ShortAnswerEntity", b =>
@@ -517,7 +522,8 @@ namespace PassPast.Database.Migrations
 
                     b.Property<int>("AnswerId");
 
-                    b.Property<string>("Content");
+                    b.Property<string>("Content")
+                        .IsRequired();
 
                     b.Property<DateTimeOffset>("CreatedAt");
 

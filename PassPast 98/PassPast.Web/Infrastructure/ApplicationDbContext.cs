@@ -5,6 +5,7 @@ using OpenIddict;
 using PassPast.Data;
 using PassPast.Data.Domain;
 using PassPast.Web.Infrastructure.Domain;
+using Microsoft.EntityFrameworkCore.Metadata;
 
 namespace PassPast.Web
 {
@@ -56,9 +57,9 @@ namespace PassPast.Web
             builder.Entity<VoteEntity>().ToTable("Votes");
 
             //Mappings
-            builder.Entity<ApplicationUser>().HasMany(x => x.CoursesCreated).WithOne(x => x.CreatedBy);
+            builder.Entity<ApplicationUser>().HasMany(x => x.CoursesCreated).WithOne(x => x.CreatedBy).OnDelete(DeleteBehavior.SetNull);
             builder.Entity<ApplicationUser>().HasMany(x => x.PapersCreated).WithOne(x => x.CreatedBy);
-            builder.Entity<ApplicationUser>().HasMany(x => x.ExamsCreated).WithOne(x => x.CreatedBy);
+            builder.Entity<ApplicationUser>().HasMany(x => x.ExamsCreated).WithOne(x => x.CreatedBy).OnDelete(DeleteBehavior.SetNull);
             builder.Entity<ApplicationUser>().HasMany(x => x.QuestionsCreated).WithOne(x => x.CreatedBy);
             builder.Entity<ApplicationUser>().HasMany(x => x.AnswersCreated).WithOne(x => x.CreatedBy);
             builder.Entity<ApplicationUser>().HasMany(x => x.McqAnswersCreated).WithOne(x => x.CreatedBy);
