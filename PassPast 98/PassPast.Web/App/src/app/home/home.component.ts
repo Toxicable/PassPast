@@ -6,6 +6,7 @@ import {AppState} from '../app-store';
 import {Store} from '@ngrx/store';
 import { AuthTokenService } from '../../core/auth-token/auth-token.service';
 import { AuthHttp } from '../../core/auth-http/auth-http.service';
+import { Storage } from '../../core/storage';
 
 
         declare let $: any;
@@ -15,47 +16,11 @@ import { AuthHttp } from '../../core/auth-http/auth-http.service';
 })
 export class HomeComponent {
 constructor(    private router: Router,
-                private alertService: AlertService,
-                private tokens: AuthTokenService,
-                private store: Store<AppState>,
-                private authHttp: AuthHttp
+                // private alertService: AlertService,
+                // private tokens: AuthTokenService,
+                // private store: Store<AppState>,
+                // private authHttp: AuthHttp,
+                // private storage: Storage
     ){}
-
-    testAuth() {
-        this.authHttp.get("values")
-            .subscribe(
-                x => this.alertService.sendSuccess("all goods"),
-                error => this.alertService.sendWarning(error)
-            )
-    }
-
-    hub: any
-    messages: string[] = ["Testa 1", "test 2"];
-
-    connect(){
-        this.hub = $.connection.echoHub;
-        $.connection.hub.logging = true;
-        this.hub.client.broadCast = (message: string) => {
-            console.log(this.messages)
-            this.messages.push(message)
-        }
-
-        $.connection.hub.start().done(() => {
-            console.log("Connected")
-        })
-    }
-
-    echo(){        
-        this.hub.server.broadcast("I am number 1");
-    }
-
-    openAlert(){
-        this.alertService.sendSuccess("Hello", 10000);
-    }
-
-    refreshTokens() {
-        this.tokens.refreshTokens()
-            .subscribe()
-    }
 
 }

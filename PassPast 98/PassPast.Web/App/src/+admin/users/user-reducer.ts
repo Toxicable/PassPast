@@ -1,7 +1,7 @@
 import { ActionReducer, Action } from '@ngrx/store';
 import { User } from '../models/user';
 
-export const usersReducer: ActionReducer<User[]> = (state: User[] = [], action: Action) => {
+export function usersReducer(state: User[] = [], action: Action): User[]{
     switch (action.type){
         case "GET_USERS":
             return action.payload;

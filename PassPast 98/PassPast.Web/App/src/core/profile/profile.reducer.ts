@@ -5,7 +5,7 @@ import { AppState } from '../../app/app-store';
 import { ProfileActionTypes } from './profile.actions';
 
 const initialState: ProfileModel = {
-    role: [],
+    role: [""],
     sub: null,
     jti: null,
     at_hash: null,
@@ -16,10 +16,11 @@ const initialState: ProfileModel = {
     iss: null,
     unique_name: null,
     email_confirmed: false,
-    given_name: null,
+    first_name: null,
+    last_name: null
 }
  
-export const profileReducer = (state = initialState, action: Action): ProfileModel => {
+export function profileReducer(state = initialState, action: Action): ProfileModel{
     switch (action.type){
         case ProfileActionTypes.LOAD:
             return action.payload

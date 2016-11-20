@@ -11,5 +11,6 @@ export interface ProfileModel{
     unique_name: string;
     email_confirmed: boolean;
     role: string[];
-    given_name: string;
+    first_name: string;
+    last_name: string;
 }

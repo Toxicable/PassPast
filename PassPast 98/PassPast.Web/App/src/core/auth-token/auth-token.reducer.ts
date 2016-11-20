@@ -12,7 +12,7 @@ const initalState: AuthTokenModel ={
     token_type: null
 }
 
-export const authTokenReducer = (state = initalState, action: Action): AuthTokenModel => {
+export function authTokenReducer(state = initalState, action: Action): AuthTokenModel{
     switch (action.type){
         case AuthTokenActionTypes.LOAD:
             return action.payload;

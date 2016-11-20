@@ -20,6 +20,7 @@ import { AuthTokenActions } from './auth-token/auth-token.actions';
 import { AlertActions } from './alert/alert.actions';
 import { LoadingBarActions } from './loading-bar/loading-bar.actions';
 import { AuthReadyActions } from './auth-store/auth-ready.actions';
+import { MaterialModule } from '@angular/material';
 
 
 @NgModule({

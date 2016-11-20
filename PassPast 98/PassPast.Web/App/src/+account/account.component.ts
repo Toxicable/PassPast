@@ -4,11 +4,6 @@ import { FormGroup, FormBuilder, Validators } from "@angular/forms";
 import { FormValidationService } from "../core/services/form-validation.service";
 import { AlertService } from '../core/alert/alert.service';
 import { AccountService } from '../core/account/account.service';
-import { Observer } from 'rxjs';
-import { Observable } from 'rxjs/Observable';
-import { ProfileModel } from '../core/models/profile-model';
-import { Store } from '@ngrx/store';
-import { AppState } from '../app/app-store';
 
 @Component({
     selector: 'account',
@@ -19,13 +14,11 @@ export class AccountComponent implements OnInit {
                 private formBuilder: FormBuilder,
                 private formValidator: FormValidationService,
                 private account: AccountService,
-                private alert: AlertService,
-                private store: Store<AppState>
+                private alert: AlertService
     ) { }
     
     resetPasswordForm: FormGroup;
     errors: string[];
-    given_name$: Observable<string>
 
     ngOnInit() {
         this.resetPasswordForm = this.formBuilder.group({
@@ -35,8 +28,6 @@ export class AccountComponent implements OnInit {
                 confirmPassword: ['', [Validators.required, this.formValidator.passwordValidator]]
             }, {validator: this.formValidator.passwordComparisonValidator})
         });
-
-        this.given_name$ = this.store.map(state => state.auth.profile.given_name);
     }
 
     submitChangePassword(){

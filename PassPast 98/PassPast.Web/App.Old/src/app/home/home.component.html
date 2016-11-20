@@ -1,0 +1,11 @@
+
+<button md-raised-button color="primary" (click)="testAuth()" >Test to see if you're loged in</button>
+{{testResult}}
+
+<div *ngFor="let number of test$ | async">number</div>
+
+<button md-raised-button color="primary" (click)="testToken()">testToken</button>
+
+<button md-raised-button color="primary" (click)="connect()">connect</button>
+<button md-raised-button color="primary" (click)="echo()">send</button>
+<button md-raised-button (click)="openAlert()">Open Alert</button>

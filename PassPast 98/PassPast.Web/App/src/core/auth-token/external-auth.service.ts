@@ -2,12 +2,14 @@ import { Injectable } from '@angular/core';
 import { Http, Response } from '@angular/http';
 import { Logger } from '../logger';
 import { ExternalRegistrationModel } from '../models/external-registration-model';
-import * as appSettings from '../../app-settings';
 import { Observable } from 'rxjs/Observable';
 import { Observer } from 'rxjs'
 import { AccountService } from '../account/account.service';
 
+declare let FB: any;
+declare let gapi: any;
 
+//TODO: make this into a swappable service
 @Injectable()
 export class ExternalAuthService {
 
@@ -18,7 +20,7 @@ export class ExternalAuthService {
 
     init(){
         FB.init({
-            appId      : appSettings.appSettings.auth.external.facebookAppId,
+            appId      : "",//appSettings.appSettings.auth.external.facebookAppId,
             status     : true,
             cookie     : true,
             xfbml      : false,
@@ -65,7 +67,7 @@ export class ExternalAuthService {
     private authorizeFacebook(): Observable<any> {
         return Observable.create( (observer: Observer<any>) => {
             try{
-                FB.login(response => {
+                FB.login((response: any) => {
                 observer.next(response.authResponse.accessToken)
                 observer.complete
             },{scope: 'email'})
@@ -80,9 +82,9 @@ export class ExternalAuthService {
         return Observable.create((observer: Observer<any>) => {
             try{
                 gapi.auth.authorize({
-                    client_id: appSettings.appSettings.auth.external.googleClientId,
+                    client_id: "",//appSettings.appSettings.auth.external.googleClientId,
                     scope: 'profile'
-                }, token => {
+                }, (token: any) => {
                     observer.next(token.access_token)
                     observer.complete()
                 });

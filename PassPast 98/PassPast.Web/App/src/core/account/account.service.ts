@@ -34,16 +34,12 @@ export class AccountService {
 
 
     register(data: RegisterModel): Observable<Response> {
-        return this.loadingBar.doWithLoader(
-            this.http.post("api/account/create", data)
+        return this.http.post("api/account/create", data)
             .catch( this.httpExceptions.handleError )
-        )
     }
 
     externalRegister(model: ExternalRegistrationModel){
-        return this.loadingBar.doWithLoader(
-            this.http.post('/api/account/registerexternal', model)
-        )
+        return this.http.post('/api/account/registerexternal', model)
     }
 
     externalLogin(model: ExternalLoginModel){
@@ -56,7 +52,8 @@ export class AccountService {
             .do(res => this.authTokens.scheduleRefresh() )
     }
 
-    sendForgotPassword( data ){
+//TODO: give this a model
+    sendForgotPassword(data: any){
         return this.authHttp.post("/account/SendForgotPassword", data)
     }
 

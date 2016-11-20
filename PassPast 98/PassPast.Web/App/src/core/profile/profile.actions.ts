@@ -18,10 +18,9 @@ export class ProfileActions{
             payload
         }
     }
-    Delete(payload = null): Action{
+    Delete(): Action{
         return {
-            type: ProfileActionTypes.DELETE,
-            payload
+            type: ProfileActionTypes.DELETE
         }
     }
 }

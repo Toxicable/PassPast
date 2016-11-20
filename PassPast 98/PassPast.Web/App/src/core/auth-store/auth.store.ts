@@ -15,10 +15,14 @@ export interface AuthState{
     authReady: boolean
 }
 
-
-export const authReducer: ActionReducer<AuthState> = combineReducers({
+const reducers = combineReducers({
     profile: profileReducer,
     authTokens: authTokenReducer,
     loggedIn: loggedInReducer,
     authReady: authReadyReducer
 });
+
+
+export function authReducer( state: any, action: any ): ActionReducer<AuthState>{
+    return reducers(state, action);    
+}

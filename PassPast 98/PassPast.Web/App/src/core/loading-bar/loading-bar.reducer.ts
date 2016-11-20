@@ -5,7 +5,7 @@ import { LoadingBarActionTypes } from './loading-bar.actions';
 
 const initalState: boolean = false;
 
-export const loadingBarReducer = (state = initalState, action: Action): boolean => {
+export function loadingBarReducer(state = initalState, action: Action): boolean{
     switch (action.type){
         case LoadingBarActionTypes.START:
             return true;

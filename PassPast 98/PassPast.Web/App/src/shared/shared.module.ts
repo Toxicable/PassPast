@@ -6,6 +6,7 @@ import {HttpModule} from "@angular/http";
 import {ReactiveFormsModule} from "@angular/forms";
 import {ControlMessagesComponent} from "./form-validation/control-messages.component";
 import {LoadingBarComponent} from "./loading-bar/loading-bar.component";
+import {FileUploadComponent} from "./file-upload/file-upload.component";
 import {DefaultValuePipe} from "./pipes/default-value/default-value.pipe";
 import {MaterialModule} from '@angular/material';
 import {RxContextDirective} from './directives/rx-context.directive';
@@ -24,6 +25,7 @@ import {RxContextDirective} from './directives/rx-context.directive';
         AlertComponent,
         ControlMessagesComponent,
         ValidationSummaryComponent,
+        FileUploadComponent,
         RxContextDirective
     ],
     exports: [
@@ -35,7 +37,8 @@ import {RxContextDirective} from './directives/rx-context.directive';
         AlertComponent,
         ControlMessagesComponent,
         CommonModule,
-        ValidationSummaryComponent
+        ValidationSummaryComponent,
+        FileUploadComponent
     ]
 })
 export class SharedModule {}

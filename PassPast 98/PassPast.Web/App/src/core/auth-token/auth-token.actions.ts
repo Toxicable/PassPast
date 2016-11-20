@@ -10,10 +10,9 @@ export const AuthTokenActionTypes = {
 
 @Injectable()
 export class AuthTokenActions{
-    Delete(payload = null): Action{
+    Delete(): Action{
         return {
-            type: AuthTokenActionTypes.LOAD,
-            payload
+            type: AuthTokenActionTypes.LOAD
         }
     }
     Load(payload: AuthTokenModel): Action{

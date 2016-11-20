@@ -4,7 +4,7 @@ import { AlertActionTypes } from './alert.actions';
 
 const initalState: Alert[] = []
 
-export const alertReducer = (state = initalState, action: Action): Alert[] => {
+export function alertReducer(state = initalState, action: Action): Alert[]{
     switch (action.type){
         case AlertActionTypes.ADD:
             return [

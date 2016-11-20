@@ -6,13 +6,12 @@ import {BadRequest} from "../models/bad-request";
 
 @Injectable()
 export class HttpExceptionService{
-
 //TODO: impove this
     public handleError (res: Response) {
         //TODO: add logging here
 
-        const error = new Error(res.statusText);
-        error['response'] = res;
+        //const error = new Error(res.statusText);
+        //error['response'] = res;
 
         switch (res.status){
             case 400:
@@ -20,7 +19,7 @@ export class HttpExceptionService{
             case 500:
                 return this.handleInternalServerError(res);
             default:
-                Observable.throw(["an Unhandled error occured" + res.status])
+                return Observable.throw(["an Unhandled error occured" + res.status])
         }
     }
 
@@ -28,7 +27,6 @@ export class HttpExceptionService{
         console.log(res);
         return Observable.throw([res.text()]);
     }
-
     public handleTokenBadRequest(res: Response) {
         let badRequest = res.json() as BadTokenRequest;
         let error = badRequest.error_description;
