@@ -19,6 +19,7 @@ using PassPast.Web.Controllers;
 using System;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Rewrite;
+using Microsoft.ApplicationInsights;
 
 namespace PassPast.Web
 {
@@ -38,6 +39,7 @@ namespace PassPast.Web
                 //ConnectionStrings:DefaultConnection
                 //Authentication:External:Facebook:appToken
                 builder.AddUserSecrets("PassPast.Web");
+                builder.AddApplicationInsightsSettings(developerMode: true);
             }
 
             Configuration = builder.Build();
@@ -48,6 +50,8 @@ namespace PassPast.Web
         public void ConfigureServices(IServiceCollection services)
         {
             var env = services.BuildServiceProvider().GetRequiredService<IHostingEnvironment>();
+
+            services.AddApplicationInsightsTelemetry(Configuration);
 
             services.AddSingleton<IConfiguration>(Configuration);
             services.AddTransient<IExternalAuthorizationManager, ExternalAuthorizationManager>();
@@ -114,6 +118,9 @@ namespace PassPast.Web
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
         {
+            app.UseApplicationInsightsRequestTelemetry();
+            app.ApplicationServices.GetService<TelemetryClient>().Context.Properties["Environment"] = env.EnvironmentName;
+
             if (!env.IsDevelopment())
             {
                 var redirectOptions = new RewriteOptions()
@@ -125,7 +132,7 @@ namespace PassPast.Web
             {
                 app.UseDeveloperExceptionPage();
             }
-            
+            app.UseApplicationInsightsExceptionTelemetry();
 
             app.Map("/api", apiApp =>
             {
