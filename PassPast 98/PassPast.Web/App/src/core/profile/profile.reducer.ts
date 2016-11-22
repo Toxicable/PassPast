@@ -1,11 +1,9 @@
-import { ActionReducer, Action, Store } from '@ngrx/store';
+import { Action } from '@ngrx/store';
 import { ProfileModel } from '../models/profile-model';
-import { Injectable } from '@angular/core';
-import { AppState } from '../../app/app-store';
 import { ProfileActionTypes } from './profile.actions';
 
 const initialState: ProfileModel = {
-    role: [""],
+    role: [],
     sub: null,
     jti: null,
     at_hash: null,
@@ -18,17 +16,17 @@ const initialState: ProfileModel = {
     email_confirmed: false,
     first_name: null,
     last_name: null
-}
- 
-export function profileReducer(state = initialState, action: Action): ProfileModel{
-    switch (action.type){
+};
+
+export function profileReducer(state = initialState, action: Action): ProfileModel {
+    switch (action.type) {
         case ProfileActionTypes.LOAD:
-            return action.payload
+            return action.payload;
 
         case ProfileActionTypes.DELETE:
-            return initialState
+            return initialState;
 
         default:
             return state;
     }
-};
+}

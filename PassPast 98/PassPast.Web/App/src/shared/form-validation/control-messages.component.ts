@@ -1,9 +1,9 @@
 import { Component, Input } from '@angular/core';
-import { FormGroup, FormControl } from '@angular/forms';
+import { FormControl } from '@angular/forms';
 import { FormValidationService } from '../../core/services/form-validation.service';
 
 @Component({
-    selector: 'control-messages',
+    selector: 'app-control-messages',
     template: `<div *ngIf="errorMessage !== null">{{errorMessage}}</div>`
 })
 export class ControlMessagesComponent {

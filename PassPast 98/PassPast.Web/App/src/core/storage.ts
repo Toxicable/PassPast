@@ -1,4 +1,4 @@
-import { Observable } from "rxjs";
+import { Observable } from 'rxjs';
 import { Injectable } from '@angular/core';
 
 
@@ -10,16 +10,16 @@ export abstract class StorageBackend {
 
 @Injectable()
 export class Storage {
-    constructor(private storageBackend:StorageBackend){}
+    constructor(private storageBackend: StorageBackend) {}
 
-    setItem(key: string, value: any){
+    setItem(key: string, value: any) {
         return this.storageBackend.setItem(key, JSON.stringify(value));
     }
-    getItem(key: string){
+    getItem(key: string) {
         return this.storageBackend.getItem(key)
             .map(item => JSON.parse(item));
     }
-    removeItem(key: string){
+    removeItem(key: string) {
         return this.storageBackend.removeItem(key);
     }
 }
@@ -27,12 +27,12 @@ export class Storage {
 @Injectable()
 export class LocalStorageBackend implements StorageBackend {
     setItem(key: string, value: string) {
-        return Observable.of( localStorage.setItem(key, value))
+        return Observable.of( localStorage.setItem(key, value));
     }
-    getItem(key: string){
-        return Observable.of( localStorage.getItem(key))
+    getItem(key: string) {
+        return Observable.of( localStorage.getItem(key));
     }
-    removeItem(key: string){
-        return Observable.of( localStorage.removeItem(key))
+    removeItem(key: string) {
+        return Observable.of( localStorage.removeItem(key));
     }
 }

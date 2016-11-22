@@ -6,19 +6,19 @@ import { Injectable } from '@angular/core';
 export const AuthTokenActionTypes = {
     LOAD: type('[AuthToken] Load'),
     DELETE: type('[AuthToken] Delete')
-}
+};
 
 @Injectable()
-export class AuthTokenActions{
-    Delete(): Action{
+export class AuthTokenActions {
+    Delete(): Action {
         return {
             type: AuthTokenActionTypes.LOAD
-        }
+        };
     }
-    Load(payload: AuthTokenModel): Action{
+    Load(payload: AuthTokenModel): Action {
         return {
             type: AuthTokenActionTypes.LOAD,
             payload
-        }
+        };
     }
 }

@@ -1,5 +1,4 @@
-
-export interface ExternalRegistrationModel{
+export interface ExternalRegistrationModel {
     accessToken: string;
-    provider   : string;
+    provider: string;
 }

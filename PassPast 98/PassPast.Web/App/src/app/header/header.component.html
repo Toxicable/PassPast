@@ -17,17 +17,21 @@
         </span>
     </span>
 </md-toolbar>
-<loading-bar></loading-bar>
+<app-loading-bar></app-loading-bar>
 
 <div >
     <div class="left">
-        <a  class="header-navigation__link" [routerLink]="['/account']" routerLinkActive="active-router-link">Account</a>
+        <a  class="header-navigation__link" [routerLink]="['/']" routerLinkActive="active-router-link">Home</a>
+        <a  class="header-navigation__link" [routerLink]="['/auth', 'login']" routerLinkActive="active-router-link">Login</a>
+        <a  class="header-navigation__link" [routerLink]="['/auth', 'register']" routerLinkActive="active-router-link">Register</a>
+        <a  class="header-navigation__link" [routerLink]="['/account']" routerLinkActive="active-router-link">Account</a>        
+        <a  class="header-navigation__link" [routerLink]="['/admin']" routerLinkActive="active-router-link">Admin</a>   
+
         <a  class="header-navigation__link" [routerLink]="['/courses']" routerLinkActive="active-router-link">Courses</a>
         <a  class="header-navigation__link" [routerLink]="['/courses', 1]" routerLinkActive="active-router-link">Papers</a>
         <a  class="header-navigation__link" [routerLink]="['/courses', 1, 2]" routerLinkActive="active-router-link">Exams</a>        
         <a  class="header-navigation__link" [routerLink]="['/courses', 1, 2, 1]" routerLinkActive="active-router-link">Questions</a>          
-    </div>
-
-    
+      
+    </div>    
 </div>
 

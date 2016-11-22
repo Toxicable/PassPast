@@ -1,5 +1,4 @@
-export interface BadRequest{
+export interface BadRequest {
     message: string;
-    modelState: {"": string[]}
-
+    modelState: {'': string[]};
 }

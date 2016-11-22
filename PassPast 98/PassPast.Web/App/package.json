@@ -1,15 +1,12 @@
 {
   "name": "angular-starter",
   "version": "0.0.0",
-  "license": "MIT",
   "angular-cli": {},
   "scripts": {
     "start": "ng serve --proxy-config proxy.conf.json",
-    "start:prod" :"ng serve --proxy-config proxy.conf.json --prod",
-    "start:prod:aot": "ng serve --proxy-config proxy.conf.json --prod --aot",
-    "build": "ng build --prod",
-    "build:aot": "ng build --prod --aot",
-    "aot": "ng build --aot",
+    "start:aot": "ng serve --proxy-config proxy.conf.json --aot --port 3000",
+    "start:prod" :"ng serve --proxy-config proxy.conf.json --prod --aot",
+    "build": "ng build --prod --aot",
     "lint": "tslint \"src/**/*.ts\"",
     "test": "ng test",
     "pree2e": "webdriver-manager update",

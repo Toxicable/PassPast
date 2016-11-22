@@ -1,10 +1,10 @@
-import { LoggedInActionTypes, LoggedInActions } from './logged-in.actions';
+import { LoggedInActionTypes } from './logged-in.actions';
 import { Action } from '@ngrx/store';
 
-const initalState: boolean = false
+const initalState = false;
 
 export const loggedInReducer = (state = initalState, action: Action): boolean => {
-    switch (action.type){
+    switch (action.type) {
         case LoggedInActionTypes.LOGGED_IN:
             return true;
 

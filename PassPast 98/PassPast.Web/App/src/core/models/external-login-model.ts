@@ -1,4 +1,4 @@
-export interface ExternalLoginModel{
+export interface ExternalLoginModel {
     provider: string;
     assertion: string;
 }

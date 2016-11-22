@@ -9,14 +9,12 @@ import { AppState } from './app-store';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
-export class AppComponent
- implements OnInit, OnDestroy 
-{
+export class AppComponent implements OnInit, OnDestroy {
 
     constructor(
       private tokens: AuthTokenService,
                private store: Store<AppState>,
-                private alert: AlertService 
+                private alert: AlertService
                ) { }
 
   ngOnInit(): void {
@@ -29,10 +27,10 @@ export class AppComponent
             }, error => {
                 console.error(error);
                 // keep it silent if there's nothing in storage
-                if(error != "No token in Storage"){
-                    this.alert.sendWarning("error");
+                if (error !== 'No token in Storage') {
+                    this.alert.sendWarning('error');
                 }
-            })
+            });
     }
 
     ngOnDestroy(): void {

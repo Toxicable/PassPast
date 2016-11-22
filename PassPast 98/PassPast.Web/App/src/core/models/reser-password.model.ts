@@ -1,4 +1,4 @@
-export interface ResetPasswordModel{
+export interface ResetPasswordModel {
     newPassword: string;
     confirmPassword: string;
 }

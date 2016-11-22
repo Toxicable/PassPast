@@ -1,41 +1,39 @@
 import { Injectable } from '@angular/core';
-import { Http, Response } from '@angular/http';
-import { Logger } from '../logger';
-import { ExternalRegistrationModel } from '../models/external-registration-model';
+import { Http } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
-import { Observer } from 'rxjs'
+import { Observer } from 'rxjs';
 import { AccountService } from '../account/account.service';
+import { AppSettings } from '../../app-settings';
 
 declare let FB: any;
 declare let gapi: any;
 
-//TODO: make this into a swappable service
+// TODO: make this into a swappable service
 @Injectable()
 export class ExternalAuthService {
 
     constructor(private http: Http,
-                private logger: Logger,
                 private account: AccountService
     ) {}
 
-    init(){
+    init() {
         FB.init({
-            appId      : "",//appSettings.appSettings.auth.external.facebookAppId,
+            appId      : AppSettings.Authentication.facebookAppId,
             status     : true,
             cookie     : true,
             xfbml      : false,
-            version    : 'v2.8' 
+            version    : 'v2.8'
         });
 
         gapi.load('auth', () => {});
     }
 
-    register(provider: string){
+    register(provider: string) {
         let accessToken$: Observable<any>;
-        if(provider == "Facebook"){
+        if (provider === 'Facebook') {
             accessToken$ = this.authorizeFacebook();
         }
-        if(provider == "Google"){
+        if (provider === 'Google') {
             accessToken$ = this.authorizeGoogle();
         }
 
@@ -43,54 +41,54 @@ export class ExternalAuthService {
             return this.account.externalRegister({
                 accessToken: accessToken,
                 provider,
-            })
-        })
+            });
+        });
     }
-    
-    login(provider: string){
+
+    login(provider: string) {
         let accessToken$: Observable<any>;
-        if(provider == "Facebook"){
+        if (provider === 'Facebook') {
             accessToken$ = this.authorizeFacebook();
         }
-        if(provider == "Google"){
+        if (provider === 'Google') {
             accessToken$ = this.authorizeGoogle();
         }
 
-        return accessToken$.flatMap((accessToken: string)=>{
+        return accessToken$.flatMap((accessToken: string) => {
             return this.account.externalLogin({
                 assertion: accessToken,
                 provider,
-            })
-        })
+            });
+        });
     }
 
     private authorizeFacebook(): Observable<any> {
         return Observable.create( (observer: Observer<any>) => {
-            try{
+            try {
                 FB.login((response: any) => {
-                observer.next(response.authResponse.accessToken)
-                observer.complete
-            },{scope: 'email'})
-            }catch(error){
+                observer.next(response.authResponse.accessToken);
+                observer.complete();
+            }, {scope: 'email'});
+            }catch (error) {
                 observer.error(error);
-            }        
+            }
         });
 
     }
 
     private authorizeGoogle(): Observable<any> {
         return Observable.create((observer: Observer<any>) => {
-            try{
+            try {
                 gapi.auth.authorize({
-                    client_id: "",//appSettings.appSettings.auth.external.googleClientId,
+                    client_id: AppSettings.Authentication.googleClientId,
                     scope: 'profile'
                 }, (token: any) => {
-                    observer.next(token.access_token)
-                    observer.complete()
+                    observer.next(token.access_token);
+                    observer.complete();
                 });
-            }catch(error){
+            }catch (error) {
                 observer.error(error);
             }
-        })          
+        });
     }
 }

@@ -1,19 +1,18 @@
-import { ActionReducer, Action, Store } from '@ngrx/store';
-import { Injectable } from '@angular/core';
-import { AppState } from '../../app/app-store';
-import { AuthTokenModel } from '../models/auth-tokens.model';
-import { AuthTokenActionTypes, AuthTokenActions } from './auth-token.actions';
+import { Action } from '@ngrx/store';
 
-const initalState: AuthTokenModel ={
+import { AuthTokenModel } from '../models/auth-tokens.model';
+import { AuthTokenActionTypes } from './auth-token.actions';
+
+const initalState: AuthTokenModel = {
     id_token: null,
     access_token: null,
     refresh_token: null,
     expires_in: 0,
     token_type: null
-}
+};
 
-export function authTokenReducer(state = initalState, action: Action): AuthTokenModel{
-    switch (action.type){
+export function authTokenReducer(state = initalState, action: Action): AuthTokenModel {
+    switch (action.type) {
         case AuthTokenActionTypes.LOAD:
             return action.payload;
 
@@ -23,4 +22,4 @@ export function authTokenReducer(state = initalState, action: Action): AuthToken
         default:
             return state;
     }
-};
+}

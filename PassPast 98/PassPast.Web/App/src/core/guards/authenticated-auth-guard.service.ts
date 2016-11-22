@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { CanActivate } from '@angular/router';
-import {AuthGuard} from "./auth-guard.service";
+import {AuthGuard} from './auth-guard.service';
 import {Observable} from 'rxjs';
 
 @Injectable()

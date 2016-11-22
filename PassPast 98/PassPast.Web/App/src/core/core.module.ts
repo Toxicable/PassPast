@@ -1,14 +1,13 @@
-import { NgModule, Optional, SkipSelf } from "@angular/core";
-import { SuperAdminAuthGuard } from "./guards/super-admin-auth-guard.service";
-import { AuthenticatedAuthGuard } from "./guards/authenticated-auth-guard.service";
-import { Title } from "@angular/platform-browser";
-import { LocalStorageBackend, Storage, StorageBackend } from "./storage";
-import { AlertService } from "./alert/alert.service";
-import { ProfileService } from "./profile/profile.service";
-import { HttpExceptionService } from "./services/http-exceptions.service";
-import { FormValidationService } from "./services/form-validation.service";
+import { NgModule, Optional, SkipSelf } from '@angular/core';
+import { SuperAdminAuthGuard } from './guards/super-admin-auth-guard.service';
+import { AuthenticatedAuthGuard } from './guards/authenticated-auth-guard.service';
+import { Title } from '@angular/platform-browser';
+import { LocalStorageBackend, Storage, StorageBackend } from './storage';
+import { AlertService } from './alert/alert.service';
+import { ProfileService } from './profile/profile.service';
+import { HttpExceptionService } from './services/http-exceptions.service';
+import { FormValidationService } from './services/form-validation.service';
 import { AuthGuard } from './guards/auth-guard.service';
-import { Logger, ConsoleLoggerBackend, LoggingBackend } from './logger';
 import { ExternalAuthService } from './auth-token/external-auth.service';
 import { AuthTokenService } from './auth-token/auth-token.service';
 import { AccountService } from './account/account.service';
@@ -20,11 +19,10 @@ import { AuthTokenActions } from './auth-token/auth-token.actions';
 import { AlertActions } from './alert/alert.actions';
 import { LoadingBarActions } from './loading-bar/loading-bar.actions';
 import { AuthReadyActions } from './auth-store/auth-ready.actions';
-import { MaterialModule } from '@angular/material';
 
 
 @NgModule({
-    providers:[
+    providers: [
         LoadingBarService,
         AlertService,
         ProfileService,
@@ -45,10 +43,8 @@ import { MaterialModule } from '@angular/material';
         AlertActions,
         LoadingBarActions,
         AuthReadyActions,
-        
+
         { provide: StorageBackend, useClass: LocalStorageBackend },
-        { provide: LoggingBackend, useClass: ConsoleLoggerBackend },
-        Logger,
         Storage,
     ]
 

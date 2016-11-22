@@ -1,4 +1,4 @@
-export interface ProfileModel{
+export interface ProfileModel {
     sub: string;
     jti: string;
     useage: string;

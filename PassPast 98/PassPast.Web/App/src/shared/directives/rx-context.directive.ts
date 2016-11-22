@@ -13,7 +13,7 @@ export class RxContextDirective{
         this._cdr.detach();
     }
 
-    ngOnInit(){
+    ngOnInit() {
         this.rxContextOn.subscribe( state => {
             if(!this._viewRef) {
                 this._viewRef = this.vcr.createEmbeddedView(this.templateRef, {'$implicit': state})

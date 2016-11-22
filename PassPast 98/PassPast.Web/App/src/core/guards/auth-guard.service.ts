@@ -1,12 +1,10 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { AlertService } from "../alert/alert.service";
-import { ProfileService } from "../profile/profile.service";
+import { AlertService } from '../alert/alert.service';
+import { ProfileService } from '../profile/profile.service';
 import { AppState } from '../../app/app-store';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
-import * as authReadyActions from '../auth-store/auth-ready.actions';
-import * as loggedInActions from '../auth-store/logged-in.actions';
 import { AuthState } from '../auth-store/auth.store';
 
 
@@ -20,38 +18,38 @@ export class AuthGuard {
     ) {}
 
 
-    isLoggedIn(): Observable<boolean>{
+    isLoggedIn(): Observable<boolean> {
         return this.store.map(state => state.auth)
             .first( (auth: AuthState) => auth.authReady)
             .map( (auth: AuthState) => auth.loggedIn)
             .do( (loggedIn: boolean) => {
                 if (!loggedIn) {
-                    this.alertService.sendError("You are not logged in");
+                    this.alertService.sendError('You are not logged in');
                     this.router.navigate(['auth/login']);
                 }
             });
     }
 
-    isInRole(role: string): Observable<boolean>{
+    isInRole(role: string): Observable<boolean> {
 
         return this.store.map( state => state.auth)
             .first( (auth: AuthState) => auth.authReady)
-            .flatMap( (auth: AuthState) =>{
-                if(!auth.loggedIn){
-                    this.alertService.sendError("Unauthorized");
+            .flatMap( (auth: AuthState) => {
+                if (!auth.loggedIn) {
+                    this.alertService.sendError('Unauthorized');
                     this.router.navigate(['unauthorized']);
                     return Observable.of(false);
                 }
 
                 return this.profile.isInRole(role)
                     .map( isInRole => {
-                        if(!isInRole){
-                            this.alertService.sendError("Unauthorized");
+                        if (!isInRole) {
+                            this.alertService.sendError('Unauthorized');
                             this.router.navigate(['unauthorized']);
                             return false;
                         }
                         return true;
-                    })
+                    });
 
             })
             .first();

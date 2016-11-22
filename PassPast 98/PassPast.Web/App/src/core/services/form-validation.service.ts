@@ -1,7 +1,7 @@
-import {FormGroup, FormControl} from "@angular/forms";
+import { FormGroup, FormControl } from '@angular/forms';
 import { Injectable } from '@angular/core';
 
-Injectable()
+Injectable();
 export class FormValidationService {
     getValidatorErrorMessage(validatorName: string, validatorValue?: any) {
         let config: any = {
@@ -20,11 +20,15 @@ export class FormValidationService {
         let password = group.controls['password'] as FormControl;
         let confirmPassword = group.controls['confirmPassword'] as FormControl;
 
-        if (password.dirty && confirmPassword.dirty){
-            if(password.value == confirmPassword.value){
+        if (password.dirty && confirmPassword.dirty) {
+            if (password.value === confirmPassword.value) {
                 return null;
-            }else return { invalidCompare: true }
-        }else return { invalidCompare: true }
+            }else {
+                return { invalidCompare: true };
+            }
+        }else {
+            return { invalidCompare: true };
+        }
     }
 
     creditCardValidator(control: FormControl) {

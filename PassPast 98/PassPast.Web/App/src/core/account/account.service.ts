@@ -1,17 +1,16 @@
 import { Injectable } from '@angular/core';
-import { RegisterModel } from '../../+auth/models/register-model';
+import { RegisterModel } from '../models/register-model';
 import { Observable } from 'rxjs';
 import { Response, Http } from '@angular/http';
 import { LoadingBarService } from '../loading-bar/loading-bar.service';
 import { HttpExceptionService } from '../services/http-exceptions.service';
-import { LoginModel } from '../../+auth/models/login-model';
+import { LoginModel } from '../models/login-model';
 import { ChangePasswordModel } from '../models/change-password';
 import { ResetPasswordModel } from '../models/reser-password.model';
 import { ExternalRegistrationModel } from '../models/external-registration-model';
 import { ExternalLoginModel } from '../models/external-login-model';
-import { AuthTokenModel } from '../models/auth-tokens.model';
 import { AuthTokenService } from '../auth-token/auth-token.service';
-import { Store, StoreModule } from '@ngrx/store';
+import { Store } from '@ngrx/store';
 import { AppState } from '../../app/app-store';
 import { LoggedInActions } from '../auth-store/logged-in.actions';
 import { AuthTokenActions } from '../auth-token/auth-token.actions';
@@ -34,39 +33,39 @@ export class AccountService {
 
 
     register(data: RegisterModel): Observable<Response> {
-        return this.http.post("api/account/create", data)
-            .catch( this.httpExceptions.handleError )
+        return this.http.post('api/account/create', data)
+            .catch( this.httpExceptions.handleError );
     }
 
-    externalRegister(model: ExternalRegistrationModel){
-        return this.http.post('/api/account/registerexternal', model)
+    externalRegister(model: ExternalRegistrationModel) {
+        return this.http.post('/api/account/registerexternal', model);
     }
 
-    externalLogin(model: ExternalLoginModel){
-        return this.authTokens.getTokens(model, "urn:ietf:params:oauth:grant-type:external_identity_token")
-            .do(() => this.authTokens.scheduleRefresh())        
+    externalLogin(model: ExternalLoginModel) {
+        return this.authTokens.getTokens(model, 'urn:ietf:params:oauth:grant-type:external_identity_token')
+            .do(() => this.authTokens.scheduleRefresh());
     }
 
     login(user: LoginModel)  {
-        return this.authTokens.getTokens(user, "password")
-            .do(res => this.authTokens.scheduleRefresh() )
+        return this.authTokens.getTokens(user, 'password')
+            .do(res => this.authTokens.scheduleRefresh() );
     }
 
-//TODO: give this a model
-    sendForgotPassword(data: any){
-        return this.authHttp.post("/account/SendForgotPassword", data)
+// TODO: give this a model
+    sendForgotPassword(data: any) {
+        return this.authHttp.post('/account/SendForgotPassword', data);
     }
 
-    changePassword(data: ChangePasswordModel){
-        return this.authHttp.post("/account/changePassword", data)
+    changePassword(data: ChangePasswordModel) {
+        return this.authHttp.post('/account/changePassword', data);
     }
 
-    resetPassword(data: ResetPasswordModel){
-        return this.authHttp.post("/account/resetPassword", data )
+    resetPassword(data: ResetPasswordModel) {
+        return this.authHttp.post('/account/resetPassword', data );
 
     }
 
-    logout(){
+    logout() {
         this.authTokens.deleteTokens();
         this.authTokens.unsubscribeRefresh();
 

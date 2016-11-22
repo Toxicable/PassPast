@@ -6,7 +6,7 @@ import { HttpExceptionService } from '../services/http-exceptions.service';
 import { AppState } from '../../app/app-store';
 import { Store } from '@ngrx/store';
 import { ProfileModel } from '../models/profile-model';
-import { LoginModel } from '../../+auth/models/login-model';
+import { LoginModel } from '../models/login-model';
 import { Storage } from '../storage';
 import { AlertService } from '../alert/alert.service';
 import { JwtHelper } from 'angular2-jwt';
@@ -19,6 +19,9 @@ import { ProfileActions } from '../profile/profile.actions';
 
 @Injectable()
 export class AuthTokenService {
+    refreshSubscription$: Subscription;
+    jwtHelper: JwtHelper = new JwtHelper();
+
     constructor(private storage: Storage,
                 private loadingBar: LoadingBarService,
                 private http: Http,
@@ -31,12 +34,10 @@ export class AuthTokenService {
                 private profileActions: ProfileActions
     ) { }
 
-    refreshSubscription$: Subscription;
-    jwtHelper: JwtHelper = new JwtHelper();
 
     getTokens(data: LoginModel | RefreshGrant | ExternalLoginModel, grantType: string): Observable<void> {
-        //  data can be any since it can either be a refresh tokens or login details
-        //  The request for tokens must be x-www-form-urlencoded IE: parameter string, it cant be json
+        // data can be any since it can either be a refresh tokens or login details
+        // The request for tokens must be x-www-form-urlencoded IE: parameter string, it cant be json
         let headers = new Headers({ 'Content-Type': 'application/x-www-form-urlencoded'});
         let options = new RequestOptions({ headers: headers });
 
@@ -48,7 +49,7 @@ export class AuthTokenService {
         return this.http.post('/api/connect/token', this.encodeObjectToParams(data) , options)
             .map( res => res.json())
             .map( (tokens: AuthTokenModel) => {
-                this.store.dispatch(this.authTokenActions.Load(tokens))
+                this.store.dispatch(this.authTokenActions.Load(tokens));
                 this.store.dispatch(this.loggedInActions.LoggedIn());
 
                 let profile = this.jwtHelper.decodeToken(tokens.id_token) as ProfileModel;
@@ -61,7 +62,7 @@ export class AuthTokenService {
 
     }
 
-    deleteTokens(){
+    deleteTokens() {
         this.storage.removeItem('auth-tokens');
         this.store.dispatch(this.authTokenActions.Delete());
     }
@@ -72,7 +73,7 @@ export class AuthTokenService {
         }
     }
 
-    refreshTokens(): Observable<Response>{
+    refreshTokens(): Observable<Response> {
         return this.store.map( state => state.auth.authTokens.refresh_token)
             .first()
             .flatMap( refreshToken => {
@@ -93,26 +94,26 @@ export class AuthTokenService {
                 }
                 // parse the token into a model and throw it into the store
                 let tokens = JSON.parse(rawTokens) as AuthTokenModel;
-                this.store.dispatch(this.authTokenActions.Load(tokens))
+                this.store.dispatch(this.authTokenActions.Load(tokens));
 
-                if(!this.jwtHelper.isTokenExpired(tokens.id_token)){
+                if (!this.jwtHelper.isTokenExpired(tokens.id_token)) {
                     // grab the profile out so we can store it
                     let profile = this.jwtHelper.decodeToken(tokens.id_token) as ProfileModel;
                     this.store.dispatch(this.profileActions.Load(profile));
 
                     // we can let the app know that we're good to go ahead of time
                     this.store.dispatch(this.loggedInActions.LoggedIn());
-                    this.store.dispatch(this.authReadActions.Ready())
+                    this.store.dispatch(this.authReadActions.Ready());
                 }
 
                 // it if is able to refresh then the getTokens method will let the app know that we're auth ready
-                return this.refreshTokens()
+                return this.refreshTokens();
             })
-            .catch(error =>{                
+            .catch(error => {
                 this.store.dispatch(this.loggedInActions.NotLoggedIn());
                 this.store.dispatch(this.authReadActions.Ready());
                 return Observable.throw(error);
-            })
+            });
     }
 
     scheduleRefresh(): void {
@@ -128,15 +129,16 @@ export class AuthTokenService {
                 //  delay = delay > 1800000 ? 1800000 : delay;
 
                 // the token should be new here so that means take half of it's expiry time should be fine
-                let delay = tokens.expires_in /2 * 1000;
+                let delay = tokens.expires_in / 2 * 1000;
                 console.log(delay);
-                return Observable.interval(delay);// ms
+                return Observable.interval(delay);
+                // ms
             });
 
         this.refreshSubscription$ = source.subscribe(() => {
             console.log('refresh fired');
             this.refreshTokens()
-                .subscribe( )
+                .subscribe( );
         });
     }
 
@@ -147,6 +149,6 @@ export class AuthTokenService {
     }
 
 }
-export interface RefreshGrant{
+export interface RefreshGrant {
     refresh_token: string;
 }

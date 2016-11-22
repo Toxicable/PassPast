@@ -55,7 +55,9 @@
   "buildOptions": {
     "compile": {
       "exclude": [
-        "App/node_modules"
+        "App/node_modules",
+
+        "App.Old/node_modules"
       ]
     },
     "emitEntryPoint": true,
@@ -70,7 +72,6 @@
 
   "publishOptions": {
     "include": [
-      "Certificate.pfx",
       "wwwroot",
       "appsettings.json",
       "web.config"
