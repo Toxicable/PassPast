@@ -12,8 +12,8 @@ const initalState: QuestionState ={
     entities: []
 }
 
-export const questionReducer = (state = initalState, action: Action): QuestionState => {
-    switch (action.type){
+export function questionReducer (state = initalState, action: Action): QuestionState {
+    switch (action.type) {
 
         case QuestionActionTypes.LOAD:
             return {

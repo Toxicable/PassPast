@@ -15,7 +15,7 @@ const initalState: CourseState ={
     entities: []
 }
 
-export const courseReducer = (state = initalState, action: Action): CourseState => {
+export function courseReducer(state = initalState, action: Action): CourseState {
     switch (action.type){
         case CourseActionTypes.LOAD:
             return {

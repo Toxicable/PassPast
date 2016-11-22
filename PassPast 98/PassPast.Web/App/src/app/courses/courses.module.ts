@@ -19,6 +19,7 @@ import { PaperActions } from './papers/paper.actions';
 import { ExamActions } from './exams/exam.actions';
 import { QuestionActions } from './questions/question.actions';
 import { SharedModule } from '../../shared/shared.module';
+import { CourseComponent } from './courses/course.components';
 
 @NgModule({
     imports: [
@@ -28,6 +29,7 @@ import { SharedModule } from '../../shared/shared.module';
     ],
     exports: [],
     declarations: [
+        CourseComponent,
         CoursesComponent,
         AddCourseComponent,
         PapersComponent,

@@ -13,8 +13,8 @@ const initalState: PaperState ={
     selected: null
 }
 
-export const paperReducer = (state = initalState, action: Action): PaperState => {
-    switch (action.type){
+export function paperReducer(state = initalState, action: Action): PaperState {
+    switch (action.type) {
         case PaperActionTypes.LOAD:
         return {
             selected: state.selected,

@@ -11,10 +11,15 @@ export interface CoursesState {
     question: QuestionState
 }
 
-
-export const coursesReducer: ActionReducer<CoursesState> = combineReducers({
+const reducers = {
     course: courseReducer,
     paper: paperReducer,
     exam: examReducer,
     question: questionReducer
-});
+}
+
+const reducer: ActionReducer<CoursesState> = combineReducers(reducers);
+
+export function coursesReducer(state: any, action: any) {
+    return reducer(state, action);
+}

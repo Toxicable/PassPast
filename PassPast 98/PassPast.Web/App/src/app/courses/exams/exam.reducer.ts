@@ -15,14 +15,14 @@ const initalState: ExamState ={
     entities: []
 }
 
-export const examReducer = (state = initalState, action: Action): ExamState => {
-    switch (action.type){
+export function examReducer(state = initalState, action: Action): ExamState {
+    switch (action.type) {
         case ExamActionTypes.LOAD:
             return {
                 selected: state.selected,
                 entities: action.payload
-            }
-            
+            };
+
         case ExamActionTypes.ADD:
         return {
             selected: state.selected,
