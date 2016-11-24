@@ -7,13 +7,15 @@ using System.Web;
 
 namespace PassPast.Data
 {
-    public class PaperEntity : Entity
+    public class PaperEntity : TrackedEntity
     {
         [Required]
         public string Name { get; set; }
+
         [Required]
         public int CourseId { get; set; }
         public CourseEntity Course { get; set; }
+
         public ICollection<ExamEntity> Exams { get; set; }
 	}
 }

@@ -2,10 +2,13 @@
 <a  class="header-navigation__link" [routerLink]="['/courses', 1, 2, 'add-exam']" routerLinkActive="active-router-link">Add Exam</a>
 
 <div>
-    <div *ngFor="let exam of exams$ | async" [routerLink]="exam.id">
-        {{exam.id}}
-        {{exam.year}}
-        {{exam.semester}}
-        {{exam.paperId}}
+    <div >
+        
     </div>
 </div>
+<md-list>
+    <md-list-item *ngFor="let exam of exams$ | async" [routerLink]="exam.id">
+        <h3 md-line>{{exam.year}}</h3>
+        <span md-line>Semester: {{exam.semester}}</span>
+    </md-list-item>
+</md-list>

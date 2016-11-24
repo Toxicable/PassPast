@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Authorization;
 using PassPast.Web.Infrastructure.Models;
 using PassPast.Web.Infrastructure.Entities;
 using AspNet.Security.OpenIdConnect.Extensions;
+using AspNet.Security.OpenIdConnect.Primitives;
 
 // For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
 

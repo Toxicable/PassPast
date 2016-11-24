@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Metadata;
 
 namespace PassPast.Web.Migrations
 {
-    public partial class InitialMigration : Migration
+    public partial class InitalMigration : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -224,12 +224,12 @@ namespace PassPast.Web.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    Code = table.Column<string>(nullable: true),
+                    Code = table.Column<string>(nullable: false),
                     CreatedAt = table.Column<DateTimeOffset>(nullable: false),
-                    CreatedById = table.Column<string>(nullable: true),
+                    CreatedById = table.Column<string>(nullable: false),
                     Deleted = table.Column<bool>(nullable: false),
                     Hidden = table.Column<bool>(nullable: false),
-                    Name = table.Column<string>(nullable: true),
+                    Name = table.Column<string>(nullable: false),
                     UpdatedAt = table.Column<DateTimeOffset>(nullable: true),
                     UpdatedById = table.Column<string>(nullable: true)
                 },
@@ -279,10 +279,10 @@ namespace PassPast.Web.Migrations
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     CourseId = table.Column<int>(nullable: false),
                     CreatedAt = table.Column<DateTimeOffset>(nullable: false),
-                    CreatedById = table.Column<string>(nullable: true),
+                    CreatedById = table.Column<string>(nullable: false),
                     Deleted = table.Column<bool>(nullable: false),
                     Hidden = table.Column<bool>(nullable: false),
-                    Name = table.Column<string>(nullable: true),
+                    Name = table.Column<string>(nullable: false),
                     UpdatedAt = table.Column<DateTimeOffset>(nullable: true),
                     UpdatedById = table.Column<string>(nullable: true)
                 },
@@ -316,7 +316,7 @@ namespace PassPast.Web.Migrations
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     CreatedAt = table.Column<DateTimeOffset>(nullable: false),
-                    CreatedById = table.Column<string>(nullable: true),
+                    CreatedById = table.Column<string>(nullable: false),
                     Deleted = table.Column<bool>(nullable: false),
                     Hidden = table.Column<bool>(nullable: false),
                     PaperId = table.Column<int>(nullable: false),
@@ -355,11 +355,12 @@ namespace PassPast.Web.Migrations
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     CreatedAt = table.Column<DateTimeOffset>(nullable: false),
-                    CreatedById = table.Column<string>(nullable: true),
+                    CreatedById = table.Column<string>(nullable: false),
                     Deleted = table.Column<bool>(nullable: false),
                     ExamId = table.Column<int>(nullable: false),
                     Hidden = table.Column<bool>(nullable: false),
                     Number = table.Column<int>(nullable: false),
+                    ParentQuestionId = table.Column<int>(nullable: false),
                     Type = table.Column<int>(nullable: false),
                     UpdatedAt = table.Column<DateTimeOffset>(nullable: true),
                     UpdatedById = table.Column<string>(nullable: true)
@@ -380,6 +381,12 @@ namespace PassPast.Web.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
+                        name: "FK_Questions_Questions_ParentQuestionId",
+                        column: x => x.ParentQuestionId,
+                        principalTable: "Questions",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
                         name: "FK_Questions__AuthUsers_UpdatedById",
                         column: x => x.UpdatedById,
                         principalTable: "_AuthUsers",
@@ -394,10 +401,12 @@ namespace PassPast.Web.Migrations
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     CreatedAt = table.Column<DateTimeOffset>(nullable: false),
-                    CreatedById = table.Column<string>(nullable: true),
+                    CreatedById = table.Column<string>(nullable: false),
                     Deleted = table.Column<bool>(nullable: false),
                     Hidden = table.Column<bool>(nullable: false),
+                    McqAnswerId = table.Column<int>(nullable: false),
                     QuestionId = table.Column<int>(nullable: false),
+                    ShortAnswerId = table.Column<int>(nullable: false),
                     UpdatedAt = table.Column<DateTimeOffset>(nullable: true),
                     UpdatedById = table.Column<string>(nullable: true)
                 },
@@ -430,9 +439,9 @@ namespace PassPast.Web.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    Content = table.Column<string>(nullable: true),
+                    Content = table.Column<string>(nullable: false),
                     CreatedAt = table.Column<DateTimeOffset>(nullable: false),
-                    CreatedById = table.Column<string>(nullable: true),
+                    CreatedById = table.Column<string>(nullable: false),
                     Deleted = table.Column<bool>(nullable: false),
                     Hidden = table.Column<bool>(nullable: false),
                     QuestionId = table.Column<int>(nullable: false),
@@ -470,7 +479,7 @@ namespace PassPast.Web.Migrations
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     AnswerId = table.Column<int>(nullable: false),
                     CreatedAt = table.Column<DateTimeOffset>(nullable: false),
-                    CreatedById = table.Column<string>(nullable: true),
+                    CreatedById = table.Column<string>(nullable: false),
                     Deleted = table.Column<bool>(nullable: false),
                     Hidden = table.Column<bool>(nullable: false),
                     Number = table.Column<int>(nullable: false),
@@ -507,9 +516,9 @@ namespace PassPast.Web.Migrations
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     AnswerId = table.Column<int>(nullable: false),
-                    Content = table.Column<string>(nullable: true),
+                    Content = table.Column<string>(nullable: false),
                     CreatedAt = table.Column<DateTimeOffset>(nullable: false),
-                    CreatedById = table.Column<string>(nullable: true),
+                    CreatedById = table.Column<string>(nullable: false),
                     Deleted = table.Column<bool>(nullable: false),
                     Hidden = table.Column<bool>(nullable: false),
                     UpdatedAt = table.Column<DateTimeOffset>(nullable: true),
@@ -544,31 +553,31 @@ namespace PassPast.Web.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    AnswerEntityId = table.Column<int>(nullable: true),
-                    CommentEntityId = table.Column<int>(nullable: true),
+                    AnswerId = table.Column<int>(nullable: false),
+                    CommentId = table.Column<int>(nullable: false),
                     CreatedAt = table.Column<DateTimeOffset>(nullable: false),
-                    CreatedById = table.Column<string>(nullable: true),
+                    CreatedById = table.Column<string>(nullable: false),
                     Deleted = table.Column<bool>(nullable: false),
                     Hidden = table.Column<bool>(nullable: false),
+                    Type = table.Column<int>(nullable: false),
                     UpdatedAt = table.Column<DateTimeOffset>(nullable: true),
-                    UpdatedById = table.Column<string>(nullable: true),
-                    Value = table.Column<int>(nullable: false)
+                    UpdatedById = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Votes", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Votes_Answers_AnswerEntityId",
-                        column: x => x.AnswerEntityId,
+                        name: "FK_Votes_Answers_AnswerId",
+                        column: x => x.AnswerId,
                         principalTable: "Answers",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Votes_Comments_CommentEntityId",
-                        column: x => x.CommentEntityId,
+                        name: "FK_Votes_Comments_CommentId",
+                        column: x => x.CommentId,
                         principalTable: "Comments",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Votes__AuthUsers_CreatedById",
                         column: x => x.CreatedById,
@@ -666,14 +675,14 @@ namespace PassPast.Web.Migrations
                 column: "UpdatedById");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Votes_AnswerEntityId",
+                name: "IX_Votes_AnswerId",
                 table: "Votes",
-                column: "AnswerEntityId");
+                column: "AnswerId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Votes_CommentEntityId",
+                name: "IX_Votes_CommentId",
                 table: "Votes",
-                column: "CommentEntityId");
+                column: "CommentId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Votes_CreatedById",
@@ -726,6 +735,11 @@ namespace PassPast.Web.Migrations
                 column: "ExamId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Questions_ParentQuestionId",
+                table: "Questions",
+                column: "ParentQuestionId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Questions_UpdatedById",
                 table: "Questions",
                 column: "UpdatedById");
@@ -744,7 +758,8 @@ namespace PassPast.Web.Migrations
             migrationBuilder.CreateIndex(
                 name: "IX_McqAnswers_AnswerId",
                 table: "McqAnswers",
-                column: "AnswerId");
+                column: "AnswerId",
+                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_McqAnswers_CreatedById",
@@ -759,7 +774,8 @@ namespace PassPast.Web.Migrations
             migrationBuilder.CreateIndex(
                 name: "IX_ShortAnswers_AnswerId",
                 table: "ShortAnswers",
-                column: "AnswerId");
+                column: "AnswerId",
+                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_ShortAnswers_CreatedById",

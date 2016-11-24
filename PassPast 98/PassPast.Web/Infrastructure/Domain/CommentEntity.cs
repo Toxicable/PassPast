@@ -9,7 +9,7 @@ using PassPast.Web.Infrastructure.Data;
 
 namespace PassPast.Data
 {
-	public class CommentEntity : Entity
+	public class CommentEntity : TrackedEntity
 	{
         [Required]
         public string Content { get; set; }

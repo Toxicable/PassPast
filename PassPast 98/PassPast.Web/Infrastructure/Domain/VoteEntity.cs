@@ -1,23 +1,19 @@
-﻿using PassPast.Web;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.ComponentModel.DataAnnotations;
 using PassPast.Web.Infrastructure.Data;
+using PassPast.Web.Infrastructure.Domain;
 
 namespace PassPast.Data.Domain
 {
     public class VoteEntity : Entity
     {
         [Required]
-        public VoteType Type { get; set; }
-    }
+        public int VoteTypeId { get; set; }
+        public VoteTypeEntity Type { get; set; }
 
-    public enum VoteType
-    {
-        Up,
-        Down
+        public int AnswerId { get; set; }
+        public AnswerEntity Answer { get; set; }
+
+        public int CommentId { get; set; }
+        public CommentEntity Comment { get; set; }
     }
 }

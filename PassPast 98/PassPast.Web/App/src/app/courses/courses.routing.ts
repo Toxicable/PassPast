@@ -17,12 +17,12 @@ const routes: Routes = [
     {
         path: 'courses',
         component: CoursesComponent,
-        canActivate: [AuthenticatedAuthGuard]
+       // canActivate: [AuthenticatedAuthGuard]
     },
     {
         path: 'courses/add-course',
         component: AddCourseComponent,
-        canActivate: [AuthenticatedAuthGuard]
+      //  canActivate: [AuthenticatedAuthGuard]
     },
     {
         path: 'courses/:courseId',

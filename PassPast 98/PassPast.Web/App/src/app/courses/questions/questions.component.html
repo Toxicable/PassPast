@@ -7,3 +7,24 @@
         {{question.type}}
     </div>
 </div>
+
+<md-list>
+    <md-list-item *ngFor="let question of questions$ | async">
+        <h3 md-line>{{question.number}}</h3>
+           TODO: make this work :D 
+       <div md-line>
+        <md-list>
+            <md-list-item *ngFor="let answer of question.answers">
+
+            <span md-line *ngIf="answer.type == 'short'">                    
+                <!--<short-answer [answer]=answer ></short-answer>-->
+            </span>
+            <span md-line *ngIf="answer == 'mcq'">                    
+                <!--<mcq-answer [answer]=answer ></mcq-answer>-->
+            </span>
+
+            </md-list-item>
+        </md-list>
+       </div>
+    </md-list-item>
+</md-list>

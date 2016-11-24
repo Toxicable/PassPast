@@ -1,5 +1,6 @@
 ﻿using PassPast.Data.Domain;
 using PassPast.Web.Infrastructure.Data;
+using PassPast.Web.Infrastructure.Domain;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -8,11 +9,17 @@ using System.Web;
 
 namespace PassPast.Data
 {
-    public class AnswerEntity : Entity
+    public class AnswerEntity : TrackedEntity
     {
         [Required]
         public int QuestionId { get; set; }
         public QuestionEntity Question { get; set; }
+
+        public int ShortAnswerId { get; set; }
+        public ShortAnswerEntity ShortAnswer { get; set; }
+
+        public int McqAnswerId { get; set; }
+        public McqAnswerEntity McqAnswer { get; set; }
 
         public ICollection<VoteEntity> Votes { get; set; }
     }

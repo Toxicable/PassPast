@@ -57,25 +57,33 @@ namespace PassPast.Web
             builder.Entity<VoteEntity>().ToTable("Votes");
 
             //Mappings
-            builder.Entity<ApplicationUser>().HasMany(x => x.CoursesCreated).WithOne(x => x.CreatedBy).OnDelete(DeleteBehavior.SetNull);
-            builder.Entity<ApplicationUser>().HasMany(x => x.PapersCreated).WithOne(x => x.CreatedBy);
-            builder.Entity<ApplicationUser>().HasMany(x => x.ExamsCreated).WithOne(x => x.CreatedBy).OnDelete(DeleteBehavior.SetNull);
-            builder.Entity<ApplicationUser>().HasMany(x => x.QuestionsCreated).WithOne(x => x.CreatedBy);
-            builder.Entity<ApplicationUser>().HasMany(x => x.AnswersCreated).WithOne(x => x.CreatedBy);
-            builder.Entity<ApplicationUser>().HasMany(x => x.McqAnswersCreated).WithOne(x => x.CreatedBy);
-            builder.Entity<ApplicationUser>().HasMany(x => x.ShortAnswersCreated).WithOne(x => x.CreatedBy);
-            builder.Entity<ApplicationUser>().HasMany(x => x.CommentsCreated).WithOne(x => x.CreatedBy);
-            builder.Entity<ApplicationUser>().HasMany(x => x.VotesCreated).WithOne(x => x.CreatedBy);
+            builder.Entity<AnswerEntity>().HasOne(x => x.McqAnswer).WithOne(x => x.Answer).HasForeignKey<McqAnswerEntity>(x => x.AnswerId);
+            builder.Entity<AnswerEntity>().HasOne(x => x.ShortAnswer).WithOne(x => x.Answer).HasForeignKey<ShortAnswerEntity>(x => x.AnswerId);
 
-            builder.Entity<ApplicationUser>().HasMany(x => x.CoursesUpdated).WithOne(x => x.UpdatedBy);
-            builder.Entity<ApplicationUser>().HasMany(x => x.PapersUpdated).WithOne(x => x.UpdatedBy);
-            builder.Entity<ApplicationUser>().HasMany(x => x.ExamsUpdated).WithOne(x => x.UpdatedBy);
-            builder.Entity<ApplicationUser>().HasMany(x => x.QuestionsUpdated).WithOne(x => x.UpdatedBy);
-            builder.Entity<ApplicationUser>().HasMany(x => x.AnswersUpdated).WithOne(x => x.UpdatedBy);
-            builder.Entity<ApplicationUser>().HasMany(x => x.McqAnswersUpdated).WithOne(x => x.UpdatedBy);
-            builder.Entity<ApplicationUser>().HasMany(x => x.ShortAnswersUpdated).WithOne(x => x.UpdatedBy);
-            builder.Entity<ApplicationUser>().HasMany(x => x.CommentsUpdated).WithOne(x => x.UpdatedBy);
-            builder.Entity<ApplicationUser>().HasMany(x => x.VotesUpdated).WithOne(x => x.UpdatedBy);
+            builder.Entity<QuestionEntity>().HasMany(x => x.SubQuestions).WithOne(x => x.ParentQuestion).OnDelete(DeleteBehavior.Restrict);
+
+            builder.Entity<VoteEntity>().HasOne(x => x.Comment).WithMany(x => x.Votes).OnDelete(DeleteBehavior.Restrict);
+            builder.Entity<VoteEntity>().HasOne(x => x.Answer).WithMany(x => x.Votes).OnDelete(DeleteBehavior.Restrict);
+
+            builder.Entity<ApplicationUser>().HasMany(x => x.CoursesCreated).WithOne(x => x.CreatedBy).OnDelete(DeleteBehavior.Restrict);
+            builder.Entity<ApplicationUser>().HasMany(x => x.PapersCreated).WithOne(x => x.CreatedBy).OnDelete(DeleteBehavior.Restrict);
+            builder.Entity<ApplicationUser>().HasMany(x => x.ExamsCreated).WithOne(x => x.CreatedBy).OnDelete(DeleteBehavior.Restrict);
+            builder.Entity<ApplicationUser>().HasMany(x => x.QuestionsCreated).WithOne(x => x.CreatedBy).OnDelete(DeleteBehavior.Restrict);
+            builder.Entity<ApplicationUser>().HasMany(x => x.AnswersCreated).WithOne(x => x.CreatedBy).OnDelete(DeleteBehavior.Restrict);
+            builder.Entity<ApplicationUser>().HasMany(x => x.McqAnswersCreated).WithOne(x => x.CreatedBy).OnDelete(DeleteBehavior.Restrict);
+            builder.Entity<ApplicationUser>().HasMany(x => x.ShortAnswersCreated).WithOne(x => x.CreatedBy).OnDelete(DeleteBehavior.Restrict);
+            builder.Entity<ApplicationUser>().HasMany(x => x.CommentsCreated).WithOne(x => x.CreatedBy).OnDelete(DeleteBehavior.Restrict);
+            builder.Entity<ApplicationUser>().HasMany(x => x.VotesCreated).WithOne(x => x.CreatedBy).OnDelete(DeleteBehavior.Restrict);
+
+            builder.Entity<ApplicationUser>().HasMany(x => x.CoursesUpdated).WithOne(x => x.UpdatedBy).OnDelete(DeleteBehavior.Restrict);
+            builder.Entity<ApplicationUser>().HasMany(x => x.PapersUpdated).WithOne(x => x.UpdatedBy).OnDelete(DeleteBehavior.Restrict);
+            builder.Entity<ApplicationUser>().HasMany(x => x.ExamsUpdated).WithOne(x => x.UpdatedBy).OnDelete(DeleteBehavior.Restrict);
+            builder.Entity<ApplicationUser>().HasMany(x => x.QuestionsUpdated).WithOne(x => x.UpdatedBy).OnDelete(DeleteBehavior.Restrict);
+            builder.Entity<ApplicationUser>().HasMany(x => x.AnswersUpdated).WithOne(x => x.UpdatedBy).OnDelete(DeleteBehavior.Restrict);
+            builder.Entity<ApplicationUser>().HasMany(x => x.McqAnswersUpdated).WithOne(x => x.UpdatedBy).OnDelete(DeleteBehavior.Restrict);
+            builder.Entity<ApplicationUser>().HasMany(x => x.ShortAnswersUpdated).WithOne(x => x.UpdatedBy).OnDelete(DeleteBehavior.Restrict);
+            builder.Entity<ApplicationUser>().HasMany(x => x.CommentsUpdated).WithOne(x => x.UpdatedBy).OnDelete(DeleteBehavior.Restrict);
+            builder.Entity<ApplicationUser>().HasMany(x => x.VotesUpdated).WithOne(x => x.UpdatedBy).OnDelete(DeleteBehavior.Restrict);
         }
     }
 }

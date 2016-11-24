@@ -1,16 +1,19 @@
 import { Component, OnInit } from '@angular/core';
 import { CourseService } from './course.service';
 import { AlertService } from '../../../core/alert/alert.service';
+import { MdDialog, MdDialogRef } from '@angular/material';
+import { AddCourseComponent } from './add-course/add-course.component';
 
 @Component({
     selector: 'course',
     templateUrl: 'course.component.html'
 })
 export class CourseComponent implements OnInit {
-    constructor(private courses: CourseService,
-                private alert: AlertService
 
+    constructor(private courses: CourseService,
+                private alert: AlertService 
     ) { }
+
 
     ngOnInit() {
         this.courses.getCourses()
