@@ -1,4 +1,5 @@
 ﻿using PassPast.Data;
+using PassPast.Web.Infrastructure.Domain;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,6 +13,6 @@ namespace PassPast.Web.Api.Questions
         public int Id { get; set; }
         public int Number { get; set; }
         public int ExamId { get; set; }
-        public QuestionTypes Type { get; set; }
+        public QuestionTypeEntity Type { get; set; }
     }
 }

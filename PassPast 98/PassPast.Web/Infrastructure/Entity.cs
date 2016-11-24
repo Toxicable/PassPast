@@ -19,7 +19,7 @@ namespace PassPast.Web.Infrastructure.Data
         public bool Hidden { get; set; }
     }
 
-    public class TrackedEntity
+    public class TrackedEntity: Entity
     {
         [Required]
         public string CreatedById { get; set; }

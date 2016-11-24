@@ -13,9 +13,11 @@ namespace PassPast.Data
 	{
         [Required]
         public string Content { get; set; }
+
         [Required]
         public int QuestionId { get; set; }
         public QuestionEntity Question { get; set; }
+
         public ICollection<VoteEntity> Votes { get; set; }
     }
 }

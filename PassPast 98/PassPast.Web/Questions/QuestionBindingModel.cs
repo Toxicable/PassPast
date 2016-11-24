@@ -1,4 +1,5 @@
 ﻿using PassPast.Data;
+using PassPast.Web.Infrastructure.Domain;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,6 +17,6 @@ namespace PassPast.Web.Api.Questions
     public class ExamSectionBindingModel
     {
         public int Count { get; set; }
-        public QuestionTypes Type { get; set; }
+        public QuestionTypeEntity Type { get; set; }
     }
 }

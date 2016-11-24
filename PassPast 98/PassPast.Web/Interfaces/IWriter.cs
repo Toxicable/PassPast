@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace PassPast.Web.Interfaces
 {
-    interface IWriter<T> : IReader<T> where T : IEntity
+    interface IWriter<T> : IReader<T> where T : Entity
     {
         Task<int> CreateAsync(T entity);
         Task<bool> DeleteAsync(int id);

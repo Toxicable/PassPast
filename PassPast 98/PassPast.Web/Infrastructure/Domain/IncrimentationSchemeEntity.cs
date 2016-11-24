@@ -7,9 +7,10 @@ using System.Threading.Tasks;
 
 namespace PassPast.Web.Infrastructure.Domain
 {
-    public class SemesterEntity : Entity
+    public class IncrimentationSchemeEntity: Entity
     {
         public string Name { get; set; }
-        public ICollection<ExamEntity> Exams { get; set; }
+        public ICollection<QuestionEntity> Questions { get; set; }
+        public ICollection<McqAnswerEntity> McqAnswers { get; set; }
     }
 }

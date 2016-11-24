@@ -35,7 +35,7 @@ namespace PassPast.Web.Api.Questions
             {
                 var newQuestion = new QuestionEntity
                 {
-                    Number = i,
+                    //Number = i,
                     ExamId = question.ExamId,
                     Type = question.Type
                 };

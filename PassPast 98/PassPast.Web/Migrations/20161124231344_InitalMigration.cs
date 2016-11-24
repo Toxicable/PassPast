@@ -107,6 +107,22 @@ namespace PassPast.Web.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "IncrimentationScheme",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    CreatedAt = table.Column<DateTimeOffset>(nullable: false),
+                    Deleted = table.Column<bool>(nullable: false),
+                    Hidden = table.Column<bool>(nullable: false),
+                    Name = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_IncrimentationScheme", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "_AuthRoleClaims",
                 columns: table => new
                 {
@@ -251,6 +267,37 @@ namespace PassPast.Web.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "QuestionTypes",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    CreatedAt = table.Column<DateTimeOffset>(nullable: false),
+                    CreatedById = table.Column<string>(nullable: false),
+                    Deleted = table.Column<bool>(nullable: false),
+                    Hidden = table.Column<bool>(nullable: false),
+                    Name = table.Column<string>(nullable: true),
+                    UpdatedAt = table.Column<DateTimeOffset>(nullable: true),
+                    UpdatedById = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_QuestionTypes", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_QuestionTypes__AuthUsers_CreatedById",
+                        column: x => x.CreatedById,
+                        principalTable: "_AuthUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_QuestionTypes__AuthUsers_UpdatedById",
+                        column: x => x.UpdatedById,
+                        principalTable: "_AuthUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "_AuthExternalAccounts",
                 columns: table => new
                 {
@@ -359,9 +406,10 @@ namespace PassPast.Web.Migrations
                     Deleted = table.Column<bool>(nullable: false),
                     ExamId = table.Column<int>(nullable: false),
                     Hidden = table.Column<bool>(nullable: false),
+                    IncrimentationSchemeId = table.Column<int>(nullable: false),
                     Number = table.Column<int>(nullable: false),
                     ParentQuestionId = table.Column<int>(nullable: false),
-                    Type = table.Column<int>(nullable: false),
+                    TypeId = table.Column<int>(nullable: false),
                     UpdatedAt = table.Column<DateTimeOffset>(nullable: true),
                     UpdatedById = table.Column<string>(nullable: true)
                 },
@@ -381,11 +429,23 @@ namespace PassPast.Web.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
+                        name: "FK_Questions_IncrimentationScheme_IncrimentationSchemeId",
+                        column: x => x.IncrimentationSchemeId,
+                        principalTable: "IncrimentationScheme",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
                         name: "FK_Questions_Questions_ParentQuestionId",
                         column: x => x.ParentQuestionId,
                         principalTable: "Questions",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Questions_QuestionTypes_TypeId",
+                        column: x => x.TypeId,
+                        principalTable: "QuestionTypes",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Questions__AuthUsers_UpdatedById",
                         column: x => x.UpdatedById,
@@ -478,13 +538,13 @@ namespace PassPast.Web.Migrations
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     AnswerId = table.Column<int>(nullable: false),
+                    ApplicationUserId = table.Column<string>(nullable: true),
+                    ApplicationUserId1 = table.Column<string>(nullable: true),
                     CreatedAt = table.Column<DateTimeOffset>(nullable: false),
-                    CreatedById = table.Column<string>(nullable: false),
                     Deleted = table.Column<bool>(nullable: false),
                     Hidden = table.Column<bool>(nullable: false),
-                    Number = table.Column<int>(nullable: false),
-                    UpdatedAt = table.Column<DateTimeOffset>(nullable: true),
-                    UpdatedById = table.Column<string>(nullable: true)
+                    Incriment = table.Column<string>(nullable: false),
+                    IncrimentationSchemeId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -496,15 +556,21 @@ namespace PassPast.Web.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_McqAnswers__AuthUsers_CreatedById",
-                        column: x => x.CreatedById,
+                        name: "FK_McqAnswers__AuthUsers_ApplicationUserId",
+                        column: x => x.ApplicationUserId,
                         principalTable: "_AuthUsers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_McqAnswers__AuthUsers_UpdatedById",
-                        column: x => x.UpdatedById,
+                        name: "FK_McqAnswers__AuthUsers_ApplicationUserId1",
+                        column: x => x.ApplicationUserId1,
                         principalTable: "_AuthUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_McqAnswers_IncrimentationScheme_IncrimentationSchemeId",
+                        column: x => x.IncrimentationSchemeId,
+                        principalTable: "IncrimentationScheme",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
@@ -516,13 +582,12 @@ namespace PassPast.Web.Migrations
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     AnswerId = table.Column<int>(nullable: false),
+                    ApplicationUserId = table.Column<string>(nullable: true),
+                    ApplicationUserId1 = table.Column<string>(nullable: true),
                     Content = table.Column<string>(nullable: false),
                     CreatedAt = table.Column<DateTimeOffset>(nullable: false),
-                    CreatedById = table.Column<string>(nullable: false),
                     Deleted = table.Column<bool>(nullable: false),
-                    Hidden = table.Column<bool>(nullable: false),
-                    UpdatedAt = table.Column<DateTimeOffset>(nullable: true),
-                    UpdatedById = table.Column<string>(nullable: true)
+                    Hidden = table.Column<bool>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -534,14 +599,14 @@ namespace PassPast.Web.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_ShortAnswers__AuthUsers_CreatedById",
-                        column: x => x.CreatedById,
+                        name: "FK_ShortAnswers__AuthUsers_ApplicationUserId",
+                        column: x => x.ApplicationUserId,
                         principalTable: "_AuthUsers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_ShortAnswers__AuthUsers_UpdatedById",
-                        column: x => x.UpdatedById,
+                        name: "FK_ShortAnswers__AuthUsers_ApplicationUserId1",
+                        column: x => x.ApplicationUserId1,
                         principalTable: "_AuthUsers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
@@ -554,14 +619,13 @@ namespace PassPast.Web.Migrations
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     AnswerId = table.Column<int>(nullable: false),
+                    ApplicationUserId = table.Column<string>(nullable: true),
+                    ApplicationUserId1 = table.Column<string>(nullable: true),
                     CommentId = table.Column<int>(nullable: false),
                     CreatedAt = table.Column<DateTimeOffset>(nullable: false),
-                    CreatedById = table.Column<string>(nullable: false),
                     Deleted = table.Column<bool>(nullable: false),
                     Hidden = table.Column<bool>(nullable: false),
-                    Type = table.Column<int>(nullable: false),
-                    UpdatedAt = table.Column<DateTimeOffset>(nullable: true),
-                    UpdatedById = table.Column<string>(nullable: true)
+                    Type = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -571,23 +635,23 @@ namespace PassPast.Web.Migrations
                         column: x => x.AnswerId,
                         principalTable: "Answers",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_Votes_Comments_CommentId",
-                        column: x => x.CommentId,
-                        principalTable: "Comments",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_Votes__AuthUsers_CreatedById",
-                        column: x => x.CreatedById,
+                        name: "FK_Votes__AuthUsers_ApplicationUserId",
+                        column: x => x.ApplicationUserId,
                         principalTable: "_AuthUsers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_Votes__AuthUsers_UpdatedById",
-                        column: x => x.UpdatedById,
+                        name: "FK_Votes__AuthUsers_ApplicationUserId1",
+                        column: x => x.ApplicationUserId1,
                         principalTable: "_AuthUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Votes_Comments_CommentId",
+                        column: x => x.CommentId,
+                        principalTable: "Comments",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
@@ -680,19 +744,19 @@ namespace PassPast.Web.Migrations
                 column: "AnswerId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Votes_ApplicationUserId",
+                table: "Votes",
+                column: "ApplicationUserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Votes_ApplicationUserId1",
+                table: "Votes",
+                column: "ApplicationUserId1");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Votes_CommentId",
                 table: "Votes",
                 column: "CommentId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Votes_CreatedById",
-                table: "Votes",
-                column: "CreatedById");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Votes_UpdatedById",
-                table: "Votes",
-                column: "UpdatedById");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Exams_CreatedById",
@@ -735,9 +799,19 @@ namespace PassPast.Web.Migrations
                 column: "ExamId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Questions_IncrimentationSchemeId",
+                table: "Questions",
+                column: "IncrimentationSchemeId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Questions_ParentQuestionId",
                 table: "Questions",
                 column: "ParentQuestionId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Questions_TypeId",
+                table: "Questions",
+                column: "TypeId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Questions_UpdatedById",
@@ -762,13 +836,28 @@ namespace PassPast.Web.Migrations
                 unique: true);
 
             migrationBuilder.CreateIndex(
-                name: "IX_McqAnswers_CreatedById",
+                name: "IX_McqAnswers_ApplicationUserId",
                 table: "McqAnswers",
+                column: "ApplicationUserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_McqAnswers_ApplicationUserId1",
+                table: "McqAnswers",
+                column: "ApplicationUserId1");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_McqAnswers_IncrimentationSchemeId",
+                table: "McqAnswers",
+                column: "IncrimentationSchemeId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_QuestionTypes_CreatedById",
+                table: "QuestionTypes",
                 column: "CreatedById");
 
             migrationBuilder.CreateIndex(
-                name: "IX_McqAnswers_UpdatedById",
-                table: "McqAnswers",
+                name: "IX_QuestionTypes_UpdatedById",
+                table: "QuestionTypes",
                 column: "UpdatedById");
 
             migrationBuilder.CreateIndex(
@@ -778,14 +867,14 @@ namespace PassPast.Web.Migrations
                 unique: true);
 
             migrationBuilder.CreateIndex(
-                name: "IX_ShortAnswers_CreatedById",
+                name: "IX_ShortAnswers_ApplicationUserId",
                 table: "ShortAnswers",
-                column: "CreatedById");
+                column: "ApplicationUserId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_ShortAnswers_UpdatedById",
+                name: "IX_ShortAnswers_ApplicationUserId1",
                 table: "ShortAnswers",
-                column: "UpdatedById");
+                column: "ApplicationUserId1");
 
             migrationBuilder.CreateIndex(
                 name: "IX__AuthExternalAccounts_UserId",
@@ -848,6 +937,12 @@ namespace PassPast.Web.Migrations
 
             migrationBuilder.DropTable(
                 name: "Exams");
+
+            migrationBuilder.DropTable(
+                name: "IncrimentationScheme");
+
+            migrationBuilder.DropTable(
+                name: "QuestionTypes");
 
             migrationBuilder.DropTable(
                 name: "Papers");

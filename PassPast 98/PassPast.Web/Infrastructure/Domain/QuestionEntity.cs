@@ -10,14 +10,8 @@ namespace PassPast.Data
 {
     public class QuestionEntity : TrackedEntity
     {
-		public QuestionEntity()
-		{
-			Answers = new HashSet<AnswerEntity>();
-			Comments = new HashSet<CommentEntity>();
-		}
-
         [Required]
-        public int Number { get; set; }
+        public string Incriment { get; set; }
 
         [Required]
         public int TypeId { get; set; }
@@ -26,6 +20,10 @@ namespace PassPast.Data
         [Required]
         public int ExamId { get; set; }
         public ExamEntity Exam { get; set; }
+
+        [Required]
+        public int IncrimentationSchemeId { get; set; }
+        public IncrimentationSchemeEntity IncrimentationScheme { get; set; }
 
         public ICollection<AnswerEntity> Answers { get; set; }
 		public ICollection<CommentEntity> Comments { get; set; }

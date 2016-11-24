@@ -10,7 +10,7 @@ using PassPast.Data;
 namespace PassPast.Web.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20161124214317_InitalMigration")]
+    [Migration("20161124231344_InitalMigration")]
     partial class InitalMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -304,12 +304,13 @@ namespace PassPast.Web.Migrations
 
                     b.Property<int>("AnswerId");
 
+                    b.Property<string>("ApplicationUserId");
+
+                    b.Property<string>("ApplicationUserId1");
+
                     b.Property<int>("CommentId");
 
                     b.Property<DateTimeOffset>("CreatedAt");
-
-                    b.Property<string>("CreatedById")
-                        .IsRequired();
 
                     b.Property<bool>("Deleted");
 
@@ -317,19 +318,15 @@ namespace PassPast.Web.Migrations
 
                     b.Property<int>("Type");
 
-                    b.Property<DateTimeOffset?>("UpdatedAt");
-
-                    b.Property<string>("UpdatedById");
-
                     b.HasKey("Id");
 
                     b.HasIndex("AnswerId");
 
+                    b.HasIndex("ApplicationUserId");
+
+                    b.HasIndex("ApplicationUserId1");
+
                     b.HasIndex("CommentId");
-
-                    b.HasIndex("CreatedById");
-
-                    b.HasIndex("UpdatedById");
 
                     b.ToTable("Votes");
                 });
@@ -419,11 +416,13 @@ namespace PassPast.Web.Migrations
 
                     b.Property<bool>("Hidden");
 
+                    b.Property<int>("IncrimentationSchemeId");
+
                     b.Property<int>("Number");
 
                     b.Property<int>("ParentQuestionId");
 
-                    b.Property<int>("Type");
+                    b.Property<int>("TypeId");
 
                     b.Property<DateTimeOffset?>("UpdatedAt");
 
@@ -435,7 +434,11 @@ namespace PassPast.Web.Migrations
 
                     b.HasIndex("ExamId");
 
+                    b.HasIndex("IncrimentationSchemeId");
+
                     b.HasIndex("ParentQuestionId");
+
+                    b.HasIndex("TypeId");
 
                     b.HasIndex("UpdatedById");
 
@@ -498,12 +501,64 @@ namespace PassPast.Web.Migrations
                     b.ToTable("_AuthUsers");
                 });
 
+            modelBuilder.Entity("PassPast.Web.Infrastructure.Domain.IncrimentationSchemeEntity", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<DateTimeOffset>("CreatedAt");
+
+                    b.Property<bool>("Deleted");
+
+                    b.Property<bool>("Hidden");
+
+                    b.Property<string>("Name");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("IncrimentationScheme");
+                });
+
             modelBuilder.Entity("PassPast.Web.Infrastructure.Domain.McqAnswerEntity", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
 
                     b.Property<int>("AnswerId");
+
+                    b.Property<string>("ApplicationUserId");
+
+                    b.Property<string>("ApplicationUserId1");
+
+                    b.Property<DateTimeOffset>("CreatedAt");
+
+                    b.Property<bool>("Deleted");
+
+                    b.Property<bool>("Hidden");
+
+                    b.Property<string>("Incriment")
+                        .IsRequired();
+
+                    b.Property<int>("IncrimentationSchemeId");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AnswerId")
+                        .IsUnique();
+
+                    b.HasIndex("ApplicationUserId");
+
+                    b.HasIndex("ApplicationUserId1");
+
+                    b.HasIndex("IncrimentationSchemeId");
+
+                    b.ToTable("McqAnswers");
+                });
+
+            modelBuilder.Entity("PassPast.Web.Infrastructure.Domain.QuestionTypeEntity", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
 
                     b.Property<DateTimeOffset>("CreatedAt");
 
@@ -514,7 +569,7 @@ namespace PassPast.Web.Migrations
 
                     b.Property<bool>("Hidden");
 
-                    b.Property<int>("Number");
+                    b.Property<string>("Name");
 
                     b.Property<DateTimeOffset?>("UpdatedAt");
 
@@ -522,14 +577,11 @@ namespace PassPast.Web.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("AnswerId")
-                        .IsUnique();
-
                     b.HasIndex("CreatedById");
 
                     b.HasIndex("UpdatedById");
 
-                    b.ToTable("McqAnswers");
+                    b.ToTable("QuestionTypes");
                 });
 
             modelBuilder.Entity("PassPast.Web.Infrastructure.Domain.ShortAnswerEntity", b =>
@@ -539,30 +591,27 @@ namespace PassPast.Web.Migrations
 
                     b.Property<int>("AnswerId");
 
+                    b.Property<string>("ApplicationUserId");
+
+                    b.Property<string>("ApplicationUserId1");
+
                     b.Property<string>("Content")
                         .IsRequired();
 
                     b.Property<DateTimeOffset>("CreatedAt");
 
-                    b.Property<string>("CreatedById")
-                        .IsRequired();
-
                     b.Property<bool>("Deleted");
 
                     b.Property<bool>("Hidden");
-
-                    b.Property<DateTimeOffset?>("UpdatedAt");
-
-                    b.Property<string>("UpdatedById");
 
                     b.HasKey("Id");
 
                     b.HasIndex("AnswerId")
                         .IsUnique();
 
-                    b.HasIndex("CreatedById");
+                    b.HasIndex("ApplicationUserId");
 
-                    b.HasIndex("UpdatedById");
+                    b.HasIndex("ApplicationUserId1");
 
                     b.ToTable("ShortAnswers");
                 });
@@ -683,21 +732,19 @@ namespace PassPast.Web.Migrations
                 {
                     b.HasOne("PassPast.Data.AnswerEntity", "Answer")
                         .WithMany("Votes")
-                        .HasForeignKey("AnswerId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .HasForeignKey("AnswerId");
+
+                    b.HasOne("PassPast.Web.ApplicationUser")
+                        .WithMany("VotesCreated")
+                        .HasForeignKey("ApplicationUserId");
+
+                    b.HasOne("PassPast.Web.ApplicationUser")
+                        .WithMany("VotesUpdated")
+                        .HasForeignKey("ApplicationUserId1");
 
                     b.HasOne("PassPast.Data.CommentEntity", "Comment")
                         .WithMany("Votes")
-                        .HasForeignKey("CommentId")
-                        .OnDelete(DeleteBehavior.Cascade);
-
-                    b.HasOne("PassPast.Web.ApplicationUser", "CreatedBy")
-                        .WithMany("VotesCreated")
-                        .HasForeignKey("CreatedById");
-
-                    b.HasOne("PassPast.Web.ApplicationUser", "UpdatedBy")
-                        .WithMany("VotesUpdated")
-                        .HasForeignKey("UpdatedById");
+                        .HasForeignKey("CommentId");
                 });
 
             modelBuilder.Entity("PassPast.Data.ExamEntity", b =>
@@ -743,9 +790,18 @@ namespace PassPast.Web.Migrations
                         .HasForeignKey("ExamId")
                         .OnDelete(DeleteBehavior.Cascade);
 
+                    b.HasOne("PassPast.Web.Infrastructure.Domain.IncrimentationSchemeEntity", "IncrimentationScheme")
+                        .WithMany("Questions")
+                        .HasForeignKey("IncrimentationSchemeId");
+
                     b.HasOne("PassPast.Data.QuestionEntity", "ParentQuestion")
                         .WithMany("SubQuestions")
                         .HasForeignKey("ParentQuestionId");
+
+                    b.HasOne("PassPast.Web.Infrastructure.Domain.QuestionTypeEntity", "Type")
+                        .WithMany("Questions")
+                        .HasForeignKey("TypeId")
+                        .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("PassPast.Web.ApplicationUser", "UpdatedBy")
                         .WithMany("QuestionsUpdated")
@@ -759,12 +815,28 @@ namespace PassPast.Web.Migrations
                         .HasForeignKey("PassPast.Web.Infrastructure.Domain.McqAnswerEntity", "AnswerId")
                         .OnDelete(DeleteBehavior.Cascade);
 
-                    b.HasOne("PassPast.Web.ApplicationUser", "CreatedBy")
+                    b.HasOne("PassPast.Web.ApplicationUser")
                         .WithMany("McqAnswersCreated")
-                        .HasForeignKey("CreatedById");
+                        .HasForeignKey("ApplicationUserId");
+
+                    b.HasOne("PassPast.Web.ApplicationUser")
+                        .WithMany("McqAnswersUpdated")
+                        .HasForeignKey("ApplicationUserId1");
+
+                    b.HasOne("PassPast.Web.Infrastructure.Domain.IncrimentationSchemeEntity", "IncrimentationScheme")
+                        .WithMany("McqAnswers")
+                        .HasForeignKey("IncrimentationSchemeId");
+                });
+
+            modelBuilder.Entity("PassPast.Web.Infrastructure.Domain.QuestionTypeEntity", b =>
+                {
+                    b.HasOne("PassPast.Web.ApplicationUser", "CreatedBy")
+                        .WithMany()
+                        .HasForeignKey("CreatedById")
+                        .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("PassPast.Web.ApplicationUser", "UpdatedBy")
-                        .WithMany("McqAnswersUpdated")
+                        .WithMany()
                         .HasForeignKey("UpdatedById");
                 });
 
@@ -775,13 +847,13 @@ namespace PassPast.Web.Migrations
                         .HasForeignKey("PassPast.Web.Infrastructure.Domain.ShortAnswerEntity", "AnswerId")
                         .OnDelete(DeleteBehavior.Cascade);
 
-                    b.HasOne("PassPast.Web.ApplicationUser", "CreatedBy")
+                    b.HasOne("PassPast.Web.ApplicationUser")
                         .WithMany("ShortAnswersCreated")
-                        .HasForeignKey("CreatedById");
+                        .HasForeignKey("ApplicationUserId");
 
-                    b.HasOne("PassPast.Web.ApplicationUser", "UpdatedBy")
+                    b.HasOne("PassPast.Web.ApplicationUser")
                         .WithMany("ShortAnswersUpdated")
-                        .HasForeignKey("UpdatedById");
+                        .HasForeignKey("ApplicationUserId1");
                 });
 
             modelBuilder.Entity("PassPast.Web.Infrastructure.Entities.ExternalAccount", b =>

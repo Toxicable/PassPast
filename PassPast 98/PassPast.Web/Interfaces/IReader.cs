@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace PassPast.Web.Interfaces
 {
-    interface IReader<T> where T : IEntity
+    interface IReader<T> where T : Entity
     {
         Task<bool> ExistsAsync(int id);
         Task<bool> ExistsAsync(Expression<Func<T, bool>> predicate);

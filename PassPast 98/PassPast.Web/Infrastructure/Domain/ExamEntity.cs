@@ -16,8 +16,7 @@ namespace PassPast.Data
         public int Year { get; set; }
 
         [Required]
-        public int SemesterId { get; set; }
-        public SemesterEntity Semester { get; set; }
+        public Semester Semester { get; set; }
 
         [Required]
         public int PaperId { get; set; }
@@ -26,4 +25,11 @@ namespace PassPast.Data
         public ICollection<QuestionEntity> Questions { get; set; }
 
 	}
+
+    public enum Semester
+    {
+        Semester1,
+        Semester2,
+        SummerSchool
+    }
 }

@@ -11,9 +11,14 @@ namespace PassPast.Web.Infrastructure.Domain
     public class McqAnswerEntity : Entity
     {
         [Required]
-        public int Number { get; set; }
+        public string Incriment { get; set; }
+
         [Required]
         public int AnswerId { get; set; }
         public AnswerEntity Answer { get; set; }
+
+        [Required]
+        public int IncrimentationSchemeId { get; set; }
+        public IncrimentationSchemeEntity IncrimentationScheme { get; set; }
     }
 }
