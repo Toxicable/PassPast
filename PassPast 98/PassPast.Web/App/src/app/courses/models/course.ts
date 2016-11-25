@@ -1,7 +1,5 @@
-import { Paper } from './paper';
-export interface Course{
+export interface Course {
     id: number;
     name: string;
     code: string;
-    papers: Paper[]
 }

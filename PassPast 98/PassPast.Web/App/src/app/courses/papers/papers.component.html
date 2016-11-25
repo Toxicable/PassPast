@@ -1,5 +1,6 @@
-<h1>Papers</h1>      
-<a  class="header-navigation__link" [routerLink]="['/courses', 1, 'add-paper']">Add Paper</a> 
+<h1>Papers</h1>
+
+<button type="button" md-raised-button color="primary" (click)="openNewPaperDialog()">Add Paper</button>
 
 <md-list>
     <md-list-item *ngFor="let paper of papers$ | async" [routerLink]="paper.id">

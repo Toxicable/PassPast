@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using PassPast.Data;
 using System.Threading.Tasks;
@@ -10,9 +11,13 @@ namespace PassPast.Web.Api.Papers
     {
         private IPaperManager _papersManager;
         private IMapper _mapper;
-
-        public PapersController(IMapper mapper, IPaperManager paperManager)
+        private readonly UserManager<ApplicationUser> _userManager;
+        public PapersController(IMapper mapper,
+            IPaperManager paperManager,
+            UserManager<ApplicationUser> userManager
+            )
         {
+            _userManager = userManager;
             _mapper = mapper;
             _papersManager = paperManager;
         }
@@ -35,11 +40,13 @@ namespace PassPast.Web.Api.Papers
 
         public async Task<IActionResult> Create([FromBody]PaperBindingModel course)
         {
-            var newCourse = _mapper.Map<PaperEntity>(course);
+            var newPaper = _mapper.Map<PaperEntity>(course);
+            newPaper.CreatedBy = await _userManager.GetUserAsync(User);
+            await _papersManager.Create(newPaper);
 
-            await _papersManager.Create(newCourse);
+            var paperToReturn = _mapper.Map<PaperViewModel>(newPaper);
 
-            return Ok(newCourse);
+            return Ok(newPaper);
         }
     }
 }

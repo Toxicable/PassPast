@@ -50,6 +50,7 @@ namespace PassPast.Web.Api.Papers
 
         public async Task Create(PaperEntity newPaper)
         {
+            newPaper.CreatedAt = DateTimeOffset.Now;
             _context.Papers.Add(newPaper);
 
             await _context.SaveChangesAsync();

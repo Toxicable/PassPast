@@ -28,7 +28,8 @@ export class AddExamComponent implements OnInit {
             sections: this.formBuilder.array([
                 this.newSection()
             ])
-        })        
+        });
+        console.log(this.newExamForm)
     }
 
     addSection(){
@@ -36,11 +37,22 @@ export class AddExamComponent implements OnInit {
         control.push(this.newSection())
     }
 
+    addSubQuestion(i: number){
+        const control = <FormArray>this.newExamForm.controls['sections']
+        const group = <FormGroup>control.controls[i];
+        var subQuestions = <FormArray>group.controls['subQuestions']
+        subQuestions.push(this.newSection())
+        console.log(this.newExamForm)
+        //control.
+    }
+
     newSection(){
         return this.formBuilder.group({
+                        incrimentationScheme: ['', Validators.required],
                         count: ['', Validators.required],
-                        type: ['', Validators.required]
-                    })                
+                        type: ['', Validators.required],
+                        subQuestions: this.formBuilder.array([])
+                    });
     }
 
     removeSection(i: number) {
@@ -49,23 +61,24 @@ export class AddExamComponent implements OnInit {
     }
 
     onSubmit(){
+        console.log(this.newExamForm)
         
-        this.store.map(state => state.courses.paper.selected.id)
-            .first()
-            .flatMap((paperId: number) => {
-                let newExam = Object.assign({}, {paperId}, this.newExamForm.value)
-                delete newExam["sections"];
-                return this.exams.create(newExam)
-                    .flatMap((exam: Exam) => {
-                        debugger
-                        let data = Object.assign({}, {examId: exam.id},this.newExamForm.value)
-                        delete data["semester"];
-                        delete data["year"];
-                        return this.questions.create(data)
-                    })
+        // this.store.map(state => state.courses.paper.selected.id)
+        //     .first()
+        //     .flatMap((paperId: number) => {
+        //         let newExam = Object.assign({}, {paperId}, this.newExamForm.value)
+        //         delete newExam["sections"];
+        //         return this.exams.create(newExam)
+        //             .flatMap((exam: Exam) => {
+        //                 debugger
+        //                 let data = Object.assign({}, {examId: exam.id},this.newExamForm.value)
+        //                 delete data["semester"];
+        //                 delete data["year"];
+        //                 return this.questions.create(data)
+        //             })
 
-            })
-            .subscribe(() => this.alert.sendSuccess("wow we actually did it :D"))
+        //     })
+        //     .subscribe(() => this.alert.sendSuccess("wow we actually did it :D"))
 
 
 

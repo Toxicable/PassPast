@@ -25,7 +25,9 @@ namespace PassPast.Web
         public DbSet<PaperEntity> Papers { get; set; }
         public DbSet<QuestionEntity> Questions { get; set; }
         public DbSet<VoteEntity> Votes { get; set; }
-
+        public DbSet<QuestionTypeEntity> QuestionTypes { get; set; }
+        public DbSet<IncrimentationSchemeEntity> IncrimentationSchemes { get; set; }
+        
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);

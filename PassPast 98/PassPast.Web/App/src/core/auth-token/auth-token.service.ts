@@ -86,14 +86,13 @@ export class AuthTokenService {
 
     startupTokenRefresh() {
         return this.storage.getItem('auth-tokens')
-            .flatMap( (rawTokens: string) => {
+            .flatMap( (tokens: AuthTokenModel) => {
                 // check if the token is even if localStorage, if it isn't tell them it's not and return
-                if (!rawTokens) {
+                if (!tokens) {
                     this.store.dispatch(this.authReadActions.Ready());
                     return Observable.throw('No token in Storage');
                 }
                 // parse the token into a model and throw it into the store
-                let tokens = JSON.parse(rawTokens) as AuthTokenModel;
                 this.store.dispatch(this.authTokenActions.Load(tokens));
 
                 if (!this.jwtHelper.isTokenExpired(tokens.id_token)) {

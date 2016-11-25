@@ -5,28 +5,23 @@
     </div>
 
     <div>
-        <md-input placeholder="Semester" formControlName="semester"></md-input>
+        <md-button-toggle-group formControlName="semester">
+            <md-button-toggle value="Semester1" [checked]="true">Semester 1</md-button-toggle>
+            <md-button-toggle value="Semester2">Semester 2</md-button-toggle>
+            <md-button-toggle value="SummerSchool">Summer School</md-button-toggle>
+        </md-button-toggle-group>
         <app-control-messages [control]="newExamForm.controls.semester"></app-control-messages>
     </div>
-    <div formArrayName="sections">
-        <div *ngFor="let sectionControl of newExamForm.controls.sections.controls; let i = index">
-            Secotion: {{i + 1}}
-            <div [formGroupName]="i">
 
-                <div>
-                    <md-input placeholder="Count" formControlName="count"></md-input>
-                    <app-control-messages [control]="newExamForm.controls.sections.controls[i].controls.count"></app-control-messages>
-                </div>
+    <button md-button (click)="ngOnInit()">Reset</button>
+    <button md-button (click)="addSection()">+ Add Section</button>
+    <ul>
+        <li *ngFor="let section of newExamForm.controls.sections.controls; let i=index">
+            <app-question-section [sectionForm]="section"></app-question-section>
+        </li>
+    </ul>
 
-                <div>                    
-                    <md-input placeholder="Type" formControlName="type"></md-input>
-                    <app-control-messages [control]="newExamForm.controls.sections.controls[i].controls.type"></app-control-messages>
-                </div>
-                <button type="button" (click)="removeSection(i)">Remove</button>
-            </div>
-        </div>
-        <button type="button" (click)="addSection()">Add</button>
-    </div>
+
 
     <button md-raised-button color="primary" type="submit" [disabled]="!newExamForm.valid" >Submit</button>
 </form>

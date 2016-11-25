@@ -20,6 +20,8 @@ using System;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Rewrite;
 using Microsoft.ApplicationInsights;
+using System.Linq;
+using PassPast.Web.Infrastructure.Domain;
 
 namespace PassPast.Web
 {
@@ -168,7 +170,7 @@ namespace PassPast.Web
             app.UseDefaultFiles(options);
             app.UseStaticFiles();
 
-            //SeedDatabase(app);
+            SeedDatabase(app);
         }
 
         private void SeedDatabase(IApplicationBuilder app)
@@ -179,10 +181,52 @@ namespace PassPast.Web
 
             using (var context = new ApplicationDbContext(options))
             {
-                //context.Database.EnsureDeleted();
-                //context.Database.EnsureCreated();
+                context.Database.EnsureCreated();
 
-                
+                var user = context.Users.FirstOrDefault(x => x.UserName == "fabian.wiles@gmail.com");
+                if (user == null) return;
+
+                if (context.QuestionTypes.Any()) return;
+                if (context.IncrimentationSchemes.Any()) return;
+
+                var types = new QuestionTypeEntity[] {
+                     new QuestionTypeEntity
+                    {
+                        CreatedBy = user,
+                        Name = "Mcq",
+                    },
+                    new QuestionTypeEntity
+                    {
+                        CreatedBy = user,
+                        Name = "Short",
+                        CreatedAt = DateTimeOffset.Now
+                    }
+                };
+
+                context.QuestionTypes.AddRange(types);
+
+                var schemes = new IncrimentationSchemeEntity[] {
+                    new IncrimentationSchemeEntity
+                    {
+                        Name = "RomanNumerals",
+                        CreatedAt = DateTimeOffset.Now
+                    },
+                    new IncrimentationSchemeEntity
+                    {
+                        Name = "Alphabetical",
+                        CreatedAt = DateTimeOffset.Now
+                    },
+                    new IncrimentationSchemeEntity
+                    {
+                        Name = "Numbered",
+                        CreatedAt = DateTimeOffset.Now
+                    }
+
+                };
+
+                context.IncrimentationSchemes.AddRange(schemes);
+                context.SaveChanges();
+
             }
         }
     }

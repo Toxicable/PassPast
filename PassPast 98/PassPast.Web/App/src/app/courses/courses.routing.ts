@@ -17,25 +17,10 @@ const routes: Routes = [
     {
         path: 'courses',
         component: CoursesComponent,
-       // canActivate: [AuthenticatedAuthGuard]
-    },
-    {
-        path: 'courses/add-course',
-        component: AddCourseComponent,
-      //  canActivate: [AuthenticatedAuthGuard]
     },
     {
         path: 'courses/:courseId',
         component: PapersComponent,
-        canActivate: [AuthenticatedAuthGuard],
-        resolve: {
-            courseExists: CourseResolveService
-        }
-    },
-    {
-        path: 'courses/:courseId/add-paper',
-        component: AddPaperComponent,
-        canActivate: [AuthenticatedAuthGuard],
         resolve: {
             courseExists: CourseResolveService
         }
@@ -43,7 +28,6 @@ const routes: Routes = [
     {
         path: 'courses/:courseId/:paperId',
         component: ExamsComponent,
-        canActivate: [AuthenticatedAuthGuard],
         resolve: {
             paperExists: PaperResolveService
         }
@@ -51,7 +35,6 @@ const routes: Routes = [
     {
         path: 'courses/:courseId/:paperId/add-exam',
         component: AddExamComponent,
-        canActivate: [AuthenticatedAuthGuard],
         resolve: {
             paperExists: PaperResolveService
         }
@@ -59,7 +42,6 @@ const routes: Routes = [
     {
         path: 'courses/:courseId/:paperId/:examId',
         component: QuestionsComponent,
-        canActivate: [AuthenticatedAuthGuard],
         resolve: {
             examExists: ExamResolveService
         }

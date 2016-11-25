@@ -34,5 +34,7 @@ namespace PassPast.Web.Extentions
         {
             app.UseAppBuilder(appBuilder => appBuilder.MapSignalR());
         }
+
+
     }
 }

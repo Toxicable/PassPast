@@ -54,6 +54,7 @@ namespace PassPast.Web.Api.Courses
 
         public async Task Create(CourseEntity newCourse)
         {
+            newCourse.CreatedAt = DateTimeOffset.Now;
             _context.Courses.Add(newCourse);
 
             await _context.SaveChangesAsync();

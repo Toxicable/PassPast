@@ -14,14 +14,14 @@ import { AddCourseComponent } from './add-course/add-course.component';
 })
 export class CoursesComponent implements OnInit {
     private newCourseDialogRef: MdDialogRef<AddCourseComponent>;
+    courses$: Observable<Course[]>;
 
-        constructor(private courses: CourseService,
-                    private alert: AlertService,
-                    private store: Store<AppState>,
-                    private dialog: MdDialog
+    constructor(private courses: CourseService,
+                private alert: AlertService,
+                private store: Store<AppState>,
+                private dialog: MdDialog
     ) { }
 
-    courses$: Observable<Course[]>;
 
     openDialog() {
         this.newCourseDialogRef = this.dialog.open(AddCourseComponent, {
@@ -29,14 +29,14 @@ export class CoursesComponent implements OnInit {
         });
 
         this.newCourseDialogRef.afterClosed().subscribe(result => {
-        console.log('result: ' + result);
-        this.newCourseDialogRef = null;
-    });
+            console.log('result: ' + result);
+            this.newCourseDialogRef = null;
+        });
     }
     ngOnInit() {
-        this.courses$ = this.store.map( state => state.courses.course.entities)
+        this.courses$ = this.store.map( state => state.courses.course.entities);
 
         this.courses.getCourses()
-            .subscribe( () => this.alert.sendSuccess("We got the courses :D"))
+            .subscribe( () => this.alert.sendSuccess('We got the courses :D'));
      }
 }
