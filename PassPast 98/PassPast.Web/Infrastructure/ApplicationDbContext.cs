@@ -26,7 +26,6 @@ namespace PassPast.Web
         public DbSet<QuestionEntity> Questions { get; set; }
         public DbSet<VoteEntity> Votes { get; set; }
         public DbSet<QuestionTypeEntity> QuestionTypes { get; set; }
-        public DbSet<IncrimentationSchemeEntity> IncrimentationSchemes { get; set; }
         
         protected override void OnModelCreating(ModelBuilder builder)
         {
@@ -58,7 +57,6 @@ namespace PassPast.Web
             builder.Entity<QuestionEntity>().ToTable("Questions");
             builder.Entity<VoteEntity>().ToTable("Votes");
             builder.Entity<QuestionTypeEntity>().ToTable("QuestionTypes");
-            builder.Entity<IncrimentationSchemeEntity>().ToTable("IncrimentationScheme");
 
             //Mappings
             builder.Entity<AnswerEntity>().HasOne(x => x.McqAnswer).WithOne(x => x.Answer).HasForeignKey<McqAnswerEntity>(x => x.AnswerId);
@@ -68,9 +66,6 @@ namespace PassPast.Web
 
             builder.Entity<VoteEntity>().HasOne(x => x.Comment).WithMany(x => x.Votes).OnDelete(DeleteBehavior.Restrict);
             builder.Entity<VoteEntity>().HasOne(x => x.Answer).WithMany(x => x.Votes).OnDelete(DeleteBehavior.Restrict);
-
-            builder.Entity<IncrimentationSchemeEntity>().HasMany(x => x.Questions).WithOne(x => x.IncrimentationScheme).OnDelete(DeleteBehavior.Restrict);
-            builder.Entity<IncrimentationSchemeEntity>().HasMany(x => x.McqAnswers).WithOne(x => x.IncrimentationScheme).OnDelete(DeleteBehavior.Restrict);
 
             builder.Entity<ApplicationUser>().HasMany(x => x.CoursesCreated).WithOne(x => x.CreatedBy).OnDelete(DeleteBehavior.Restrict);
             builder.Entity<ApplicationUser>().HasMany(x => x.PapersCreated).WithOne(x => x.CreatedBy).OnDelete(DeleteBehavior.Restrict);

@@ -11,12 +11,14 @@ namespace PassPast.Web.Api.Questions
     {
         public int ExamId { get; set; }
 
-        public ICollection<ExamSectionBindingModel> Sections { get; set; }
+        public ICollection<QuestionSectionBindingModel> Sections { get; set; }
     }
 
-    public class ExamSectionBindingModel
+    public class QuestionSectionBindingModel
     {
         public int Count { get; set; }
-        public QuestionTypeEntity Type { get; set; }
+        public string Type { get; set; }
+        public IncrimentationScheme IncrimentationScheme { get; set; }
+        public ICollection<QuestionSectionBindingModel> SubQuestions { get; set; }
     }
 }

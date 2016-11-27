@@ -16,9 +16,5 @@ namespace PassPast.Web.Infrastructure.Domain
         [Required]
         public int AnswerId { get; set; }
         public AnswerEntity Answer { get; set; }
-
-        [Required]
-        public int IncrimentationSchemeId { get; set; }
-        public IncrimentationSchemeEntity IncrimentationScheme { get; set; }
     }
 }

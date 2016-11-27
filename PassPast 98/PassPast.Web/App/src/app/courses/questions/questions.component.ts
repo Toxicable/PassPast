@@ -6,27 +6,27 @@ import { Observable } from 'rxjs/Observable';
 import { Question } from '../models/question';
 
 @Component({
-    selector: 'questions',
+    selector: 'app-questions',
     templateUrl: 'questions.component.html'
 })
 export class QuestionsComponent implements OnInit {
+    questions$: Observable<Question[]>;
+
     constructor(private store: Store<AppState>,
                 private questions: QuestionService) { }
 
-    questions$: Observable<Question[]>;
 
-    ngOnInit() { 
-
+    ngOnInit() {
         this.store.map( state => state.courses.exam.selected.id)
-            .subscribe( (examId: number)=>{
+            .subscribe( (examId: number) => {
                 this.questions$ = this.store.map(state => state.courses.question.entities)
             })
 
-        this.store.map( state=> state.courses.exam.selected.id)
+        this.store.map( state => state.courses.exam.selected.id)
             .first()
-            .subscribe((examId: number) =>{                
+            .subscribe((examId: number) => {
                 this.questions.getQuestions(examId)
-                    .subscribe()
-            })
+                    .subscribe();
+            });
     }
 }

@@ -6,6 +6,7 @@ import { Store } from '@ngrx/store';
 import { Exam } from '../../models/exam';
 import { QuestionService } from '../../questions/question.service';
 import { AlertService } from '../../../../core/alert/alert.service';
+import { FormValidationService } from '../../../../core/services/form-validation.service';
 
 @Component({
     selector: 'add-exam',
@@ -16,34 +17,32 @@ export class AddExamComponent implements OnInit {
                 private exams: ExamService,
                 private alert: AlertService,
                 private store: Store<AppState>,
-                private questions: QuestionService
+                private questions: QuestionService,
+                private formValidation: FormValidationService
     ) { }
 
     newExamForm: FormGroup
 
     ngOnInit(): void {
         this.newExamForm = this.formBuilder.group({
-            year: ['', Validators.required],
+            year: ['', [Validators.required, this.formValidation.yearRangeValidator]],
             semester: ['', Validators.required],
             sections: this.formBuilder.array([
                 this.newSection()
             ])
         });
-        console.log(this.newExamForm)
     }
 
     addSection(){
         const control = <FormArray>this.newExamForm.controls['sections']
-        control.push(this.newSection())
+        control.push(this.newSection());
     }
 
-    addSubQuestion(i: number){
+    addSubQuestion(i: number) {
         const control = <FormArray>this.newExamForm.controls['sections']
         const group = <FormGroup>control.controls[i];
-        var subQuestions = <FormArray>group.controls['subQuestions']
-        subQuestions.push(this.newSection())
-        console.log(this.newExamForm)
-        //control.
+        const subQuestions = <FormArray>group.controls['subQuestions']
+        subQuestions.push(this.newSection());
     }
 
     newSection(){
@@ -60,25 +59,23 @@ export class AddExamComponent implements OnInit {
         control.removeAt(i);
     }
 
-    onSubmit(){
-        console.log(this.newExamForm)
-        
-        // this.store.map(state => state.courses.paper.selected.id)
-        //     .first()
-        //     .flatMap((paperId: number) => {
-        //         let newExam = Object.assign({}, {paperId}, this.newExamForm.value)
-        //         delete newExam["sections"];
-        //         return this.exams.create(newExam)
-        //             .flatMap((exam: Exam) => {
-        //                 debugger
-        //                 let data = Object.assign({}, {examId: exam.id},this.newExamForm.value)
-        //                 delete data["semester"];
-        //                 delete data["year"];
-        //                 return this.questions.create(data)
-        //             })
+    onSubmit() {
+        this.store.map(state => state.courses.paper.selected.id)
+            .first()
+            .flatMap((paperId: number) => {
+                let newExam = Object.assign({}, {paperId}, this.newExamForm.value)
+                delete newExam['sections'];
 
-        //     })
-        //     .subscribe(() => this.alert.sendSuccess("wow we actually did it :D"))
+                return this.exams.create(newExam)
+                    .flatMap((exam: Exam) => {
+                        let data = Object.assign({}, {examId: exam.id}, this.newExamForm.value);
+                        delete data['semester'];
+                        delete data['year'];
+                        return this.questions.create(data)
+                    })
+
+            })
+            .subscribe(() => this.alert.sendSuccess('wow we actually did it :D'))
 
 
 

@@ -17,6 +17,7 @@
     <button md-button (click)="addSection()">+ Add Section</button>
     <ul>
         <li *ngFor="let section of newExamForm.controls.sections.controls; let i=index">
+             <button md-button (click)="removeSection(i)" type="button">RemoveSection</button>
             <app-question-section [sectionForm]="section"></app-question-section>
         </li>
     </ul>

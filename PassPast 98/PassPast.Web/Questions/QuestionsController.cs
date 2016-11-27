@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
 using PassPast.Data;
 using System.Threading.Tasks;
 
@@ -8,9 +9,11 @@ namespace PassPast.Web.Api.Questions
     public class QuestionsController : Controller
     {
         private IQuestionManger _questionsManager;
-        
-        public QuestionsController(IQuestionManger questionManager)
+        private UserManager<ApplicationUser> _userManager;
+
+        public QuestionsController(IQuestionManger questionManager, UserManager<ApplicationUser> userManager)
         {
+            _userManager = userManager;
             _questionsManager = questionManager;
         }
 
@@ -25,14 +28,11 @@ namespace PassPast.Web.Api.Questions
         [HttpPost]
         public async Task<IActionResult> Create([FromBody]QuestionBindingModel questions)
         {
-            foreach(var section in questions.Sections)
-            {
-                var question = new QuestionEntity {
-                    ExamId = questions.ExamId,
-                    Type = section.Type
-                };
-                await _questionsManager.CreateMultiple(question, section.Count);
-            }
+            var userId = _userManager.GetUserId(User);
+
+            await _questionsManager.CreateFromSections(questions, userId);
+
+
 
 
             return Ok();

@@ -19,7 +19,6 @@ import { PaperActions } from './papers/paper.actions';
 import { ExamActions } from './exams/exam.actions';
 import { QuestionActions } from './questions/question.actions';
 import { SharedModule } from '../../shared/shared.module';
-import { CourseComponent } from './courses/course.components';
 import { QuestionSectionComponent } from './exams/add-exam/question-section.component';
 
 @NgModule({
@@ -28,9 +27,7 @@ import { QuestionSectionComponent } from './exams/add-exam/question-section.comp
         coursesRouting
 
     ],
-    exports: [],
     declarations: [
-        CourseComponent,
         CoursesComponent,
         AddCourseComponent,
         PapersComponent,

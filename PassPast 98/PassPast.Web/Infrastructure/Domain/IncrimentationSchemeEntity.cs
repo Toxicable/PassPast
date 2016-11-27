@@ -7,10 +7,10 @@ using System.Threading.Tasks;
 
 namespace PassPast.Web.Infrastructure.Domain
 {
-    public class IncrimentationSchemeEntity: Entity
+    public enum IncrimentationScheme
     {
-        public string Name { get; set; }
-        public ICollection<QuestionEntity> Questions { get; set; }
-        public ICollection<McqAnswerEntity> McqAnswers { get; set; }
+        RomanNumerals,
+        Alphabetical,
+        Numbered
     }
 }

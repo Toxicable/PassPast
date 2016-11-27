@@ -187,7 +187,6 @@ namespace PassPast.Web
                 if (user == null) return;
 
                 if (context.QuestionTypes.Any()) return;
-                if (context.IncrimentationSchemes.Any()) return;
 
                 var types = new QuestionTypeEntity[] {
                      new QuestionTypeEntity
@@ -205,26 +204,6 @@ namespace PassPast.Web
 
                 context.QuestionTypes.AddRange(types);
 
-                var schemes = new IncrimentationSchemeEntity[] {
-                    new IncrimentationSchemeEntity
-                    {
-                        Name = "RomanNumerals",
-                        CreatedAt = DateTimeOffset.Now
-                    },
-                    new IncrimentationSchemeEntity
-                    {
-                        Name = "Alphabetical",
-                        CreatedAt = DateTimeOffset.Now
-                    },
-                    new IncrimentationSchemeEntity
-                    {
-                        Name = "Numbered",
-                        CreatedAt = DateTimeOffset.Now
-                    }
-
-                };
-
-                context.IncrimentationSchemes.AddRange(schemes);
                 context.SaveChanges();
 
             }

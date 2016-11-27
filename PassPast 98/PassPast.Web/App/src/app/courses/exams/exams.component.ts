@@ -34,12 +34,12 @@ export class ExamsComponent implements OnInit {
 
     ngOnInit() {
         this.store.map( state => state.courses.paper.selected.id)
-        .subscribe( (paperId: number) => {
-            this.exams$ = this.store.map( state => state.courses.exam.entities)
-                .map((exams: Exam[]) => {
-                    return exams.filter((paper: Exam) => paper.paperId === paperId);
+            .subscribe( (paperId: number) => {
+                this.exams$ = this.store.map( state => state.courses.exam.entities)
+                    .map((exams: Exam[]) => {
+                        return exams.filter((paper: Exam) => paper.paperId === paperId);
+                    });
                 });
-            });
 
         this.exams.getExams()
             .subscribe();

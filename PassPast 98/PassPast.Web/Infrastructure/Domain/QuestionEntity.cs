@@ -20,15 +20,11 @@ namespace PassPast.Data
         [Required]
         public int ExamId { get; set; }
         public ExamEntity Exam { get; set; }
-
-        [Required]
-        public int IncrimentationSchemeId { get; set; }
-        public IncrimentationSchemeEntity IncrimentationScheme { get; set; }
-
+        
         public ICollection<AnswerEntity> Answers { get; set; }
 		public ICollection<CommentEntity> Comments { get; set; }
         
-        public int ParentQuestionId { get; set; }
+        public int? ParentQuestionId { get; set; }
         public QuestionEntity ParentQuestion { get; set; }
         
         public ICollection<QuestionEntity> SubQuestions { get; set; }

@@ -24,10 +24,6 @@ const appRoutes: Routes = [
         loadChildren: './+auth/auth.module#AuthModule'
     },
     {
-        path: 'account',
-        loadChildren: './+account/account.module#AccountModule'
-    },
-    {
         path: 'unauthorized',
         component: UnauthorizedComponent
     },

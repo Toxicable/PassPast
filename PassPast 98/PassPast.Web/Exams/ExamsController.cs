@@ -6,6 +6,7 @@ using OAuthAPI.WebApi.Api;
 using PassPast.Data;
 using PassPast.Web.Api.Courses;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 
 namespace PassPast.Web.Api.Exams
 {
@@ -40,14 +41,15 @@ namespace PassPast.Web.Api.Exams
         }
         
         [HttpPost]
+        [Authorize]
         public async Task<IActionResult> Create([FromBody]ExamBindingModel course)
         {
 
             var newCourse = _mapper.Map<ExamEntity>(course);
 
-            var user = await _userManager.GetUserAsync(User);
+            var userId = _userManager.GetUserId(User);
 
-            newCourse.CreatedById = user.Id;
+            newCourse.CreatedById = userId;
 
             await _examsManager.Create(newCourse);
 

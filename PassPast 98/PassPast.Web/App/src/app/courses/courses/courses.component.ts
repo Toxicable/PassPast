@@ -27,8 +27,10 @@ export class CoursesComponent implements OnInit {
         this.newCourseDialogRef = this.dialog.open(AddCourseComponent, {
             disableClose: false
         });
+        //this.newCourseDialogRef.componentInstance.
 
-        this.newCourseDialogRef.afterClosed().subscribe(result => {
+        this.newCourseDialogRef.afterClosed()
+            .subscribe(result => {
             console.log('result: ' + result);
             this.newCourseDialogRef = null;
         });

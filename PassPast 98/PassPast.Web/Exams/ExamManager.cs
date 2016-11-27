@@ -50,6 +50,7 @@ namespace PassPast.Web.Api.Exams
 
         public async Task Create(ExamEntity newExam)
         {
+            newExam.CreatedAt = DateTimeOffset.Now;
             _context.Exams.Add(newExam);
             
             await _context.SaveChangesAsync();
