@@ -17,15 +17,12 @@ namespace PassPast.Web
         public DbSet<ExternalAccount> ExternalAccounts { get; set; }
 
         public DbSet<AnswerEntity> Answers { get; set; }
-        public DbSet<McqAnswerEntity> McqAnswers { get; set; }
-        public DbSet<ShortAnswerEntity> ShortAnswers { get; set; }
         public DbSet<CommentEntity> Comments { get; set; }
         public DbSet<CourseEntity> Courses { get; set; }
         public DbSet<ExamEntity> Exams { get; set; }
         public DbSet<PaperEntity> Papers { get; set; }
         public DbSet<QuestionEntity> Questions { get; set; }
         public DbSet<VoteEntity> Votes { get; set; }
-        public DbSet<QuestionTypeEntity> QuestionTypes { get; set; }
         
         protected override void OnModelCreating(ModelBuilder builder)
         {
@@ -49,19 +46,13 @@ namespace PassPast.Web
             //Domain
 
             builder.Entity<AnswerEntity>().ToTable("Answers");
-            builder.Entity<ShortAnswerEntity>().ToTable("ShortAnswers");
-            builder.Entity<McqAnswerEntity>().ToTable("McqAnswers");
             builder.Entity<CourseEntity>().ToTable("Courses");
             builder.Entity<ExamEntity>().ToTable("Exams");
             builder.Entity<PaperEntity>().ToTable("Papers");
             builder.Entity<QuestionEntity>().ToTable("Questions");
             builder.Entity<VoteEntity>().ToTable("Votes");
-            builder.Entity<QuestionTypeEntity>().ToTable("QuestionTypes");
 
             //Mappings
-            builder.Entity<AnswerEntity>().HasOne(x => x.McqAnswer).WithOne(x => x.Answer).HasForeignKey<McqAnswerEntity>(x => x.AnswerId);
-            builder.Entity<AnswerEntity>().HasOne(x => x.ShortAnswer).WithOne(x => x.Answer).HasForeignKey<ShortAnswerEntity>(x => x.AnswerId);
-
             builder.Entity<QuestionEntity>().HasMany(x => x.SubQuestions).WithOne(x => x.ParentQuestion).OnDelete(DeleteBehavior.Restrict);
 
             builder.Entity<VoteEntity>().HasOne(x => x.Comment).WithMany(x => x.Votes).OnDelete(DeleteBehavior.Restrict);
@@ -73,6 +64,7 @@ namespace PassPast.Web
             builder.Entity<ApplicationUser>().HasMany(x => x.QuestionsCreated).WithOne(x => x.CreatedBy).OnDelete(DeleteBehavior.Restrict);
             builder.Entity<ApplicationUser>().HasMany(x => x.AnswersCreated).WithOne(x => x.CreatedBy).OnDelete(DeleteBehavior.Restrict);
             builder.Entity<ApplicationUser>().HasMany(x => x.CommentsCreated).WithOne(x => x.CreatedBy).OnDelete(DeleteBehavior.Restrict);
+            builder.Entity<ApplicationUser>().HasMany(x => x.VotesCreated).WithOne(x => x.CreatedBy).OnDelete(DeleteBehavior.Restrict);
 
             builder.Entity<ApplicationUser>().HasMany(x => x.CoursesUpdated).WithOne(x => x.UpdatedBy).OnDelete(DeleteBehavior.Restrict);
             builder.Entity<ApplicationUser>().HasMany(x => x.PapersUpdated).WithOne(x => x.UpdatedBy).OnDelete(DeleteBehavior.Restrict);
@@ -80,6 +72,7 @@ namespace PassPast.Web
             builder.Entity<ApplicationUser>().HasMany(x => x.QuestionsUpdated).WithOne(x => x.UpdatedBy).OnDelete(DeleteBehavior.Restrict);
             builder.Entity<ApplicationUser>().HasMany(x => x.AnswersUpdated).WithOne(x => x.UpdatedBy).OnDelete(DeleteBehavior.Restrict);
             builder.Entity<ApplicationUser>().HasMany(x => x.CommentsUpdated).WithOne(x => x.UpdatedBy).OnDelete(DeleteBehavior.Restrict);
+            builder.Entity<ApplicationUser>().HasMany(x => x.VotesUpdated).WithOne(x => x.UpdatedBy).OnDelete(DeleteBehavior.Restrict);
         }
     }
 }

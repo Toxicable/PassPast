@@ -15,11 +15,9 @@ namespace PassPast.Data
         public int QuestionId { get; set; }
         public QuestionEntity Question { get; set; }
 
-        public int ShortAnswerId { get; set; }
-        public ShortAnswerEntity ShortAnswer { get; set; }
+        public int TotalVotes { get; set; }
 
-        public int McqAnswerId { get; set; }
-        public McqAnswerEntity McqAnswer { get; set; }
+        public string ContentOrIncriment { get; set; }
 
         public ICollection<VoteEntity> Votes { get; set; }
     }

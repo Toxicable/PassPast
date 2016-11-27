@@ -14,6 +14,8 @@ namespace PassPast.Data
         [Required]
         public string Content { get; set; }
 
+        public int TotalVotes { get; set; }
+
         [Required]
         public int QuestionId { get; set; }
         public QuestionEntity Question { get; set; }

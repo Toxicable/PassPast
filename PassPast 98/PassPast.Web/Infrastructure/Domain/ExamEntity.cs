@@ -11,7 +11,7 @@ namespace PassPast.Data
 {
     public class ExamEntity : TrackedEntity
     {
-        [Range(1950, 10000)]
+        [Range(1950, 3000)]
         [Required]
         public int Year { get; set; }
 

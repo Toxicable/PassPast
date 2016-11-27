@@ -14,19 +14,23 @@ namespace PassPast.Data
         public string Incriment { get; set; }
 
         [Required]
-        public int TypeId { get; set; }
-        public QuestionTypeEntity Type { get; set; }
+        public QuestionType Type { get; set; }
 
         [Required]
         public int ExamId { get; set; }
         public ExamEntity Exam { get; set; }
-        
-        public ICollection<AnswerEntity> Answers { get; set; }
-		public ICollection<CommentEntity> Comments { get; set; }
-        
+            
         public int? ParentQuestionId { get; set; }
         public QuestionEntity ParentQuestion { get; set; }
-        
+
+        public ICollection<AnswerEntity> Answers { get; set; }
+        public ICollection<CommentEntity> Comments { get; set; }
         public ICollection<QuestionEntity> SubQuestions { get; set; }
+    }
+
+    public enum QuestionType
+    {
+        Mcq,
+        Short
     }
 }
