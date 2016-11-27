@@ -23,7 +23,7 @@ export class ExamService {
     }
 
     getExam(id: number): Observable<Exam>{
-        return this.authHttp.get('/exams'+ id)
+        return this.authHttp.get('/exams/'+ id)
     }
 
     create(exam: Exam): Observable<Exam>{
