@@ -16,7 +16,7 @@ namespace PassPast.Web.Api.Questions
     public interface IQuestionManger
     {
         Task CreateFromSections(QuestionBindingModel question, string userId);
-        Task<ICollection<QuestionViewModel>> GetAll(int id);
+        Task<ICollection<QuestionEntity>> GetAll(int id);
     }
 
     public class QuestionManger : IQuestionManger
@@ -30,7 +30,7 @@ namespace PassPast.Web.Api.Questions
             _mapper = mapper;
         }
 
-        public string ToRoman(int number)
+        private string ToRoman(int number)
         {
             if ((number < 0) || (number > 39)) throw new ArgumentOutOfRangeException("insert value betwheen 1 and 39");
             if (number < 1) return string.Empty;
@@ -50,41 +50,30 @@ namespace PassPast.Web.Api.Questions
 
         public async Task CreateFromSections(QuestionBindingModel questions, string userId)
         {
-            var questionTypes = await _context.QuestionTypes.ToListAsync();
             Func<QuestionSectionBindingModel, IEnumerable<QuestionEntity>> map = null;
 
             map = bindingModel =>
-            {
-                ICollection<AnswerEntity> answers = null;
-                if(bindingModel.Type == "mcq")
+            {             
+                Func<IEnumerable<AnswerEntity>> answersFactory = () => Enumerable.Range(1, 5).Select(index => new AnswerEntity
                 {
-                    answers = Enumerable.Range(1, 5).Select(index => new AnswerEntity
-                    {
-                        CreatedById = userId,
-                        CreatedAt = DateTimeOffset.Now,
-                        McqAnswer = new McqAnswerEntity
-                        {
-                            Incriment = index.ToString(),
-                            CreatedAt = DateTimeOffset.Now
-                        }
-                    }).ToList();
-                }
-                var subquestions = bindingModel.SubQuestions.SelectMany(y => map(y)).ToList();
-                
-                //_context.Questions.AddRangeAsync(subquestions)
+                    CreatedById = userId,
+                    CreatedAt = DateTimeOffset.Now,
+                    ContentOrIncriment = ToAlpha(index)
+                    
+                });                
 
                 return Enumerable.Range(1, bindingModel.Count).Select(currentIncriment => new QuestionEntity
                 {
-                    SubQuestions = subquestions,
+                    SubQuestions = bindingModel.SubQuestions.SelectMany(y => map(y)).ToList(),
                     CreatedAt = DateTimeOffset.Now,
                     CreatedById = userId,
                     ExamId = questions.ExamId,
-                    Answers = answers,
-                    Type = questionTypes.Single(type => type.Name == bindingModel.Type),
+                    Answers = bindingModel.Type == QuestionType.Mcq && bindingModel.SubQuestions.Count == 0 ? answersFactory().ToList() : null,
+                    Type = bindingModel.Type,
                     Incriment =
-                bindingModel.IncrimentationScheme == IncrimentationScheme.Numbered ? currentIncriment.ToString() :
-                bindingModel.IncrimentationScheme == IncrimentationScheme.Alphabetical ? ToAlpha(currentIncriment) :
-                ToRoman(currentIncriment)
+                        bindingModel.IncrimentationScheme == IncrimentationScheme.Numbered ? currentIncriment.ToString() :
+                        bindingModel.IncrimentationScheme == IncrimentationScheme.Alphabetical ? ToAlpha(currentIncriment) :
+                        ToRoman(currentIncriment)
                 });
             };
 
@@ -95,17 +84,13 @@ namespace PassPast.Web.Api.Questions
 
         }
 
-        public async Task<ICollection<QuestionViewModel>> GetAll(int examId)
-        {
-            var exams = (await _context.Questions
-                .Where( q => q.ExamId == examId)
-                .Include( x => x.SubQuestions)
-                .Include( x => x.Answers)
-                //TODO: Double check this
-                .ToListAsync())
-                //move this to the controller
-                .Select(c => _mapper.Map<QuestionViewModel>(c))
-                .ToList();
+        public async Task<ICollection<QuestionEntity>> GetAll(int examId)
+        {  
+            var exams = await _context.Questions
+                .Where(q => q.ExamId == examId)
+                .Include(q => q.Answers)
+                .Include(a => a.SubQuestions)     
+                .ToListAsync();
 
             return exams;
         }

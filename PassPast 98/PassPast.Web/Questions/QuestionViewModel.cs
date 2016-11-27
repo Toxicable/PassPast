@@ -1,4 +1,5 @@
 ﻿using PassPast.Data;
+using PassPast.Web.Answers;
 using PassPast.Web.Infrastructure.Domain;
 using System;
 using System.Collections.Generic;
@@ -11,8 +12,9 @@ namespace PassPast.Web.Api.Questions
     public class QuestionViewModel
     {
         public int Id { get; set; }
-        public int Number { get; set; }
-        public int ExamId { get; set; }
-        public QuestionTypeEntity Type { get; set; }
+        public string Incriment { get; set; }
+        public QuestionType Type { get; set; }
+        public ICollection<QuestionViewModel> SubQuestions { get; set; }
+        public ICollection<AnswerViewModel> Answers { get; set; }
     }
 }

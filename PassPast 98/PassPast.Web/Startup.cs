@@ -22,6 +22,7 @@ using Microsoft.AspNetCore.Rewrite;
 using Microsoft.ApplicationInsights;
 using System.Linq;
 using PassPast.Web.Infrastructure.Domain;
+using PassPast.Web.Answers;
 
 namespace PassPast.Web
 {
@@ -77,6 +78,9 @@ namespace PassPast.Web
 
                 x.CreateMap<QuestionEntity, QuestionViewModel>();
                 x.CreateMap<QuestionBindingModel, QuestionEntity>();
+
+                x.CreateMap<AnswerEntity, AnswerViewModel>();
+
 
             });
 
@@ -186,23 +190,8 @@ namespace PassPast.Web
                 var user = context.Users.FirstOrDefault(x => x.UserName == "fabian.wiles@gmail.com");
                 if (user == null) return;
 
-                if (context.QuestionTypes.Any()) return;
-
-                var types = new QuestionTypeEntity[] {
-                     new QuestionTypeEntity
-                    {
-                        CreatedBy = user,
-                        Name = "Mcq",
-                    },
-                    new QuestionTypeEntity
-                    {
-                        CreatedBy = user,
-                        Name = "Short",
-                        CreatedAt = DateTimeOffset.Now
-                    }
-                };
-
-                context.QuestionTypes.AddRange(types);
+                //TODO: add me to the admin role
+                
 
                 context.SaveChanges();
 

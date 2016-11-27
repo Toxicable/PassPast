@@ -20,6 +20,7 @@ import { ExamActions } from './exams/exam.actions';
 import { QuestionActions } from './questions/question.actions';
 import { SharedModule } from '../../shared/shared.module';
 import { QuestionSectionComponent } from './exams/add-exam/question-section.component';
+import { QuestionComponent } from './questions/question.component';
 
 @NgModule({
     imports: [
@@ -35,7 +36,8 @@ import { QuestionSectionComponent } from './exams/add-exam/question-section.comp
         ExamsComponent,
         AddExamComponent,
         QuestionsComponent,
-        QuestionSectionComponent
+        QuestionSectionComponent,
+        QuestionComponent
     ],
     providers: [
         CourseService,

@@ -1,10 +1,8 @@
 import { Answer } from './answer';
-import { Exam } from './exam';
-export interface Question{
+export interface Question {
     id: number;
-    number: number;
+    incriment: string;
+    type: string;
     answers: Answer[];
-    examId: number;
-    exam: Exam
-    comments: Comment[];
+    subQuestions: Question[];
 }

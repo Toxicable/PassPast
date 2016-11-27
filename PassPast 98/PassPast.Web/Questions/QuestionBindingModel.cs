@@ -17,7 +17,7 @@ namespace PassPast.Web.Api.Questions
     public class QuestionSectionBindingModel
     {
         public int Count { get; set; }
-        public string Type { get; set; }
+        public QuestionType Type { get; set; }
         public IncrimentationScheme IncrimentationScheme { get; set; }
         public ICollection<QuestionSectionBindingModel> SubQuestions { get; set; }
     }

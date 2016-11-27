@@ -1,6 +1,8 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using PassPast.Data;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace PassPast.Web.Api.Questions
@@ -9,10 +11,17 @@ namespace PassPast.Web.Api.Questions
     public class QuestionsController : Controller
     {
         private IQuestionManger _questionsManager;
+        private readonly IMapper _mapper;
         private UserManager<ApplicationUser> _userManager;
 
-        public QuestionsController(IQuestionManger questionManager, UserManager<ApplicationUser> userManager)
+        public QuestionsController(
+            IQuestionManger questionManager, 
+            UserManager<ApplicationUser> userManager,
+            IMapper mapper
+            
+            )
         {
+            _mapper = mapper;
             _userManager = userManager;
             _questionsManager = questionManager;
         }
@@ -20,7 +29,9 @@ namespace PassPast.Web.Api.Questions
         [HttpGet("{id}")]
         public async Task<IActionResult> Get(int id)
         {
-            var courses = await _questionsManager.GetAll(id);
+            var courses = (await _questionsManager.GetAll(id))
+                .Select(c => _mapper.Map<QuestionViewModel>(c))
+                .ToList();
 
             return Ok(courses);
         }

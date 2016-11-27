@@ -1,0 +1,17 @@
+<div>
+    <span md-line>
+        <!--id: {{question.id}}-->
+    </span>
+    <span md-line>
+       {{question.incriment}}
+    </span>
+    <span md-line>
+        type: {{question.type}}
+    </span>
+    <ul>
+        <li *ngFor="let subQuestion of question.subQuestions">
+            <app-question [question]="subQuestion"></app-question>        
+        </li> 
+    </ul>
+    
+</div>
