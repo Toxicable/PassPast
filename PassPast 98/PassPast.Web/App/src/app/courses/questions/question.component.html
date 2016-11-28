@@ -8,6 +8,13 @@
     <span md-line>
         <!--type: {{question.type}}-->
     </span>
+    <div>
+        Answers:<br />
+        <div *ngFor="let answer of question.answers">
+            Votes: {{answer.totalVotes}}<br />
+            {{contentOrIncriment}}
+        </div> 
+    </div>
     <ul>
         <li *ngFor="let subQuestion of question.subQuestions">
             <app-question [question]="subQuestion"></app-question>        

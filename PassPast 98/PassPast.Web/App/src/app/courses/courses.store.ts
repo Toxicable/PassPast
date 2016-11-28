@@ -16,7 +16,7 @@ const reducers = {
     paper: paperReducer,
     exam: examReducer,
     question: questionReducer
-}
+};
 
 const reducer: ActionReducer<CoursesState> = combineReducers(reducers);
 

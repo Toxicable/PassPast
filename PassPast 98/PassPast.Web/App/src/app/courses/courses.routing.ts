@@ -5,13 +5,10 @@ import { CoursesComponent } from './courses/courses.component';
 import { PapersComponent } from './papers/papers.component';
 import { ExamsComponent } from './exams/exams.component';
 import { QuestionsComponent } from './questions/questions.component';
-import { AddCourseComponent } from './courses/add-course/add-course.component';
-import { AddPaperComponent } from './papers/add-paper/add-paper.component';
 import { CourseResolveService } from './courses/course-resolve.service';
 import { PaperResolveService } from './papers/paper-resolve.service';
 import { AddExamComponent } from './exams/add-exam/add-exam.component';
 import { ExamResolveService } from './exams/exam-resolve.service';
-import { AuthenticatedAuthGuard } from '../../core/guards/authenticated-auth-guard.service';
 
 const routes: Routes = [
     {
@@ -31,7 +28,7 @@ const routes: Routes = [
         resolve: {
             paperExists: PaperResolveService
         }
-    },    
+    },
     {
         path: 'courses/:courseId/:paperId/add-exam',
         component: AddExamComponent,

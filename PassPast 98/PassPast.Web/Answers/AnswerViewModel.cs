@@ -7,8 +7,7 @@ namespace PassPast.Web.Answers
 {
     public class AnswerViewModel
     {
-        public int Id { get; set; }
-        
+        public int Id { get; set; }        
         public string ContentOrIncriment { get; set; }
         public int TotalVotes { get; set; }
     }

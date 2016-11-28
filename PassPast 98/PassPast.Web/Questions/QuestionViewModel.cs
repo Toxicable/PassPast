@@ -12,6 +12,7 @@ namespace PassPast.Web.Api.Questions
     public class QuestionViewModel
     {
         public int Id { get; set; }
+        public int ExamId { get; set; }
         public string Incriment { get; set; }
         public QuestionType Type { get; set; }
         public ICollection<QuestionViewModel> SubQuestions { get; set; }

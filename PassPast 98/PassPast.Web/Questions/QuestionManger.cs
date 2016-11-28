@@ -107,6 +107,7 @@ namespace PassPast.Web.Api.Questions
                 .Where(q => q.ExamId == examId && q.ParentQuestionId == null)
                 .Include(q => q.Answers)
                 .Include(a => a.SubQuestions)     
+                    .ThenInclude(sb => sb.Answers)
                 .ToListAsync();
 
             return exams;

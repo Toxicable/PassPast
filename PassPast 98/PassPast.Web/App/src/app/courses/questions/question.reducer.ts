@@ -1,15 +1,15 @@
-import { ActionReducer, Action, Store } from '@ngrx/store';
-import { Observable } from 'rxjs';
-import { Paper } from '../models/paper';
+import { Action } from '@ngrx/store';
 import { Question } from '../models/question';
 import { QuestionActionTypes } from './question.actions';
  
 export interface QuestionState{
-    entities: Question[]
+    entities: Question[];
+    //selected: Question[];
 }
 
 const initalState: QuestionState ={
     entities: []
+    //selected: []
 }
 
 export function questionReducer (state = initalState, action: Action): QuestionState {
@@ -23,4 +23,4 @@ export function questionReducer (state = initalState, action: Action): QuestionS
         default:
             return state;
     }
-};
+}

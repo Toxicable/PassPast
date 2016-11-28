@@ -14,6 +14,6 @@ export class QuestionActions{
         return {
             type: QuestionActionTypes.LOAD,
             payload
-        }
+        };
     }
 }
