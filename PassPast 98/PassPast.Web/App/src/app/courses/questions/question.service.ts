@@ -12,7 +12,7 @@ export class QuestionService {
     constructor(private authHttp: AuthHttp,
                 private store: Store<AppState>,
                 private questionActions: QuestionActions
-                
+
     ) { }
 
     getQuestions(examId: number): Observable<Question[]> {

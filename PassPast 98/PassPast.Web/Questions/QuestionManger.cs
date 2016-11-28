@@ -51,7 +51,7 @@ namespace PassPast.Web.Api.Questions
         public async Task CreateFromSections(QuestionBindingModel questions, string userId)
         {
             Func<QuestionSectionBindingModel, IEnumerable<QuestionEntity>> map = null;
-
+            //used to map from the binding model into the db model
             map = bindingModel =>
             {             
                 Func<IEnumerable<AnswerEntity>> answersFactory = () => Enumerable.Range(1, 5).Select(index => new AnswerEntity
@@ -70,15 +70,32 @@ namespace PassPast.Web.Api.Questions
                     ExamId = questions.ExamId,
                     Answers = bindingModel.Type == QuestionType.Mcq && bindingModel.SubQuestions.Count == 0 ? answersFactory().ToList() : null,
                     Type = bindingModel.Type,
-                    Incriment =
-                        bindingModel.IncrimentationScheme == IncrimentationScheme.Numbered ? currentIncriment.ToString() :
-                        bindingModel.IncrimentationScheme == IncrimentationScheme.Alphabetical ? ToAlpha(currentIncriment) :
-                        ToRoman(currentIncriment)
+                    //lol, lets just store it here till it's flattened out and can actualy number them off below
+                    Incriment = bindingModel.IncrimentationScheme.ToString()
                 });
             };
 
+            Func<IList<QuestionEntity>, IList<QuestionEntity>> numberOff = null;
+            numberOff = questionst =>
+            Enumerable.Range(1, questionst.Count).Select(incriment => {
+                var question = questionst[incriment - 1];
+                var incrimentationScheme = (IncrimentationScheme)Enum.Parse(typeof(IncrimentationScheme), question.Incriment);
+                question.Incriment =
+                    incrimentationScheme == IncrimentationScheme.Numbered ? incriment.ToString() :
+                    incrimentationScheme == IncrimentationScheme.Alphabetical ? ToAlpha(incriment) :
+                    ToRoman(incriment);
+                question.SubQuestions = numberOff(question.SubQuestions.ToList());
+                return questionst[incriment - 1];
+
+            }).ToList();            
+
+
             var mappedQuestions = questions.Sections.SelectMany( x => map(x).ToList()).ToList();
-            _context.Questions.AddRange(mappedQuestions);
+
+            var numberedOffQuestions = numberOff(mappedQuestions);
+
+
+            _context.Questions.AddRange(numberedOffQuestions);
 
             await _context.SaveChangesAsync();
 
@@ -87,7 +104,7 @@ namespace PassPast.Web.Api.Questions
         public async Task<ICollection<QuestionEntity>> GetAll(int examId)
         {  
             var exams = await _context.Questions
-                .Where(q => q.ExamId == examId)
+                .Where(q => q.ExamId == examId && q.ParentQuestionId == null)
                 .Include(q => q.Answers)
                 .Include(a => a.SubQuestions)     
                 .ToListAsync();

@@ -14,7 +14,7 @@ import { ExamActions } from './exam.actions';
 @Injectable()
 export class ExamResolveService implements Resolve<void> {
 
-  constructor(private exams: ExamService, 
+  constructor(private exams: ExamService,
               private router: Router,
               private store: Store<AppState>,
               private examActions: ExamActions
@@ -26,20 +26,21 @@ export class ExamResolveService implements Resolve<void> {
     return this.store.map(state => state.courses.exam.entities)
       .first()
       .flatMap( (exams: Exam[]) => {
-        let localExams = exams.find( c => c.id == examId)
-        if(localExams){
+        let localExams = exams.find( c => c.id === examId);
+
+        if (localExams) {
           this.store.dispatch(this.examActions.Select(localExams));
           return Observable.of(true);
         }
         return this.exams.getExam(examId)
           .map((exam: Exam) => {
-            if(exam != null){
+            if (exam != null) {
               this.store.dispatch(this.examActions.Add(exam));
               this.store.dispatch(this.examActions.Select(exam));
               return true;
             }
             return false;
-          })
+          });
       });
   }
 }

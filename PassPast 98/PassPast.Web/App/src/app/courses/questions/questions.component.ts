@@ -20,7 +20,7 @@ export class QuestionsComponent implements OnInit {
         this.store.map( state => state.courses.exam.selected.id)
             .subscribe( (examId: number) => {
                 this.questions$ = this.store.map(state => state.courses.question.entities)
-            })
+            });
 
         this.store.map( state => state.courses.exam.selected.id)
             .first()
