@@ -26,6 +26,7 @@ const routes: Routes = [
         path: 'courses/:courseId/:paperId',
         component: ExamsComponent,
         resolve: {
+            courseExists: CourseResolveService,
             paperExists: PaperResolveService
         }
     },
@@ -33,6 +34,7 @@ const routes: Routes = [
         path: 'courses/:courseId/:paperId/add-exam',
         component: AddExamComponent,
         resolve: {
+            courseExists: CourseResolveService,
             paperExists: PaperResolveService
         }
     },
@@ -40,6 +42,8 @@ const routes: Routes = [
         path: 'courses/:courseId/:paperId/:examId',
         component: QuestionsComponent,
         resolve: {
+            courseExists: CourseResolveService,
+            paperExists: PaperResolveService,
             examExists: ExamResolveService
         }
     },

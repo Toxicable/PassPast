@@ -1,4 +1,6 @@
-﻿using PassPast.Data;
+﻿using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
+using PassPast.Data;
 using PassPast.Web.Answers;
 using PassPast.Web.Infrastructure.Domain;
 using System;
@@ -14,6 +16,7 @@ namespace PassPast.Web.Api.Questions
         public int Id { get; set; }
         public int ExamId { get; set; }
         public string Incriment { get; set; }
+        [JsonConverter(typeof(StringEnumConverter))]
         public QuestionType Type { get; set; }
         public ICollection<QuestionViewModel> SubQuestions { get; set; }
         public ICollection<AnswerViewModel> Answers { get; set; }

@@ -6,8 +6,10 @@
             </a>
             
             <a [routerLink]="['/courses']">Courses</a>
-            Computer  Science
-            230
+            {{(currentCourse$ | async)?.name | defaultValue: "No Course"}}
+            {{(currentPaper$ | async)?.name  | defaultValue: "No Paper"}}
+            {{(currentExam$ | async)?.year  | defaultValue: "No Exam"}}
+            {{(currentExam$ | async)?.semester}}
         </span>
 
 
@@ -27,13 +29,12 @@
 <app-loading-bar></app-loading-bar>
 
 <div >
-    <div class="left">
-        <a  class="header-navigation__link" [routerLink]="['/account']" routerLinkActive="active-router-link">Account</a>        
+    <div class="left">     
         <a  class="header-navigation__link" [routerLink]="['/admin']" routerLinkActive="active-router-link">Admin</a>   
-
+<!--
         <a  class="header-navigation__link" [routerLink]="['/courses', 1]" routerLinkActive="active-router-link">Papers</a>
         <a  class="header-navigation__link" [routerLink]="['/courses', 1, 2]" routerLinkActive="active-router-link">Exams</a>        
-        <a  class="header-navigation__link" [routerLink]="['/courses', 1, 2, 1]" routerLinkActive="active-router-link">Questions</a>          
+        <a  class="header-navigation__link" [routerLink]="['/courses', 1, 2, 1]" routerLinkActive="active-router-link">Questions</a>          -->
       
     </div>    
 </div>
