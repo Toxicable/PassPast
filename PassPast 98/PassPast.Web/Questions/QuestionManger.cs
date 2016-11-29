@@ -51,7 +51,6 @@ namespace PassPast.Web.Api.Questions
         public async Task CreateFromSections(QuestionBindingModel questions, string userId)
         {
             Func<QuestionSectionBindingModel, IEnumerable<QuestionEntity>> map = null;
-            //used to map from the binding model into the db model
             map = bindingModel =>
             {             
                 Func<IEnumerable<AnswerEntity>> answersFactory = () => Enumerable.Range(1, 5).Select(index => new AnswerEntity
@@ -70,7 +69,6 @@ namespace PassPast.Web.Api.Questions
                     ExamId = questions.ExamId,
                     Answers = bindingModel.Type == QuestionType.Mcq && bindingModel.SubQuestions.Count == 0 ? answersFactory().ToList() : null,
                     Type = bindingModel.Type,
-                    //lol, lets just store it here till it's flattened out and can actualy number them off below
                     Incriment = bindingModel.IncrimentationScheme.ToString()
                 });
             };

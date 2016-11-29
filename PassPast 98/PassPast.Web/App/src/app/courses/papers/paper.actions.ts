@@ -6,29 +6,37 @@ import { Injectable } from '@angular/core';
 export const PaperActionTypes = {
     LOAD: type('[Papers] Load'),
     ADD: type('[Papers] Add'),
-    SELECT: type('[Paper] Select')
-}
+    SELECT: type('[Paper] Select'),
+    CACHE: type('[Papers] Cache')
+};
 
 @Injectable()
-export class PaperActions{
-    Select(payload: Paper): Action{
+export class PaperActions {
+    Select(payload: Paper): Action {
         return {
             type: PaperActionTypes.SELECT,
             payload
-        }
+        };
     }
 
-    Load(payload: Paper[]): Action{
+    Load(payload: Paper[]): Action {
         return {
             type: PaperActionTypes.LOAD,
             payload
-        }
+        };
     }
 
-    Add(payload:Paper): Action{
+    Add(payload: Paper): Action {
         return{
             type: PaperActionTypes.ADD,
             payload
-        }
+        };
+    }
+
+    cache(payload: Paper[]): Action {
+        return {
+            type: PaperActionTypes.CACHE,
+            payload
+        };
     }
 }

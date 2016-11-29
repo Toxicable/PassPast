@@ -1,42 +1,63 @@
-import { ActionReducer, Action, Store } from '@ngrx/store';
-import { Observable } from 'rxjs';
+import { Action } from '@ngrx/store';
 import { Paper } from '../models/paper';
-import { PaperActions, PaperActionTypes } from './paper.actions';
- 
-export interface PaperState{
-    entities: Paper[],
-    selected: Paper
+import { PaperActionTypes } from './paper.actions';
+
+export interface PaperState {
+    displayed: Paper[];
+    selected: Paper;
+    cache: Paper[];
 }
 
-const initalState: PaperState ={
-    entities: [],
+const initalState: PaperState = {
+    displayed: [],
+    cache: [],
     selected: null
-}
+};
 
 export function paperReducer(state = initalState, action: Action): PaperState {
     switch (action.type) {
         case PaperActionTypes.LOAD:
         return {
+            cache: state.cache,
             selected: state.selected,
-            entities: action.payload
-        }
+            displayed: action.payload
+        };
 
         case PaperActionTypes.ADD:
         return {
+            cache: state.cache,
             selected: state.selected,
-            entities: [
-                ...state.entities,
+            displayed: [
+                ...state.displayed,
                 action.payload
             ]
-        }
+        };
 
         case PaperActionTypes.SELECT:
             return {
+                cache: state.cache,
                 selected: action.payload,
-                entities: state.entities
-            }
+                displayed: state.displayed
+            };
+
+        case PaperActionTypes.CACHE:
+            console.log([
+                    ...state.cache,
+                    action.payload
+                ]);
+console.log(state.cache)
+console.log(action.payload)
+
+            return {
+                cache: [
+                    ...state.cache,
+                    ...action.payload
+                ],
+                selected: state.selected,
+                displayed: state.displayed
+            };
 
         default:
             return state;
     }
-};
+}

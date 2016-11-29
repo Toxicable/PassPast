@@ -13,8 +13,8 @@ namespace PassPast.Web.Api.Papers
 {
     public interface IPaperManager
     {
-        Task<PaperViewModel> Get(int id);
-        Task<ICollection<PaperViewModel>> GetAll();
+        Task<IEnumerable<PaperEntity>> Get(int id);
+        Task<IEnumerable<PaperEntity>> GetAll();
         Task Create(PaperEntity newPaper);
     }
 
@@ -29,21 +29,21 @@ namespace PassPast.Web.Api.Papers
             _mapper = mapper;
         }
 
-        public async Task<PaperViewModel> Get(int id)
+        public async Task<IEnumerable<PaperEntity>> Get(int courseId)
         {
-            var paper = (await _context.Papers
-                .FirstOrDefaultAsync(c => c.Id == id));
+            var papers = await _context.Papers
+                .Where(p => !p.Deleted)
+                .Where(p => p.CourseId == courseId)
+                .OrderByDescending(c => c.Name)
+                .ToListAsync();
 
-            return _mapper.Map<PaperViewModel>(paper);
+            return papers;
         }
 
-        public async Task<ICollection<PaperViewModel>> GetAll()
+        public async Task<IEnumerable<PaperEntity>> GetAll()
         {
-            var papers = (await _context.Papers
-                .OrderByDescending(c => c.Name)
-                .ToListAsync())
-                .Select(c => _mapper.Map<PaperViewModel>(c))
-                .ToList();
+            var papers = await _context.Papers
+                .ToListAsync();
 
             return papers;
         }

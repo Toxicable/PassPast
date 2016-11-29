@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using PassPast.Data;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace PassPast.Web.Api.Papers
@@ -12,7 +13,8 @@ namespace PassPast.Web.Api.Papers
         private IPaperManager _papersManager;
         private IMapper _mapper;
         private readonly UserManager<ApplicationUser> _userManager;
-        public PapersController(IMapper mapper,
+        public PapersController(
+            IMapper mapper,
             IPaperManager paperManager,
             UserManager<ApplicationUser> userManager
             )
@@ -25,17 +27,10 @@ namespace PassPast.Web.Api.Papers
         [HttpGet("{id}")]
         public async Task<IActionResult> Get(int id)
         {
-            var course = await _papersManager.Get(id);
+            var papers = (await _papersManager.Get(id))
+                .Select( p => _mapper.Map<PaperViewModel>(p));
 
-            return Ok(course);
-        }
-
-        [HttpGet]
-        public async Task<IActionResult> Get()
-        {
-            var courses = await _papersManager.GetAll();
-
-            return Ok(courses);
+            return Ok(papers);
         }
 
         public async Task<IActionResult> Create([FromBody]PaperBindingModel course)

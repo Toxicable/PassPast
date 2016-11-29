@@ -23,10 +23,10 @@ export class PaperResolveService implements Resolve<void> {
   resolve(route: ActivatedRouteSnapshot): Observable<boolean> {
     let paperId = route.params['paperId'];
 
-    return this.store.map(state => state.courses.paper.entities)
+    return this.store.map(state => state.courses.paper.displayed)
       .first()
       .flatMap( (papers: Paper[]) => {
-        let localPapers = papers.find( c => c.id == paperId)
+        let localPapers = papers.find( c => c.id === paperId);
         if(localPapers){
           this.store.dispatch(this.paperActions.Select(localPapers));
           return Observable.of(true);
@@ -39,7 +39,7 @@ export class PaperResolveService implements Resolve<void> {
               return true;
             }
 
-            this.alert.sendWarning("Paper does not exist");
+            this.alert.sendWarning('Paper does not exist');
             return false;
           })
       });

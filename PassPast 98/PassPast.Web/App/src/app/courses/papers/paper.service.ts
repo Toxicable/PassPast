@@ -1,7 +1,5 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
-import { Course } from '../models/course';
-import * as paperActions from './paper.actions';
 import { Store } from '@ngrx/store';
 import { AppState } from '../../../app/app-store';
 import { Paper } from '../models/paper';
@@ -15,21 +13,40 @@ export class PaperService {
                 private paperActions: PaperActions
     ) { }
 
-    getPaper(id: number): Observable<Paper>{
-        return this.authHttp.get('/papers/'+ id)
+    getPaper(id: number): Observable<Paper> {
+        return this.authHttp.get('/papers/' + id)
+            .map((papers: Paper[]) => papers.length === 1 ? papers[1] : null);
     }
 
-    getPapers(): Observable<Paper[]>{
-        return this.authHttp.get('/papers')
-            .do((papers: Paper[]) => { 
-                this.store.dispatch(this.paperActions.Load(papers));
-            })
+    getPapers(courseId: number): Observable<Paper[]> {
+        return this.store.map(state => state.courses.paper.cache)
+            .first()
+            .flatMap(papers => {
+                // check if there's any paper with the same course id
+                let existingPapers = papers.filter( paper => paper.courseId === courseId);
+
+                // if there's even 1 then they all should be there so we're good to not fetch
+                if (existingPapers.length > 0) {
+                    return Observable.of(existingPapers)
+                        .do(alsoExistingPapers => this.store.dispatch(this.paperActions.Load(alsoExistingPapers)));
+                }
+
+                // if we got here then it looks like we have to fetch some new ones
+                return this.authHttp.get('/papers/' + courseId)
+                    .do((fetchedPapers: Paper[]) => {
+                        // store them to be  displayed
+                        this.store.dispatch(this.paperActions.Load(fetchedPapers));
+
+                        // throw them in the cache aswell
+                        this.store.dispatch(this.paperActions.cache(fetchedPapers));
+                    });
+            });
     }
 
-    create(paper: Paper): Observable<Paper>{
+    create(paper: Paper): Observable<Paper> {
         return this.authHttp.post('/papers', paper)
             .do((newPaper: Paper) => {
                 this.store.dispatch(this.paperActions.Add(newPaper));
-            })
+            });
     }
 }
