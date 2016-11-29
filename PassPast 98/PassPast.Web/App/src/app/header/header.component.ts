@@ -1,9 +1,11 @@
 import {Component, OnInit} from '@angular/core';
 import {AppState} from '../app-store';
 import {Store} from '@ngrx/store';
-import {Observable} from 'rxjs';
+import { Observable, Observer } from 'rxjs';
 import { AccountService } from '../../core/account/account.service';
 import { ProfileService } from '../../core/profile/profile.service';
+import { Course } from '../courses/models/course';
+import { Paper } from '../courses/models/paper';
 
 @Component({
     selector: 'app-header',
@@ -14,6 +16,10 @@ import { ProfileService } from '../../core/profile/profile.service';
 export class HeaderComponent implements OnInit {
     username$: Observable<string>;
     loggedIn$: Observable<boolean>;
+
+    currentCourse$: Observable<Course>;
+    currentPaper$: Observable<Paper>;
+    currentExam$: Observable<
 
     constructor(private profile: ProfileService,
                 private account: AccountService,

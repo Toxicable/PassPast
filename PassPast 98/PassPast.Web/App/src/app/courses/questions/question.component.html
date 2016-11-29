@@ -11,7 +11,7 @@
     <div>
         Answers:<br />
         <div *ngFor="let answer of question.answers">
-            <span *ngIf="question.type == 0">                
+            <span *ngIf="question.type == 0">+                
                 {{answer.contentOrIncriment}}
                 Votes: {{answer.totalVotes}}<br />
             </span>
