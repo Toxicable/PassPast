@@ -5,14 +5,21 @@
     <span md-line>
        {{question.incriment}}
     </span>
-    <span md-line>
+    <span >
         <!--type: {{question.type}}-->
     </span>
     <div>
         Answers:<br />
         <div *ngFor="let answer of question.answers">
-            Votes: {{answer.totalVotes}}<br />
-            {{contentOrIncriment}}
+            <span *ngIf="question.type == 0">                
+                {{answer.contentOrIncriment}}
+                Votes: {{answer.totalVotes}}<br />
+            </span>
+            <span *ngIf="question.type == 1">
+                Short
+                Votes: {{answer.totalVotes}}<br />
+                {{contentOrIncriment}}
+            </span>
         </div> 
     </div>
     <ul>
