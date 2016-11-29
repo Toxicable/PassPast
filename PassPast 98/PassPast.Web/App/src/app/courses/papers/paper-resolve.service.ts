@@ -21,7 +21,7 @@ export class PaperResolveService implements Resolve<void> {
   ) {}
 
   resolve(route: ActivatedRouteSnapshot): Observable<boolean> {
-    let paperId = route.params['paperId'];
+    let paperId = +route.params['paperId'];
 
     return this.store.map(state => state.courses.paper.displayed)
       .first()
