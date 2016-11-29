@@ -1,4 +1,6 @@
-﻿using PassPast.Web;
+﻿using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
+using PassPast.Web;
 using PassPast.Web.Infrastructure.Data;
 using PassPast.Web.Infrastructure.Domain;
 using System;
@@ -16,6 +18,7 @@ namespace PassPast.Data
         public int Year { get; set; }
 
         [Required]
+        [JsonConverter(typeof(StringEnumConverter))]
         public Semester Semester { get; set; }
 
         [Required]

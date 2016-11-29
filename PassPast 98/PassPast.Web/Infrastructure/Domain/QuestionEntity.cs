@@ -1,4 +1,6 @@
-﻿using PassPast.Web.Infrastructure.Data;
+﻿using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
+using PassPast.Web.Infrastructure.Data;
 using PassPast.Web.Infrastructure.Domain;
 using System;
 using System.Collections.Generic;
@@ -14,6 +16,7 @@ namespace PassPast.Data
         public string Incriment { get; set; }
 
         [Required]
+        [JsonConverter(typeof(StringEnumConverter))]
         public QuestionType Type { get; set; }
 
         [Required]
