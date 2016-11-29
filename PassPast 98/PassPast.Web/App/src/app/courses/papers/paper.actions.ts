@@ -19,7 +19,7 @@ export class PaperActions {
         };
     }
 
-    Load(payload: Paper[]): Action {
+    display(payload: Paper[]): Action {
         return {
             type: PaperActionTypes.LOAD,
             payload

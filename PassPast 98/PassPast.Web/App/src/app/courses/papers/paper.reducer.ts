@@ -41,13 +41,6 @@ export function paperReducer(state = initalState, action: Action): PaperState {
             };
 
         case PaperActionTypes.CACHE:
-            console.log([
-                    ...state.cache,
-                    action.payload
-                ]);
-console.log(state.cache)
-console.log(action.payload)
-
             return {
                 cache: [
                     ...state.cache,
