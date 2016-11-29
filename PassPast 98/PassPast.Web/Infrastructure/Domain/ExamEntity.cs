@@ -31,8 +31,8 @@ namespace PassPast.Data
 
     public enum Semester
     {
-        Semester1,
-        Semester2,
-        SummerSchool
+        S1,
+        S2,
+        SS
     }
 }
