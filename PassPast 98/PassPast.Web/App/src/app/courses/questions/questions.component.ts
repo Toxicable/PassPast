@@ -4,6 +4,7 @@ import { AppState } from '../../../app/app-store';
 import { QuestionService } from './question.service';
 import { Observable } from 'rxjs/Observable';
 import { Question } from '../models/question';
+import { CommentsHubService } from '../comments/comments-hub.service';
 
 @Component({
     selector: 'app-questions',
@@ -13,7 +14,10 @@ export class QuestionsComponent implements OnInit {
     questions$: Observable<Question[]>;
 
     constructor(private store: Store<AppState>,
-                private questions: QuestionService) { }
+                private questions: QuestionService,
+                private commentsHub: CommentsHubService
+
+        ) { }
 
 
     ngOnInit() {
@@ -28,5 +32,9 @@ export class QuestionsComponent implements OnInit {
                 this.questions.getQuestions(examId)
                     .subscribe();
             });
+
+        this.commentsHub.init()
+           // .subscribe();
+
     }
 }

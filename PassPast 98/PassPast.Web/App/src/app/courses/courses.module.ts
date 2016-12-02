@@ -21,6 +21,7 @@ import { QuestionActions } from './questions/question.actions';
 import { SharedModule } from '../../shared/shared.module';
 import { QuestionSectionComponent } from './exams/add-exam/question-section.component';
 import { QuestionComponent } from './questions/question.component';
+import { CommentsHubService } from './comments/comments-hub.service';
 
 @NgModule({
     imports: [
@@ -52,6 +53,9 @@ import { QuestionComponent } from './questions/question.component';
         PaperActions,
         ExamActions,
         QuestionActions,
+
+        CommentsHubService,
+       // SignalRHubService
     ],
     entryComponents: [
         AddCourseComponent,

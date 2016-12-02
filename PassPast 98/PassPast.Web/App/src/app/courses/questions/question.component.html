@@ -20,7 +20,18 @@
                 Votes: {{answer.totalVotes}}<br />
                 {{contentOrIncriment}}
             </span>
-        </div> 
+            
+        </div>
+        Comments:<br />
+        <div>
+            <form [formGroup]="newCommentForm" novalidate (ngSubmit)="sendComment(question.id)">
+                <md-input placeholder="new comment" formControlName="content"></md-input>
+            </form>
+            <!--<form>
+                <input />
+            </form>-->
+        </div>
+
     </div>
     <ul>
         <li *ngFor="let subQuestion of question.subQuestions">

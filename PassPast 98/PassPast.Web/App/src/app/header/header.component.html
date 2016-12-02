@@ -6,9 +6,9 @@
             </a>
             
             <a [routerLink]="['/courses']">Courses</a>
-            {{(currentCourse$ | async)?.name | defaultValue: "No Course"}}
-            {{(currentPaper$ | async)?.name  | defaultValue: "No Paper"}}
-            {{(currentExam$ | async)?.year  | defaultValue: "No Exam"}}
+            {{(currentCourse$ | async)?.name}}
+            {{(currentPaper$ | async)?.name}}
+            {{(currentExam$ | async)?.year}}
             {{(currentExam$ | async)?.semester}}
         </span>
 

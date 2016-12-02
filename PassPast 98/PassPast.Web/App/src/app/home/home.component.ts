@@ -1,33 +1,27 @@
 import { Component } from '@angular/core';
-import { Observable,  } from 'rxjs/Observable';
 import { MdDialog, MdDialogRef, MdSnackBar } from '@angular/material';
-import { NotFoundComponent } from '../not-found/not-found.component';
+import { CommentsHubService } from '../courses/comments/comments-hub.service';
+import { Store } from '@ngrx/store';
+import { AppState } from '../app-store';
 
-declare let window: any;
 
 @Component({
     selector: 'app-home',
     templateUrl: './home.component.html'
 })
 export class HomeComponent {
-    dialogRef: MdDialogRef<NotFoundComponent>;
+
     constructor(private dialog: MdDialog,
-                private snackBar: MdSnackBar
+                private snackBar: MdSnackBar,
+                private store: Store<AppState>
     ) { }
 
+logState(){
+    this.store.first().subscribe(state => console.log(JSON.stringify(state)));
+}
 
  failedAttempt() {
    this.snackBar.open('It didn\'t quite work!', 'Try Again');
  }
 
-    openDialog() {
-        this.dialogRef = this.dialog.open(NotFoundComponent, {
-            disableClose: false
-        });
-
-        this.dialogRef.afterClosed().subscribe(result => {
-        console.log('result: ' + result);
-        this.dialogRef = null;
-    });
-    }
 }

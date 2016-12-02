@@ -23,6 +23,7 @@ using Microsoft.ApplicationInsights;
 using System.Linq;
 using PassPast.Web.Infrastructure.Domain;
 using PassPast.Web.Answers;
+using AspNet.Security.OAuth.Validation;
 
 namespace PassPast.Web
 {
@@ -142,7 +143,12 @@ namespace PassPast.Web
 
             app.Map("/api", apiApp =>
             {
-                apiApp.UseOAuthValidation();
+            var oAuthOptions = new OAuthValidationOptions
+            {
+                
+            };
+            apiApp.UseOAuthValidation();
+                 
                 apiApp.UseSignalR2();
                 apiApp.UseOpenIddict();
                 apiApp.UseMvc(routes =>
@@ -167,14 +173,10 @@ namespace PassPast.Web
                 }
             });
 
-            DefaultFilesOptions options = new DefaultFilesOptions();
-            options.DefaultFileNames.Clear();
-            options.DefaultFileNames.Add("index.html");
-
-            app.UseDefaultFiles(options);
+            app.UseDefaultFiles();
             app.UseStaticFiles();
 
-            SeedDatabase(app);
+            //SeedDatabase(app);
         }
 
         private void SeedDatabase(IApplicationBuilder app)

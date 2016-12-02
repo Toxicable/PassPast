@@ -5,8 +5,6 @@ import { Response, Http } from '@angular/http';
 import { LoadingBarService } from '../loading-bar/loading-bar.service';
 import { HttpExceptionService } from '../services/http-exceptions.service';
 import { LoginModel } from '../models/login-model';
-import { ChangePasswordModel } from '../models/change-password';
-import { ResetPasswordModel } from '../models/reser-password.model';
 import { ExternalRegistrationModel } from '../models/external-registration-model';
 import { ExternalLoginModel } from '../models/external-login-model';
 import { AuthTokenService } from '../auth-token/auth-token.service';
@@ -49,20 +47,6 @@ export class AccountService {
     login(user: LoginModel)  {
         return this.authTokens.getTokens(user, 'password')
             .do(res => this.authTokens.scheduleRefresh() );
-    }
-
-// TODO: give this a model
-    sendForgotPassword(data: any) {
-        return this.authHttp.post('/account/SendForgotPassword', data);
-    }
-
-    changePassword(data: ChangePasswordModel) {
-        return this.authHttp.post('/account/changePassword', data);
-    }
-
-    resetPassword(data: ResetPasswordModel) {
-        return this.authHttp.post('/account/resetPassword', data );
-
     }
 
     logout() {

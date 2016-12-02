@@ -49,6 +49,9 @@ export class AuthTokenService {
         return this.http.post('/api/connect/token', this.encodeObjectToParams(data) , options)
             .map( res => res.json())
             .map( (tokens: AuthTokenModel) => {
+                let now = new Date();
+                tokens.expiration_date = new Date(now.getTime() + tokens.expires_in * 1000).getTime().toString();
+
                 this.store.dispatch(this.authTokenActions.Load(tokens));
                 this.store.dispatch(this.loggedInActions.LoggedIn());
 
@@ -95,7 +98,7 @@ export class AuthTokenService {
                 // parse the token into a model and throw it into the store
                 this.store.dispatch(this.authTokenActions.Load(tokens));
 
-                if (!this.jwtHelper.isTokenExpired(tokens.id_token)) {
+                if (+tokens.expiration_date < new Date().getTime()) {
                     // grab the profile out so we can store it
                     let profile = this.jwtHelper.decodeToken(tokens.id_token) as ProfileModel;
                     this.store.dispatch(this.profileActions.Load(profile));
@@ -119,19 +122,9 @@ export class AuthTokenService {
         let source = this.store.select( state => state.auth.authTokens)
             .take(1)
             .flatMap((tokens: AuthTokenModel) => {
-                // this is the other method for getting a refresh timer
-                //  let issued = new Date(tokens['.issued']).getTime() / 1000;
-                //  let expires = new Date(tokens['.expires']).getTime() / 1000;
-                // 
-                //  let refreshTokenThreshold = 10; // seconds
-                //  let delay = ((expires - issued) - refreshTokenThreshold) * 1000;
-                //  delay = delay > 1800000 ? 1800000 : delay;
-
-                // the token should be new here so that means take half of it's expiry time should be fine
                 let delay = tokens.expires_in / 2 * 1000;
                 console.log(delay);
                 return Observable.interval(delay);
-                // ms
             });
 
         this.refreshSubscription$ = source.subscribe(() => {

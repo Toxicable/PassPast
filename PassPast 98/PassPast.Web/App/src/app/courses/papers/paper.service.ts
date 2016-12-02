@@ -15,7 +15,7 @@ export class PaperService {
 
     getPaper(id: number): Observable<Paper> {
         return this.authHttp.get('/papers/' + id)
-            .map((papers: Paper[]) => papers.length === 1 ? papers[1] : null);
+            .map((papers: Paper[]) => papers.length === 1 ? papers[0] : null);
     }
 
     getPapers(courseId: number): Observable<Paper[]> {

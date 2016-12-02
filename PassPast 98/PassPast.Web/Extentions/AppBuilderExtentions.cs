@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Builder;
 
 namespace PassPast.Web.Extentions
 {
-
+    using Microsoft.AspNet.SignalR;
     using Microsoft.Owin.Builder;
     using AppFunc = Func<IDictionary<string, object>, Task>;
 
@@ -32,7 +32,12 @@ namespace PassPast.Web.Extentions
 
         public static void UseSignalR2(this IApplicationBuilder app)
         {
-            app.UseAppBuilder(appBuilder => appBuilder.MapSignalR());
+            app.UseAppBuilder(appBuilder =>
+            {
+                var hubConfiguration = new HubConfiguration();
+                hubConfiguration.EnableDetailedErrors = true;
+                appBuilder.MapSignalR(hubConfiguration);
+            });
         }
 
 

@@ -5,10 +5,12 @@ import { AlertType } from '../models/alert-types';
 import { Store}  from '@ngrx/store';
 import { AppState } from '../../app/app-store';
 import { AlertActions } from './alert.actions';
+import { MdSnackBar } from '@angular/material';
 
 @Injectable()
 export class AlertService {
     constructor(private store: Store<AppState>,
+                private snackBar: MdSnackBar,
                 private alertActions: AlertActions
     ) {}
 
@@ -29,6 +31,10 @@ export class AlertService {
     }
 
     private sendAlert(alert: Alert, delay = 3000) {
+
+        this.snackBar.open(alert.message, 'Try Again');
+
+
         this.store.dispatch(this.alertActions.Add(alert));
         Observable.of(true)
             .delay(delay)
