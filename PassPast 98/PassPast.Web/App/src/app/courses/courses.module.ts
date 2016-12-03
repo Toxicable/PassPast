@@ -22,6 +22,7 @@ import { SharedModule } from '../../shared/shared.module';
 import { QuestionSectionComponent } from './exams/add-exam/question-section.component';
 import { QuestionComponent } from './questions/question.component';
 import { CommentsHubService } from './comments/comments-hub.service';
+import { DataResolveService } from './resolve-data.service';
 
 @NgModule({
     imports: [
@@ -55,7 +56,7 @@ import { CommentsHubService } from './comments/comments-hub.service';
         QuestionActions,
 
         CommentsHubService,
-       // SignalRHubService
+        DataResolveService
     ],
     entryComponents: [
         AddCourseComponent,

@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { Course } from '../models/course';
-import * as courseActions from './course.actions';
 import { Store } from '@ngrx/store';
 import { AppState } from '../../../app/app-store';
 import { AuthHttp } from '../../../core/auth-http/auth-http.service';
@@ -16,11 +15,22 @@ export class CourseService {
     ) { }
 
     getCourses(): Observable<Course[]>{
-        return this.authHttp.get('/courses')
-            .do((courses: Course[]) => {
-                this.store.dispatch(this.courseActions.Load(courses));
-            })
+        return this.store.map(state => state.courses.course.entities)
+            .first()
+            .flatMap( localCourses => {
+                if (localCourses.length > 0) {
+                    this.store.dispatch(this.courseActions.Load(localCourses));
+                    return Observable.of(localCourses);
+                }
+
+                return this.authHttp.get('/courses')
+                    .do((courses: Course[]) => {
+                        this.store.dispatch(this.courseActions.Load(courses));
+                    });
+            });
+
     }
+
 
     getCourse(id: number): Observable<Course>{
         return this.authHttp.get('/courses/'+ id)

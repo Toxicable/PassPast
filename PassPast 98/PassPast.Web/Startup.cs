@@ -24,6 +24,7 @@ using System.Linq;
 using PassPast.Web.Infrastructure.Domain;
 using PassPast.Web.Answers;
 using AspNet.Security.OAuth.Validation;
+using System.Threading.Tasks;
 
 namespace PassPast.Web
 {
@@ -143,12 +144,20 @@ namespace PassPast.Web
 
             app.Map("/api", apiApp =>
             {
-            var oAuthOptions = new OAuthValidationOptions
-            {
-                
-            };
-            apiApp.UseOAuthValidation();
-                 
+                apiApp.UseOAuthValidation(options => {
+                    options.Events = new OAuthValidationEvents
+                    {
+                        // Note: for SignalR connections, the default Authorization header does not work,
+                        // because the WebSockets JS API doesn't allow setting custom parameters.
+                        // To work around this limitation, the access token is retrieved from the query string.
+                        OnRetrieveToken = context => {
+                            context.Token = context.Request.Query["access_token"];
+
+                            return Task.FromResult(0);
+                        }
+                    };
+                });
+
                 apiApp.UseSignalR2();
                 apiApp.UseOpenIddict();
                 apiApp.UseMvc(routes =>
