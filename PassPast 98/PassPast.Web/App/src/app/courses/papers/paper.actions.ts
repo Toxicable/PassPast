@@ -8,6 +8,8 @@ export const PaperActionTypes = {
   LOAD_SUCCESS: type('[Paper] Load Success'),
   ADD: type('[Papers] Add'),
   SELECT: type('[Paper] Select'),
+  SELECT_SUCCESS: type('[Paper] Select Success'),
+  SELECT_FAILED: type('[Paper] Select Failed'),
   DESELECT: type('[Paper] Deselect'),
   CACHE: type('[Papers] Cache')
 };
@@ -26,10 +28,21 @@ export class PaperActions {
       payload
     };
   }
-  Select(payload: Paper): Action {
+  select(payload: number): Action {
     return {
       type: PaperActionTypes.SELECT,
       payload
+    };
+  }
+  selectSuccess(payload: Paper): Action {
+    return {
+      type: PaperActionTypes.SELECT_SUCCESS,
+      payload
+    };
+  }
+    selectFailed(): Action {
+    return {
+      type: PaperActionTypes.SELECT_FAILED,
     };
   }
   deselect(): Action {

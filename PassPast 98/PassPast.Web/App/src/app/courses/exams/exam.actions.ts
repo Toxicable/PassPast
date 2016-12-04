@@ -23,7 +23,7 @@ export class ExamActions{
         }
     }
 
-    Load(payload: Exam[]): Action{
+    load(payload: Exam[]): Action{
         return{
             type: ExamActionTypes.LOAD,
             payload

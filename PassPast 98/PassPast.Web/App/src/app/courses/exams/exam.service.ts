@@ -18,7 +18,7 @@ export class ExamService {
     getExams(): Observable<Exam[]>{
         return this.authHttp.get('/exams')
             .do((exams: Exam[]) => { 
-                this.store.dispatch(this.examActions.Load(exams));
+                this.store.dispatch(this.examActions.load(exams));
             })
     }
 

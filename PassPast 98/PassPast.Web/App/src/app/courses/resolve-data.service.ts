@@ -91,7 +91,7 @@ export class DataResolveService {
 
   resolvePaper(paperId: number): Observable<boolean> {
     if (!paperId) {
-      this.store.dispatch(this.paperActions.Select(null));
+      this.store.dispatch(this.paperActions.select(null));
       return Observable.of(false);
     }
 
@@ -100,14 +100,14 @@ export class DataResolveService {
       .flatMap((papers: Paper[]) => {
         let localPapers = papers.find(c => c.id === paperId);
         if (localPapers) {
-          this.store.dispatch(this.paperActions.Select(localPapers));
+         // this.store.dispatch(this.paperActions.select(localPapers));
           return Observable.of(true);
         }
         return this.papers.getPaper(paperId)
           .map((paper: Paper) => {
             if (paper != null) {
               this.store.dispatch(this.paperActions.Add(paper));
-              this.store.dispatch(this.paperActions.Select(paper));
+              //this.store.dispatch(this.paperActions.select(paper));
               return true;
             }
 

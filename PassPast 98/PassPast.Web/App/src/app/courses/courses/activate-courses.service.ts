@@ -18,7 +18,7 @@ export class ActivateCoursesService implements CanActivate {
 
   canActivate(route: ActivatedRouteSnapshot) {
     this.store.dispatch(this.courseActions.deselect());
-    this.store.dispatch(this.paperActions.Select(null));
+    this.store.dispatch(this.paperActions.select(null));
     this.store.dispatch(this.examActions.Select(null));
     return true;
   }

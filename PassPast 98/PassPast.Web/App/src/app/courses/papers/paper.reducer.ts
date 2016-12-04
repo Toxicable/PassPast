@@ -33,7 +33,7 @@ export function paperReducer(state = initalState, action: Action): PaperState {
             ]
         };
 
-        case PaperActionTypes.SELECT:
+        case PaperActionTypes.SELECT_SUCCESS:
             return {
                 cache: state.cache,
                 selected: action.payload,

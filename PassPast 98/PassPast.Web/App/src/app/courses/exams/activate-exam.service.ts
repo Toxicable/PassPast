@@ -4,7 +4,7 @@ import { AppState } from '../../app-store';
 import { CanActivate, ActivatedRouteSnapshot } from '@angular/router';
 import { CourseActions } from '../courses/course.actions';
 import { ExamActions } from '../exams/exam.actions';
-import { PaperActions } from './paper.actions';
+import { PaperActions } from '../papers/paper.actions';
 
 @Injectable()
 export class ActivatePapersService implements CanActivate {
@@ -18,8 +18,9 @@ export class ActivatePapersService implements CanActivate {
 
   canActivate(route: ActivatedRouteSnapshot) {
     let courseId = route.params['courseId'];
+    let paperId = route.params['paperId'];
     this.store.dispatch(this.courseActions.select(courseId));
-    this.store.dispatch(this.paperActions.select(null));
+    this.store.dispatch(this.paperActions.select(paperId));
     this.store.dispatch(this.examActions.Select(null));
     return true;
   }
