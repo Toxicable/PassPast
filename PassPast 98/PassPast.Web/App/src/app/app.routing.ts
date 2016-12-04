@@ -31,8 +31,6 @@ const appRoutes: Routes = [
         path: '**',
         component: NotFoundComponent
     }
-
-
 ];
 
 export const appRouting: ModuleWithProviders = RouterModule.forRoot(appRoutes, {

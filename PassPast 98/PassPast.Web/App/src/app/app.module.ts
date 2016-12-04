@@ -9,19 +9,13 @@ import { HomeComponent } from './home/home.component';
 import { NotFoundComponent } from './not-found/not-found.component';
 import { UnauthorizedComponent } from './unauthorized/unauthorized.component';
 import { appRouting } from './app.routing';
-import { StoreModule, combineReducers } from '@ngrx/store';
-import { alertReducer } from '../core/alert/alert.reducer';
-import { loadingBarReducer } from '../core/loading-bar/loading-bar.reducer';
-import { authReducer } from '../core/auth-store/auth.store';
-import { usersReducer } from './+admin/users/user-reducer';
+import { StoreModule } from '@ngrx/store';
 import { HeaderComponent } from './header/header.component';
 import { CourseModule } from './courses/courses.module';
-import { coursesReducer } from './courses/courses.store';
-import { courseReducer } from './courses/courses/course.reducer';
-import { paperReducer } from './courses/papers/paper.reducer';
-import { examReducer } from './courses/exams/exam.reducer';
-import { questionReducer } from './courses/questions/question.reducer';
 import { appReducer } from './app-store';
+import { EffectsModule } from '@ngrx/effects';
+import { CourseEffects } from './courses/courses/course.effects';
+import { PaperEffects } from './courses/papers/paper.effects';
 
 @NgModule({
   declarations: [
@@ -39,7 +33,9 @@ import { appReducer } from './app-store';
     appRouting,
 
     StoreModule.provideStore(appReducer),
-    StoreDevtoolsModule.instrumentOnlyWithExtension()
+    StoreDevtoolsModule.instrumentOnlyWithExtension(),
+    EffectsModule.runAfterBootstrap(CourseEffects),
+    EffectsModule.runAfterBootstrap(PaperEffects)
   ],
   bootstrap: [AppComponent]
 })

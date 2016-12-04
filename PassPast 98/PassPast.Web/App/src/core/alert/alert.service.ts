@@ -32,14 +32,14 @@ export class AlertService {
 
     private sendAlert(alert: Alert, delay = 3000) {
 
-        this.snackBar.open(alert.message, 'Try Again');
+        this.snackBar.open(alert.message, 'Dismiss');
 
 
-        this.store.dispatch(this.alertActions.Add(alert));
-        Observable.of(true)
-            .delay(delay)
-            .subscribe(
-                () => this.store.dispatch(this.alertActions.Delete(alert))
-            );
+        // this.store.dispatch(this.alertActions.Add(alert));
+        // Observable.of(true)
+        //     .delay(delay)
+        //     .subscribe(
+        //         () => this.store.dispatch(this.alertActions.Delete(alert))
+        //     );
     }
 }

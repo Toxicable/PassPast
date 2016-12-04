@@ -7,9 +7,11 @@ import { Store } from '@ngrx/store';
 import { AlertService } from '../../../core/alert/alert.service';
 import { MdDialogRef, MdDialog } from '@angular/material';
 import { AddCourseComponent } from './add-course/add-course.component';
+import { DataResolveService } from '../resolve-data.service';
+import { CourseActions } from './course.actions';
 
 @Component({
-    selector: 'courses',
+    selector: 'app-courses',
     templateUrl: 'courses.component.html'
 })
 export class CoursesComponent implements OnInit {
@@ -19,7 +21,9 @@ export class CoursesComponent implements OnInit {
     constructor(private courses: CourseService,
                 private alert: AlertService,
                 private store: Store<AppState>,
-                private dialog: MdDialog
+                private dialog: MdDialog,
+                private dataResolver: DataResolveService,
+                private courseActions: CourseActions
     ) { }
 
 
@@ -27,7 +31,6 @@ export class CoursesComponent implements OnInit {
         this.newCourseDialogRef = this.dialog.open(AddCourseComponent, {
             disableClose: false
         });
-        //this.newCourseDialogRef.componentInstance.
 
         this.newCourseDialogRef.afterClosed()
             .subscribe(result => {
@@ -38,7 +41,6 @@ export class CoursesComponent implements OnInit {
     ngOnInit() {
         this.courses$ = this.store.map( state => state.courses.course.entities);
 
-        this.courses.getCourses()
-            .subscribe( () => this.alert.sendSuccess('We got the courses :D'));
+        this.store.dispatch(this.courseActions.Load());
      }
 }

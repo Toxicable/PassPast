@@ -8,7 +8,6 @@ import { CourseService } from './courses/course.service';
 import { AddCourseComponent } from './courses/add-course/add-course.component';
 import { PaperService } from './papers/paper.service';
 import { AddPaperComponent } from './papers/add-paper/add-paper.component';
-import { CourseResolveService } from './courses/course-resolve.service';
 import { AddExamComponent } from './exams/add-exam/add-exam.component';
 import { PaperResolveService } from './papers/paper-resolve.service';
 import { ExamService } from './exams/exam.service';
@@ -23,12 +22,13 @@ import { QuestionSectionComponent } from './exams/add-exam/question-section.comp
 import { QuestionComponent } from './questions/question.component';
 import { CommentsHubService } from './comments/comments-hub.service';
 import { DataResolveService } from './resolve-data.service';
+import { ActivateCoursesService } from './courses/activate-courses.service';
+import { ActivatePapersService } from './papers/activate-papers.service';
 
 @NgModule({
     imports: [
         SharedModule,
         coursesRouting
-
     ],
     declarations: [
         CoursesComponent,
@@ -39,14 +39,13 @@ import { DataResolveService } from './resolve-data.service';
         AddExamComponent,
         QuestionsComponent,
         QuestionSectionComponent,
-        QuestionComponent
+        QuestionComponent,
     ],
     providers: [
         CourseService,
         PaperService,
         ExamService,
         QuestionService,
-        CourseResolveService,
         PaperResolveService,
         ExamResolveService,
 
@@ -56,7 +55,9 @@ import { DataResolveService } from './resolve-data.service';
         QuestionActions,
 
         CommentsHubService,
-        DataResolveService
+        DataResolveService,
+        ActivateCoursesService,
+        ActivatePapersService
     ],
     entryComponents: [
         AddCourseComponent,
@@ -64,4 +65,5 @@ import { DataResolveService } from './resolve-data.service';
         AddPaperComponent
     ]
 })
-export class CourseModule { }
+export class CourseModule {
+}

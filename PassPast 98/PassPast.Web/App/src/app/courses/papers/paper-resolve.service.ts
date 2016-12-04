@@ -4,7 +4,6 @@ import { Router, Resolve,
          ActivatedRouteSnapshot } from '@angular/router';
 import { AppState } from '../../../app/app-store';
 import { Store } from '@ngrx/store';
-import { Course } from '../models/course';
 import { PaperService } from './paper.service';
 import { Paper } from '../models/paper';
 import { PaperActions } from './paper.actions';
@@ -13,7 +12,7 @@ import { AlertService } from '../../../core/alert/alert.service';
 @Injectable()
 export class PaperResolveService implements Resolve<void> {
 
-  constructor(private papers: PaperService, 
+  constructor(private papers: PaperService,
               private router: Router,
               private store: Store<AppState>,
               private paperActions: PaperActions,

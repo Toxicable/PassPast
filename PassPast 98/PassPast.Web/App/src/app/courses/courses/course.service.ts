@@ -14,29 +14,15 @@ export class CourseService {
 
     ) { }
 
-    getCourses(): Observable<Course[]>{
-        return this.store.map(state => state.courses.course.entities)
-            .first()
-            .flatMap( localCourses => {
-                if (localCourses.length > 0) {
-                    this.store.dispatch(this.courseActions.Load(localCourses));
-                    return Observable.of(localCourses);
-                }
-
-                return this.authHttp.get('/courses')
-                    .do((courses: Course[]) => {
-                        this.store.dispatch(this.courseActions.Load(courses));
-                    });
-            });
-
+    getCourses(): Observable<Course[]> {
+      return this.authHttp.get('/courses');
     }
 
-
-    getCourse(id: number): Observable<Course>{
-        return this.authHttp.get('/courses/'+ id)
+    getCourse(id: number): Observable<Course> {
+        return this.authHttp.get('/courses/' + id);
     }
 
-    create(course: Course): Observable<Course>{
+    create(course: Course): Observable<Course> {
         return this.authHttp.post('/courses', course)
             .do((newCourse: Course) => {
                 this.store.dispatch(this.courseActions.Add(newCourse));

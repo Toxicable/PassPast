@@ -38,12 +38,5 @@ export class PapersComponent implements OnInit {
     ngOnInit() {
         this.papers$ = this.store.map( state => state.courses.paper.displayed);
 
-        this.store.map( state => state.courses.course.selected.id)
-            .first()
-            .flatMap( (courseId: number) => {
-                return this.papers.getPapers(courseId);
-            })
-            .subscribe();
-
      }
 }

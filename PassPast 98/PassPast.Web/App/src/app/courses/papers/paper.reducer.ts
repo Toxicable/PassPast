@@ -16,7 +16,7 @@ const initalState: PaperState = {
 
 export function paperReducer(state = initalState, action: Action): PaperState {
     switch (action.type) {
-        case PaperActionTypes.LOAD:
+        case PaperActionTypes.LOAD_SUCCESS:
         return {
             cache: state.cache,
             selected: state.selected,

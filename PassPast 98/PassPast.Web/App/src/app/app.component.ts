@@ -3,6 +3,8 @@ import { AuthTokenService } from '../core/auth-token/auth-token.service';
 import { Store } from '@ngrx/store';
 import { AlertService } from '../core/alert/alert.service';
 import { AppState } from './app-store';
+import { Router, NavigationEnd } from '@angular/router';
+import { DataResolveService } from './courses/resolve-data.service';
 
 @Component({
   selector: 'app-root',
@@ -14,11 +16,12 @@ export class AppComponent implements OnInit, OnDestroy {
     constructor(
       private tokens: AuthTokenService,
                private store: Store<AppState>,
-                private alert: AlertService
+                private alert: AlertService,
+                private router: Router,
+                private dataResolver: DataResolveService
                ) { }
 
   ngOnInit(): void {
-      
         this.tokens.startupTokenRefresh()
             .subscribe(
             () => {

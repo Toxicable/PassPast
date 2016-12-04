@@ -3,30 +3,57 @@ import { Course } from '../models/course';
 import { type } from '../../../util/action-name-helper';
 
 export const CourseActionTypes = {
-    LOAD: type('[Course] Load'),
-    ADD: type('[Course] Add'),
-    SELECT: type('[Course] Select')
+  LOAD: type('[Course] Load'),
+  LOAD_SUCCESS: type('[Course] Load Success'),
+  ADD: type('[Course] Add'),
+  SELECT: type('[Course] Select'),
+  SELECT_SUCCESS: type('[Course] Select Success'),
+  SELECT_FAILED: type('[Course] Select Failed'),
+  DESELECT: type('[Course] Deselect')
 }
 
-export class CourseActions{
-    Select(payload: Course): Action{
-        return{
-            type: CourseActionTypes.SELECT,
-            payload
-        }
+export class CourseActions {
+  deselect(): Action{
+    return {
+      type: CourseActionTypes.DESELECT
     }
+  }
 
-    Add(payload: Course): Action{
-        return{
-            type: CourseActionTypes.ADD,
-            payload
-        }
-    }
+  Select(payload: number): Action {
+    return {
+      type: CourseActionTypes.SELECT,
+      payload
+    };
+  }
+  selectSuccess(payload: Course): Action {
+    return {
+      type: CourseActionTypes.SELECT_SUCCESS,
+      payload
+    };
+  }
+  selectFailed(): Action {
+    return {
+      type: CourseActionTypes.SELECT_SUCCESS
+    };
+  }
 
-    Load(payload: Course[]): Action{
-        return{
-            type: CourseActionTypes.LOAD,
-            payload
-        }
-    }
+  Add(payload: Course): Action {
+    return {
+      type: CourseActionTypes.ADD,
+      payload
+    };
+  }
+
+  Load(): Action {
+    return {
+      type: CourseActionTypes.LOAD
+    };
+  }
+
+  LoadSuccess(payload: Course[]): Action {
+    return {
+      type: CourseActionTypes.LOAD_SUCCESS,
+      payload
+    };
+  }
 }
