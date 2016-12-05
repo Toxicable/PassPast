@@ -119,24 +119,24 @@ export class DataResolveService {
 
   resolveExam(examId: number): Observable<boolean> {
     if (!examId) {
-      this.store.dispatch(this.examActions.Select(null));
+      this.store.dispatch(this.examActions.select(null));
       return Observable.of(false);
     }
 
-    return this.store.map(state => state.courses.exam.entities)
+    return this.store.map(state => state.courses.exam.cache)
       .first()
       .flatMap((exams: Exam[]) => {
         let localExams = exams.find(c => c.id === examId);
 
         if (localExams) {
-          this.store.dispatch(this.examActions.Select(localExams));
+          //this.store.dispatch(this.examActions.select(localExams));
           return Observable.of(true);
         }
         return this.exams.getExam(examId)
           .map((exam: Exam) => {
             if (exam != null) {
-              this.store.dispatch(this.examActions.Add(exam));
-              this.store.dispatch(this.examActions.Select(exam));
+              this.store.dispatch(this.examActions.add(exam));
+              //this.store.dispatch(this.examActions.select(exam));
               return true;
             }
             this.alert.sendWarning('Exam does not exist');

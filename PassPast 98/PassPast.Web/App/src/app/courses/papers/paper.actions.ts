@@ -51,13 +51,6 @@ export class PaperActions {
     };
   }
 
-  display(payload: Paper[]): Action {
-    return {
-      type: PaperActionTypes.LOAD,
-      payload
-    };
-  }
-
   Add(payload: Paper): Action {
     return {
       type: PaperActionTypes.ADD,

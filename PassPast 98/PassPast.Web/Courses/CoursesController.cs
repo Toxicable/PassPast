@@ -30,9 +30,17 @@ namespace PassPast.Web.Api.Courses
         [HttpGet("{id}")]
         public async Task<IActionResult> Get(int id)
         {
-            var course = await _courseManager.Get(id);
+            var course = _mapper.Map<CourseViewModel>(await _courseManager.Get(id));                
 
             return Ok(course);
+        }
+
+        [HttpGet("{id}/papers")]
+        public async Task<IActionResult> GetPapers(int id)
+        {
+            var papers = (await _courseManager.GetPapers(id)).Papers;
+
+            return Ok(papers);
         }
 
         [HttpGet]

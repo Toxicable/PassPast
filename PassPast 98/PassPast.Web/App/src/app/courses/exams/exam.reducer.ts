@@ -5,40 +5,52 @@ import { Exam } from '../models/exam';
 import { Observable } from 'rxjs';
 import { ExamActionTypes } from './exam.actions';
 
-export interface ExamState{
-    selected: Exam,
-    entities: Exam[]
+export interface ExamState {
+  selected: Exam,
+  cache: Exam[],
+  display: Exam[]
 }
 
-const initalState: ExamState ={
-    selected: null,
-    entities: []
+const initalState: ExamState = {
+  selected: null,
+  cache: [],
+  display: []
 }
 
 export function examReducer(state = initalState, action: Action): ExamState {
-    switch (action.type) {
-        case ExamActionTypes.LOAD:
-            return {
-                selected: state.selected,
-                entities: action.payload
-            };
+  switch (action.type) {
+    case ExamActionTypes.LOAD:
+      return {
+        selected: state.selected,
+        display: action.payload,
+        cache: state.cache
+      };
 
-        case ExamActionTypes.ADD:
-        return {
-            selected: state.selected,
-            entities: [
-                ...state.entities,
-                action.payload
-            ]
-        }
+    case ExamActionTypes.ADD:
+      return {
+        selected: state.selected,
+        cache: state.cache,
+        display: [
+          ...state.display,
+          action.payload
+        ]
+      };
 
-        case ExamActionTypes.SELECT:
-            return {
-                selected: action.payload,
-                entities: state.entities
-            }
+    case ExamActionTypes.SELECT_SUCCESS:
+      return {
+        selected: action.payload,
+        cache: state.cache,
+        display: state.display
+      };
 
-        default:
-            return state;
-    }
+    case ExamActionTypes.DESELECT:
+      return {
+        selected: null,
+        cache: state.cache,
+        display: state.display
+      }
+
+    default:
+      return state;
+  }
 };

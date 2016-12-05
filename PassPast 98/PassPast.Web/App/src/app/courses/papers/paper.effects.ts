@@ -30,8 +30,7 @@ export class PaperEffects {
         .flatMap((papers: Paper[]) => {
           let localPapers = papers.find(c => c.id === paperId);
           if (localPapers) {
-            this.store.dispatch(this.paperActions.selectSuccess(localPapers));
-            return Observable.of(true);
+            return Observable.of(this.paperActions.selectSuccess(localPapers));
           }
           return this.paperService.getPaper(paperId)
             .map((paper: Paper) => {
@@ -53,7 +52,7 @@ export class PaperEffects {
   @Effect()
   load: Observable<Action> = this.actions$
     .ofType(PaperActionTypes.LOAD)
-    .map(action => action.payload)
+    .map(action => +action.payload)
     .switchMap((courseId: number) =>
       this.store.map(state => state.courses.paper.cache)
         .first()

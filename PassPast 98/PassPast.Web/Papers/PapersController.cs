@@ -33,6 +33,24 @@ namespace PassPast.Web.Api.Papers
             return Ok(papers);
         }
 
+        [HttpGet("{id}/exams")]
+        public async Task<IActionResult> GetExams(int id)
+        {
+            var papers = (await _papersManager.Get(id))
+                .Select(p => _mapper.Map<PaperViewModel>(p));
+
+            return Ok(papers);
+        }
+
+        [HttpGet()]
+        public async Task<IActionResult> Get(int courseId)
+        {
+            var papers = (await _papersManager.Get(id))
+                .Select(p => _mapper.Map<PaperViewModel>(p));
+
+            return Ok(papers);
+        }
+
         public async Task<IActionResult> Create([FromBody]PaperBindingModel course)
         {
             var newPaper = _mapper.Map<PaperEntity>(course);

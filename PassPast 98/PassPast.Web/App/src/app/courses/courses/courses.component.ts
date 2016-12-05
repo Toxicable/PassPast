@@ -41,6 +41,6 @@ export class CoursesComponent implements OnInit {
     ngOnInit() {
         this.courses$ = this.store.map( state => state.courses.course.entities);
 
-        this.store.dispatch(this.courseActions.Load());
+        this.store.dispatch(this.courseActions.load());
      }
 }

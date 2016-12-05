@@ -6,28 +6,31 @@ import { PapersComponent } from './papers/papers.component';
 import { ExamsComponent } from './exams/exams.component';
 import { QuestionsComponent } from './questions/questions.component';
 import { AddExamComponent } from './exams/add-exam/add-exam.component';
-import { ActivateCoursesService } from './courses/activate-courses.service';
-import { ActivatePapersService } from './papers/activate-papers.service';
+import { ActivateCourseService } from './courses/activate-courses.service';
+import { ActivatePaperService } from './papers/activate-papers.service';
+import { ActivateExamService } from './exams/activate-exam.service';
 
 const routes: Routes = [
 
     {
         path: 'courses',
         component: CoursesComponent,
-        canActivate: [ActivateCoursesService]
+        canActivate: [ActivateCourseService]
     },
     {
         path: 'courses/:courseId',
         component: PapersComponent,
-        canActivate: [ActivatePapersService]
+        canActivate: [ActivatePaperService]
     },
     {
         path: 'courses/:courseId/:paperId',
         component: ExamsComponent,
+        canActivate: [ActivateExamService]
     },
     {
         path: 'courses/:courseId/:paperId/add-exam',
         component: AddExamComponent,
+        canActivate: [ActivateExamService]
     },
     {
         path: 'courses/:courseId/:paperId/:examId',

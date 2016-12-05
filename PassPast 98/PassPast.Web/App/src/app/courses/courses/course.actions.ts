@@ -19,7 +19,7 @@ export class CourseActions {
     }
   }
 
-  Select(payload: number): Action {
+  select(payload: number): Action {
     return {
       type: CourseActionTypes.SELECT,
       payload
@@ -37,20 +37,20 @@ export class CourseActions {
     };
   }
 
-  Add(payload: Course): Action {
+  add(payload: Course): Action {
     return {
       type: CourseActionTypes.ADD,
       payload
     };
   }
 
-  Load(): Action {
+  load(): Action {
     return {
       type: CourseActionTypes.LOAD
     };
   }
 
-  LoadSuccess(payload: Course[]): Action {
+  loadSuccess(payload: Course[]): Action {
     return {
       type: CourseActionTypes.LOAD_SUCCESS,
       payload

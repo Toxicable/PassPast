@@ -22,10 +22,14 @@ export class CourseService {
         return this.authHttp.get('/courses/' + id);
     }
 
+    getPapers(id: number): Observable<Course[]> {
+      return this.authHttp.get(`/courses/${id}/papers`);
+    }
+
     create(course: Course): Observable<Course> {
         return this.authHttp.post('/courses', course)
             .do((newCourse: Course) => {
-                this.store.dispatch(this.courseActions.Add(newCourse));
+                this.store.dispatch(this.courseActions.add(newCourse));
             })
     }
 }

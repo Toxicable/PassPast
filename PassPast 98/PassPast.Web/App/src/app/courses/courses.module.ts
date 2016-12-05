@@ -9,7 +9,6 @@ import { AddCourseComponent } from './courses/add-course/add-course.component';
 import { PaperService } from './papers/paper.service';
 import { AddPaperComponent } from './papers/add-paper/add-paper.component';
 import { AddExamComponent } from './exams/add-exam/add-exam.component';
-import { PaperResolveService } from './papers/paper-resolve.service';
 import { ExamService } from './exams/exam.service';
 import { QuestionService } from './questions/question.service';
 import { ExamResolveService } from './exams/exam-resolve.service';
@@ -22,13 +21,21 @@ import { QuestionSectionComponent } from './exams/add-exam/question-section.comp
 import { QuestionComponent } from './questions/question.component';
 import { CommentsHubService } from './comments/comments-hub.service';
 import { DataResolveService } from './resolve-data.service';
-import { ActivateCoursesService } from './courses/activate-courses.service';
-import { ActivatePapersService } from './papers/activate-papers.service';
+import { ActivateCourseService } from './courses/activate-courses.service';
+import { ActivatePaperService } from './papers/activate-papers.service';
+import { ActivateExamService } from './exams/activate-exam.service';
+import { EffectsModule } from '@ngrx/effects';
+import { CourseEffects } from './courses/course.effects';
+import { PaperEffects } from './papers/paper.effects';
+import { ExamEffects } from './exams/exam.effects';
 
 @NgModule({
     imports: [
         SharedModule,
-        coursesRouting
+        coursesRouting,
+    EffectsModule.run(CourseEffects),
+    EffectsModule.run(PaperEffects),
+    EffectsModule.run(ExamEffects)
     ],
     declarations: [
         CoursesComponent,
@@ -46,7 +53,6 @@ import { ActivatePapersService } from './papers/activate-papers.service';
         PaperService,
         ExamService,
         QuestionService,
-        PaperResolveService,
         ExamResolveService,
 
         CourseActions,
@@ -56,8 +62,9 @@ import { ActivatePapersService } from './papers/activate-papers.service';
 
         CommentsHubService,
         DataResolveService,
-        ActivateCoursesService,
-        ActivatePapersService
+        ActivateCourseService,
+        ActivatePaperService,
+        ActivateExamService
     ],
     entryComponents: [
         AddCourseComponent,

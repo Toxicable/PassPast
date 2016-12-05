@@ -16,6 +16,7 @@ import { appReducer } from './app-store';
 import { EffectsModule } from '@ngrx/effects';
 import { CourseEffects } from './courses/courses/course.effects';
 import { PaperEffects } from './courses/papers/paper.effects';
+import { ExamEffects } from './courses/exams/exam.effects';
 
 @NgModule({
   declarations: [
@@ -34,8 +35,6 @@ import { PaperEffects } from './courses/papers/paper.effects';
 
     StoreModule.provideStore(appReducer),
     StoreDevtoolsModule.instrumentOnlyWithExtension(),
-    EffectsModule.runAfterBootstrap(CourseEffects),
-    EffectsModule.runAfterBootstrap(PaperEffects)
   ],
   bootstrap: [AppComponent]
 })

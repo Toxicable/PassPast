@@ -23,20 +23,20 @@ export class ExamResolveService implements Resolve<void> {
   resolve(route: ActivatedRouteSnapshot): Observable<boolean> {
     let examId = route.params['examId'];
 
-    return this.store.map(state => state.courses.exam.entities)
+    return this.store.map(state => state.courses.exam.cache)
       .first()
       .flatMap( (exams: Exam[]) => {
         let localExams = exams.find( c => c.id === examId);
 
         if (localExams) {
-          this.store.dispatch(this.examActions.Select(localExams));
+         // this.store.dispatch(this.examActions.select(localExams));
           return Observable.of(true);
         }
         return this.exams.getExam(examId)
           .map((exam: Exam) => {
             if (exam != null) {
-              this.store.dispatch(this.examActions.Add(exam));
-              this.store.dispatch(this.examActions.Select(exam));
+              this.store.dispatch(this.examActions.add(exam));
+              //this.store.dispatch(this.examActions.select(exam));
               return true;
             }
             return false;

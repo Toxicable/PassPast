@@ -7,7 +7,7 @@ import { ExamActions } from '../exams/exam.actions';
 import { PaperActions } from './paper.actions';
 
 @Injectable()
-export class ActivatePapersService implements CanActivate {
+export class ActivatePaperService implements CanActivate {
 
   constructor(
     private store: Store<AppState>,
@@ -20,7 +20,7 @@ export class ActivatePapersService implements CanActivate {
     let courseId = route.params['courseId'];
     this.store.dispatch(this.courseActions.select(courseId));
     this.store.dispatch(this.paperActions.select(null));
-    this.store.dispatch(this.examActions.Select(null));
+    this.store.dispatch(this.examActions.select(null));
     return true;
   }
 

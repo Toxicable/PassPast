@@ -6,6 +6,10 @@ namespace PassPast.Data
 {
     public class CourseEntity : TrackedEntity
     {
+        public CourseEntity()
+        {
+            Papers = new HashSet<PaperEntity>();
+        }
         [Required]
         public string Name { get; set; }
         [Required]

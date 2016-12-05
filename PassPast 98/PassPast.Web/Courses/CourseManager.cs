@@ -14,8 +14,9 @@ namespace PassPast.Web.Api.Courses
 {
     public interface ICourseManager
     {
-        Task<CourseViewModel> Get(int id);
-        Task<ICollection<CourseViewModel>> GetAll();
+        Task<CourseEntity> Get(int id);
+        Task<ICollection<CourseEntity>> GetAll();
+        Task<CourseEntity> GetPapers(int id);
         Task Create(CourseEntity newCourse);
     }
 
@@ -33,21 +34,28 @@ namespace PassPast.Web.Api.Courses
             _mapper = mapper;
         }
 
-        public async Task<CourseViewModel> Get(int id)
+        public async Task<CourseEntity> Get(int id)
         {
-            var course = (await _context.Courses
-                .FirstOrDefaultAsync(c => c.Id == id));
+            var course = await _context.Courses
+                .FirstOrDefaultAsync(c => c.Id == id);
 
-            return _mapper.Map<CourseViewModel>(course);                
+            return course;                
         }
 
-        public async Task<ICollection<CourseViewModel>> GetAll()
+        public async Task<CourseEntity> GetPapers(int id)
         {
-            var courses = (await _context.Courses
+            var course = await _context.Courses
+                .Include(c => c.Papers)
+                .SingleOrDefaultAsync(c => c.Id == id);
+
+            return course;
+        }
+
+        public async Task<ICollection<CourseEntity>> GetAll()
+        {
+            var courses = await _context.Courses
                 .OrderByDescending(c => c.Name)
-                .ToListAsync())
-                .Select(c => _mapper.Map<CourseViewModel>(c))
-                .ToList();
+                .ToListAsync();
 
             return courses;
         }

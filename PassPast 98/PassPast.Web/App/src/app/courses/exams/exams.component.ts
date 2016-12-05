@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { AppState } from '../../../app/app-store';
-import { PaperService } from '../papers/paper.service';
 import { Observable } from 'rxjs';
 import { Exam } from '../models/exam';
 import { ExamService } from './exam.service';
@@ -33,6 +32,6 @@ export class ExamsComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.exams$ = this.store.map(state => state.courses.exam.entities);
+    this.exams$ = this.store.map(state => state.courses.exam.display);
   }
 }

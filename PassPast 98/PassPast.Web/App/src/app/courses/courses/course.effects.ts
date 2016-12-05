@@ -27,7 +27,7 @@ export class CourseEffects {
     .ofType(CourseActionTypes.LOAD)
     .switchMap(action =>
       this.courseService.getCourses()
-        .map(courses => this.courseActions.LoadSuccess(courses))
+        .map(courses => this.courseActions.loadSuccess(courses))
     );
 
   @Effect()
@@ -45,7 +45,7 @@ export class CourseEffects {
         return this.courseService.getCourse(courseId)
           .map((course: Course) => {
             if (course != null) {
-              this.store.dispatch(this.courseActions.Add(course));
+              this.store.dispatch(this.courseActions.add(course));
               return this.courseActions.selectSuccess(course);
             }
             return this.courseActions.selectFailed();
