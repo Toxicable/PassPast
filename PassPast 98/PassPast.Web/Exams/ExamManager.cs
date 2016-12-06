@@ -13,8 +13,9 @@ namespace PassPast.Web.Api.Exams
 {
     public interface IExamManager
     {
-        Task<ExamViewModel> Get(int id);
-        Task<ICollection<ExamViewModel>> GetAll();
+        Task<ExamEntity> Get(int id);
+        Task<ExamEntity> GetQuestions(int id);
+        Task<IEnumerable<ExamEntity>> GetAll();
         Task Create(ExamEntity newExam);
     }
 
@@ -29,21 +30,27 @@ namespace PassPast.Web.Api.Exams
             _mapper = mapper;
         }
 
-        public async Task<ExamViewModel> Get(int id)
+        public async Task<ExamEntity> Get(int id)
         {
-            var exam = (await _context.Exams
-                .FirstOrDefaultAsync(c => c.Id == id));
+            var exam = await _context.Exams
+                .FirstOrDefaultAsync(c => c.Id == id);
 
-            return _mapper.Map<ExamViewModel>(exam);
+            return exam;
         }
 
-        public async Task<ICollection<ExamViewModel>> GetAll()
+        public async Task<ExamEntity> GetQuestions(int id)
         {
-            var exams = (await _context.Exams
-               // .OrderByDescending(c => c.)
-                .ToListAsync())
-                .Select(c => _mapper.Map<ExamViewModel>(c))
-                .ToList();
+            var exam = await _context.Exams
+                .Include(c => c.Questions)
+                .SingleOrDefaultAsync(c => c.Id == id);
+
+            return exam;
+        }
+
+        public async Task<IEnumerable<ExamEntity>> GetAll()
+        {
+            var exams = await _context.Exams
+                .ToListAsync();
 
             return exams;
         }

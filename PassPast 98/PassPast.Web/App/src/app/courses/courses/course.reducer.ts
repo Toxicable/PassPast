@@ -3,48 +3,43 @@ import { Course } from '../models/course';
 import { CourseActionTypes } from './course.actions';
 
 export interface CourseState {
-  selected: Course,
-  entities: Course[]
+  selected: Course;
+  display: Course[];
 }
 
 const initalState: CourseState = {
   selected: null,
-  entities: []
+  display: []
 };
 
 export function courseReducer(state = initalState, action: Action): CourseState {
   switch (action.type) {
-    case CourseActionTypes.LOAD:
-      return {
-        selected: state.selected,
-        entities: action.payload
-      };
-
     case CourseActionTypes.LOAD_SUCCESS:
       return {
         selected: state.selected,
-        entities: action.payload
+        display: action.payload
       };
 
     case CourseActionTypes.ADD:
       return {
         selected: state.selected,
-        entities: [
-          ...state.entities,
+        display: [
+          ...state.display,
           action.payload
         ]
       };
+
     case CourseActionTypes.SELECT_SUCCESS:
       return {
         selected: action.payload,
-        entities: state.entities
+        display: state.display
       };
+
     case CourseActionTypes.DESELECT:
       return {
         selected: null,
-        entities: state.entities
-      }
-
+        display: state.display
+      };
 
     default:
       return state;

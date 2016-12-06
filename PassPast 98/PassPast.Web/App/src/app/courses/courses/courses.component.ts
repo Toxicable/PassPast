@@ -7,7 +7,6 @@ import { Store } from '@ngrx/store';
 import { AlertService } from '../../../core/alert/alert.service';
 import { MdDialogRef, MdDialog } from '@angular/material';
 import { AddCourseComponent } from './add-course/add-course.component';
-import { DataResolveService } from '../resolve-data.service';
 import { CourseActions } from './course.actions';
 
 @Component({
@@ -22,7 +21,6 @@ export class CoursesComponent implements OnInit {
                 private alert: AlertService,
                 private store: Store<AppState>,
                 private dialog: MdDialog,
-                private dataResolver: DataResolveService,
                 private courseActions: CourseActions
     ) { }
 
@@ -39,7 +37,7 @@ export class CoursesComponent implements OnInit {
         });
     }
     ngOnInit() {
-        this.courses$ = this.store.map( state => state.courses.course.entities);
+        this.courses$ = this.store.map( state => state.courses.course.display);
 
         this.store.dispatch(this.courseActions.load());
      }

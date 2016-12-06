@@ -61,7 +61,7 @@ export class PaperEffects {
           if (localPapers.length > 0) {
             return Observable.of(this.paperActions.loadSuccess(localPapers));
           }
-          return this.paperService.getPapers(courseId)
+          return this.paperService.getRelatedPapers(courseId)
             .map(fetchedPapers => {
               this.store.dispatch(this.paperActions.cache(fetchedPapers));
               return this.paperActions.loadSuccess(fetchedPapers);

@@ -61,7 +61,7 @@ export class ExamEffects {
           if (localExams.length > 0) {
             return Observable.of(this.examActions.loadSuccess(localExams));
           }
-          return this.examService.getExams(paperId)
+          return this.examService.getRelatedExams(paperId)
             .map(fetchedExams => {
               this.store.dispatch(this.examActions.cache(fetchedExams));
               return this.examActions.loadSuccess(fetchedExams);

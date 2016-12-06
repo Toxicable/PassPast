@@ -9,23 +9,27 @@ import { ExamActions } from './exam.actions';
 @Injectable()
 export class ExamService {
   constructor(private authHttp: AuthHttp,
-                private store: Store<AppState>,
-                private examActions: ExamActions
+    private store: Store<AppState>,
+    private examActions: ExamActions
 
-    ) { }
+  ) { }
 
-    getExams(paperId: number): Observable<Exam[]> {
-        return this.authHttp.get('/exams/' + paperId);
-    }
+  getExams(): Observable<Exam[]> {
+    return this.authHttp.get('/exams');
+  }
 
-    getExam(id: number): Observable<Exam> {
-        return this.authHttp.get('/exams/' + id);
-    }
+  getExam(id: number): Observable<Exam> {
+    return this.authHttp.get('/exams/' + id);
+  }
 
-    create(exam: Exam): Observable<Exam> {
-        return this.authHttp.post('/exams', exam)
-            .do((newExam: Exam) => {
-                this.store.dispatch(this.examActions.add(newExam));
-            })
-    }
+  getRelatedExams(paperId: number): Observable<Exam[]> {
+    return this.authHttp.get(`/papers/${paperId}/exams`);
+  }
+
+  create(exam: Exam): Observable<Exam> {
+    return this.authHttp.post('/exams', exam)
+      .do((newExam: Exam) => {
+        this.store.dispatch(this.examActions.add(newExam));
+      });
+  }
 }

@@ -7,6 +7,10 @@ using PassPast.Data;
 using PassPast.Web.Api.Courses;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
+using System.Collections;
+using System.Collections.Generic;
+using PassPast.Web.Api.Questions;
+using System.Linq;
 
 namespace PassPast.Web.Api.Exams
 {
@@ -25,24 +29,36 @@ namespace PassPast.Web.Api.Exams
         }
 
         [HttpGet("{id}")]
-        public async Task<IActionResult> Get(int id)
+        public async Task<ExamViewModel> Get(int id)
         {
-            var course = await _examsManager.Get(id);
+            var course = _mapper.Map<ExamViewModel>(await _examsManager.Get(id));
 
-            return Ok(course);
+            return course;
         }
 
         [HttpGet]
-        public async Task<IActionResult> Get()
+        public async Task<ICollection<ExamViewModel>> Get()
         {
-            var courses = await _examsManager.GetAll();
+            var courses = (await _examsManager.GetAll())
+                .Select(e => _mapper.Map<ExamViewModel>(e))
+                .ToList();
 
-            return Ok(courses);
+            return courses;
         }
-        
+
+        [HttpGet("{id}/questions")]
+        public async Task<ICollection<QuestionViewModel>> GetQuestions(int id)
+        {
+            var questions = (await _examsManager.GetQuestions(id)).Questions
+                .Select(q => _mapper.Map<QuestionViewModel>(q))
+                .ToList();
+
+            return questions;
+        }
+
         [HttpPost]
         [Authorize]
-        public async Task<IActionResult> Create([FromBody]ExamBindingModel course)
+        public async Task<ExamViewModel> Create([FromBody]ExamBindingModel course)
         {
 
             var newCourse = _mapper.Map<ExamEntity>(course);
@@ -53,9 +69,9 @@ namespace PassPast.Web.Api.Exams
 
             await _examsManager.Create(newCourse);
 
-            var a = _mapper.Map<ExamViewModel>(newCourse);
+            var examToReturn = _mapper.Map<ExamViewModel>(newCourse);
 
-            return Ok(a);
+            return examToReturn;
         }
     }
 }

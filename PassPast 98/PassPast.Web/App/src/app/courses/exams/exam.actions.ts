@@ -49,7 +49,8 @@ export class ExamActions {
 
   load(payload: number): Action {
     return {
-      type: ExamActionTypes.LOAD
+      type: ExamActionTypes.LOAD,
+      payload
     };
   }
 

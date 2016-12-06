@@ -1,25 +1,22 @@
-import { ActionReducer, Action, Store, combineReducers } from '@ngrx/store';
-import { Injectable } from '@angular/core';
-import { AppState } from '../../../app/app-store';
+import { Action } from '@ngrx/store';
 import { Exam } from '../models/exam';
-import { Observable } from 'rxjs';
 import { ExamActionTypes } from './exam.actions';
 
 export interface ExamState {
-  selected: Exam,
-  cache: Exam[],
-  display: Exam[]
+  selected: Exam;
+  cache: Exam[];
+  display: Exam[];
 }
 
 const initalState: ExamState = {
   selected: null,
   cache: [],
   display: []
-}
+};
 
 export function examReducer(state = initalState, action: Action): ExamState {
   switch (action.type) {
-    case ExamActionTypes.LOAD:
+    case ExamActionTypes.LOAD_SUCCESS:
       return {
         selected: state.selected,
         display: action.payload,
@@ -48,6 +45,17 @@ export function examReducer(state = initalState, action: Action): ExamState {
         selected: null,
         cache: state.cache,
         display: state.display
+      };
+
+    case ExamActionTypes.CACHE:
+      return {
+        selected: state.selected,
+        display: state.display,
+        cache: [
+          ...state.cache,
+          ...action.payload
+        ],
+
       }
 
     default:

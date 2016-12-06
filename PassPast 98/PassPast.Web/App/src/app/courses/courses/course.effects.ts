@@ -3,7 +3,7 @@ import { Effect, Actions } from '@ngrx/effects';
 import { PaperService } from '../papers/paper.service';
 import { PaperActions } from '../papers/paper.actions';
 import { Store, Action } from '@ngrx/store';
-import { Observable } from 'rxjs';
+import { Observable, Observer } from 'rxjs';
 import { AppState } from '../../app-store';
 import { CourseActionTypes, CourseActions } from './course.actions';
 import { Course } from '../models/course';
@@ -25,9 +25,17 @@ export class CourseEffects {
   @Effect()
   load: Observable<Action> = this.actions$
     .ofType(CourseActionTypes.LOAD)
+    .map(action => action.payload)
     .switchMap(action =>
-      this.courseService.getCourses()
-        .map(courses => this.courseActions.loadSuccess(courses))
+    this.store.map(state => state.courses.course.display)
+      .first()
+      .flatMap( courses => {
+        if (courses.length > 0){
+          return Observable.of(this.courseActions.loadSuccess(courses))
+        }
+        return this.courseService.getCourses()
+          .map(fetchedCourses => this.courseActions.loadSuccess(fetchedCourses))
+      })
     );
 
   @Effect()
@@ -35,7 +43,7 @@ export class CourseEffects {
     .ofType(CourseActionTypes.SELECT)
     .map(action => +action.payload)
     .switchMap((courseId: number) =>
-      this.store.map(state => state.courses.course.entities)
+      this.store.map(state => state.courses.course.display)
       .first()
       .flatMap((courses: Course[]) => {
         let localCourse = courses.find(c => c.id === courseId);
@@ -45,7 +53,6 @@ export class CourseEffects {
         return this.courseService.getCourse(courseId)
           .map((course: Course) => {
             if (course != null) {
-              this.store.dispatch(this.courseActions.add(course));
               return this.courseActions.selectSuccess(course);
             }
             return this.courseActions.selectFailed();

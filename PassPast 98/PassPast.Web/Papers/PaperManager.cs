@@ -1,19 +1,17 @@
 ﻿using AutoMapper;
 using Microsoft.EntityFrameworkCore;
-using PassPast.Web;
-using OAuthAPI.WebApi.Api;
 using PassPast.Data;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using System.Web;
 
 namespace PassPast.Web.Api.Papers
 {
     public interface IPaperManager
     {
-        Task<IEnumerable<PaperEntity>> Get(int id);
+        Task<PaperEntity> Get(int id);
+        Task<PaperEntity> GetExams(int id);       
         Task<IEnumerable<PaperEntity>> GetAll();
         Task Create(PaperEntity newPaper);
     }
@@ -23,21 +21,30 @@ namespace PassPast.Web.Api.Papers
         private ApplicationDbContext _context;
         private IMapper _mapper;
 
-        public PaperManager(ApplicationDbContext context, IMapper mapper)
+        public PaperManager(
+            ApplicationDbContext context, 
+            IMapper mapper
+            )
         {
             _context = context;
             _mapper = mapper;
         }
 
-        public async Task<IEnumerable<PaperEntity>> Get(int courseId)
+        public async Task<PaperEntity> Get(int id)
         {
             var papers = await _context.Papers
-                .Where(p => !p.Deleted)
-                .Where(p => p.CourseId == courseId)
-                .OrderByDescending(c => c.Name)
-                .ToListAsync();
+                .SingleOrDefaultAsync(c => c.Id == id);
 
             return papers;
+        }
+
+        public async Task<PaperEntity> GetExams(int id)
+        {
+            var paper = await _context.Papers
+                .Include(p => p.Exams)
+                .SingleOrDefaultAsync(c => c.Id == id);
+
+            return paper;
         }
 
         public async Task<IEnumerable<PaperEntity>> GetAll()

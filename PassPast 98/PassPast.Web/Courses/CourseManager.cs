@@ -1,22 +1,18 @@
 ﻿using AutoMapper;
 using Microsoft.EntityFrameworkCore;
-using PassPast.Web;
-using OAuthAPI.WebApi.Api;
 using PassPast.Data;
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using System.Web;
 
 namespace PassPast.Web.Api.Courses
 {
     public interface ICourseManager
     {
         Task<CourseEntity> Get(int id);
-        Task<ICollection<CourseEntity>> GetAll();
         Task<CourseEntity> GetPapers(int id);
+        Task<IEnumerable<CourseEntity>> GetAll();
         Task Create(CourseEntity newCourse);
     }
 
@@ -51,7 +47,7 @@ namespace PassPast.Web.Api.Courses
             return course;
         }
 
-        public async Task<ICollection<CourseEntity>> GetAll()
+        public async Task<IEnumerable<CourseEntity>> GetAll()
         {
             var courses = await _context.Courses
                 .OrderByDescending(c => c.Name)

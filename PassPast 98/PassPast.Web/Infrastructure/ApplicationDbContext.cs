@@ -6,6 +6,7 @@ using PassPast.Data;
 using PassPast.Data.Domain;
 using PassPast.Web.Infrastructure.Domain;
 using Microsoft.EntityFrameworkCore.Metadata;
+using System;
 
 namespace PassPast.Web
 {

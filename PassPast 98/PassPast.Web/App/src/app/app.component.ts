@@ -4,7 +4,6 @@ import { Store } from '@ngrx/store';
 import { AlertService } from '../core/alert/alert.service';
 import { AppState } from './app-store';
 import { Router, NavigationEnd } from '@angular/router';
-import { DataResolveService } from './courses/resolve-data.service';
 
 @Component({
   selector: 'app-root',
@@ -17,8 +16,7 @@ export class AppComponent implements OnInit, OnDestroy {
       private tokens: AuthTokenService,
                private store: Store<AppState>,
                 private alert: AlertService,
-                private router: Router,
-                private dataResolver: DataResolveService
+                private router: Router
                ) { }
 
   ngOnInit(): void {

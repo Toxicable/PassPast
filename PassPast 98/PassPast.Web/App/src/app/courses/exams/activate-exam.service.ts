@@ -19,9 +19,10 @@ export class ActivateExamService implements CanActivate {
   canActivate(route: ActivatedRouteSnapshot) {
     let courseId = route.params['courseId'];
     let paperId = route.params['paperId'];
+
     this.store.dispatch(this.courseActions.select(+courseId));
     this.store.dispatch(this.paperActions.select(+paperId));
-    this.store.dispatch(this.examActions.select(null));
+    this.store.dispatch(this.examActions.deselect());
     return true;
   }
 

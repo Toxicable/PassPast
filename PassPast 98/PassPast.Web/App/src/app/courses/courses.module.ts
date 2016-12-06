@@ -20,7 +20,6 @@ import { SharedModule } from '../../shared/shared.module';
 import { QuestionSectionComponent } from './exams/add-exam/question-section.component';
 import { QuestionComponent } from './questions/question.component';
 import { CommentsHubService } from './comments/comments-hub.service';
-import { DataResolveService } from './resolve-data.service';
 import { ActivateCourseService } from './courses/activate-courses.service';
 import { ActivatePaperService } from './papers/activate-papers.service';
 import { ActivateExamService } from './exams/activate-exam.service';
@@ -61,7 +60,6 @@ import { ExamEffects } from './exams/exam.effects';
         QuestionActions,
 
         CommentsHubService,
-        DataResolveService,
         ActivateCourseService,
         ActivatePaperService,
         ActivateExamService

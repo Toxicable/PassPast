@@ -4,12 +4,14 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using PassPast.Data;
 using PassPast.Web.Api.Courses;
+using PassPast.Web.Api.Papers;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace PassPast.Web.Api.Courses
 {
     [Route("[controller]")]
-
     public class CoursesController : Controller
     {
         private readonly ICourseManager _courseManager;
@@ -28,32 +30,36 @@ namespace PassPast.Web.Api.Courses
         }
 
         [HttpGet("{id}")]
-        public async Task<IActionResult> Get(int id)
+        public async Task<CourseViewModel> Get(int id)
         {
             var course = _mapper.Map<CourseViewModel>(await _courseManager.Get(id));                
 
-            return Ok(course);
-        }
-
-        [HttpGet("{id}/papers")]
-        public async Task<IActionResult> GetPapers(int id)
-        {
-            var papers = (await _courseManager.GetPapers(id)).Papers;
-
-            return Ok(papers);
+            return course;
         }
 
         [HttpGet]
-        public async Task<IActionResult> Get()
+        public async Task<ICollection<CourseViewModel>> Get()
         {
-            var courses = await _courseManager.GetAll();
+            var courses = (await _courseManager.GetAll())
+                .Select(c => _mapper.Map<CourseViewModel>(c))
+                .ToList();
 
-            return Ok(courses);
+            return courses;
+        }
+
+        [HttpGet("{id}/papers")]
+        public async Task<ICollection<PaperViewModel>> GetPapers(int id)
+        {
+            var papers = (await _courseManager.GetPapers(id)).Papers
+                .Select(p => _mapper.Map<PaperViewModel>(p))
+                .ToList();
+
+            return papers;
         }
 
         [HttpPost]
         [Authorize]
-        public async Task<IActionResult> Post([FromBody]CourseBindingModel course)
+        public async Task<CourseViewModel> Post([FromBody]CourseBindingModel course)
         {
             var newCourse = _mapper.Map<CourseEntity>(course);
 
@@ -64,7 +70,7 @@ namespace PassPast.Web.Api.Courses
             var courseToReturn = _mapper.Map<CourseViewModel>(newCourse);
 
 
-            return Ok(courseToReturn);
+            return courseToReturn;
         }
     }
 }

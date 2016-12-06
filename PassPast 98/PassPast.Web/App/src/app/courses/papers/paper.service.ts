@@ -14,12 +14,15 @@ export class PaperService {
   ) { }
 
   getPaper(id: number): Observable<Paper> {
-    return this.authHttp.get('/papers/' + id)
-      .map((papers: Paper[]) => papers.length === 1 ? papers[0] : null);
+    return this.authHttp.get('/papers/' + id);
   }
 
-  getPapers(courseId: number): Observable<Paper[]> {
-    return this.authHttp.get('/papers/' + courseId);
+  getPapers(): Observable<Paper[]> {
+    return this.authHttp.get('/papers');
+  }
+
+  getRelatedPapers(courseId: number): Observable<Paper[]> {
+    return this.authHttp.get(`/courses/${courseId}/papers`);
   }
 
   create(paper: Paper): Observable<Paper> {
