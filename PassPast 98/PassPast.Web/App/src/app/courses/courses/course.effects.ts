@@ -25,17 +25,26 @@ export class CourseEffects {
   @Effect()
   load: Observable<Action> = this.actions$
     .ofType(CourseActionTypes.LOAD)
-    .map(action => action.payload)
+    .map(action => {
+      return action.payload
+    })
     .switchMap(action =>
-    this.store.map(state => state.courses.course.display)
+    {
+      console.log("I will emit once")
+      return this.store.map(state => {
+        console.log('hi')
+        return state.courses.course.display
+      })
       .first()
       .flatMap( courses => {
+        console.log("I will emit twice")
         if (courses.length > 0){
           return Observable.of(this.courseActions.loadSuccess(courses))
         }
         return this.courseService.getCourses()
           .map(fetchedCourses => this.courseActions.loadSuccess(fetchedCourses))
       })
+    }
     );
 
   @Effect()
