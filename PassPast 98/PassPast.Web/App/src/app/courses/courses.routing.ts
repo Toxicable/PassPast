@@ -9,6 +9,7 @@ import { AddExamComponent } from './exams/add-exam/add-exam.component';
 import { ActivateCourseService } from './courses/activate-courses.service';
 import { ActivatePaperService } from './papers/activate-papers.service';
 import { ActivateExamService } from './exams/activate-exam.service';
+import { ActivateQuestionsService } from './questions/activate-questions.service';
 
 const routes: Routes = [
 
@@ -35,6 +36,7 @@ const routes: Routes = [
     {
         path: 'courses/:courseId/:paperId/:examId',
         component: QuestionsComponent,
+        canActivate: [ActivateQuestionsService]
     }
 
 ];

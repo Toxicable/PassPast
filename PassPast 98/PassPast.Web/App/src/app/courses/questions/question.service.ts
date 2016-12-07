@@ -14,11 +14,8 @@ export class QuestionService {
 
     ) { }
 
-    getQuestions(examId: number): Observable<Question[]> {
-        return this.authHttp.get('/questions/' + examId)
-            .do((questions: Question[]) => {
-                this.store.dispatch(this.questionActions.Load(questions));
-            });
+    getRelatedQuestions(examId: number): Observable<Question[]> {
+        return this.authHttp.get(`/exams/${examId}/questions`);
     }
 
     // todo: make this a proper model

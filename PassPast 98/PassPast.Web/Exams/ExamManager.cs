@@ -14,7 +14,7 @@ namespace PassPast.Web.Api.Exams
     public interface IExamManager
     {
         Task<ExamEntity> Get(int id);
-        Task<ExamEntity> GetQuestions(int id);
+        Task<IEnumerable<QuestionEntity>> GetQuestions(int id);
         Task<IEnumerable<ExamEntity>> GetAll();
         Task Create(ExamEntity newExam);
     }
@@ -38,13 +38,17 @@ namespace PassPast.Web.Api.Exams
             return exam;
         }
 
-        public async Task<ExamEntity> GetQuestions(int id)
+        public async Task<IEnumerable<QuestionEntity>> GetQuestions(int id)
         {
-            var exam = await _context.Exams
-                .Include(c => c.Questions)
-                .SingleOrDefaultAsync(c => c.Id == id);
+            var exams = await _context.Questions
+                .Where(q => q.ExamId == id && q.ParentQuestionId == null)
+                .Include(q => q.Answers)
+                .Include(a => a.SubQuestions)
+                    .ThenInclude(sb => sb.Answers)
+                .ToListAsync();
 
-            return exam;
+            return exams;
+            
         }
 
         public async Task<IEnumerable<ExamEntity>> GetAll()

@@ -16,7 +16,6 @@ namespace PassPast.Web.Api.Questions
     public interface IQuestionManger
     {
         Task CreateFromSections(QuestionBindingModel question, string userId);
-        Task<ICollection<QuestionEntity>> GetAll(int id);
     }
 
     public class QuestionManger : IQuestionManger
@@ -97,18 +96,6 @@ namespace PassPast.Web.Api.Questions
 
             await _context.SaveChangesAsync();
 
-        }
-
-        public async Task<ICollection<QuestionEntity>> GetAll(int examId)
-        {  
-            var exams = await _context.Questions
-                .Where(q => q.ExamId == examId && q.ParentQuestionId == null)
-                .Include(q => q.Answers)
-                .Include(a => a.SubQuestions)     
-                    .ThenInclude(sb => sb.Answers)
-                .ToListAsync();
-
-            return exams;
         }
     }
 }

@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { CoursesComponent }   from './courses/courses.component';
+import { CoursesComponent } from './courses/courses.component';
 import { coursesRouting } from './courses.routing';
 import { PapersComponent } from './papers/papers.component';
 import { ExamsComponent } from './exams/exams.component';
@@ -11,7 +11,6 @@ import { AddPaperComponent } from './papers/add-paper/add-paper.component';
 import { AddExamComponent } from './exams/add-exam/add-exam.component';
 import { ExamService } from './exams/exam.service';
 import { QuestionService } from './questions/question.service';
-import { ExamResolveService } from './exams/exam-resolve.service';
 import { CourseActions } from './courses/course.actions';
 import { PaperActions } from './papers/paper.actions';
 import { ExamActions } from './exams/exam.actions';
@@ -27,48 +26,51 @@ import { EffectsModule } from '@ngrx/effects';
 import { CourseEffects } from './courses/course.effects';
 import { PaperEffects } from './papers/paper.effects';
 import { ExamEffects } from './exams/exam.effects';
+import { ActivateQuestionsService } from './questions/activate-questions.service';
+import { QuestionEffects } from './questions/question.effects';
 
 @NgModule({
-    imports: [
-        SharedModule,
-        coursesRouting,
+  imports: [
+    SharedModule,
+    coursesRouting,
     EffectsModule.run(CourseEffects),
     EffectsModule.run(PaperEffects),
-    EffectsModule.run(ExamEffects)
-    ],
-    declarations: [
-        CoursesComponent,
-        AddCourseComponent,
-        PapersComponent,
-        AddPaperComponent,
-        ExamsComponent,
-        AddExamComponent,
-        QuestionsComponent,
-        QuestionSectionComponent,
-        QuestionComponent,
-    ],
-    providers: [
-        CourseService,
-        PaperService,
-        ExamService,
-        QuestionService,
-        ExamResolveService,
+    EffectsModule.run(ExamEffects),
+    EffectsModule.run(QuestionEffects)
+  ],
+  declarations: [
+    CoursesComponent,
+    AddCourseComponent,
+    PapersComponent,
+    AddPaperComponent,
+    ExamsComponent,
+    AddExamComponent,
+    QuestionsComponent,
+    QuestionSectionComponent,
+    QuestionComponent,
+  ],
+  providers: [
+    CourseService,
+    PaperService,
+    ExamService,
+    QuestionService,
 
-        CourseActions,
-        PaperActions,
-        ExamActions,
-        QuestionActions,
+    CourseActions,
+    PaperActions,
+    ExamActions,
+    QuestionActions,
 
-        CommentsHubService,
-        ActivateCourseService,
-        ActivatePaperService,
-        ActivateExamService
-    ],
-    entryComponents: [
-        AddCourseComponent,
-        AddExamComponent,
-        AddPaperComponent
-    ]
+    CommentsHubService,
+    ActivateCourseService,
+    ActivatePaperService,
+    ActivateExamService,
+    ActivateQuestionsService
+  ],
+  entryComponents: [
+    AddCourseComponent,
+    AddExamComponent,
+    AddPaperComponent
+  ]
 })
 export class CourseModule {
 }

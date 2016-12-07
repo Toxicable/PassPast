@@ -1,26 +1,36 @@
 import { Action } from '@ngrx/store';
 import { Question } from '../models/question';
 import { QuestionActionTypes } from './question.actions';
- 
-export interface QuestionState{
-    entities: Question[];
-    //selected: Question[];
+
+export interface QuestionState {
+  display: Question[];
+  cache: Question[];
 }
 
-const initalState: QuestionState ={
-    entities: []
-    //selected: []
+const initalState: QuestionState = {
+  display: [],
+  cache: []
 }
 
-export function questionReducer (state = initalState, action: Action): QuestionState {
-    switch (action.type) {
+export function questionReducer(state = initalState, action: Action): QuestionState {
+  switch (action.type) {
 
-        case QuestionActionTypes.LOAD:
-            return {
-                entities: action.payload
-            }
+    case QuestionActionTypes.LOAD_SUCCESS:
+      return {
+        display: action.payload,
+        cache: state.cache
+      }
 
-        default:
-            return state;
-    }
+    case QuestionActionTypes.CACHE:
+      return {
+        display: state.display,
+        cache: [
+          ...state.cache,
+          ...action.payload
+        ],
+      }
+
+    default:
+      return state;
+  }
 }

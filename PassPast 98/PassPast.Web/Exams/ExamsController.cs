@@ -49,7 +49,7 @@ namespace PassPast.Web.Api.Exams
         [HttpGet("{id}/questions")]
         public async Task<ICollection<QuestionViewModel>> GetQuestions(int id)
         {
-            var questions = (await _examsManager.GetQuestions(id)).Questions
+            var questions = (await _examsManager.GetQuestions(id))
                 .Select(q => _mapper.Map<QuestionViewModel>(q))
                 .ToList();
 

@@ -8,6 +8,7 @@ import { ExamActionTypes, ExamActions } from './exam.actions';
 import { Observable } from 'rxjs/Observable';
 import { Exam } from '../models/exam';
 import { ExamService } from './exam.service';
+import { QuestionActions } from '../questions/question.actions';
 
 @Injectable()
 export class ExamEffects {
@@ -18,6 +19,7 @@ export class ExamEffects {
     private store: Store<AppState>,
     private examService: ExamService,
     private examActions: ExamActions,
+    private questionActions: QuestionActions
   ) { }
 
  @Effect()
@@ -35,7 +37,6 @@ export class ExamEffects {
           return this.examService.getExam(examId)
             .map((exam: Exam) => {
               if (exam != null) {
-                this.store.dispatch(this.examActions.add(exam));
                 return this.examActions.selectSuccess(exam);
               }
               return this.examActions.selectFailed();
@@ -46,7 +47,7 @@ export class ExamEffects {
   @Effect()
   selectSuccess: Observable<Action> = this.actions$
     .ofType(ExamActionTypes.SELECT_SUCCESS)
-    .map(action => this.examActions.load(action.payload.id));
+    .map(action => this.questionActions.load(action.payload.id));
 
 
   @Effect()

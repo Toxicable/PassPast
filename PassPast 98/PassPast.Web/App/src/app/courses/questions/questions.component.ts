@@ -19,9 +19,8 @@ export class QuestionsComponent implements OnInit {
 
         ) { }
 
-
     ngOnInit() {
-        this.questions$ = this.store.map(state => state.courses.question.entities);
+        this.questions$ = this.store.map(state => state.courses.question.display);
 
         this.commentsHub.init();
 
