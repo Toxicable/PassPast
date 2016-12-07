@@ -32,6 +32,6 @@ export class ExamsComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.exams$ = this.store.map(state => state.courses.exam.display);
+    this.exams$ = this.store.select(state => state.courses.exam.display);
   }
 }

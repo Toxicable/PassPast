@@ -14,7 +14,7 @@ export class AddPaperComponent implements OnInit {
                 private alert: AlertService,
                 private formBuilder: FormBuilder,
                 private store: Store<AppState>
-                
+
     ) { }
 
     newPaperForm: FormGroup
@@ -26,11 +26,11 @@ export class AddPaperComponent implements OnInit {
     }
 
     onSubmit(){
-        this.store.map( state => state.courses.course.selected.id)
+        this.store.select( state => state.courses.course.selected.id)
             .first()
             .flatMap( (id: number) => {
                 let newPaper = Object.assign({}, {courseId: id},this.newPaperForm.value );
-                return this.papers.create(newPaper);                    
+                return this.papers.create(newPaper);
             })
             .subscribe(() => this.alert.sendSuccess("SUccessfully crreated the Paper :D"));
     }

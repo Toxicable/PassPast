@@ -22,7 +22,7 @@ export class AuthHttp {
     ) {}
 
     private getHeaders(): Observable<Headers> {
-        return this.store.map(state => state.auth)
+        return this.store.select(state => state.auth)
             .first((auth: AuthState) => auth.authReady)
             .map((auth: AuthState) => auth.authTokens.access_token)
             .map((accessToken: string) => new Headers(Object.assign({},

@@ -27,7 +27,7 @@ export class ExamEffects {
     .ofType(ExamActionTypes.SELECT)
     .map(action => +action.payload)
     .switchMap((examId: number) =>
-      this.store.map(state => state.courses.exam.cache)
+      this.store.select(state => state.courses.exam.cache)
         .first()
         .flatMap((cachedExams: Exam[]) => {
           let localExams = cachedExams.find(c => c.id === examId);
@@ -55,7 +55,7 @@ export class ExamEffects {
     .ofType(ExamActionTypes.LOAD)
     .map(action => +action.payload)
     .switchMap((paperId: number) =>
-      this.store.map(state => state.courses.exam.cache)
+      this.store.select(state => state.courses.exam.cache)
         .first()
         .flatMap(exams => {
           let localExams = exams.filter(exam => exam.paperId === paperId);

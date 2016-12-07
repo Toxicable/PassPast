@@ -60,7 +60,7 @@ export class AddExamComponent implements OnInit {
     }
 
     onSubmit() {
-        this.store.map(state => state.courses.paper.selected.id)
+        this.store.select(state => state.courses.paper.selected.id)
             .first()
             .flatMap((paperId: number) => {
                 let newExam = Object.assign({}, {paperId}, this.newExamForm.value)

@@ -36,7 +36,7 @@ export class PapersComponent implements OnInit {
     }
 
     ngOnInit() {
-        this.papers$ = this.store.map( state => state.courses.paper.displayed);
+        this.papers$ = this.store.select( state => state.courses.paper.displayed);
 
      }
 }

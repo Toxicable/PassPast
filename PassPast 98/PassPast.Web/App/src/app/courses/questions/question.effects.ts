@@ -27,7 +27,7 @@ export class QuestionEffects {
     .ofType(QuestionActionTypes.LOAD)
     .map(action => +action.payload)
     .switchMap((examId: number) =>
-      this.store.map(state => state.courses.question.cache)
+      this.store.select(state => state.courses.question.cache)
         .first()
         .flatMap(questions => {
           let localQuestions = questions.filter(question => question.examId === examId);

@@ -29,9 +29,9 @@ export class HeaderComponent implements OnInit {
     ngOnInit(): void {
         this.username$ = this.store.select( state => state.auth.profile.unique_name);
         this.loggedIn$ = this.store.select( state => state.auth.loggedIn);
-        this.currentExam$ = this.store.map( state => state.courses.exam.selected);
-        this.currentPaper$ = this.store.map( state => state.courses.paper.selected);
-        this.currentCourse$ = this.store.map( state => state.courses.course.selected);
+        this.currentExam$ = this.store.select( state => state.courses.exam.selected);
+        this.currentPaper$ = this.store.select( state => state.courses.paper.selected);
+        this.currentCourse$ = this.store.select( state => state.courses.course.selected);
 
     }
 }

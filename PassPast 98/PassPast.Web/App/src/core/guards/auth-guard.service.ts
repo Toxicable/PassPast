@@ -19,7 +19,7 @@ export class AuthGuard {
 
 
     isLoggedIn(): Observable<boolean> {
-        return this.store.map(state => state.auth)
+        return this.store.select(state => state.auth)
             .first( (auth: AuthState) => auth.authReady)
             .map( (auth: AuthState) => auth.loggedIn)
             .do( (loggedIn: boolean) => {
@@ -32,7 +32,7 @@ export class AuthGuard {
 
     isInRole(role: string): Observable<boolean> {
 
-        return this.store.map( state => state.auth)
+        return this.store.select( state => state.auth)
             .first( (auth: AuthState) => auth.authReady)
             .flatMap( (auth: AuthState) => {
                 if (!auth.loggedIn) {

@@ -12,7 +12,6 @@ import { CourseService } from './course.service';
 @Injectable()
 export class CourseEffects {
 
-
   constructor(
     private actions$: Actions,
     private store: Store<AppState>,
@@ -25,20 +24,13 @@ export class CourseEffects {
   @Effect()
   load: Observable<Action> = this.actions$
     .ofType(CourseActionTypes.LOAD)
-    .map(action => {
-      return action.payload
-    })
+    .map(action => action.payload )
     .switchMap(action =>
     {
-      console.log("I will emit once")
-      return this.store.map(state => {
-        console.log('hi')
-        return state.courses.course.display
-      })
+      return this.store.select(state => state.courses.course.display)
       .first()
       .flatMap( courses => {
-        console.log("I will emit twice")
-        if (courses.length > 0){
+        if (courses.length > 0) {
           return Observable.of(this.courseActions.loadSuccess(courses))
         }
         return this.courseService.getCourses()
@@ -52,7 +44,7 @@ export class CourseEffects {
     .ofType(CourseActionTypes.SELECT)
     .map(action => +action.payload)
     .switchMap((courseId: number) =>
-      this.store.map(state => state.courses.course.display)
+      this.store.select(state => state.courses.course.display)
       .first()
       .flatMap((courses: Course[]) => {
         let localCourse = courses.find(c => c.id === courseId);

@@ -9,14 +9,10 @@ import { HomeComponent } from './home/home.component';
 import { NotFoundComponent } from './not-found/not-found.component';
 import { UnauthorizedComponent } from './unauthorized/unauthorized.component';
 import { appRouting } from './app.routing';
-import { StoreModule } from '@ngrx/store';
+import { StoreModule, Store } from '@ngrx/store';
 import { HeaderComponent } from './header/header.component';
 import { CourseModule } from './courses/courses.module';
-import { appReducer } from './app-store';
-import { EffectsModule } from '@ngrx/effects';
-import { CourseEffects } from './courses/courses/course.effects';
-import { PaperEffects } from './courses/papers/paper.effects';
-import { ExamEffects } from './courses/exams/exam.effects';
+import { appReducer, AppState } from './app-store';
 
 @NgModule({
   declarations: [
@@ -32,10 +28,10 @@ import { ExamEffects } from './courses/exams/exam.effects';
     SharedModule,
     CourseModule,
     appRouting,
-
     StoreModule.provideStore(appReducer),
     StoreDevtoolsModule.instrumentOnlyWithExtension(),
   ],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {
+}
