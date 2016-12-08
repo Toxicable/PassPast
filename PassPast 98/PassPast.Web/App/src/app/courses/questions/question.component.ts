@@ -1,31 +1,40 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { Question } from '../models/question';
-import { CommentsHubService } from '../comments/comments-hub.service';
 import { FormBuilder, FormGroup } from '@angular/forms';
+import { ExamHubService } from '../exam-hub.service';
 
 @Component({
-    selector: 'app-question',
-    templateUrl: 'question.component.html'
+  selector: 'app-question',
+  templateUrl: 'question.component.html'
 })
 export class QuestionComponent implements OnInit {
-    newCommentForm: FormGroup;
+  newCommentForm: FormGroup;
 
-    @Input() question: Question;
-    constructor(private commentsHub: CommentsHubService,
-                private formBuilder: FormBuilder
+  private _question: Question;
 
-    ) { }
+  @Input()
+  set question(question: Question) {
+    let totalAnswerVotes = question.answers
+      .map(a => +a.totalVotes)
+      .reduce((previousVote, currentVote) => previousVote + currentVote, 0);
+    this._question = Object.assign({}, question, { totalAnswerVotes });
+  }
+  constructor(
+    private examHub: ExamHubService,
+    private formBuilder: FormBuilder
+
+  ) { }
 
 
-    ngOnInit() {
-        this.newCommentForm = this.formBuilder.group({
-            content: ['']
-        });
-     }
+  ngOnInit() {
+    this.newCommentForm = this.formBuilder.group({
+      content: ['']
+    });
+  }
 
 
-     sendComment(questionId: string){
-         //this.commentsHub.server.post(this.newCommentForm.value['content'], questionId);
-     }
+  sendComment(questionId: string) {
+    //this.commentsHub.server.post(this.newCommentForm.value['content'], questionId);
+  }
 
 }

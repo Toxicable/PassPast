@@ -18,7 +18,6 @@ import { QuestionActions } from './questions/question.actions';
 import { SharedModule } from '../../shared/shared.module';
 import { QuestionSectionComponent } from './exams/add-exam/question-section.component';
 import { QuestionComponent } from './questions/question.component';
-import { CommentsHubService } from './comments/comments-hub.service';
 import { ActivateCourseService } from './courses/activate-courses.service';
 import { ActivatePaperService } from './papers/activate-papers.service';
 import { ActivateExamService } from './exams/activate-exam.service';
@@ -28,6 +27,7 @@ import { PaperEffects } from './papers/paper.effects';
 import { ExamEffects } from './exams/exam.effects';
 import { ActivateQuestionsService } from './questions/activate-questions.service';
 import { QuestionEffects } from './questions/question.effects';
+import { ExamHubService } from './exam-hub.service';
 
 @NgModule({
   imports: [
@@ -60,7 +60,8 @@ import { QuestionEffects } from './questions/question.effects';
     ExamActions,
     QuestionActions,
 
-    CommentsHubService,
+    ExamHubService,
+
     ActivateCourseService,
     ActivatePaperService,
     ActivateExamService,

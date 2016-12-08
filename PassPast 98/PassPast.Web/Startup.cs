@@ -7,7 +7,6 @@ using Microsoft.Extensions.Logging;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using System.IO;
-using PassPast.Web.Extentions;
 using AutoMapper;
 using PassPast.Web.Api.Questions;
 using PassPast.Web.Api.Exams;
@@ -21,10 +20,11 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Rewrite;
 using Microsoft.ApplicationInsights;
 using System.Linq;
-using PassPast.Web.Infrastructure.Domain;
 using PassPast.Web.Answers;
 using AspNet.Security.OAuth.Validation;
 using System.Threading.Tasks;
+using PassPast.Web.Votes;
+using PassPast.Web.Comments.Hubs;
 
 namespace PassPast.Web
 {
@@ -64,6 +64,7 @@ namespace PassPast.Web
             services.AddTransient<IExamManager, ExamManager>();
             services.AddTransient<IPaperManager, PaperManager>();
             services.AddTransient<IQuestionManger, QuestionManger>();
+            services.AddTransient<IVoteManager, VoteManager>();
 
             services.AddTransient<IMyService, MyService>();
 
@@ -121,6 +122,8 @@ namespace PassPast.Web
                 options.AllowInsecureHttp = env.IsDevelopment();
             });
 
+            services.AddSignalR();
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -144,6 +147,13 @@ namespace PassPast.Web
 
             app.Map("/api", apiApp =>
             {
+                apiApp.UseCors(config =>
+                {
+                    config.AllowAnyMethod();
+                    config.AllowAnyHeader();
+                    config.AllowAnyOrigin();
+                });
+
                 apiApp.UseOAuthValidation(options => {
                     options.Events = new OAuthValidationEvents
                     {
@@ -158,7 +168,12 @@ namespace PassPast.Web
                     };
                 });
 
-                apiApp.UseSignalR2();
+                apiApp.UseSignalR(router =>
+                {
+                    router.MapHub<ExamHub>("/exam-hub");
+                });
+
+                //apiApp.UseSignalR2();
                 apiApp.UseOpenIddict();
                 apiApp.UseMvc(routes =>
                 {

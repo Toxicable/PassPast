@@ -1,42 +1,51 @@
 <div>
     <span md-line>
-        <!--id: {{question.id}}-->
+       {{_question.incriment}}
     </span>
-    <span md-line>
-       {{question.incriment}}
-    </span>
-    <span >
-        <!--type: {{question.type}}-->
-    </span>
+
     <div>
-        Answers:<br />
-        <div *ngFor="let answer of question.answers">
-            <span *ngIf="question.type == 0">+                
-                {{answer.contentOrIncriment}}
+        <div *ngFor="let answer of _question.answers" >
+            <div *ngIf="_question.type == 'Mcq'" class="mcq">
+                <span>
+                  {{answer.contentOrIncriment}}
+                </span>
+
+                <div class="mcq__progressbar--outer" (click)="examHub.postVote(1, answer.id, 'answer')">
+                  <div class="mcq__progressbar--inner" [style.width.%]="(answer.totalVotes/_question.totalAnswerVotes) * 100">
+                  </div>
+                </div>
+                <span>
+                  {{answer.totalVotes}}
+                </span>
+            </div>
+            <span *ngIf="_question.type == 'Short'">
+
+                where short answers are displayed
                 Votes: {{answer.totalVotes}}<br />
+                Content: {{contentOrIncriment}}
             </span>
-            <span *ngIf="question.type == 1">
-                Short
-                Votes: {{answer.totalVotes}}<br />
-                {{contentOrIncriment}}
-            </span>
-            
+
         </div>
-        Comments:<br />
+        <span *ngIf="_question.type == 'Short'">
+          New Answer:
+            <md-input placeholder="new Answer"></md-input>
+        </span>
+        <!--Comments:<br />
         <div>
+
             <form [formGroup]="newCommentForm" novalidate (ngSubmit)="sendComment(question.id)">
                 <md-input placeholder="new comment" formControlName="content"></md-input>
             </form>
-            <!--<form>
+            <form>
                 <input />
-            </form>-->
-        </div>
+            </form>
+        </div>-->
 
     </div>
     <ul>
-        <li *ngFor="let subQuestion of question.subQuestions">
-            <app-question [question]="subQuestion"></app-question>        
-        </li> 
+        <li *ngFor="let subQuestion of _question.subQuestions">
+            <app-question [question]="subQuestion"></app-question>
+        </li>
     </ul>
-    
+
 </div>

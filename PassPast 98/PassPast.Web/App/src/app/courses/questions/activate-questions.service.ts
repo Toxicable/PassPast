@@ -20,9 +20,9 @@ export class ActivateQuestionsService implements CanActivate {
     let courseId = route.params['courseId'];
     let paperId = route.params['paperId'];
     let examId = route.params['examId'];
-    this.store.dispatch(this.courseActions.select(courseId));
-    this.store.dispatch(this.paperActions.select(paperId));
-    this.store.dispatch(this.examActions.select(examId));
+    this.store.dispatch(this.examActions.select(+examId));
+    this.store.dispatch(this.paperActions.select(+paperId));
+    this.store.dispatch(this.courseActions.select(+courseId));
     return true;
   }
 

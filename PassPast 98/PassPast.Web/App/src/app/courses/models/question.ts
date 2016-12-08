@@ -8,4 +8,5 @@ export interface Question {
     type: QuestionType;
     answers: Answer[];
     subQuestions: Question[];
+    totalAnswerVotes: number;
 }

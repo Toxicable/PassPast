@@ -25,6 +25,7 @@ export class ExamEffects {
  @Effect()
   select: Observable<Action> = this.actions$
     .ofType(ExamActionTypes.SELECT)
+    //.do(action => this.store.dispatch(this.examActions.deselect()))
     .map(action => +action.payload)
     .switchMap((examId: number) =>
       this.store.select(state => state.courses.exam.cache)
@@ -69,7 +70,4 @@ export class ExamEffects {
             });
         })
     );
-
-
-
 }

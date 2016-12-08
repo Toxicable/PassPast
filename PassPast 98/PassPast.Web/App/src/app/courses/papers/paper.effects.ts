@@ -23,6 +23,7 @@ export class PaperEffects {
   @Effect()
   select: Observable<Action> = this.actions$
     .ofType(PaperActionTypes.SELECT)
+    //.do(action => this.store.dispatch(this.paperActions.deselect()))
     .map(action => +action.payload)
     .switchMap((paperId: number) =>
       this.store.select(state => state.courses.paper.cache)

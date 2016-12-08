@@ -64,7 +64,10 @@ export class CourseEffects {
   @Effect()
   selectSuccess: Observable<Action> = this.actions$
     .ofType(CourseActionTypes.SELECT_SUCCESS)
-    .map(action => this.paperActions.load(action.payload.id));
+    .map(action => {
+      this.store.dispatch(this.courseActions.load());;
+      return this.paperActions.load(action.payload.id)
+    });
 
 
 }
