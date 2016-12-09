@@ -13,6 +13,7 @@ import { StoreModule, Store } from '@ngrx/store';
 import { HeaderComponent } from './header/header.component';
 import { CourseModule } from './courses/courses.module';
 import { appReducer, AppState } from './app-store';
+import { MaterialModule } from '@angular/material';
 
 @NgModule({
   declarations: [

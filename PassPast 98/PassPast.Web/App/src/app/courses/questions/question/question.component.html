@@ -18,6 +18,7 @@
                   {{answer.totalVotes}}
                 </span>
             </div>
+
             <span *ngIf="_question.type == 'Short'">
 
                 where short answers are displayed
@@ -26,7 +27,7 @@
             </span>
 
         </div>
-        <span *ngIf="_question.type == 'Short'">
+        <span *ngIf="_question.type == 'Short' && _question.subQuestions.length == 0 ">
           New Answer:
             <md-input placeholder="new Answer"></md-input>
         </span>

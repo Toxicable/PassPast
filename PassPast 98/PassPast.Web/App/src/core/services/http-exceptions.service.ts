@@ -8,7 +8,7 @@ import { ErrorObservable } from 'rxjs/observable/ErrorObservable';
 @Injectable()
 export class HttpExceptionService {
     // TODO: impove this
-    public handleError (res: Response): ErrorObservable {
+    public handleError (res: Response): ErrorObservable<string[]> {
         // TODO: add logging here
 
         // const error = new Error(res.statusText);

@@ -4,12 +4,12 @@ import { Routes, RouterModule } from '@angular/router';
 import { CoursesComponent } from './courses/courses.component';
 import { PapersComponent } from './papers/papers.component';
 import { ExamsComponent } from './exams/exams.component';
-import { QuestionsComponent } from './questions/questions.component';
 import { AddExamComponent } from './exams/add-exam/add-exam.component';
 import { ActivateCourseService } from './courses/activate-courses.service';
 import { ActivatePaperService } from './papers/activate-papers.service';
 import { ActivateExamService } from './exams/activate-exam.service';
 import { ActivateQuestionsService } from './questions/activate-questions.service';
+import { QuestionsComponent } from './questions/question-list/questions.component';
 
 const routes: Routes = [
 

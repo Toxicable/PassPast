@@ -1,12 +1,12 @@
 {
   "project": {
-    "version": "1.0.0-beta.20-4",
-    "name": "angular-starter"
+    "version": "1.0.0-beta.22-1",
+    "name": "pass-past"
   },
   "apps": [
     {
       "root": "src",
-      "outDir": "../wwwroot",
+      "outDir": "dist",
       "assets": [
         "assets"
       ],
@@ -19,8 +19,7 @@
       "styles": [
         "styles.css"
       ],
-      "scripts": [
-      ],
+      "scripts": [],
       "environments": {
         "source": "environments/environment.ts",
         "dev": "environments/environment.ts",
@@ -28,10 +27,8 @@
       }
     }
   ],
-  "addons": [
-  ],
-  "packages": [
-  ],
+  "addons": [],
+  "packages": [],
   "e2e": {
     "protractor": {
       "config": "./protractor.conf.js"

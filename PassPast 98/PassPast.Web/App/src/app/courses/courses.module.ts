@@ -3,7 +3,6 @@ import { CoursesComponent } from './courses/courses.component';
 import { coursesRouting } from './courses.routing';
 import { PapersComponent } from './papers/papers.component';
 import { ExamsComponent } from './exams/exams.component';
-import { QuestionsComponent } from './questions/questions.component';
 import { CourseService } from './courses/course.service';
 import { AddCourseComponent } from './courses/add-course/add-course.component';
 import { PaperService } from './papers/paper.service';
@@ -17,7 +16,6 @@ import { ExamActions } from './exams/exam.actions';
 import { QuestionActions } from './questions/question.actions';
 import { SharedModule } from '../../shared/shared.module';
 import { QuestionSectionComponent } from './exams/add-exam/question-section.component';
-import { QuestionComponent } from './questions/question.component';
 import { ActivateCourseService } from './courses/activate-courses.service';
 import { ActivatePaperService } from './papers/activate-papers.service';
 import { ActivateExamService } from './exams/activate-exam.service';
@@ -28,11 +26,15 @@ import { ExamEffects } from './exams/exam.effects';
 import { ActivateQuestionsService } from './questions/activate-questions.service';
 import { QuestionEffects } from './questions/question.effects';
 import { ExamHubService } from './exam-hub.service';
+import { QuestionsComponent } from './questions/question-list/questions.component';
+import { QuestionComponent } from './questions/question/question.component';
+//import { MarkdownModule } from 'angular2-markdown';
 
 @NgModule({
   imports: [
     SharedModule,
     coursesRouting,
+    //MarkdownModule,
     EffectsModule.run(CourseEffects),
     EffectsModule.run(PaperEffects),
     EffectsModule.run(ExamEffects),
