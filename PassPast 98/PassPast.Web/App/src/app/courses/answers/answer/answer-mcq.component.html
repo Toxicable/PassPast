@@ -1,0 +1,13 @@
+<div class="mcq">
+  <span>
+    {{answer.contentOrIncriment}}
+  </span>
+
+  <div class="mcq__progressbar--outer" (click)="sendVote(1, answer.id, 'answer')">
+    <div class="mcq__progressbar--inner" [style.width.%]="(answer.totalVotes/totalAnswerVotes) * 100">
+    </div>
+  </div>
+  <span>
+    {{answer.totalVotes}}
+  </span>
+</div>

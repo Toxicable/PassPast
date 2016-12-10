@@ -28,13 +28,18 @@ import { QuestionEffects } from './questions/question.effects';
 import { ExamHubService } from './exam-hub.service';
 import { QuestionsComponent } from './questions/question-list/questions.component';
 import { QuestionComponent } from './questions/question/question.component';
-//import { MarkdownModule } from 'angular2-markdown';
+import { SignalrExamHubService } from './signalr-exam-hub.service';
+import { AnswerMcqComponent } from './answers/answer/answer-mcq.component';
+import { AnswerShortComponent } from './answers/answer/answer-short.component';
+import { NewAnswerComponent } from './answers/new-answer/new-answer.component';
+import { NewCommentComponent } from './comments/new-comment/new-comment.component';
+import { VoteComponent } from './votes/vote.component';
+import { CommentComponent } from './comments/comment/comment.component';
 
 @NgModule({
   imports: [
     SharedModule,
     coursesRouting,
-    //MarkdownModule,
     EffectsModule.run(CourseEffects),
     EffectsModule.run(PaperEffects),
     EffectsModule.run(ExamEffects),
@@ -50,6 +55,13 @@ import { QuestionComponent } from './questions/question/question.component';
     QuestionsComponent,
     QuestionSectionComponent,
     QuestionComponent,
+    AnswerShortComponent,
+    AnswerMcqComponent,
+    NewAnswerComponent,
+    NewCommentComponent,
+    CommentComponent,
+
+    VoteComponent,
   ],
   providers: [
     CourseService,
@@ -63,6 +75,7 @@ import { QuestionComponent } from './questions/question/question.component';
     QuestionActions,
 
     ExamHubService,
+    SignalrExamHubService,
 
     ActivateCourseService,
     ActivatePaperService,

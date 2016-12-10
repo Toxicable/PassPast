@@ -31,10 +31,11 @@ const developmentReducer: ActionReducer<AppState> = compose(storeFreeze, combine
 const productionReducer: ActionReducer<AppState> = combineReducers(reducers);
 
 export function appReducer(state: any, action: any) {
-  if (environment.production) {
-    return productionReducer(state, action);
-  }
-  else {
-    return developmentReducer(state, action);
-  }
+  return productionReducer(state, action);
+  // if (environment.production) {
+  //   return productionReducer(state, action);
+  // }
+  // else {
+  //   return developmentReducer(state, action);
+  // }
 }

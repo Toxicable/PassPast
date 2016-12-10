@@ -1,52 +1,45 @@
 <div>
-    <span md-line>
+  <span md-line>
        {{_question.incriment}}
-    </span>
+  </span>
+  <div>
+    <div *ngFor="let answer of _question.answers">
 
-    <div>
-        <div *ngFor="let answer of _question.answers" >
-            <div *ngIf="_question.type == 'Mcq'" class="mcq">
-                <span>
-                  {{answer.contentOrIncriment}}
-                </span>
+      <div *ngIf="_question.type == 'Mcq'"  >
+        <app-answer-mcq [totalAnswerVotes]="_question.totalAnswerVotes" [answer]="answer"></app-answer-mcq>
+      </div>
 
-                <div class="mcq__progressbar--outer" (click)="examHub.postVote(1, answer.id, 'answer')">
-                  <div class="mcq__progressbar--inner" [style.width.%]="(answer.totalVotes/_question.totalAnswerVotes) * 100">
-                  </div>
-                </div>
-                <span>
-                  {{answer.totalVotes}}
-                </span>
-            </div>
-
-            <span *ngIf="_question.type == 'Short'">
-
-                where short answers are displayed
-                Votes: {{answer.totalVotes}}<br />
-                Content: {{contentOrIncriment}}
-            </span>
-
-        </div>
-        <span *ngIf="_question.type == 'Short' && _question.subQuestions.length == 0 ">
-          New Answer:
-            <md-input placeholder="new Answer"></md-input>
-        </span>
-        <!--Comments:<br />
-        <div>
-
-            <form [formGroup]="newCommentForm" novalidate (ngSubmit)="sendComment(question.id)">
-                <md-input placeholder="new comment" formControlName="content"></md-input>
-            </form>
-            <form>
-                <input />
-            </form>
-        </div>-->
+      <div *ngIf="_question.type == 'Short'">
+        <app-answer-short [answer]="answer"></app-answer-short>
+      </div>
 
     </div>
-    <ul>
-        <li *ngFor="let subQuestion of _question.subQuestions">
-            <app-question [question]="subQuestion"></app-question>
-        </li>
-    </ul>
+
+    <!--makes sure this the is bottom level question-->
+    <span *ngIf="_question.subQuestions.length == 0 ">
+      <span *ngIf="_question.type == 'Short'">
+        <app-new-answer [questionId]="_question.id"></app-new-answer>
+      </span>
+
+      <button (click)="showComments = !showComments">Show Comments</button>
+
+      <span *ngIf="showComments">
+
+        <div *ngFor="let comment of _question.comments">
+          <app-comment [comment]="comment"></app-comment>
+        </div>
+
+        <app-new-comment></app-new-comment>
+      </span>
+
+    </span>
+
+
+  </div>
+  <ul>
+    <li *ngFor="let subQuestion of _question.subQuestions; trackBy: subQuestion?.id">
+      <app-question [question]="subQuestion"></app-question>
+    </li>
+  </ul>
 
 </div>

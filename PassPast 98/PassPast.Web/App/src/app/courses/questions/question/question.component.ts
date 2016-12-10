@@ -1,40 +1,28 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, ChangeDetectionStrategy } from '@angular/core';
 import { Question } from '../../models/question';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { ExamHubService } from '../../exam-hub.service';
+import { SignalrExamHubService } from '../../signalr-exam-hub.service';
 
 @Component({
   selector: 'app-question',
-  templateUrl: 'question.component.html'
+  templateUrl: 'question.component.html',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class QuestionComponent implements OnInit {
-  newCommentForm: FormGroup;
-
+export class QuestionComponent {
   private _question: Question;
+  private showComments: boolean = false;
 
   @Input()
   set question(question: Question) {
+    // sum the votes for this answers for this question
     let totalAnswerVotes = question.answers
       .map(a => +a.totalVotes)
       .reduce((previousVote, currentVote) => previousVote + currentVote, 0);
     this._question = Object.assign({}, question, { totalAnswerVotes });
   }
   constructor(
-    private examHub: ExamHubService,
-    private formBuilder: FormBuilder
-
+    private examHub: SignalrExamHubService,
   ) { }
-
-
-  ngOnInit() {
-    this.newCommentForm = this.formBuilder.group({
-      content: ['']
-    });
-  }
-
-
-  sendComment(questionId: string) {
-    //this.commentsHub.server.post(this.newCommentForm.value['content'], questionId);
-  }
 
 }

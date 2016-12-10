@@ -1,6 +1,7 @@
 import { Action } from '@ngrx/store';
 import { Question } from '../models/question';
 import { QuestionActionTypes } from './question.actions';
+import { AppState } from '../../app-store';
 
 export interface QuestionState {
   display: Question[];
@@ -33,4 +34,17 @@ export function questionReducer(state = initalState, action: Action): QuestionSt
     default:
       return state;
   }
+}
+
+
+export const getDisplayed = (questions: Question[]) => {
+
+    let objs: any = {};
+    questions.forEach(q => objs[q.id] = q);
+
+    let nonNulls = questions.filter(val => !!val.parentQuestionId)
+    nonNulls.forEach(q => objs[q.parentQuestionId].subQuestions.push(q))
+
+    return questions.filter(val => !val.parentQuestionId);
+
 }

@@ -15,9 +15,10 @@ export class ExamsComponent implements OnInit {
   private newExamDialogRef: MdDialogRef<AddExamComponent>;
   exams$: Observable<Exam[]>;
 
-  constructor(private store: Store<AppState>,
+  constructor(
+    private store: Store<AppState>,
     private exams: ExamService,
-    private dialog: MdDialog
+    private dialog: MdDialog,
 
   ) { }
 

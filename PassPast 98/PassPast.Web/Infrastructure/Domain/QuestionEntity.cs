@@ -12,6 +12,10 @@ namespace PassPast.Data
 {
     public class QuestionEntity : TrackedEntity
     {
+        public QuestionEntity()
+        {
+            SubQuestions = new HashSet<QuestionEntity>();
+        }
         [Required]
         public string Incriment { get; set; }
 

@@ -65,6 +65,7 @@ namespace PassPast.Web
             services.AddTransient<IPaperManager, PaperManager>();
             services.AddTransient<IQuestionManger, QuestionManger>();
             services.AddTransient<IVoteManager, VoteManager>();
+            services.AddTransient<IAnswerManager, AnswerManager>();
 
             services.AddTransient<IMyService, MyService>();
 

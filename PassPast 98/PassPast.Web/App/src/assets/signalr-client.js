@@ -24,7 +24,7 @@
             this.queryString = queryString;
             this.connectionState = ConnectionState.Disconnected;
         }
-        start(accessToken, transportName = 'webSockets') {
+        start(accessToken = "", transportName = 'webSockets') {
             if (this.connectionState != ConnectionState.Disconnected) {
                 throw new Error("Cannot start a connection that is not in the 'Disconnected' state");
             }

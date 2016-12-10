@@ -1,0 +1,11 @@
+<div style="display:flex;">
+  <span>
+    <markdown>
+      {{answer.contentOrIncriment}}
+    </markdown>
+  </span>
+
+  <span>
+    <app-vote [type]="'answer'" [id]="answer.id"></app-vote>
+    </span>
+</div>

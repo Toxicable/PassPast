@@ -8,6 +8,7 @@ import {ControlMessagesComponent} from './form-validation/control-messages.compo
 import {LoadingBarComponent} from './loading-bar/loading-bar.component';
 import {DefaultValuePipe} from './pipes/default-value/default-value.pipe';
 import {MaterialModule} from '@angular/material';
+import { MarkdownComponent } from './markdown/markdown.component';
 
 
 @NgModule({
@@ -23,6 +24,7 @@ import {MaterialModule} from '@angular/material';
         AlertComponent,
         ControlMessagesComponent,
         ValidationSummaryComponent,
+        MarkdownComponent,
     ],
     exports: [
         MaterialModule,
@@ -34,6 +36,7 @@ import {MaterialModule} from '@angular/material';
         ControlMessagesComponent,
         CommonModule,
         ValidationSummaryComponent,
+        MarkdownComponent,
     ]
 })
 export class SharedModule {}

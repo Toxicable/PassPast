@@ -4,10 +4,5 @@ import { Vote } from './vote';
 export interface Comment{
     id: number;
     content: string;
-    votes: Vote[];
-    postedAt: Date;
-    questionId: number;
-    question: Question;
-    createdById: string;
-    createdBy: ApplicationUser;
+    totalVotes: Vote[];
 }

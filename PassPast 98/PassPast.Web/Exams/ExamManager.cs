@@ -40,12 +40,16 @@ namespace PassPast.Web.Api.Exams
 
         public async Task<IEnumerable<QuestionEntity>> GetQuestions(int id)
         {
-            var exams = await _context.Questions
-                .Where(q => q.ExamId == id && q.ParentQuestionId == null)
+            var exams = (await _context.Questions
+                .Where(q => q.ExamId == id)
                 .Include(q => q.Answers)
-                .Include(a => a.SubQuestions)
-                    .ThenInclude(sb => sb.Answers)
-                .ToListAsync();
+                .Include(q => q.Comments)
+                .ToListAsync())
+                .Select(x =>
+                {
+                    x.SubQuestions = null;
+                    return x;
+                }).ToList();
 
             return exams;
             
