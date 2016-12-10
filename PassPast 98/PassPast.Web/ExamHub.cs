@@ -50,6 +50,7 @@ namespace PassPast.Web.Comments.Hubs
             {
                 vote.CommentId = id;
             }
+            
         }
 
         public async Task PostAnswer(int questionId, string content)
@@ -61,6 +62,8 @@ namespace PassPast.Web.Comments.Hubs
             };
 
             await _answerManager.Create(answer);
+
+            //Clients.Group(Context.).InvokeAsync
         }
         
         public void PostComment(string content, int questionId)

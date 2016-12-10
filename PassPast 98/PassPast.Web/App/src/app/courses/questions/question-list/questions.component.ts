@@ -4,7 +4,6 @@ import { AppState } from '../../../../app/app-store';
 import { QuestionService } from '../question.service';
 import { Observable } from 'rxjs/Observable';
 import { Question } from '../../models/question';
-import { ExamHubService } from '../../exam-hub.service';
 import { SignalrExamHubService } from '../../signalr-exam-hub.service';
 import { getDisplayed } from '../question.reducer';
 

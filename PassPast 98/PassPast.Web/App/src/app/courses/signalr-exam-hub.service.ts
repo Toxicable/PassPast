@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { AppState } from '../app-store';
+import { AppSettings } from '../../app-settings';
 
 
 declare let signalR: any;
@@ -16,8 +17,7 @@ export class SignalrExamHubService {
     if (this.connection != null) {
       return
     }
-
-    let connection = new signalR.HubConnection(`http://localhost:5000/api/exam-hub`);
+    let connection = new signalR.HubConnection(AppSettings.SignalRUrl);
 
     connection.on('Send', function (message: any) {
     });

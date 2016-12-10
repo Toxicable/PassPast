@@ -1,7 +1,6 @@
 import { Component, OnInit, Input, ChangeDetectionStrategy } from '@angular/core';
 import { Question } from '../../models/question';
 import { FormBuilder, FormGroup } from '@angular/forms';
-import { ExamHubService } from '../../exam-hub.service';
 import { SignalrExamHubService } from '../../signalr-exam-hub.service';
 
 @Component({

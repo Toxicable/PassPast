@@ -25,7 +25,6 @@ import { PaperEffects } from './papers/paper.effects';
 import { ExamEffects } from './exams/exam.effects';
 import { ActivateQuestionsService } from './questions/activate-questions.service';
 import { QuestionEffects } from './questions/question.effects';
-import { ExamHubService } from './exam-hub.service';
 import { QuestionsComponent } from './questions/question-list/questions.component';
 import { QuestionComponent } from './questions/question/question.component';
 import { SignalrExamHubService } from './signalr-exam-hub.service';
@@ -73,8 +72,6 @@ import { CommentComponent } from './comments/comment/comment.component';
     PaperActions,
     ExamActions,
     QuestionActions,
-
-    ExamHubService,
     SignalrExamHubService,
 
     ActivateCourseService,
