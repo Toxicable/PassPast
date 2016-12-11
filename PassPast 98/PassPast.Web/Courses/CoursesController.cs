@@ -50,7 +50,7 @@ namespace PassPast.Web.Api.Courses
         [HttpGet("{id}/papers")]
         public async Task<ICollection<PaperViewModel>> GetPapers(int id)
         {
-            var papers = (await _courseManager.GetPapers(id)).Papers
+            var papers = (await _courseManager.GetPapers(id))
                 .Select(p => _mapper.Map<PaperViewModel>(p))
                 .ToList();
 

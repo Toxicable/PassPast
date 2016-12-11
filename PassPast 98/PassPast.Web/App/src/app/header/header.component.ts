@@ -7,6 +7,8 @@ import { ProfileService } from '../../core/profile/profile.service';
 import { Course } from '../courses/models/course';
 import { Paper } from '../courses/models/paper';
 import { Exam } from '../courses/models/exam';
+import { getSelectedCourse } from '../courses/courses/course.reducer';
+import { getSelectedPaper } from '../courses/papers/paper.reducer';
 
 @Component({
     selector: 'app-header',
@@ -30,8 +32,10 @@ export class HeaderComponent implements OnInit {
         this.username$ = this.store.select( state => state.auth.profile.unique_name);
         this.loggedIn$ = this.store.select( state => state.auth.loggedIn);
         this.currentExam$ = this.store.select( state => state.courses.exam.selected);
-        this.currentPaper$ = this.store.select( state => state.courses.paper.selected);
-        this.currentCourse$ = this.store.select( state => state.courses.course.selected);
+        this.currentPaper$ = this.store.select( state => state.courses.paper)
+          .map(state => getSelectedPaper(state));
+        this.currentCourse$ = this.store.select( state => state.courses.course)
+          .map(state => getSelectedCourse(state));
 
     }
 }

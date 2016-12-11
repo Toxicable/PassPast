@@ -30,6 +30,11 @@ export function questionReducer(state = initalState, action: Action): QuestionSt
           ...action.payload
         ],
       }
+    case QuestionActionTypes.ADD_ANSWER:
+      return {
+        display: state.display,
+        cache: state.cache
+      }
 
     default:
       return state;
@@ -39,12 +44,12 @@ export function questionReducer(state = initalState, action: Action): QuestionSt
 
 export const getDisplayed = (questions: Question[]) => {
 
-    let objs: any = {};
-    questions.forEach(q => objs[q.id] = q);
+  let objs: any = {};
+  questions.forEach(q => objs[q.id] = q);
 
-    let nonNulls = questions.filter(val => !!val.parentQuestionId)
-    nonNulls.forEach(q => objs[q.parentQuestionId].subQuestions.push(q))
+  let nonNulls = questions.filter(val => !!val.parentQuestionId)
+  nonNulls.forEach(q => objs[q.parentQuestionId].subQuestions.push(q))
 
-    return questions.filter(val => !val.parentQuestionId);
+  return questions.filter(val => !val.parentQuestionId);
 
 }

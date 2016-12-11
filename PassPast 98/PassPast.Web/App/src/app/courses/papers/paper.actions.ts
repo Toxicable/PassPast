@@ -2,16 +2,17 @@ import { Action } from '@ngrx/store';
 import { Paper } from '../models/paper';
 import { type } from '../../../util/action-name-helper';
 import { Injectable } from '@angular/core';
+import { Dict } from '../models/dict';
 
 export const PaperActionTypes = {
   LOAD: type('[Papers] Load'),
   LOAD_SUCCESS: type('[Paper] Load Success'),
   ADD: type('[Papers] Add'),
+  ADD_SUCCESS: type('[Papers] Add Success'),
   SELECT: type('[Paper] Select'),
   SELECT_SUCCESS: type('[Paper] Select Success'),
   SELECT_FAILED: type('[Paper] Select Failed'),
   DESELECT: type('[Paper] Deselect'),
-  CACHE: type('[Papers] Cache')
 };
 
 @Injectable()
@@ -22,7 +23,7 @@ export class PaperActions {
       payload
     }
   }
-  loadSuccess(payload: Paper[]) {
+  loadSuccess(payload: Dict<Paper>) {
     return {
       type: PaperActionTypes.LOAD_SUCCESS,
       payload
@@ -40,7 +41,7 @@ export class PaperActions {
       payload
     };
   }
-    selectFailed(): Action {
+  selectFailed(): Action {
     return {
       type: PaperActionTypes.SELECT_FAILED,
     };
@@ -51,16 +52,15 @@ export class PaperActions {
     };
   }
 
-  Add(payload: Paper): Action {
+  add(payload: Paper): Action {
     return {
       type: PaperActionTypes.ADD,
       payload
     };
   }
-
-  cache(payload: Paper[]): Action {
+  addSuccess(payload: Dict<Paper>): Action {
     return {
-      type: PaperActionTypes.CACHE,
+      type: PaperActionTypes.ADD_SUCCESS,
       payload
     };
   }

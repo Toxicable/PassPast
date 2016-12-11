@@ -8,7 +8,8 @@ import { PaperActions } from './paper.actions';
 
 @Injectable()
 export class PaperService {
-  constructor(private authHttp: AuthHttp,
+  constructor(
+    private authHttp: AuthHttp,
     private store: Store<AppState>,
     private paperActions: PaperActions
   ) { }
@@ -26,9 +27,6 @@ export class PaperService {
   }
 
   create(paper: Paper): Observable<Paper> {
-    return this.authHttp.post('/papers', paper)
-      .do((newPaper: Paper) => {
-        this.store.dispatch(this.paperActions.Add(newPaper));
-      });
+    return this.authHttp.post('/papers', paper);
   }
 }

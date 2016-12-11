@@ -24,8 +24,5 @@ export class CourseService {
 
   create(course: Course): Observable<Course> {
     return this.authHttp.post('/courses', course)
-      .do((newCourse: Course) => {
-        this.store.dispatch(this.courseActions.add(newCourse));
-      });
   }
 }
