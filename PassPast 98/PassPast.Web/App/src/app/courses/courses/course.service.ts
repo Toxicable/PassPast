@@ -5,6 +5,7 @@ import { Store } from '@ngrx/store';
 import { AppState } from '../../../app/app-store';
 import { AuthHttp } from '../../../core/auth-http/auth-http.service';
 import { CourseActions } from './course.actions';
+import { Http } from '@angular/http';
 
 @Injectable()
 export class CourseService {

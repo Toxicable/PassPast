@@ -14,3 +14,7 @@ a{
 .can-click{
   cursor: pointer;
 }
+
+.can-click:hover{
+  background:lightgrey
+}
