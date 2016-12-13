@@ -1,15 +1,13 @@
 import { Component, OnInit } from '@angular/core';
-import { CourseService } from '../course.service';
+import { CourseService } from './course.service';
 import { Observable } from 'rxjs/Observable';
-import { Course } from '../../models/course';
-import { AppState } from '../../../../app/app-store';
+import { Course } from '../models/course';
+import { AppState } from '../../../app/app-store';
 import { Store } from '@ngrx/store';
-import { AlertService } from '../../../../core/alert/alert.service';
+import { AlertService } from '../../../core/alert/alert.service';
 import { MdDialogRef, MdDialog } from '@angular/material';
-import { AddCourseComponent } from '../add-course/add-course.component';
-import { CourseActions } from '../course.actions';
-import { normalize, Schema, arrayOf } from 'normalizr';
-import { denormalizeCourses } from '../course.reducer'
+import { AddCourseComponent } from './add-course/add-course.component';
+import { CourseActions } from './course.actions';
 
 @Component({
     selector: 'app-courses',
@@ -39,9 +37,7 @@ export class CoursesComponent implements OnInit {
         });
     }
     ngOnInit() {
-        this.courses$ = this.store.select( state => state.courses.course.entities)
-          .map(courses => denormalizeCourses(courses))
-
+        this.courses$ = this.store.select( state => state.courses.course.display);
 
         this.store.dispatch(this.courseActions.load());
      }

@@ -6,7 +6,6 @@ import { Observable } from 'rxjs/Observable';
 import { Question } from '../../models/question';
 import { SignalrExamHubService } from '../../signalr-exam-hub.service';
 import { getDisplayed } from '../question.reducer';
-import { normalize, Schema, arrayOf } from 'normalizr';
 
 @Component({
   selector: 'app-questions',
@@ -27,27 +26,5 @@ export class QuestionsComponent implements OnInit {
   ngOnInit() {
     this.questions$ = this.store.select(state => state.courses.question.display)
       .map(questions => getDisplayed(questions))
-
-    const question = new Schema('questions');
-    const answer = new Schema('answers');
-    const comment = new Schema('comments');
-
-
-    question.define({
-      answers: arrayOf(answer),
-      comments: arrayOf(comment),
-      subQuestions: arrayOf(question)
-    });
-
-    this.store.select(state => state.courses.question.display)
-      .subscribe(qs => {
-
-        let denorm = normalize(qs, arrayOf(question))
-        let renormed = normalize(denorm.entities, question)
-        console.log(denorm);
-     })
-
-
-
   }
 }

@@ -11,7 +11,7 @@ namespace PassPast.Web.Api.Courses
     public interface ICourseManager
     {
         Task<CourseEntity> Get(int id);
-        Task<IEnumerable<PaperEntity>> GetPapers(int id);
+        Task<CourseEntity> GetPapers(int id);
         Task<IEnumerable<CourseEntity>> GetAll();
         Task Create(CourseEntity newCourse);
     }
@@ -38,11 +38,11 @@ namespace PassPast.Web.Api.Courses
             return course;                
         }
 
-        public async Task<IEnumerable<PaperEntity>> GetPapers(int id)
+        public async Task<CourseEntity> GetPapers(int id)
         {
-            var course = await _context.Papers
-                .Where(p => p.CourseId == id)
-                .ToListAsync();
+            var course = await _context.Courses
+                .Include(c => c.Papers)
+                .SingleOrDefaultAsync(c => c.Id == id);
 
             return course;
         }

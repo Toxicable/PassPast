@@ -47,7 +47,7 @@ namespace PassPast.Web.Api.Exams
                 .ToListAsync())
                 .Select(x =>
                 {
-                    x.SubQuestions.Clear();
+                    x.SubQuestions = null;
                     return x;
                 }).ToList();
 

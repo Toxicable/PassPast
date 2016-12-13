@@ -1,13 +1,11 @@
 import { Action } from '@ngrx/store';
 import { Course } from '../models/course';
 import { type } from '../../../util/action-name-helper';
-import { Dict } from '../models/dict';
 
 export const CourseActionTypes = {
   LOAD: type('[Course] Load'),
   LOAD_SUCCESS: type('[Course] Load Success'),
   ADD: type('[Course] Add'),
-  ADD_SUCCESS: type('[Course] Add Success'),
   SELECT: type('[Course] Select'),
   SELECT_SUCCESS: type('[Course] Select Success'),
   SELECT_FAILED: type('[Course] Select Failed'),
@@ -27,7 +25,7 @@ export class CourseActions {
       payload
     };
   }
-  selectSuccess(payload: number): Action {
+  selectSuccess(payload: Course): Action {
     return {
       type: CourseActionTypes.SELECT_SUCCESS,
       payload
@@ -45,12 +43,6 @@ export class CourseActions {
       payload
     };
   }
-  addSuccess(payload: Dict<Course>): Action {
-    return {
-      type: CourseActionTypes.ADD_SUCCESS,
-      payload
-    };
-  }
 
   load(): Action {
     return {
@@ -58,7 +50,7 @@ export class CourseActions {
     };
   }
 
-  loadSuccess(payload: Dict<Course>): Action {
+  loadSuccess(payload: Course[]): Action {
     return {
       type: CourseActionTypes.LOAD_SUCCESS,
       payload

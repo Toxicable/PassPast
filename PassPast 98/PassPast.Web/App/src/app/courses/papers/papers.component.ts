@@ -1,14 +1,13 @@
 import { Component, OnInit } from '@angular/core';
+import { PaperService } from './paper.service';
 import { Observable } from 'rxjs';
+import { Paper } from '../models/paper';
+import { AppState } from '../../../app/app-store';
 import { ActivatedRoute } from '@angular/router';
+import { AlertService } from '../../../core/alert/alert.service';
 import { MdDialogRef, MdDialog } from '@angular/material';
+import { AddPaperComponent } from './add-paper/add-paper.component';
 import { Store } from '@ngrx/store';
-import { AddPaperComponent } from '../add-paper/add-paper.component';
-import { Paper } from '../../models/paper';
-import { PaperService } from '../paper.service';
-import { AlertService } from '../../../../core/alert/alert.service';
-import { AppState } from '../../../app-store';
-import { denormalizePapers, getSelectedPaper, getPapersSelectedByCourse } from '../paper.reducer';
 
 @Component({
     selector: 'app-papers',
@@ -37,8 +36,7 @@ export class PapersComponent implements OnInit {
     }
 
     ngOnInit() {
-        this.papers$ = this.store.select( state => state.courses)
-        .map(state => getPapersSelectedByCourse(state));
+        this.papers$ = this.store.select( state => state.courses.paper.displayed);
 
      }
 }

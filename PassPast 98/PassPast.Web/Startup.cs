@@ -25,7 +25,6 @@ using AspNet.Security.OAuth.Validation;
 using System.Threading.Tasks;
 using PassPast.Web.Votes;
 using PassPast.Web.Comments.Hubs;
-using PassPast.Web.Comments;
 
 namespace PassPast.Web
 {
@@ -85,8 +84,6 @@ namespace PassPast.Web
                 x.CreateMap<QuestionBindingModel, QuestionEntity>();
 
                 x.CreateMap<AnswerEntity, AnswerViewModel>();
-
-                x.CreateMap<CommentEntity, CommentViewModel>();
 
 
             });

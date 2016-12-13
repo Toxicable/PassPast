@@ -2,10 +2,7 @@ import { Injectable } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { AppState } from '../app-store';
 import { AppSettings } from '../../app-settings';
-import { QuestionActions } from './questions/question.actions';
-import { Answer } from './models/answer';
 
-import { normalize, Schema, arrayOf } from 'normalizr';
 
 declare let signalR: any;
 
@@ -15,10 +12,7 @@ export class SignalrExamHubService {
   connection: any;
   groupId: number;
 
-  constructor(
-    private store: Store<AppState>,
-    private answerActions: QuestionActions
-    ) {
+  constructor(private store: Store<AppState>) {
 
     if (this.connection != null) {
       return
@@ -27,9 +21,6 @@ export class SignalrExamHubService {
 
     connection.on('Send', function (message: any) {
     });
-    connection.on('broadCastAnswer', (answer: Answer) => {
-      this.store.dispatch(this.answerActions.addAnswer(answer))
-    })
 
     connection.start()
       .then(() => {

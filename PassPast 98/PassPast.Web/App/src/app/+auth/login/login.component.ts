@@ -37,6 +37,7 @@ export class LoginComponent implements OnInit {
                 (error: string[]) => {
                     this.alert.sendWarning('Failed to login');
                     this.alert.sendInfo(error[0], 7000);
+                    console.log(error);
                 }
             );
     }

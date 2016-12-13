@@ -8,7 +8,6 @@ import { AppState } from '../../app-store';
 import { PaperActionTypes } from './paper.actions';
 import { Paper } from '../models/paper';
 import { ExamActions } from '../exams/exam.actions';
-import { normalizePapers, denormalizePapers } from './paper.reducer';
 
 @Injectable()
 export class PaperEffects {
@@ -24,19 +23,20 @@ export class PaperEffects {
   @Effect()
   select: Observable<Action> = this.actions$
     .ofType(PaperActionTypes.SELECT)
+    //.do(action => this.store.dispatch(this.paperActions.deselect()))
     .map(action => +action.payload)
     .switchMap((paperId: number) =>
-      this.store.select(state => state.courses.paper.entities)
+      this.store.select(state => state.courses.paper.cache)
         .first()
-        .flatMap(papers => {
-          let localPaper = papers[paperId];
-          if (localPaper) {
-            return Observable.of(this.paperActions.selectSuccess(localPaper));
+        .flatMap((papers: Paper[]) => {
+          let localPapers = papers.find(c => c.id === paperId);
+          if (localPapers) {
+            return Observable.of(this.paperActions.selectSuccess(localPapers));
           }
           return this.paperService.getPaper(paperId)
             .map((paper: Paper) => {
               if (paper != null) {
-                this.store.dispatch(this.paperActions.add(paper));
+                this.store.dispatch(this.paperActions.Add(paper));
                 return this.paperActions.selectSuccess(paper);
               }
               return this.paperActions.selectFailed();
@@ -47,7 +47,7 @@ export class PaperEffects {
   @Effect()
   selectSuccess: Observable<Action> = this.actions$
     .ofType(PaperActionTypes.SELECT_SUCCESS)
-    .map(action => this.examActions.load(action.payload));
+    .map(action => this.examActions.load(action.payload.id));
 
 
   @Effect()
@@ -55,32 +55,20 @@ export class PaperEffects {
     .ofType(PaperActionTypes.LOAD)
     .map(action => +action.payload)
     .switchMap((courseId: number) =>
-      this.store.select(state => state.courses.paper.entities)
+      this.store.select(state => state.courses.paper.cache)
         .first()
         .flatMap(papers => {
-          const denormalized = denormalizePapers(papers);
-          let localPapers = denormalized.filter(paper => paper.courseId === courseId);
+          let localPapers = papers.filter(paper => paper.courseId === courseId);
           if (localPapers.length > 0) {
-            return Observable.of(this.paperActions.loadSuccess(null));
+            return Observable.of(this.paperActions.loadSuccess(localPapers));
           }
           return this.paperService.getRelatedPapers(courseId)
-            .map(fetchedPapers => normalizePapers(fetchedPapers))
-            .map(fetchedPapers => this.paperActions.loadSuccess(fetchedPapers));
+            .map(fetchedPapers => {
+              this.store.dispatch(this.paperActions.cache(fetchedPapers));
+              return this.paperActions.loadSuccess(fetchedPapers);
+            });
         })
     );
 
-  @Effect()
-  add: Observable<Action> = this.actions$
-    .ofType(PaperActionTypes.ADD)
-    .map(action => action.payload)
-    .flatMap(paper =>
-      this.store.select(state => state.courses.course.selectedId)
-        .first()
-        .flatMap(courseId => {
-          paper.courseId = courseId;
-          return this.paperService.create(paper)
-            .map(paper => normalizePapers([paper]))
-            .map(paper => this.paperActions.addSuccess(paper))
-        })
-    );
+
 }

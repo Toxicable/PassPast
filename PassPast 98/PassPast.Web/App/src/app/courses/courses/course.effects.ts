@@ -8,11 +8,10 @@ import { AppState } from '../../app-store';
 import { CourseActionTypes, CourseActions } from './course.actions';
 import { Course } from '../models/course';
 import { CourseService } from './course.service';
-import { Dict } from '../models/dict';
-import { normalizeCourses, denormalizeCourses } from './course.reducer';
 
 @Injectable()
 export class CourseEffects {
+
   constructor(
     private actions$: Actions,
     private store: Store<AppState>,
@@ -22,63 +21,53 @@ export class CourseEffects {
     private courseActions: CourseActions
   ) { }
 
-
-
   @Effect()
   load: Observable<Action> = this.actions$
     .ofType(CourseActionTypes.LOAD)
-    .map(action => action.payload)
-    .switchMap(action => {
-      return this.store.select(state => state.courses.course.entities)
-        .first()
-        .flatMap(courses => {
-          const denormedCourses = denormalizeCourses(courses)
-          if (denormedCourses.length > 0) {
-            return Observable.of(this.courseActions.loadSuccess(courses))
-          }
-          return this.courseService.getCourses()
-            .map(fetchedCourses => normalizeCourses(fetchedCourses))
-            .map(fetchedCourses => this.courseActions.loadSuccess(fetchedCourses))
-        })
-    });
+    .map(action => action.payload )
+    .switchMap(action =>
+    {
+      return this.store.select(state => state.courses.course.display)
+      .first()
+      .flatMap( courses => {
+        if (courses.length > 0) {
+          return Observable.of(this.courseActions.loadSuccess(courses))
+        }
+        return this.courseService.getCourses()
+          .map(fetchedCourses => this.courseActions.loadSuccess(fetchedCourses))
+      })
+    }
+    );
 
   @Effect()
   select: Observable<Action> = this.actions$
     .ofType(CourseActionTypes.SELECT)
     .map(action => +action.payload)
     .switchMap((courseId: number) =>
-      this.store.select(state => state.courses.course.entities)
-        .first()
-        .flatMap((courses: Dict<Course>) => {
-          let localCourse = courses[courseId];
-          if (localCourse) {
-            return Observable.of(this.courseActions.selectSuccess(localCourse.id));
-          }
-          return this.courseService.getCourse(courseId)
-            .map((course: Course) => {
-              if (course != null) {
-                return this.courseActions.selectSuccess(course.id);
-              }
-              return this.courseActions.selectFailed();
-            });
-        })
+      this.store.select(state => state.courses.course.display)
+      .first()
+      .flatMap((courses: Course[]) => {
+        let localCourse = courses.find(c => c.id === courseId);
+        if (localCourse) {
+          return Observable.of(this.courseActions.selectSuccess(localCourse));
+        }
+        return this.courseService.getCourse(courseId)
+          .map((course: Course) => {
+            if (course != null) {
+              return this.courseActions.selectSuccess(course);
+            }
+            return this.courseActions.selectFailed();
+          });
+      })
     );
 
   @Effect()
   selectSuccess: Observable<Action> = this.actions$
     .ofType(CourseActionTypes.SELECT_SUCCESS)
     .map(action => {
-      this.store.dispatch(this.courseActions.load());
-      return this.paperActions.load(action.payload);
+      this.store.dispatch(this.courseActions.load());;
+      return this.paperActions.load(action.payload.id)
     });
 
-  @Effect()
-  add: Observable<Action> = this.actions$
-    .ofType(CourseActionTypes.ADD)
-    .map(action => action.payload)
-    .flatMap((course: Course) => this.courseService.create(course)
-      .map((course: Course) => normalizeCourses([course]))
-      .map(newCourse => this.courseActions.addSuccess(newCourse))
-    )
 
 }
