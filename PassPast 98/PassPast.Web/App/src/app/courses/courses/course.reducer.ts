@@ -3,12 +3,12 @@ import { Course } from '../models/course';
 import { CourseActionTypes } from './course.actions';
 
 export interface CourseState {
-  selectedId: number;
+  selected: Course;
   entities: Course[];
 }
 
 const initalState: CourseState = {
-  selectedId: null,
+  selected: null,
   entities: []
 };
 
@@ -16,13 +16,13 @@ export function courseReducer(state = initalState, action: Action): CourseState 
   switch (action.type) {
     case CourseActionTypes.LOAD_SUCCESS:
       return {
-        selectedId: state.selectedId,
+        selected: state.selected,
         entities: action.payload
       };
 
     case CourseActionTypes.ADD_SUCCESS:
       return {
-        selectedId: state.selectedId,
+        selected: state.selected,
         entities: [
           ...state.entities,
           action.payload
@@ -31,21 +31,17 @@ export function courseReducer(state = initalState, action: Action): CourseState 
 
     case CourseActionTypes.SELECT_SUCCESS:
       return {
-        selectedId: action.payload,
+        selected: action.payload,
         entities: state.entities
       };
 
     case CourseActionTypes.DESELECT:
       return {
-        selectedId: null,
+        selected: null,
         entities: state.entities
       };
 
     default:
       return state;
   }
-}
-
-export function getSelectedCourse(state: CourseState){
-  return state.entities.find(c => c.id == state.selectedId)
 }

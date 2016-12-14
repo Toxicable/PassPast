@@ -27,9 +27,9 @@ export class SignalrExamHubService {
         this.connection = connection;
 
         this.store.select(state => state.courses.exam.selected)
-          .filter(selected => selected !== null)
-          .subscribe(selected => {
-            this.groupId = selected.id
+          .filter(selectedId => selectedId !== null)
+          .subscribe(selectedId => {
+            this.groupId = selectedId.id
             //this.leaveRoom(selected.id);
             //leave all other groups
             this.joinRoom(this.groupId);

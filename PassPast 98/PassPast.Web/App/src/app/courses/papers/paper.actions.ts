@@ -35,7 +35,7 @@ export class PaperActions {
       payload
     };
   }
-  selectSuccess(payload: number): Action {
+  selectSuccess(payload: Paper): Action {
     return {
       type: PaperActionTypes.SELECT_SUCCESS,
       payload

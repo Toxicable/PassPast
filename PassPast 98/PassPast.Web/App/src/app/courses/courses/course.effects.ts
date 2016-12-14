@@ -22,22 +22,6 @@ export class CourseEffects {
   ) { }
 
   @Effect()
-  load: Observable<Action> = this.actions$
-    .ofType(CourseActionTypes.LOAD)
-    .map(action => action.payload)
-    .switchMap(action => {
-      return this.store.select(state => state.courses.course.entities)
-        .first()
-        .flatMap(courses => {
-          if (courses.length > 0) {
-            return Observable.of(this.courseActions.loadSuccess(courses))
-          }
-          return this.courseService.getCourses()
-            .map(fetchedCourses => this.courseActions.loadSuccess(fetchedCourses))
-        })
-    });
-
-  @Effect()
   select: Observable<Action> = this.actions$
     .ofType(CourseActionTypes.SELECT)
     .map(action => +action.payload)
@@ -47,12 +31,12 @@ export class CourseEffects {
         .flatMap((courses: Course[]) => {
           let localCourse = courses.find(c => c.id === courseId);
           if (localCourse) {
-            return Observable.of(this.courseActions.selectSuccess(localCourse.id));
+            return Observable.of(this.courseActions.selectSuccess(localCourse));
           }
           return this.courseService.getCourse(courseId)
             .map((course: Course) => {
               if (course != null) {
-                return this.courseActions.selectSuccess(course.id);
+                return this.courseActions.selectSuccess(course);
               }
               return this.courseActions.selectFailed();
             });
@@ -63,9 +47,22 @@ export class CourseEffects {
   selectSuccess: Observable<Action> = this.actions$
     .ofType(CourseActionTypes.SELECT_SUCCESS)
     .map(action => action.payload)
-    .map((courseId: number) => {
-      this.store.dispatch(this.courseActions.load());
-      return this.paperActions.load(courseId);
+    .map((course: Course) => this.paperActions.load(course.id));
+
+  @Effect()
+  load: Observable<Action> = this.actions$
+    .ofType(CourseActionTypes.LOAD)
+    .map(action => action.payload)
+    .switchMap(() => {
+      return this.store.select(state => state.courses.course.entities)
+        .first()
+        .flatMap(courses => {
+          if (courses.length > 0) {
+            return Observable.empty();
+          }
+          return this.courseService.getCourses()
+            .map(fetchedCourses => this.courseActions.loadSuccess(fetchedCourses))
+        })
     });
 
   @Effect()
@@ -75,6 +72,6 @@ export class CourseEffects {
     .flatMap((course: Course) =>
       this.courseService.create(course)
         .map(course => this.courseActions.addSuccess(course))
-        )
+      )
 
 }

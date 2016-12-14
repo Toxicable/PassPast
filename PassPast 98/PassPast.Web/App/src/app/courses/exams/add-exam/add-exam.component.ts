@@ -60,22 +60,23 @@ export class AddExamComponent implements OnInit {
     }
 
     onSubmit() {
-        this.store.select(state => state.courses.paper.selected.id)
-            .first()
-            .flatMap((paperId: number) => {
-                let newExam = Object.assign({}, {paperId}, this.newExamForm.value)
-                delete newExam['sections'];
 
-                return this.exams.create(newExam)
-                    .flatMap((exam: Exam) => {
-                        let data = Object.assign({}, {examId: exam.id}, this.newExamForm.value);
-                        delete data['semester'];
-                        delete data['year'];
-                        return this.questions.create(data)
-                    })
+        // this.store.select(state => state.courses.paper.selected.id)
+        //     .first()
+        //     .flatMap((paperId: number) => {
+        //         let newExam = Object.assign({}, {paperId}, this.newExamForm.value)
+        //         delete newExam['sections'];
 
-            })
-            .subscribe(() => this.alert.sendSuccess('wow we actually did it :D'))
+        //         return this.exams.create(newExam)
+        //             .flatMap((exam: Exam) => {
+        //                 let data = Object.assign({}, {examId: exam.id}, this.newExamForm.value);
+        //                 delete data['semester'];
+        //                 delete data['year'];
+        //                 return this.questions.create(data)
+        //             })
+
+        //     })
+        //     .subscribe(() => this.alert.sendSuccess('wow we actually did it :D'))
 
 
 

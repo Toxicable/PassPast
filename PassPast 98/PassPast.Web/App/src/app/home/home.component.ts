@@ -17,8 +17,12 @@ export class HomeComponent {
   constructor(
     private dialog: MdDialog,
     private snackBar: MdSnackBar,
-    private store: Store<AppState>
+    private store: Store<AppState>,
+    private router: Router
   ) { }
+  ngOnInit(){
+    console.log(this.router)
+  }
 
 
 

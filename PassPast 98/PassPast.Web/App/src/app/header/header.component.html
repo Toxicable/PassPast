@@ -1,41 +1,55 @@
-<md-toolbar [color]="primary" >
-    <span class="header-navigation">
-        <span>
-            <a [routerLink]="['/']" >
-                Pass Past
-            </a>
-            
-            <a [routerLink]="['/courses']">Courses</a>
-            {{(currentCourse$ | async)?.name}}
-            {{(currentPaper$ | async)?.name}}
-            {{(currentExam$ | async)?.year}}
-            {{(currentExam$ | async)?.semester}}
-        </span>
+<md-toolbar [color]="primary">
+  <span class="header-navigation">
+    <span>
+        <a [routerLink]="['/']" >
+            Pass Past
+        </a>
 
+        <a [routerLink]="['/courses']">Courses</a>
 
-        <span class="right">
-            <span *ngIf="(loggedIn$ | async)" >
-                Welcome {{username$ | async}}
-                <a [routerLink]="['/']" (click)="account.logout()">Logout</a>
-            </span>
-            <span *ngIf="!(loggedIn$ | async)"> 
-                <a  class="header-navigation__link" [routerLink]="['/auth/login']">
-                    Login
-                </a>
-            </span>
-        </span>
+        <a >
+        <!--[routerLink]="[ (currentCourse$ | async)?.id]">-->
+          {{(currentCourse$ | async)?.name}}
+        </a>
+
+        <a >
+        <!--[routerLink]="['/courses', {{(currentCourse$ | async)?.id}}, {{(currentCourse$ | async)?.id}}]">-->
+          {{(currentPaper$ | async)?.name}}
+        </a>
+
+        <a >
+        <!--[routerLink]="['/courses', {{(currentCourse$ | async)?.id}}, {{(currentCourse$ | async)?.id}}, {{(currentCourse$ | async)?.id}}]">-->
+          {{(currentExam$ | async)?.year}}
+        </a>
+
+        <a >
+        <!--[routerLink]="['/courses', {{(currentCourse$ | async)?.id}}]">-->
+          {{(currentExam$ | async)?.semester}}
+        </a>
+
     </span>
+  <span class="right">
+    <span *ngIf="(loggedIn$ | async)" >
+        Welcome {{username$ | async}}
+        <a [routerLink]="['/']" (click)="account.logout()">Logout</a>
+    </span>
+  <span *ngIf="!(loggedIn$ | async)">
+        <a  class="header-navigation__link" [routerLink]="['/auth/login']">
+            Login
+        </a>
+    </span>
+  </span>
+  </span>
 </md-toolbar>
 <app-loading-bar></app-loading-bar>
 
-<div >
-    <div class="left">     
-        <a  class="header-navigation__link" [routerLink]="['/admin']" routerLinkActive="active-router-link">Admin</a>   
-<!--
+<div>
+  <div class="left">
+    <a class="header-navigation__link" [routerLink]="['/admin']" routerLinkActive="active-router-link">Admin</a>
+    <!--
         <a  class="header-navigation__link" [routerLink]="['/courses', 1]" routerLinkActive="active-router-link">Papers</a>
-        <a  class="header-navigation__link" [routerLink]="['/courses', 1, 2]" routerLinkActive="active-router-link">Exams</a>        
+        <a  class="header-navigation__link" [routerLink]="['/courses', 1, 2]" routerLinkActive="active-router-link">Exams</a>
         <a  class="header-navigation__link" [routerLink]="['/courses', 1, 2, 1]" routerLinkActive="active-router-link">Questions</a>          -->
-      
-    </div>    
-</div>
 
+  </div>
+</div>

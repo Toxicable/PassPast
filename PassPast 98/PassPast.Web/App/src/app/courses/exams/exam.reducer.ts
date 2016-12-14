@@ -4,14 +4,12 @@ import { ExamActionTypes } from './exam.actions';
 
 export interface ExamState {
   selected: Exam;
-  cache: Exam[];
-  display: Exam[];
+  entities: Exam[];
 }
 
 const initalState: ExamState = {
   selected: null,
-  cache: [],
-  display: []
+  entities: []
 };
 
 export function examReducer(state = initalState, action: Action): ExamState {
@@ -19,16 +17,14 @@ export function examReducer(state = initalState, action: Action): ExamState {
     case ExamActionTypes.LOAD_SUCCESS:
       return {
         selected: state.selected,
-        display: action.payload,
-        cache: state.cache
+        entities: action.payload
       };
 
     case ExamActionTypes.ADD:
       return {
         selected: state.selected,
-        cache: state.cache,
-        display: [
-          ...state.display,
+        entities: [
+          ...state.entities,
           action.payload
         ]
       };
@@ -36,29 +32,21 @@ export function examReducer(state = initalState, action: Action): ExamState {
     case ExamActionTypes.SELECT_SUCCESS:
       return {
         selected: action.payload,
-        cache: state.cache,
-        display: state.display
+        entities: state.entities
       };
 
     case ExamActionTypes.DESELECT:
       return {
         selected: null,
-        cache: state.cache,
-        display: state.display
+        entities: state.entities
       };
-
-    case ExamActionTypes.CACHE:
-      return {
-        selected: state.selected,
-        display: state.display,
-        cache: [
-          ...state.cache,
-          ...action.payload
-        ],
-
-      }
 
     default:
       return state;
   }
 };
+
+export function getSelectedExams(examEntities: Exam[], exam: Exam): Exam[]{
+  if(exam == null) { return [] }
+  return examEntities.filter(e => e.paperId == exam.id)
+}

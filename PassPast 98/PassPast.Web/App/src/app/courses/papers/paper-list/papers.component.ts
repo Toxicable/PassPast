@@ -38,7 +38,7 @@ export class PapersComponent implements OnInit {
 
     ngOnInit() {
         this.papers$ = this.store.select( state => state.courses.paper.entities)
-        .combineLatest(this.store.select(state => state.courses.course.selectedId),
+        .combineLatest(this.store.select(state => state.courses.course.selected),
             (papers, courseId) => getSelectedPapers(papers, courseId)
           )
 

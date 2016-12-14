@@ -9,11 +9,11 @@ import { Observable } from 'rxjs/Observable';
 import { Exam } from '../models/exam';
 import { ExamService } from './exam.service';
 import { QuestionActions } from '../questions/question.actions';
+import { Paper } from '../models/paper';
+import { Question } from '../models/question';
 
 @Injectable()
 export class ExamEffects {
-
-
   constructor(
     private actions$: Actions,
     private store: Store<AppState>,
@@ -25,15 +25,15 @@ export class ExamEffects {
  @Effect()
   select: Observable<Action> = this.actions$
     .ofType(ExamActionTypes.SELECT)
-    //.do(action => this.store.dispatch(this.examActions.deselect()))
     .map(action => +action.payload)
     .switchMap((examId: number) =>
-      this.store.select(state => state.courses.exam.cache)
+      this.store.select(state => state.courses.exam.entities)
         .first()
         .flatMap((cachedExams: Exam[]) => {
-          let localExams = cachedExams.find(c => c.id === examId);
-          if (localExams) {
-            return Observable.of(this.examActions.selectSuccess(localExams));
+          //TODO: add in selected cache
+          let localExam = cachedExams.find(c => c.id === examId);
+          if (localExam) {
+            return Observable.of(this.examActions.selectSuccess(localExam));
           }
           return this.examService.getExam(examId)
             .map((exam: Exam) => {
@@ -48,20 +48,21 @@ export class ExamEffects {
   @Effect()
   selectSuccess: Observable<Action> = this.actions$
     .ofType(ExamActionTypes.SELECT_SUCCESS)
-    .map(action => this.questionActions.load(action.payload.id));
+    .map(action => action.payload)
+    .map((question: Question) => this.questionActions.load(question.id));
 
 
   @Effect()
   load: Observable<Action> = this.actions$
     .ofType(ExamActionTypes.LOAD)
-    .map(action => +action.payload)
+    .map(action => action.payload)
     .switchMap((paperId: number) =>
-      this.store.select(state => state.courses.exam.cache)
+      this.store.select(state => state.courses.exam.entities)
         .first()
         .flatMap(exams => {
           let localExams = exams.filter(exam => exam.paperId === paperId);
           if (localExams.length > 0) {
-            return Observable.of(this.examActions.loadSuccess(localExams));
+            return Observable.empty();
           }
           return this.examService.getRelatedExams(paperId)
             .map(fetchedExams => {

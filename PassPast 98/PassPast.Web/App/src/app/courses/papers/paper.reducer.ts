@@ -2,22 +2,23 @@ import { Action } from '@ngrx/store';
 import { Paper } from '../models/paper';
 import { PaperActionTypes } from './paper.actions';
 import { CoursesState } from '../courses.store';
+import { Course } from '../models/course';
 
 export interface PaperState {
   entities: Paper[];
-  selectedId: number;
+  selected: Paper;
 }
 
 const initalState: PaperState = {
   entities: [],
-  selectedId: null
+  selected: null
 };
 
 export function paperReducer(state = initalState, action: Action): PaperState {
   switch (action.type) {
     case PaperActionTypes.LOAD_SUCCESS:
       return {
-        selectedId: state.selectedId,
+        selected: state.selected,
         entities: [
           ...state.entities,
           ...action.payload
@@ -26,7 +27,7 @@ export function paperReducer(state = initalState, action: Action): PaperState {
 
     case PaperActionTypes.ADD_SUCCESS:
       return {
-        selectedId: state.selectedId,
+        selected: state.selected,
         entities: [
           ...state.entities,
           action.payload
@@ -35,13 +36,13 @@ export function paperReducer(state = initalState, action: Action): PaperState {
 
     case PaperActionTypes.SELECT_SUCCESS:
       return {
-        selectedId: action.payload,
+        selected: action.payload,
         entities: state.entities
       };
 
     case PaperActionTypes.DESELECT:
       return {
-        selectedId: null,
+        selected: null,
         entities: state.entities
       };
 
@@ -50,10 +51,7 @@ export function paperReducer(state = initalState, action: Action): PaperState {
   }
 }
 
-export function getSelectedPaper(state: PaperState){
-  return state.entities.find(p => p.id == state.selectedId)
-}
-
-export function getSelectedPapers(paperEntities: Paper[], courseId: number){
-  return paperEntities.filter(p => p.courseId == courseId)
+export function getSelectedPapers(paperEntities: Paper[], course: Course): Paper[]{
+  if(course == null) { return [] }
+  return paperEntities.filter(p => p.courseId == course.id)
 }

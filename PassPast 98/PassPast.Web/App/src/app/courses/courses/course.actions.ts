@@ -26,7 +26,7 @@ export class CourseActions {
       payload
     };
   }
-  selectSuccess(payload: number): Action {
+  selectSuccess(payload: Course): Action {
     return {
       type: CourseActionTypes.SELECT_SUCCESS,
       payload
