@@ -28,15 +28,14 @@ export class PaperEffects {
       this.store.select(state => state.courses.paper.entities)
         .first()
         .flatMap((papers: Paper[]) => {
-          let localPapers = papers.find(c => c.id === paperId);
-          if (localPapers) {
-            return Observable.of(this.paperActions.selectSuccess(localPapers));
+          let localPaper = papers.find(c => c.id === paperId);
+          if (localPaper) {
+            return Observable.of(this.paperActions.selectSuccess(localPaper.id));
           }
           return this.paperService.getPaper(paperId)
             .map((paper: Paper) => {
               if (paper != null) {
-                this.store.dispatch(this.paperActions.Add(paper));
-                return this.paperActions.selectSuccess(paper);
+                return this.paperActions.selectSuccess(paper.id);
               }
               return this.paperActions.selectFailed();
             })
@@ -46,28 +45,40 @@ export class PaperEffects {
   @Effect()
   selectSuccess: Observable<Action> = this.actions$
     .ofType(PaperActionTypes.SELECT_SUCCESS)
-    .map(action => this.examActions.load(action.payload.id));
-
+    .map(action => action.payload)
+    .map(paperId => this.examActions.load(paperId));
 
   @Effect()
   load: Observable<Action> = this.actions$
     .ofType(PaperActionTypes.LOAD)
+    .map(action => action)
     .map(action => +action.payload)
-    .switchMap((courseId: number) =>
+    .switchMap(courseId =>
       this.store.select(state => state.courses.paper.entities)
         .first()
         .flatMap(papers => {
           let localPapers = papers.filter(paper => paper.courseId === courseId);
           if (localPapers.length > 0) {
-            return Observable.of(this.paperActions.loadSuccess(localPapers));
+            return Observable.never();
           }
           return this.paperService.getRelatedPapers(courseId)
-            .map(fetchedPapers => {
-              this.store.dispatch(this.paperActions.cache(fetchedPapers));
-              return this.paperActions.loadSuccess(fetchedPapers);
-            });
+            .map(fetchedPapers => this.paperActions.loadSuccess(fetchedPapers))
         })
-    );
+    )
 
+  @Effect()
+  add: Observable<Action> = this.actions$
+    .ofType(PaperActionTypes.ADD)
+    .map(a => { debugger; return a;})
+    .map(action => action.payload)
+    .flatMap((paper: Paper) =>
+      this.store.select(state => state.courses.course.selectedId)
+        .flatMap(courseId => {
+          debugger
+          paper.courseId = courseId;
+          return this.paperService.create(paper)
+            .map(paper => this.paperActions.addSuccess(paper))
+        })
+    )
 
 }

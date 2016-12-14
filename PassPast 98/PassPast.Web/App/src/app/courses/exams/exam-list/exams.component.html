@@ -1,11 +1,11 @@
-<h1>Exams</h1>     
+<h1>Exams</h1>
 <a  class="header-navigation__link" [routerLink]="['/courses', 1, 2, 'add-exam']" routerLinkActive="active-router-link">Add Exam</a>
 
 <a [routerLink]="['../']">Back</a>
 <button type="button" md-raised-button color="primary" (click)="openNewExamDialog()">Add Exam</button>
 
 <md-list>
-    <md-list-item *ngFor="let exam of exams$ | async" [routerLink]="exam.id">
+    <md-list-item *ngFor="let exam of exams$ | async" [routerLink]="exam.id" class="can-click">
         <h3 md-line>{{exam.year}}</h3>
         <span md-line>Semester: {{exam.semester}}</span>
     </md-list-item>

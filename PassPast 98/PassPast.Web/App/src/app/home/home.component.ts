@@ -13,27 +13,13 @@ import { NgFor } from '@angular/common'
   templateUrl: './home.component.html'
 })
 export class HomeComponent {
-  items = [{id: 2}, {id: 4}, {id: 6}];
+
   constructor(
     private dialog: MdDialog,
     private snackBar: MdSnackBar,
     private store: Store<AppState>
   ) { }
 
-  @ViewChild(NgFor) forloop: NgFor;
 
-  ngOnInit(){
-    console.log(this.forloop);
-  }
-
-  connection: any;
-
-  connect() {
-  }
-
-  send() {
-
-    this.connection.invoke('Echo', "hi", 'json')
-  }
 
 }

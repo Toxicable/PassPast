@@ -27,8 +27,5 @@ export class PaperService {
 
   create(paper: Paper): Observable<Paper> {
     return this.authHttp.post('/papers', paper)
-      .do((newPaper: Paper) => {
-        this.store.dispatch(this.paperActions.Add(newPaper));
-      });
   }
 }

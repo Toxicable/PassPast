@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { coursesRouting } from './courses.routing';
-import { ExamsComponent } from './exams/exams.component';
 import { CourseService } from './courses/course.service';
 import { AddCourseComponent } from './courses/add-course/add-course.component';
 import { PaperService } from './papers/paper.service';
@@ -34,6 +33,7 @@ import { VoteComponent } from './votes/vote.component';
 import { CommentComponent } from './comments/comment/comment.component';
 import { CoursesComponent } from './courses/course-list/courses.component';
 import { PapersComponent } from './papers/paper-list/papers.component';
+import { ExamsComponent } from './exams/exam-list/exams.component';
 
 @NgModule({
   imports: [

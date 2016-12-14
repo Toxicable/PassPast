@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { AppState } from '../../../app/app-store';
+import { AppState } from '../../../../app/app-store';
 import { Observable } from 'rxjs';
-import { Exam } from '../models/exam';
-import { ExamService } from './exam.service';
+import { Exam } from '../../models/exam';
+import { ExamService } from './../exam.service';
 import { Store } from '@ngrx/store';
-import { AddExamComponent } from './add-exam/add-exam.component';
+import { AddExamComponent } from './../add-exam/add-exam.component';
 import { MdDialog, MdDialogRef } from '@angular/material';
 
 @Component({

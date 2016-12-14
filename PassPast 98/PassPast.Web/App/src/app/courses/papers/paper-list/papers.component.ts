@@ -8,6 +8,7 @@ import { AlertService } from '../../../../core/alert/alert.service';
 import { MdDialogRef, MdDialog } from '@angular/material';
 import { AddPaperComponent } from './../add-paper/add-paper.component';
 import { Store } from '@ngrx/store';
+import { getSelectedPapers } from '../paper.reducer';
 
 @Component({
     selector: 'app-papers',
@@ -36,7 +37,10 @@ export class PapersComponent implements OnInit {
     }
 
     ngOnInit() {
-        this.papers$ = this.store.select( state => state.courses.paper.entities);
+        this.papers$ = this.store.select( state => state.courses.paper.entities)
+        .combineLatest(this.store.select(state => state.courses.course.selectedId),
+            (papers, courseId) => getSelectedPapers(papers, courseId)
+          )
 
      }
 }
