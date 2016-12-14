@@ -6,6 +6,7 @@ export const CourseActionTypes = {
   LOAD: type('[Course] Load'),
   LOAD_SUCCESS: type('[Course] Load Success'),
   ADD: type('[Course] Add'),
+  ADD_SUCCESS: type('[Course] Add Success'),
   SELECT: type('[Course] Select'),
   SELECT_SUCCESS: type('[Course] Select Success'),
   SELECT_FAILED: type('[Course] Select Failed'),
@@ -25,7 +26,7 @@ export class CourseActions {
       payload
     };
   }
-  selectSuccess(payload: Course): Action {
+  selectSuccess(payload: number): Action {
     return {
       type: CourseActionTypes.SELECT_SUCCESS,
       payload
@@ -40,6 +41,12 @@ export class CourseActions {
   add(payload: Course): Action {
     return {
       type: CourseActionTypes.ADD,
+      payload
+    };
+  }
+  addSuccess(payload: Course): Action {
+    return {
+      type: CourseActionTypes.ADD_SUCCESS,
       payload
     };
   }

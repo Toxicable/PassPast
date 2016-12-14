@@ -23,10 +23,9 @@ export class PaperEffects {
   @Effect()
   select: Observable<Action> = this.actions$
     .ofType(PaperActionTypes.SELECT)
-    //.do(action => this.store.dispatch(this.paperActions.deselect()))
     .map(action => +action.payload)
     .switchMap((paperId: number) =>
-      this.store.select(state => state.courses.paper.cache)
+      this.store.select(state => state.courses.paper.entities)
         .first()
         .flatMap((papers: Paper[]) => {
           let localPapers = papers.find(c => c.id === paperId);
@@ -55,7 +54,7 @@ export class PaperEffects {
     .ofType(PaperActionTypes.LOAD)
     .map(action => +action.payload)
     .switchMap((courseId: number) =>
-      this.store.select(state => state.courses.paper.cache)
+      this.store.select(state => state.courses.paper.entities)
         .first()
         .flatMap(papers => {
           let localPapers = papers.filter(paper => paper.courseId === courseId);

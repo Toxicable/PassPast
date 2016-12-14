@@ -6,33 +6,35 @@ import { Store } from '@ngrx/store';
 import { AlertService } from '../../../../core/alert/alert.service';
 
 @Component({
-    selector: 'add-paper',
-    templateUrl: 'add-paper.component.html'
+  selector: 'add-paper',
+  templateUrl: 'add-paper.component.html'
 })
 export class AddPaperComponent implements OnInit {
-    constructor(private papers: PaperService,
-                private alert: AlertService,
-                private formBuilder: FormBuilder,
-                private store: Store<AppState>
+  constructor(
+    private papers: PaperService,
+    private alert: AlertService,
+    private formBuilder: FormBuilder,
+    private store: Store<AppState>
+    private
+  ) { }
 
-    ) { }
+  newPaperForm: FormGroup
 
-    newPaperForm: FormGroup
+  ngOnInit(): void {
+    this.newPaperForm = this.formBuilder.group({
+      name: ['', [Validators.required]],
+    });
+  }
 
-    ngOnInit(): void {
-        this.newPaperForm = this.formBuilder.group({
-            name: ['', [Validators.required]],
-        });
-    }
-
-    onSubmit(){
-        this.store.select( state => state.courses.course.selected.id)
-            .first()
-            .flatMap( (id: number) => {
-                let newPaper = Object.assign({}, {courseId: id},this.newPaperForm.value );
-                return this.papers.create(newPaper);
-            })
-            .subscribe(() => this.alert.sendSuccess("SUccessfully crreated the Paper :D"));
-    }
+  onSubmit() {
+    this.store.dispatch
+    this.store.select(state => state.courses.course.entities.id)
+      .first()
+      .flatMap((id: number) => {
+        let newPaper = Object.assign({}, { courseId: id }, this.newPaperForm.value);
+        return this.papers.create(newPaper);
+      })
+      .subscribe(() => this.alert.sendSuccess("Successfully crreated the Paper :D"));
+  }
 
 }

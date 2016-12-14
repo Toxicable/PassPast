@@ -1,12 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import { PaperService } from './paper.service';
+import { PaperService } from './../paper.service';
 import { Observable } from 'rxjs';
-import { Paper } from '../models/paper';
-import { AppState } from '../../../app/app-store';
+import { Paper } from '../../models/paper';
+import { AppState } from '../../../../app/app-store';
 import { ActivatedRoute } from '@angular/router';
-import { AlertService } from '../../../core/alert/alert.service';
+import { AlertService } from '../../../../core/alert/alert.service';
 import { MdDialogRef, MdDialog } from '@angular/material';
-import { AddPaperComponent } from './add-paper/add-paper.component';
+import { AddPaperComponent } from './../add-paper/add-paper.component';
 import { Store } from '@ngrx/store';
 
 @Component({
@@ -36,7 +36,7 @@ export class PapersComponent implements OnInit {
     }
 
     ngOnInit() {
-        this.papers$ = this.store.select( state => state.courses.paper.displayed);
+        this.papers$ = this.store.select( state => state.courses.paper.entities);
 
      }
 }
