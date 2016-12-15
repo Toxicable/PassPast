@@ -25,6 +25,7 @@ using AspNet.Security.OAuth.Validation;
 using System.Threading.Tasks;
 using PassPast.Web.Votes;
 using PassPast.Web.Comments.Hubs;
+using PassPast.Web.Comments;
 
 namespace PassPast.Web
 {
@@ -51,7 +52,7 @@ namespace PassPast.Web
         }
 
         public IConfigurationRoot Configuration { get; }
-        
+
         public void ConfigureServices(IServiceCollection services)
         {
             var env = services.BuildServiceProvider().GetRequiredService<IHostingEnvironment>();
@@ -85,12 +86,14 @@ namespace PassPast.Web
 
                 x.CreateMap<AnswerEntity, AnswerViewModel>();
 
-
+                x.CreateMap<CommentEntity, CommentViewModel>();
             });
 
             services.AddSingleton(sp => config.CreateMapper());
 
             services.AddMvc();
+
+        
 
             services.AddEntityFramework()
                 .AddDbContext<ApplicationDbContext>(options =>

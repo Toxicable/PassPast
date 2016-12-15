@@ -45,13 +45,10 @@ namespace PassPast.Web.Api.Exams
                 .Include(q => q.Answers)
                 .Include(q => q.Comments)
                 .ToListAsync())
-                .Select(x =>
-                {
-                    x.SubQuestions = null;
-                    return x;
-                }).ToList();
+                .Where(q => q.ParentQuestionId == null)
+                .ToList();
 
-            return exams;
+            return  exams;
             
         }
 

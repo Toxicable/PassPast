@@ -41,7 +41,7 @@ export class AuthHttp {
                     return this.http.get(this.baseUrl + url, options)
                         .map( this.checkForError)
                         .catch( error => Observable.throw(error))
-                        .map(this.getJson);
+                        .map(res => this.getJson(res))
                 })
         );
     }
@@ -54,7 +54,7 @@ export class AuthHttp {
                     return this.http.post(this.baseUrl + url, data, options)
                         .map( this.checkForError)
                         .catch( error => this.httpExceptions.handleError(error))
-                        .map(this.getJson);
+                        .map(this.getJson)
                 })
         );
     }

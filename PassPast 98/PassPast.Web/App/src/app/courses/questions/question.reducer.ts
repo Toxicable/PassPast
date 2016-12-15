@@ -4,13 +4,11 @@ import { QuestionActionTypes } from './question.actions';
 import { AppState } from '../../app-store';
 
 export interface QuestionState {
-  display: Question[];
-  cache: Question[];
+  entities: Question[];
 }
 
 const initalState: QuestionState = {
-  display: [],
-  cache: []
+  entities: [],
 }
 
 export function questionReducer(state = initalState, action: Action): QuestionState {
@@ -18,33 +16,10 @@ export function questionReducer(state = initalState, action: Action): QuestionSt
 
     case QuestionActionTypes.LOAD_SUCCESS:
       return {
-        display: action.payload,
-        cache: state.cache
-      }
-
-    case QuestionActionTypes.CACHE:
-      return {
-        display: state.display,
-        cache: [
-          ...state.cache,
-          ...action.payload
-        ],
+        entities: action.payload,
       }
 
     default:
       return state;
   }
-}
-
-
-export const getDisplayed = (questions: Question[]) => {
-
-    let objs: any = {};
-    questions.forEach(q => objs[q.id] = q);
-
-    let nonNulls = questions.filter(val => !!val.parentQuestionId)
-    nonNulls.forEach(q => objs[q.parentQuestionId].subQuestions.push(q))
-
-    return questions.filter(val => !val.parentQuestionId);
-
 }

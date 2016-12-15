@@ -23,12 +23,4 @@ export class QuestionActions {
       payload
     };
   }
-  cache(payload: Question[]) {
-    return {
-      type: QuestionActionTypes.CACHE,
-      payload
-    }
-  }
-
-
 }

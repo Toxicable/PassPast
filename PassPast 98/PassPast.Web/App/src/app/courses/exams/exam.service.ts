@@ -28,8 +28,5 @@ export class ExamService {
 
   create(exam: Exam): Observable<Exam> {
     return this.authHttp.post('/exams', exam)
-      .do((newExam: Exam) => {
-        this.store.dispatch(this.examActions.add(newExam));
-      });
   }
 }

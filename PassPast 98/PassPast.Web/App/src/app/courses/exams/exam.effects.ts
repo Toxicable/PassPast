@@ -11,6 +11,7 @@ import { ExamService } from './exam.service';
 import { QuestionActions } from '../questions/question.actions';
 import { Paper } from '../models/paper';
 import { Question } from '../models/question';
+import { QuestionService } from '../questions/question.service';
 
 @Injectable()
 export class ExamEffects {
@@ -19,10 +20,11 @@ export class ExamEffects {
     private store: Store<AppState>,
     private examService: ExamService,
     private examActions: ExamActions,
-    private questionActions: QuestionActions
+    private questionActions: QuestionActions,
+    private questionService: QuestionService,
   ) { }
 
- @Effect()
+  @Effect()
   select: Observable<Action> = this.actions$
     .ofType(ExamActionTypes.SELECT)
     .map(action => +action.payload)
@@ -71,4 +73,26 @@ export class ExamEffects {
             });
         })
     );
+
+  @Effect()
+  add: Observable<Action> = this.actions$
+    .ofType(ExamActionTypes.ADD)
+    .map(action => action.payload)
+    .flatMap((formData: any) =>
+      this.store.select(state => state.courses.paper.selected)
+        .flatMap(selectedPaper =>{
+          //make this a better method
+          let newExam = Object.assign({}, { paperId: selectedPaper.id }, formData)
+          delete newExam['sections'];
+
+          return this.examService.create(newExam)
+            .flatMap(createdExam => {
+              let newPaperData = Object.assign({}, { examId: createdExam.id }, formData);
+              delete newPaperData['semester'];
+              delete newPaperData['year'];
+              return this.questionService.create(newPaperData);
+            })
+        })
+    )
+
 }
