@@ -11,6 +11,8 @@ import { QuestionActionTypes, QuestionActions } from './question.actions';
 import { ExamService } from '../exams/exam.service';
 import { QuestionService } from './question.service';
 import { normalize, Schema, arrayOf } from 'normalizr';
+import { CommentActions } from '../comments/comment.actions';
+import { AnswerActions } from '../answers/answer.actions';
 
 @Injectable()
 export class QuestionEffects {
@@ -20,7 +22,9 @@ export class QuestionEffects {
     private actions$: Actions,
     private store: Store<AppState>,
     private questionActions: QuestionActions,
-    private questionService: QuestionService
+    private questionService: QuestionService,
+    private commentActions: CommentActions,
+    private answerActions: AnswerActions,
   ) {
     this.questionSchema.define({
       answers: arrayOf(this.answerSchema),
@@ -41,13 +45,16 @@ export class QuestionEffects {
       this.store.select(state => state.courses.question.entities)
         .first()
         .flatMap(questions => {
-          let localQuestions = questions.filter(question => question.examId === examId);
-          if (localQuestions.length > 0) {
-            return Observable.of(this.questionActions.loadSuccess(localQuestions));
-          }
+          // let localQuestions = questions.filter(question => question.examId === examId);
+          // if (localQuestions.length > 0) {
+          //   return Observable.of(this.questionActions.loadSuccess(localQuestions));
+          // }
           return this.questionService.getRelatedQuestions(examId)
             .map(questions => {
               let norm = normalize(questions, arrayOf(this.questionSchema)).entities
+
+              this.store.dispatch(this.answerActions.loadSuccess(norm['answers']))
+              this.store.dispatch(this.commentActions.loadSuccess(norm['comments']))
 
               return this.questionActions.loadSuccess(norm['questions']);
             })

@@ -34,6 +34,8 @@ import { CommentComponent } from './comments/comment/comment.component';
 import { CoursesComponent } from './courses/course-list/courses.component';
 import { PapersComponent } from './papers/paper-list/papers.component';
 import { ExamsComponent } from './exams/exam-list/exams.component';
+import { CommentActions } from './comments/comment.actions';
+import { AnswerActions } from './answers/answer.actions';
 
 @NgModule({
   imports: [
@@ -72,7 +74,12 @@ import { ExamsComponent } from './exams/exam-list/exams.component';
     PaperActions,
     ExamActions,
     QuestionActions,
+CommentActions,
+AnswerActions,
+
     SignalrExamHubService,
+
+
 
     ActivateCourseService,
     ActivatePaperService,

@@ -1,21 +1,22 @@
 import { Action } from '@ngrx/store';
 import { Question } from '../models/question';
-import { QuestionActionTypes } from './question.actions';
 import { AppState } from '../../app-store';
+import { Answer } from '../models/answer';
+import { AnswerActionTypes } from './answer.actions';
 import { Dict } from '../models/dict';
 
-export interface QuestionState {
-  entities: Dict<Question>;
+export interface AnswerState {
+  entities: Dict<Answer>;
 }
 
-const initalState: QuestionState = {
+const initalState: AnswerState = {
   entities: {},
 }
 
-export function questionReducer(state = initalState, action: Action): QuestionState {
+export function answerReducer(state = initalState, action: Action): AnswerState {
   switch (action.type) {
 
-    case QuestionActionTypes.LOAD_SUCCESS:
+    case AnswerActionTypes.LOAD_SUCCESS:
       return {
         entities: action.payload,
       }

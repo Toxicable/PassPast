@@ -6,7 +6,6 @@ import { Injectable } from '@angular/core';
 export const QuestionActionTypes = {
   LOAD: type('[Questions] Load'),
   LOAD_SUCCESS: type('[Questions] Load Success'),
-  CACHE: type('[Questions] Cache')
 }
 
 @Injectable()
