@@ -1,11 +1,11 @@
 import { Component, OnInit, ChangeDetectionStrategy, Input } from '@angular/core';
-import { SignalrExamHubService } from '../../signalr-exam-hub.service';
+import { ExamHubService } from '../../exam-hub.service';
 import { FormGroup, FormBuilder } from '@angular/forms';
 
 @Component({
   selector: 'app-new-answer',
   templateUrl: 'new-answer.component.html',
-  changeDetection: ChangeDetectionStrategy.Default
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class NewAnswerComponent implements OnInit {
   @Input() questionId: number;
@@ -13,7 +13,7 @@ export class NewAnswerComponent implements OnInit {
 
   constructor(
     private formBuilder: FormBuilder,
-    private examHub: SignalrExamHubService
+    private examHub: ExamHubService
   ) { }
 
   ngOnInit() {

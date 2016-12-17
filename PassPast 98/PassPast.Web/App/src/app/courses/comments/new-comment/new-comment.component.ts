@@ -1,6 +1,6 @@
 import { Component, OnInit, Input, ChangeDetectionStrategy } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
-import { SignalrExamHubService } from '../../signalr-exam-hub.service';
+import { ExamHubService } from '../../exam-hub.service';
 
 @Component({
   selector: 'app-new-comment',
@@ -14,7 +14,7 @@ export class NewCommentComponent implements OnInit {
 
   constructor(
     private formBuilder: FormBuilder,
-    private examHub: SignalrExamHubService
+    private examHub: ExamHubService
   ) { }
 
   ngOnInit() {

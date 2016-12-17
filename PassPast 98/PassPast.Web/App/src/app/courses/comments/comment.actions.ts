@@ -1,6 +1,7 @@
 import { Action } from '@ngrx/store';
 import { type } from '../../../util/action-name-helper';
 import { Injectable } from '@angular/core';
+import { Dict } from '../models/dict';
 
 export const CommentActionTypes = {
   LOAD_SUCCESS: type('[Comments] Load Success'),
@@ -8,7 +9,7 @@ export const CommentActionTypes = {
 
 @Injectable()
 export class CommentActions {
-  loadSuccess(payload: Comment[]) {
+  loadSuccess(payload: Dict<Comment>) {
     return {
       type: CommentActionTypes.LOAD_SUCCESS,
       payload

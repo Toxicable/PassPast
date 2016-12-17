@@ -8,7 +8,7 @@ namespace PassPast.Web.Answers
 {
     public interface IAnswerManager
     {
-        Task Create(AnswerEntity answer);
+        Task<AnswerEntity> Create(AnswerEntity answer);
     }
 
     public class AnswerManager: IAnswerManager
@@ -20,7 +20,7 @@ namespace PassPast.Web.Answers
             _context = context;
         }
 
-        public async Task Create(AnswerEntity answer)
+        public async Task<AnswerEntity> Create(AnswerEntity answer)
         {
             answer.CreatedAt = DateTimeOffset.Now;
 
@@ -29,6 +29,8 @@ namespace PassPast.Web.Answers
 
             _context.Add(answer);
             await _context.SaveChangesAsync();
+
+            return answer;
         }
     }
 }

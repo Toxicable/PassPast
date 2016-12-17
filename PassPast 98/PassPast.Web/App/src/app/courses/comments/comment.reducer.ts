@@ -25,3 +25,7 @@ export function commentReducer(state = initalState, action: Action): CommentStat
       return state;
   }
 }
+
+export function getComments(answerIds: number[], questions: Dict<Comment>): Comment[]{
+  return answerIds.map(id => questions[id])
+}

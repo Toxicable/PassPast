@@ -24,7 +24,6 @@ import { ActivateQuestionsService } from './questions/activate-questions.service
 import { QuestionEffects } from './questions/question.effects';
 import { QuestionsComponent } from './questions/question-list/questions.component';
 import { QuestionComponent } from './questions/question/question.component';
-import { SignalrExamHubService } from './signalr-exam-hub.service';
 import { AnswerMcqComponent } from './answers/answer/answer-mcq.component';
 import { AnswerShortComponent } from './answers/answer/answer-short.component';
 import { NewAnswerComponent } from './answers/new-answer/new-answer.component';
@@ -36,6 +35,7 @@ import { PapersComponent } from './papers/paper-list/papers.component';
 import { ExamsComponent } from './exams/exam-list/exams.component';
 import { CommentActions } from './comments/comment.actions';
 import { AnswerActions } from './answers/answer.actions';
+import { ExamHubService } from './exam-hub.service';
 
 @NgModule({
   imports: [
@@ -61,8 +61,8 @@ import { AnswerActions } from './answers/answer.actions';
     NewAnswerComponent,
     NewCommentComponent,
     CommentComponent,
-
     VoteComponent,
+
   ],
   providers: [
     CourseService,
@@ -77,7 +77,7 @@ import { AnswerActions } from './answers/answer.actions';
 CommentActions,
 AnswerActions,
 
-    SignalrExamHubService,
+    ExamHubService,
 
 
 

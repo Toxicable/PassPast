@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { SignalrExamHubService } from '../signalr-exam-hub.service';
+import { ExamHubService } from '../exam-hub.service';
 
 @Component({
   selector: 'app-vote',
@@ -10,7 +10,7 @@ export class VoteComponent {
   @Input() type: string;
   @Input() id: number;
   constructor(
-    private examHub: SignalrExamHubService
+    private examHub: ExamHubService
 
   ) { }
 

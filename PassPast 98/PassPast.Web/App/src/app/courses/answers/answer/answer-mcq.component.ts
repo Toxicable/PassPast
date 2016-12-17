@@ -1,6 +1,6 @@
 import { Component, OnInit, Input, ChangeDetectionStrategy } from '@angular/core';
 import { Answer } from '../../models/answer';
-import { SignalrExamHubService } from '../../signalr-exam-hub.service';
+import { ExamHubService } from '../../exam-hub.service';
 
 @Component({
   selector: 'app-answer-mcq',
@@ -12,7 +12,7 @@ export class AnswerMcqComponent {
   @Input() totalAnswerVotes: number;
 
   constructor(
-    private examHub: SignalrExamHubService
+    private examHub: ExamHubService
   ) {}
 
 }

@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.SignalR;
 using PassPast.Data;
@@ -16,12 +17,15 @@ namespace PassPast.Web.Comments.Hubs
     {
         private IVoteManager _voteManager { get; set; }
         private IAnswerManager _answerManager { get; set; }
+        private IMapper _mapper { get; set; }
 
         public ExamHub(
             IVoteManager voteManager,
-            IAnswerManager answerManager
+            IAnswerManager answerManager,
+            IMapper mapper
             )
         {
+            _mapper = mapper;
             _answerManager = answerManager;
             _voteManager = voteManager;
         }
@@ -53,7 +57,7 @@ namespace PassPast.Web.Comments.Hubs
             
         }
 
-        public async Task PostAnswer(int questionId, string content)
+        public async Task PostAnswer(int groupdId, int questionId, string content)
         {
             var answer = new AnswerEntity
             {
@@ -61,9 +65,11 @@ namespace PassPast.Web.Comments.Hubs
                 QuestionId = questionId,
             };
 
-            await _answerManager.Create(answer);
+            var createdAnswer = _mapper.Map<AnswerViewModel>(await _answerManager.Create(answer));
 
-            //Clients.Group(Context.).InvokeAsync
+
+
+            await Clients.Group(groupdId.ToString()).InvokeAsync("BroadcastAnswer", createdAnswer);
         }
         
         public void PostComment(string content, int questionId)

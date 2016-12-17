@@ -3,10 +3,11 @@
        {{_question.incriment}}
   </span>
   <div>
-    <div *ngFor="let answer of _question.answers">
+    <!--answers-->
+    <div *ngFor="let answer of answers | async">
 
       <div *ngIf="_question.type == 'Mcq'"  >
-        <app-answer-mcq [totalAnswerVotes]="_question.totalAnswerVotes" [answer]="answer"></app-answer-mcq>
+        <app-answer-mcq [totalAnswerVotes]="totalAnswerVotes" [answer]="answer"></app-answer-mcq>
       </div>
 
       <div *ngIf="_question.type == 'Short'">
@@ -25,7 +26,7 @@
 
       <span *ngIf="showComments">
 
-        <div *ngFor="let comment of _question.comments">
+        <div *ngFor="let comment of comments | async">
           <app-comment [comment]="comment"></app-comment>
         </div>
 
@@ -37,7 +38,7 @@
 
   </div>
   <ul>
-    <li *ngFor="let subQuestion of _question.subQuestions; trackBy: subQuestion?.id">
+    <li *ngFor="let subQuestion of (subQuestions | async)">
       <app-question [question]="subQuestion"></app-question>
     </li>
   </ul>

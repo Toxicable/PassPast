@@ -5,5 +5,6 @@ import { Vote } from './vote';
 export interface Answer{
     id: number;
     contentOrIncriment: string;
-    totalVotes: string;
+    totalVotes: number;
+    questionId: number;
 }

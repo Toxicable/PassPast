@@ -2,7 +2,7 @@
 <a [routerLink]="['../']">Back</a>
 
 <ul>
-    <li *ngFor="let question of questions$ | async; trackBy: question?.id">
+    <li *ngFor="let question of (questions$ | async)">
         <app-question [question]="question"></app-question>
     </li>
 </ul>

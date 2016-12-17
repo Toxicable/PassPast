@@ -51,12 +51,13 @@ export class QuestionEffects {
           // }
           return this.questionService.getRelatedQuestions(examId)
             .map(questions => {
-              let norm = normalize(questions, arrayOf(this.questionSchema)).entities
+              let norm = normalize(questions, arrayOf(this.questionSchema))
 
-              this.store.dispatch(this.answerActions.loadSuccess(norm['answers']))
-              this.store.dispatch(this.commentActions.loadSuccess(norm['comments']))
+              this.store.dispatch(this.answerActions.loadSuccess(norm.entities['answers'] ? norm.entities['answers'] : {}))
+              this.store.dispatch(this.commentActions.loadSuccess(norm.entities['comments'] ? norm.entities['comments'] : {}))
+              this.store.dispatch(this.questionActions.selectSuccess(norm.result));
 
-              return this.questionActions.loadSuccess(norm['questions']);
+              return this.questionActions.loadSuccess(norm.entities['questions']);
             })
         })
     );

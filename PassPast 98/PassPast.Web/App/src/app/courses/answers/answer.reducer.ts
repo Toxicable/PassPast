@@ -16,12 +16,25 @@ const initalState: AnswerState = {
 export function answerReducer(state = initalState, action: Action): AnswerState {
   switch (action.type) {
 
+    case AnswerActionTypes.ADD_SUCCESS:
+    console.log(Object.assign({}, state.entities, action.payload))
+      return {
+        entities: Object.assign({}, state.entities, action.payload)
+      }
+
     case AnswerActionTypes.LOAD_SUCCESS:
       return {
         entities: action.payload,
       }
 
+
     default:
       return state;
   }
+}
+
+
+export function getAnswers(answerIds: number[], questions: Dict<Answer>): Answer[]{
+
+  return answerIds.map(id => questions[id])
 }
