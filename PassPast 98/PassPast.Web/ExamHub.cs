@@ -4,6 +4,7 @@ using PassPast.Data;
 using PassPast.Data.Domain;
 using PassPast.Web.Answers;
 using PassPast.Web.Votes;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace PassPast.Web.Comments.Hubs
@@ -35,12 +36,14 @@ namespace PassPast.Web.Comments.Hubs
             return Groups.RemoveAsync(examId.ToString());
         }
 
-        public async Task PostAnswerVote(int groupId, VoteBindingModel vote)
+        public async Task PostAnswerVote(int groupId, VoteBindingModel vote, string type)
         {
             var newVote = _mapper.Map<VoteEntity>(vote);
             newVote.CreatedById = "b7675d91-c236-4890-b8e3-3630956cb75b";
 
-            var editedAnswer = _mapper.Map<AnswerViewModel>(await _answerManager.AddVote(newVote));
+            var editedAnswer = (await _answerManager.AddVote(newVote, type))
+                .Select(a => _mapper.Map<AnswerViewModel>(a))
+                .ToList();
             await Clients.Group(groupId.ToString()).InvokeAsync("BroadcastAnswerVote", editedAnswer);         
         }
 

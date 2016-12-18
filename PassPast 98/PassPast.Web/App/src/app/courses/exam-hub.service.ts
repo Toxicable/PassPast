@@ -40,19 +40,20 @@ export class ExamHubService {
 
       this.store.dispatch(this.questionActions.addComment(comment));
       this.store.dispatch(this.commentActions.addSuccess(dictComment));
-    })
+    });
 
-    this.connection.on('BroadcastAnswerVote', (answer: Answer) => {
-      let dictAnswer: Dict<Answer> = { [answer.id]: answer };
+    this.connection.on('BroadcastAnswerVote', (answers: Answer[]) => {
+      let dicAnswers: Dict<Answer> = {};
+      answers.forEach(a =>  dicAnswers[a.id] = a );
 
-      this.store.dispatch(this.answerActions.updateVotes(dictAnswer));
-    })
+      this.store.dispatch(this.answerActions.updateVotes(dicAnswers));
+    });
 
     this.connection.on('BroadcastCommentVote', (comment: Comment) => {
       let dictComment: Dict<Comment> = { [comment.id]: comment };
 
       this.store.dispatch(this.commentActions.updateVotes(dictComment));
-    })
+    });
 
     this.connecting = this.connection.start();
   }
@@ -74,8 +75,8 @@ export class ExamHubService {
     this.connection.invoke('PostAnswer', this.groupId, { questionId, contentOrIncriment: content });
   }
 
-  postAnswerVote(value: number, answerId: number) {
-    this.connection.invoke('PostAnswerVote', this.groupId, { value, answerId });
+  postAnswerVote(value: number, answerId: number, type: string) {
+    this.connection.invoke('PostAnswerVote', this.groupId, { value, answerId }, type);
   }
 
   postCommentVote(value: number, commentId: number) {

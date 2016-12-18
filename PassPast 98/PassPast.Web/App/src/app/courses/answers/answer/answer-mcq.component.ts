@@ -11,12 +11,18 @@ export class AnswerMcqComponent {
   @Input() answer: Answer;
   @Input() totalAnswerVotes: number;
 
+  get foo() {
+    return {
+      foo: "bar"
+    }
+  }
+
   constructor(
     private examHub: ExamHubService
-  ) {}
+  ) { }
 
   sendVote() {
-    this.examHub.postAnswerVote(1, this.answer.id);
+    this.examHub.postAnswerVote(1, this.answer.id, 'mcq');
   }
 
 }

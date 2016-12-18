@@ -17,7 +17,7 @@ export class VoteComponent {
 
   upVote() {
     if (this.type === 'answer') {
-      this.examHub.postAnswerVote(1, this.id);
+      this.examHub.postAnswerVote(1, this.id, 'short');
     }
     if (this.type === 'comment') {
       this.examHub.postCommentVote(1, this.id);
@@ -26,7 +26,7 @@ export class VoteComponent {
 
   downVote() {
     if (this.type === 'answer') {
-      this.examHub.postAnswerVote(-1, this.id);
+      this.examHub.postAnswerVote(-1, this.id, 'short');
     }
     if (this.type === 'comment') {
       this.examHub.postCommentVote(-1, this.id);

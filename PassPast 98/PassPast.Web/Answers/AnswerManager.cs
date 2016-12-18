@@ -11,10 +11,10 @@ namespace PassPast.Web.Answers
     public interface IAnswerManager
     {
         Task<AnswerEntity> Create(AnswerEntity answer);
-        Task<AnswerEntity> AddVote(VoteEntity vote);
+        Task<IEnumerable<AnswerEntity>> AddVote(VoteEntity vote, string type);
     }
 
-    public class AnswerManager: IAnswerManager
+    public class AnswerManager : IAnswerManager
     {
         private readonly ApplicationDbContext _context;
 
@@ -33,11 +33,19 @@ namespace PassPast.Web.Answers
             return answer;
         }
 
-        public async Task<AnswerEntity> AddVote(VoteEntity vote)
+        public async Task<IEnumerable<AnswerEntity>> AddVote(VoteEntity vote, string type)
         {
+            vote.CreatedAt = DateTimeOffset.Now;
+
+            var result = new List<AnswerEntity>();
+
+            var answer = await _context.Answers
+                .FirstOrDefaultAsync(a => a.Id == vote.AnswerId);
+
             var existingVote = await _context.Votes
-               .Include(v => v.Answer)
-               .SingleOrDefaultAsync(v => v.AnswerId == vote.AnswerId && v.CreatedById == vote.CreatedById && !v.Deleted);
+                .Include(v => v.Answer)
+                .SingleOrDefaultAsync(v => v.AnswerId == vote.AnswerId && v.CreatedById == vote.CreatedById && !v.Deleted);
+
 
             if (existingVote != null)
             {
@@ -48,19 +56,42 @@ namespace PassPast.Web.Answers
                 if (vote.Value == existingVote.Value)
                 {
                     await _context.SaveChangesAsync();
-                    return existingVote.Answer;
+
+                    result.Add(existingVote.Answer);
+                    return result;
                 }
             }
 
-            vote.CreatedAt = DateTimeOffset.Now;
+            if (existingVote == null && type == "mcq")
+            {
+
+                var otherAnswer = await _context.Answers
+                    .FirstOrDefaultAsync(a => a.QuestionId == answer.QuestionId && a.Votes.Any(q => q.CreatedById == vote.CreatedById && !q.Deleted));
+
+                if (otherAnswer != null)
+                {
+                    existingVote = await _context.Votes
+                   .Include(v => v.Answer)
+                   .FirstOrDefaultAsync(v => v.AnswerId == otherAnswer.Id && v.CreatedById == vote.CreatedById && !v.Deleted);
+
+                    //negate the old one
+                    existingVote.Deleted = true;
+                    existingVote.Answer.TotalVotes += existingVote.Value == 1 ? -1 : 1;
+
+                    //add the other answer
+                    result.Add(existingVote.Answer);
+                }
+            }
+
+            //add the clicked answer
+            result.Add(answer);
 
             _context.Votes.Add(vote);
-            var answer = await _context.Answers.FindAsync(vote.AnswerId);
             answer.TotalVotes += vote.Value;
 
             await _context.SaveChangesAsync();
 
-            return answer;
+            return result;
         }
     }
 }
