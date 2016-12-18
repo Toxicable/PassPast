@@ -41,7 +41,6 @@ namespace PassPast.Web.Comments.Hubs
             newVote.CreatedById = "b7675d91-c236-4890-b8e3-3630956cb75b";
 
             var editedAnswer = _mapper.Map<AnswerViewModel>(await _answerManager.AddVote(newVote));
-
             await Clients.Group(groupId.ToString()).InvokeAsync("BroadcastAnswerVote", editedAnswer);         
         }
 
@@ -50,7 +49,8 @@ namespace PassPast.Web.Comments.Hubs
             var newVote = _mapper.Map<VoteEntity>(vote);
             newVote.CreatedById = "b7675d91-c236-4890-b8e3-3630956cb75b";
 
-            await _commentManager.AddVote(newVote);
+            var editedComment = _mapper.Map<CommentViewModel>(await _commentManager.AddVote(newVote));
+            await Clients.Group(groupId.ToString()).InvokeAsync("BroadcastCommentVote", editedComment);
         }
 
         public async Task PostAnswer(int groupId, AnswerBindingModel answer)
@@ -58,8 +58,7 @@ namespace PassPast.Web.Comments.Hubs
             var newAnswer = _mapper.Map<AnswerEntity>(answer);
             newAnswer.CreatedById = "b7675d91-c236-4890-b8e3-3630956cb75b";
 
-            var createdAnswer = _mapper.Map<AnswerViewModel>(await _answerManager.Create(newAnswer));
-            
+            var createdAnswer = _mapper.Map<AnswerViewModel>(await _answerManager.Create(newAnswer));            
             await Clients.Group(groupId.ToString()).InvokeAsync("BroadcastAnswer", createdAnswer);
         }
         
@@ -69,7 +68,6 @@ namespace PassPast.Web.Comments.Hubs
             newComment.CreatedById = "b7675d91-c236-4890-b8e3-3630956cb75b";
 
             var createdComment = _mapper.Map<CommentViewModel>(await _commentManager.Create(newComment));
-
             await Clients.Group(groupId.ToString()).InvokeAsync("BroadcastComment", createdComment);
         }
     }

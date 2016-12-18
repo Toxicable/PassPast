@@ -7,13 +7,13 @@ import { Dict } from '../models/dict';
 export const AnswerActionTypes = {
   ADD: type('[Answer] Add'),
   ADD_SUCCESS: type('[Answer] Add Success'),
-  LOAD_SUCCESS: type('[Answers] Load Success'),
+  LOAD_SUCCESS: type('[Answer] Load Success'),
   UPDATE_VOTES: type('[Answer] Update')
 };
 
 @Injectable()
 export class AnswerActions {
-  updateVotes(payload: Dict<Answer>){
+  updateVotes(payload: Dict<Answer>) {
     return {
       type: AnswerActionTypes.UPDATE_VOTES,
       payload

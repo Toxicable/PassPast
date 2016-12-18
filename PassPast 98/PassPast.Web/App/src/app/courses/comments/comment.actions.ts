@@ -6,11 +6,18 @@ import { Comment } from '../models/comment';
 
 export const CommentActionTypes = {
   LOAD_SUCCESS: type('[Comments] Load Success'),
-  ADD_SUCCESS: type('[Comment] Add Success')
+  ADD_SUCCESS: type('[Comment] Add Success'),
+  UPDATE_VOTES: type('[Comment] Update')
 }
 
 @Injectable()
 export class CommentActions {
+  updateVotes(payload: Dict<Comment>){
+    return {
+      type: CommentActionTypes.UPDATE_VOTES,
+      payload
+    }
+  }
   addSuccess(payload: Dict<Comment>){
     return {
       type: CommentActionTypes.ADD_SUCCESS,

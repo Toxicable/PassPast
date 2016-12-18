@@ -16,6 +16,7 @@ const initalState: CommentState = {
 export function commentReducer(state = initalState, action: Action): CommentState {
   switch (action.type) {
 
+    case CommentActionTypes.UPDATE_VOTES:
     case CommentActionTypes.ADD_SUCCESS:
       return {
         entities: Object.assign({}, state.entities, action.payload)

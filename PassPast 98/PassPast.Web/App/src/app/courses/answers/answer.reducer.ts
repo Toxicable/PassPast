@@ -15,7 +15,6 @@ const initalState: AnswerState = {
 
 export function answerReducer(state = initalState, action: Action): AnswerState {
   switch (action.type) {
-
     case AnswerActionTypes.UPDATE_VOTES:
     case AnswerActionTypes.ADD_SUCCESS:
       return {

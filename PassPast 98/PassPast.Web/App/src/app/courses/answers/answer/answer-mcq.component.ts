@@ -15,4 +15,8 @@ export class AnswerMcqComponent {
     private examHub: ExamHubService
   ) {}
 
+  sendVote() {
+    this.examHub.postAnswerVote(1, this.answer.id);
+  }
+
 }
