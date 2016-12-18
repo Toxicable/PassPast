@@ -19,7 +19,7 @@ import { Comment } from '../../models/comment';
 })
 export class QuestionComponent {
   _question: NormQuestion;
-  totalAnswerVotes: number;
+  totalAnswerVotes: number = 0;
   showComments: boolean = false;
   subQuestions: Observable<NormQuestion[]>;
   answers: Observable<Answer[]>;
@@ -27,29 +27,21 @@ export class QuestionComponent {
 
   @Input()
   set question(question: NormQuestion) {
-    // sum the votes for this answers for this question
-    // let totalAnswerVotes = question.answers
-    //   .map(a => +a.totalVotes)
-    //   .reduce((previousVote, currentVote) => previousVote + currentVote, 0);
-    this._question = question
+
+    this._question = question;
     this.subQuestions = this.store.select(state => state.courses.question.entities)
       .map(entities => getQuestions(question.subQuestions, entities ))
 
     this.answers = this.store.select(state => state.courses.answer.entities)
-      //.do((a) => console.log(a))
       .map(entities => getAnswers(question.answers, entities))
       .do(answers => {
         this.totalAnswerVotes = answers
-        .map(a => a.totalVotes)
-        .reduce((previousVote, currentVote) => previousVote + currentVote, 0);
-      })
-      //.do((a) => console.log(a))
-      //.do((a) => console.log(question.answers))
+          .map(a => a.totalVotes)
+          .reduce((previousVote, currentVote) => previousVote + currentVote, 0);
+      });
 
     this.comments = this.store.select(state => state.courses.comment.entities)
-      .map(entities => getComments(question.comments, entities))
-
-    // this._question = Object.assign({}, question, { totalAnswerVotes });
+      .map(entities => getComments(question.comments, entities));
 
   }
   constructor(

@@ -1,4 +1,6 @@
-﻿using PassPast.Data;
+﻿using Microsoft.EntityFrameworkCore;
+using PassPast.Data;
+using PassPast.Data.Domain;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,6 +11,7 @@ namespace PassPast.Web.Answers
     public interface IAnswerManager
     {
         Task<AnswerEntity> Create(AnswerEntity answer);
+        Task<AnswerEntity> AddVote(VoteEntity vote);
     }
 
     public class AnswerManager: IAnswerManager
@@ -24,10 +27,37 @@ namespace PassPast.Web.Answers
         {
             answer.CreatedAt = DateTimeOffset.Now;
 
-            //TODO: remove this when we can auth the user con the connection
-            answer.CreatedById = "b7675d91-c236-4890-b8e3-3630956cb75b";
+            _context.Answers.Add(answer);
+            await _context.SaveChangesAsync();
 
-            _context.Add(answer);
+            return answer;
+        }
+
+        public async Task<AnswerEntity> AddVote(VoteEntity vote)
+        {
+            var existingVote = await _context.Votes
+               .Include(v => v.Answer)
+               .SingleOrDefaultAsync(v => v.AnswerId == vote.AnswerId && v.CreatedById == vote.CreatedById && !v.Deleted);
+
+            if (existingVote != null)
+            {
+                //delete and negate the old vote
+                existingVote.Deleted = true;
+                existingVote.Answer.TotalVotes += existingVote.Value == 1 ? -1 : 1;
+
+                if (vote.Value == existingVote.Value)
+                {
+                    await _context.SaveChangesAsync();
+                    return existingVote.Answer;
+                }
+            }
+
+            vote.CreatedAt = DateTimeOffset.Now;
+
+            _context.Votes.Add(vote);
+            var answer = await _context.Answers.FindAsync(vote.AnswerId);
+            answer.TotalVotes += vote.Value;
+
             await _context.SaveChangesAsync();
 
             return answer;

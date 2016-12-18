@@ -13,7 +13,7 @@
         <app-control-messages [control]="newExamForm.controls.semester"></app-control-messages>
     </div>
 
-    <button md-button (click)="ngOnInit()" type="button">Reset</button>
+    <button md-button (click)="newExamForm.reset()" type="button">Reset</button>
     <button md-button (click)="addSection()" type="button">+ Add Section</button>
     <ul>
         <li *ngFor="let section of newExamForm.controls.sections.controls; let i=index">
@@ -21,6 +21,6 @@
             <app-question-section [sectionForm]="section"></app-question-section>
         </li>
     </ul>
-    
+
     <button md-raised-button color="primary" type="submit" [disabled]="!newExamForm.valid" >Submit</button>
 </form>

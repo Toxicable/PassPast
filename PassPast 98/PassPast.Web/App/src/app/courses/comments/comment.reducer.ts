@@ -16,16 +16,21 @@ const initalState: CommentState = {
 export function commentReducer(state = initalState, action: Action): CommentState {
   switch (action.type) {
 
+    case CommentActionTypes.ADD_SUCCESS:
+      return {
+        entities: Object.assign({}, state.entities, action.payload)
+      };
+
     case CommentActionTypes.LOAD_SUCCESS:
       return {
         entities: action.payload,
-      }
+      };
 
     default:
       return state;
   }
 }
 
-export function getComments(answerIds: number[], questions: Dict<Comment>): Comment[]{
+export function getComments(answerIds: number[], questions: Dict<Comment>): Comment[] {
   return answerIds.map(id => questions[id])
 }

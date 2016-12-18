@@ -16,7 +16,9 @@ import { AnswerActions } from '../answers/answer.actions';
 
 @Injectable()
 export class QuestionEffects {
-
+  questionSchema = new Schema('questions');
+  answerSchema = new Schema('answers');
+  commentSchema = new Schema('comments');
 
   constructor(
     private actions$: Actions,
@@ -33,9 +35,7 @@ export class QuestionEffects {
     });
   }
 
-  questionSchema = new Schema('questions');
-  answerSchema = new Schema('answers');
-  commentSchema = new Schema('comments');
+
 
   @Effect()
   load: Observable<Action> = this.actions$
@@ -50,15 +50,15 @@ export class QuestionEffects {
           //   return Observable.of(this.questionActions.loadSuccess(localQuestions));
           // }
           return this.questionService.getRelatedQuestions(examId)
-            .map(questions => {
-              let norm = normalize(questions, arrayOf(this.questionSchema))
+            .map(fetchedQuestions => {
+              let norm = normalize(fetchedQuestions, arrayOf(this.questionSchema))
 
-              this.store.dispatch(this.answerActions.loadSuccess(norm.entities['answers'] ? norm.entities['answers'] : {}))
-              this.store.dispatch(this.commentActions.loadSuccess(norm.entities['comments'] ? norm.entities['comments'] : {}))
+              this.store.dispatch(this.answerActions.loadSuccess(norm.entities['answers'] ? norm.entities['answers'] : {}));
+              this.store.dispatch(this.commentActions.loadSuccess(norm.entities['comments'] ? norm.entities['comments'] : {}));
               this.store.dispatch(this.questionActions.selectSuccess(norm.result));
 
               return this.questionActions.loadSuccess(norm.entities['questions']);
-            })
+            });
         })
     );
 }

@@ -26,6 +26,7 @@ using System.Threading.Tasks;
 using PassPast.Web.Votes;
 using PassPast.Web.Comments.Hubs;
 using PassPast.Web.Comments;
+using PassPast.Data.Domain;
 
 namespace PassPast.Web
 {
@@ -65,10 +66,8 @@ namespace PassPast.Web
             services.AddTransient<IExamManager, ExamManager>();
             services.AddTransient<IPaperManager, PaperManager>();
             services.AddTransient<IQuestionManger, QuestionManger>();
-            services.AddTransient<IVoteManager, VoteManager>();
             services.AddTransient<IAnswerManager, AnswerManager>();
-
-            services.AddTransient<IMyService, MyService>();
+            services.AddTransient<ICommentManager, CommentManager>();
 
             var config = new MapperConfiguration(x =>
             {
@@ -85,8 +84,12 @@ namespace PassPast.Web
                 x.CreateMap<QuestionBindingModel, QuestionEntity>();
 
                 x.CreateMap<AnswerEntity, AnswerViewModel>();
+                x.CreateMap<AnswerBindingModel, AnswerEntity>();
 
                 x.CreateMap<CommentEntity, CommentViewModel>();
+                x.CreateMap<CommentBindingModel, CommentEntity>();
+
+                x.CreateMap<VoteBindingModel, VoteEntity>();
             });
 
             services.AddSingleton(sp => config.CreateMapper());

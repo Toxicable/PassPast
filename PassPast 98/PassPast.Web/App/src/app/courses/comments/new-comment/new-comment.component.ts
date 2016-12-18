@@ -10,7 +10,7 @@ import { ExamHubService } from '../../exam-hub.service';
 export class NewCommentComponent implements OnInit {
   newCommentForm: FormGroup;
 
-  @Input() id: number
+  @Input() questionId: number;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -24,6 +24,7 @@ export class NewCommentComponent implements OnInit {
   }
 
   sendComment(){
-    this.examHub.postComment(this.newCommentForm.value['content'], this.id)
+    this.examHub.postComment(this.newCommentForm.value['content'], this.questionId)
+    this.newCommentForm.reset();
   }
 }

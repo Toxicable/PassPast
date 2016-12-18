@@ -1,4 +1,11 @@
-<span class="vote-button-container">
-    <md-icon class="can-click" (click)="upVote()">expand_less</md-icon>
-    <md-icon class="can-click" (click)="downVote()">expand_more</md-icon>
+<span class="horizontal">
+  <span class="vote-button-container">
+      <md-icon class="can-click" (click)="upVote()">expand_less</md-icon>
+      <md-icon class="can-click" (click)="downVote()">expand_more</md-icon>
+
+  </span>
+  <span>
+    {{voteCount}}
+  </span>
 </span>
+

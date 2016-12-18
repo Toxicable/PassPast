@@ -6,6 +6,9 @@ import { AnswerActions } from './answers/answer.actions';
 import { Answer } from './models/answer';
 import { Dict } from './models/dict';
 import { QuestionActions } from './questions/question.actions';
+import { Observable } from 'rxjs/Observable';
+import { Comment } from './models/comment';
+import { CommentActions } from './comments/comment.actions';
 
 declare let signalR: any;
 
@@ -15,57 +18,65 @@ export class ExamHubService {
   connection: any;
   groupId: number;
 
+  connecting: Promise<any>;
+
   constructor(
     private store: Store<AppState>,
     private answerActions: AnswerActions,
     private questionActions: QuestionActions,
+    private commentActions: CommentActions,
   ) {
+    this.connection = new signalR.HubConnection(AppSettings.SignalRUrl);
 
-    if (this.connection != null) {
-      return
-    }
-    let connection = new signalR.HubConnection(AppSettings.SignalRUrl);
-
-    connection.on('BroadcastAnswer', (answer: Answer) => {
+    this.connection.on('BroadcastAnswer', (answer: Answer) => {
       let dictAnswer: Dict<Answer> = { [answer.id]: answer };
 
       this.store.dispatch(this.questionActions.addAnswer(answer));
       this.store.dispatch(this.answerActions.addSuccess(dictAnswer));
     });
 
-    connection.start()
+    this.connection.on('BroadcastComment', (comment: Comment) => {
+      let dictComment: Dict<Comment> = { [comment.id]: comment };
+
+      this.store.dispatch(this.questionActions.addComment(comment));
+      this.store.dispatch(this.commentActions.addSuccess(dictComment));
+    })
+
+    this.connection.on('BroadcastAnswerVote', (answer: Answer) =>{
+      let dictAnswer: Dict<Answer> = { [answer.id]: answer };
+
+      this.store.dispatch(this.answerActions.updateVotes(dictAnswer));
+    })
+
+    this.connecting = this.connection.start();
+  }
+
+  joinRoom(roomNumber: number) {
+    this.connecting
       .then(() => {
-        this.connection = connection;
-
-        this.store.select(state => state.courses.exam.selected)
-          .filter(selectedId => selectedId !== null)
-          .subscribe(selectedId => {
-            this.groupId = selectedId.id
-            //this.leaveRoom(selected.id);
-            //leave all other groups
-            this.joinRoom(this.groupId);
-          });
+        this.groupId = roomNumber;
+        this.connection.invoke('JoinGroup', roomNumber);
       })
-
-
   }
-
-  private joinRoom(roomNumber: number) {
-    this.connection.invoke('JoinGroup', roomNumber)
-  }
-  private leaveRoom(roomNumber: number) {
-    this.connection.invoke('LeaveGroup', roomNumber)
+  leaveCurrentRoom() {
+    if (this.groupId) {
+      this.connection.invoke('LeaveGroup', this.groupId);
+    }
   }
 
   public postAnswer(questionId: number, content: string) {
-    this.connection.invoke('PostAnswer', this.groupId, questionId, content)
+    this.connection.invoke('PostAnswer', this.groupId, { questionId, contentOrIncriment: content });
   }
 
-  public postVote(value: number, id: number, type: string) {
-    this.connection.invoke('PostVote', value, id, type);
+  public postAnswerVote(value: number, answerId: number) {
+    this.connection.invoke('PostAnswerVote', this.groupId, {value, answerId});
   }
 
-  public postComment(content: string, id: number) {
-    this.connection.invoke('PostComment', content, id)
+  public postCommentVote(value: number, commentId: number) {
+    this.connection.invoke('PostCommentVote', this.groupId, {value, commentId});
+  }
+
+  public postComment(content: string, questionId: number) {
+    this.connection.invoke('PostComment', this.groupId, { content, questionId });
   }
 }

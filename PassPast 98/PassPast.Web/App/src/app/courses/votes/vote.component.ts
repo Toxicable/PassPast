@@ -9,16 +9,27 @@ import { ExamHubService } from '../exam-hub.service';
 export class VoteComponent {
   @Input() type: string;
   @Input() id: number;
+  @Input() voteCount: number;
   constructor(
     private examHub: ExamHubService
 
   ) { }
 
-  upVote(){
-    this.examHub.postVote(1, this.id, this.type);
+  upVote() {
+    if (this.type === 'answer') {
+      this.examHub.postAnswerVote(1, this.id);
+    }
+    if (this.type === 'comment') {
+      this.examHub.postCommentVote(1, this.id);
+    }
   }
 
-  downVote(){
-    this.examHub.postVote(-1, this.id, this.type);
+  downVote() {
+    if (this.type === 'answer') {
+      this.examHub.postAnswerVote(-1, this.id);
+    }
+    if (this.type === 'comment') {
+      this.examHub.postCommentVote(-1, this.id);
+    }
   }
 }

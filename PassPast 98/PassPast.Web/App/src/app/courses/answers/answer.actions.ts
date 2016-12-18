@@ -8,15 +8,22 @@ export const AnswerActionTypes = {
   ADD: type('[Answer] Add'),
   ADD_SUCCESS: type('[Answer] Add Success'),
   LOAD_SUCCESS: type('[Answers] Load Success'),
-}
+  UPDATE_VOTES: type('[Answer] Update')
+};
 
 @Injectable()
 export class AnswerActions {
-  addSuccess(payload: Dict<Answer>){
+  updateVotes(payload: Dict<Answer>){
+    return {
+      type: AnswerActionTypes.UPDATE_VOTES,
+      payload
+    }
+  }
+  addSuccess(payload: Dict<Answer>) {
     return {
       type: AnswerActionTypes.ADD_SUCCESS,
       payload
-    }
+    };
   }
   loadSuccess(payload: Dict<Answer>) {
     return {

@@ -5,6 +5,9 @@ import { CanActivate, ActivatedRouteSnapshot } from '@angular/router';
 import { CourseActions } from '../courses/course.actions';
 import { ExamActions } from '../exams/exam.actions';
 import { PaperActions } from '../papers/paper.actions';
+import { AnswerActions } from '../answers/answer.actions';
+import { QuestionActions } from '../questions/question.actions';
+import { ExamHubService } from '../exam-hub.service';
 
 @Injectable()
 export class ActivateExamService implements CanActivate {
@@ -13,7 +16,9 @@ export class ActivateExamService implements CanActivate {
     private store: Store<AppState>,
     private courseActions: CourseActions,
     private paperActions: PaperActions,
-    private examActions: ExamActions
+    private examActions: ExamActions,
+    private questionActions: QuestionActions,
+    private examHub: ExamHubService,
   ) { }
 
   canActivate(route: ActivatedRouteSnapshot) {
@@ -23,6 +28,8 @@ export class ActivateExamService implements CanActivate {
     this.store.dispatch(this.paperActions.select(+paperId));
     this.store.dispatch(this.courseActions.select(+courseId));
     this.store.dispatch(this.examActions.deselect());
+    this.store.dispatch(this.questionActions.deselect());
+    this.examHub.leaveCurrentRoom();
     return true;
   }
 

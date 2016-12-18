@@ -1,33 +1,28 @@
 ﻿using AutoMapper;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.SignalR;
 using PassPast.Data;
 using PassPast.Data.Domain;
 using PassPast.Web.Answers;
 using PassPast.Web.Votes;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace PassPast.Web.Comments.Hubs
 {
     public class ExamHub : Hub
     {
-        private IVoteManager _voteManager { get; set; }
         private IAnswerManager _answerManager { get; set; }
         private IMapper _mapper { get; set; }
+        private ICommentManager _commentManager { get; set; }
 
         public ExamHub(
-            IVoteManager voteManager,
             IAnswerManager answerManager,
+            ICommentManager commentManager,
             IMapper mapper
             )
         {
+            _commentManager = commentManager;
             _mapper = mapper;
             _answerManager = answerManager;
-            _voteManager = voteManager;
         }
 
         public Task JoinGroup(int examId)
@@ -40,45 +35,42 @@ namespace PassPast.Web.Comments.Hubs
             return Groups.RemoveAsync(examId.ToString());
         }
 
-        public void PostVote(int value, int id, string type)
+        public async Task PostAnswerVote(int groupId, VoteBindingModel vote)
         {
-            var vote = new VoteEntity
-            {
-                Value = value
-            };
-            if(type == "comment")
-            {
-                vote.CommentId = id;
-            }
-            if(type == "answer")
-            {
-                vote.CommentId = id;
-            }
-            
+            var newVote = _mapper.Map<VoteEntity>(vote);
+            newVote.CreatedById = "b7675d91-c236-4890-b8e3-3630956cb75b";
+
+            var editedAnswer = _mapper.Map<AnswerViewModel>(await _answerManager.AddVote(newVote));
+
+            await Clients.Group(groupId.ToString()).InvokeAsync("BroadcastAnswerVote", editedAnswer);         
         }
 
-        public async Task PostAnswer(int groupdId, int questionId, string content)
+        public async Task PostCommentVote(int groupId, VoteBindingModel vote)
         {
-            var answer = new AnswerEntity
-            {
-                ContentOrIncriment = content,
-                QuestionId = questionId,
-            };
+            var newVote = _mapper.Map<VoteEntity>(vote);
+            newVote.CreatedById = "b7675d91-c236-4890-b8e3-3630956cb75b";
 
-            var createdAnswer = _mapper.Map<AnswerViewModel>(await _answerManager.Create(answer));
+            await _commentManager.AddVote(newVote);
+        }
 
+        public async Task PostAnswer(int groupId, AnswerBindingModel answer)
+        {
+            var newAnswer = _mapper.Map<AnswerEntity>(answer);
+            newAnswer.CreatedById = "b7675d91-c236-4890-b8e3-3630956cb75b";
 
-
-            await Clients.Group(groupdId.ToString()).InvokeAsync("BroadcastAnswer", createdAnswer);
+            var createdAnswer = _mapper.Map<AnswerViewModel>(await _answerManager.Create(newAnswer));
+            
+            await Clients.Group(groupId.ToString()).InvokeAsync("BroadcastAnswer", createdAnswer);
         }
         
-        public void PostComment(string content, int questionId)
+        public async Task PostComment(int groupId, CommentBindingModel comment)
         {
-            var comment = new CommentEntity
-            {
-                Content = content,
-                QuestionId = questionId
-            };
+            var newComment = _mapper.Map<CommentEntity>(comment);
+            newComment.CreatedById = "b7675d91-c236-4890-b8e3-3630956cb75b";
+
+            var createdComment = _mapper.Map<CommentViewModel>(await _commentManager.Create(newComment));
+
+            await Clients.Group(groupId.ToString()).InvokeAsync("BroadcastComment", createdComment);
         }
     }
 

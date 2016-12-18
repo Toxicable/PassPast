@@ -23,7 +23,6 @@ export class QuestionsComponent implements OnInit {
   constructor(
     private store: Store<AppState>,
     private questions: QuestionService,
-    private examHub: ExamHubService
   ) { }
 
   ngOnInit() {

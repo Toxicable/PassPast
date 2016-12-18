@@ -3,13 +3,14 @@
        {{_question.incriment}}
   </span>
   <div>
-    <!--answers-->
+    <!--Answers-->
     <div *ngFor="let answer of answers | async">
-
+      <!--MCQ-->
       <div *ngIf="_question.type == 'Mcq'"  >
         <app-answer-mcq [totalAnswerVotes]="totalAnswerVotes" [answer]="answer"></app-answer-mcq>
       </div>
 
+      <!--Short -->
       <div *ngIf="_question.type == 'Short'">
         <app-answer-short [answer]="answer"></app-answer-short>
       </div>
@@ -18,19 +19,20 @@
 
     <!--makes sure this the is bottom level question-->
     <span *ngIf="_question.subQuestions.length == 0 ">
+      <!--New Answer-->
       <span *ngIf="_question.type == 'Short'">
         <app-new-answer [questionId]="_question.id"></app-new-answer>
       </span>
 
       <button (click)="showComments = !showComments">Show Comments</button>
 
+      <!--Comments-->
       <span *ngIf="showComments">
-
         <div *ngFor="let comment of comments | async">
           <app-comment [comment]="comment"></app-comment>
         </div>
-
-        <app-new-comment></app-new-comment>
+        <!--New Comment-->
+        <app-new-comment [questionId]="_question.id"></app-new-comment>
       </span>
 
     </span>

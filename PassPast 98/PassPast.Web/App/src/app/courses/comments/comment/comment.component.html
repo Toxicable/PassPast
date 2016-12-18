@@ -1,3 +1,5 @@
 <div>
-{{comment.content}}
-  <div>
+  {{comment.content}}
+<div>
+
+<app-vote [type]="'comment'" [id]="comment.id" [voteCount]="comment.totalVotes"></app-vote>

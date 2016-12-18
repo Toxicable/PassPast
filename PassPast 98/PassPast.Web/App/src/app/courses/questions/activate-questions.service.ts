@@ -5,6 +5,7 @@ import { CanActivate, ActivatedRouteSnapshot } from '@angular/router';
 import { CourseActions } from '../courses/course.actions';
 import { ExamActions } from '../exams/exam.actions';
 import { PaperActions } from '../papers/paper.actions';
+import { ExamHubService } from '../exam-hub.service';
 
 @Injectable()
 export class ActivateQuestionsService implements CanActivate {
@@ -13,7 +14,8 @@ export class ActivateQuestionsService implements CanActivate {
     private store: Store<AppState>,
     private courseActions: CourseActions,
     private paperActions: PaperActions,
-    private examActions: ExamActions
+    private examActions: ExamActions,
+    private examHub: ExamHubService,
   ) { }
 
   canActivate(route: ActivatedRouteSnapshot) {
@@ -23,6 +25,7 @@ export class ActivateQuestionsService implements CanActivate {
     this.store.dispatch(this.examActions.select(+examId));
     this.store.dispatch(this.paperActions.select(+paperId));
     this.store.dispatch(this.courseActions.select(+courseId));
+    this.examHub.joinRoom(examId);
     return true;
   }
 

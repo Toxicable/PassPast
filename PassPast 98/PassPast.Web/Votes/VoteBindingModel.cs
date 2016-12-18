@@ -7,5 +7,8 @@ namespace PassPast.Web.Votes
 {
     public class VoteBindingModel
     {
+        public int Value { get; set; }
+        public int? AnswerId { get; set; }
+        public int? CommentId { get; set; }
     }
 }
