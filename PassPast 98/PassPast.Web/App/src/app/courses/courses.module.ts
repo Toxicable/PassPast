@@ -36,6 +36,8 @@ import { ExamsComponent } from './exams/exam-list/exams.component';
 import { CommentActions } from './comments/comment.actions';
 import { AnswerActions } from './answers/answer.actions';
 import { ExamHubService } from './exam-hub.service';
+import { AppState } from '../app-store';
+import { Store } from '@ngrx/store';
 
 @NgModule({
   imports: [
@@ -74,8 +76,8 @@ import { ExamHubService } from './exam-hub.service';
     PaperActions,
     ExamActions,
     QuestionActions,
-CommentActions,
-AnswerActions,
+    CommentActions,
+    AnswerActions,
 
     ExamHubService,
 

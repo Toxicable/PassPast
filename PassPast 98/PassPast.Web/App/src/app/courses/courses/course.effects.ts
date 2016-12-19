@@ -8,6 +8,7 @@ import { AppState } from '../../app-store';
 import { CourseActionTypes, CourseActions } from './course.actions';
 import { Course } from '../models/course';
 import { CourseService } from './course.service';
+import { Title } from '@angular/platform-browser';
 
 @Injectable()
 export class CourseEffects {
@@ -18,7 +19,8 @@ export class CourseEffects {
     private paperService: PaperService,
     private paperActions: PaperActions,
     private courseService: CourseService,
-    private courseActions: CourseActions
+    private courseActions: CourseActions,
+    private title: Title,
   ) { }
 
   @Effect()
@@ -47,7 +49,7 @@ export class CourseEffects {
   selectSuccess: Observable<Action> = this.actions$
     .ofType(CourseActionTypes.SELECT_SUCCESS)
     .map(action => action.payload)
-    .map((course: Course) => this.paperActions.load(course.id));
+    .map((course: Course) => this.paperActions.load(course.id))
 
   @Effect()
   load: Observable<Action> = this.actions$
@@ -71,7 +73,7 @@ export class CourseEffects {
     .map(action => action.payload)
     .flatMap((course: Course) =>
       this.courseService.create(course)
-        .map(course => this.courseActions.addSuccess(course))
-      )
+        .map(fetchedCourse => this.courseActions.addSuccess(fetchedCourse))
+      );
 
 }
