@@ -40,7 +40,7 @@
 
   </div>
   <ul>
-    <li *ngFor="let subQuestion of (subQuestions | async)">
+    <li *ngFor="let subQuestion of (subQuestions | async); trackBy: trackByFn">
       <app-question [question]="subQuestion"></app-question>
     </li>
   </ul>

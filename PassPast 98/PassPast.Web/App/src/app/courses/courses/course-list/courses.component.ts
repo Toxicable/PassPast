@@ -8,6 +8,7 @@ import { AlertService } from '../../../../core/alert/alert.service';
 import { MdDialogRef, MdDialog } from '@angular/material';
 import { AddCourseComponent } from './../add-course/add-course.component';
 import { CourseActions } from './../course.actions';
+import { trackByIdentity } from '../../../../util/track-by-id';
 
 @Component({
     selector: 'app-courses',
@@ -16,6 +17,7 @@ import { CourseActions } from './../course.actions';
 export class CoursesComponent implements OnInit {
     private newCourseDialogRef: MdDialogRef<AddCourseComponent>;
     courses$: Observable<Course[]>;
+    trackByFn = trackByIdentity;
 
     constructor(private courses: CourseService,
                 private alert: AlertService,

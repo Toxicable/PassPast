@@ -9,6 +9,7 @@ import { MdDialogRef, MdDialog } from '@angular/material';
 import { AddPaperComponent } from './../add-paper/add-paper.component';
 import { Store } from '@ngrx/store';
 import { getSelectedPapers } from '../paper.reducer';
+import { trackByIdentity } from '../../../../util/track-by-id';
 
 @Component({
     selector: 'app-papers',
@@ -17,6 +18,7 @@ import { getSelectedPapers } from '../paper.reducer';
 export class PapersComponent implements OnInit {
     private newPaperDialogRef: MdDialogRef<AddPaperComponent>;
     papers$: Observable<Paper[]>;
+    trackByFn = trackByIdentity;
 
     constructor(private papers: PaperService,
                 private alert: AlertService,

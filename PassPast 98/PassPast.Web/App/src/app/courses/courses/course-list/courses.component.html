@@ -2,7 +2,7 @@
 <button type="button" md-raised-button color="primary" (click)="openDialog()">Add Course</button>
 
 <md-list>
-    <md-list-item *ngFor="let course of courses$ | async" [routerLink]="[course.id]" class="can-click">
+    <md-list-item *ngFor="let course of courses$ | async; trackBy: trackByFn" [routerLink]="[course.id]" class="can-click">
         <h3 md-line>{{course.name}}</h3>
         <span md-line>Code: {{course.code}}</span>
     </md-list-item>

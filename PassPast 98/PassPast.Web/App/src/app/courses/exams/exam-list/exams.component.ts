@@ -6,6 +6,7 @@ import { ExamService } from './../exam.service';
 import { Store } from '@ngrx/store';
 import { AddExamComponent } from './../add-exam/add-exam.component';
 import { MdDialog, MdDialogRef } from '@angular/material';
+import { trackByIdentity } from '../../../../util/track-by-id';
 
 @Component({
   selector: 'app-exams',
@@ -14,6 +15,7 @@ import { MdDialog, MdDialogRef } from '@angular/material';
 export class ExamsComponent implements OnInit {
   private newExamDialogRef: MdDialogRef<AddExamComponent>;
   exams$: Observable<Exam[]>;
+  trackByFn = trackByIdentity;
 
   constructor(
     private store: Store<AppState>,

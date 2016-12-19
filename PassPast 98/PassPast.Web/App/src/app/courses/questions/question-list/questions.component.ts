@@ -9,6 +9,7 @@ import { normalize, Schema, arrayOf } from 'normalizr';
 import { getQuestions } from '../question.reducer';
 import { Dict } from '../../models/dict';
 import { NormQuestion } from '../../models/norm-question';
+import { trackByIdentity } from '../../../../util/track-by-id';
 
 @Component({
   selector: 'app-questions',
@@ -19,6 +20,7 @@ import { NormQuestion } from '../../models/norm-question';
 })
 export class QuestionsComponent implements OnInit {
   questions$: Observable<NormQuestion[]>;
+  trackByFn = trackByIdentity;
 
   constructor(
     private store: Store<AppState>,
