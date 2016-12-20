@@ -4,6 +4,4 @@ export interface Paper{
     id: number;
     name: string;
     courseId: number;
-    course: Course;
-    exams: Exam[];
 }

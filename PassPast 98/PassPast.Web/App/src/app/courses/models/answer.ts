@@ -1,4 +1,3 @@
-import { AnswerType } from './answer-type';
 import { Question } from './question';
 import { Vote } from './vote';
 

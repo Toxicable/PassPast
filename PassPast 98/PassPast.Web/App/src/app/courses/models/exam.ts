@@ -6,9 +6,5 @@ export interface Exam{
     year: number;
     semester: string;
     paperId: number;
-    paper: Paper;
-    questions: Question[];
-    createdById: number;
-    createdBy: string;
 }
 

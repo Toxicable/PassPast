@@ -11,5 +11,6 @@ namespace PassPast.Web.Answers
         public string contentOrIncriment { get; set; }
         public int totalVotes { get; set; }
         public int questionId { get; set; }
+        public DateTimeOffset createdAt { get; set; }
     }
 }
