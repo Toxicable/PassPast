@@ -26,6 +26,7 @@ export class QuestionComponent {
   answers: Observable<Answer[]>;
   comments: Observable<Comment[]>;
   trackByFn = trackByIdentity;
+  showContent = true;
 
   @Input()
   set question(question: NormQuestion) {

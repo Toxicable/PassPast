@@ -1,10 +1,12 @@
 <h1>Papers</h1>
 
-<a [routerLink]="['/courses']">Back</a>
+<button md-raised-button color="secondary" [routerLink]="['/courses']" >
+  <md-icon>chevron_left</md-icon>
+</button>
 <button type="button" md-raised-button color="primary" (click)="openNewPaperDialog()">Add Paper</button>
 
 <md-list>
-    <md-list-item *ngFor="let paper of papers$ | async; trackBy: trackByFn" class="can-click" [routerLink]="paper.id">
+    <md-list-item *ngFor="let paper of papers$ | async; trackBy: trackByFn" [routerLink]="paper.id" class="can-click highlight-background" >
         <h3 md-line>{{paper.name}}</h3>
     </md-list-item>
 </md-list>

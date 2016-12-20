@@ -12,3 +12,9 @@
   height:10px;
   background-color:orange
 }
+
+.question-container{
+    padding-left: 15px;
+    border-left: solid lightgray;
+}
+

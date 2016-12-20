@@ -1,8 +1,8 @@
 <h1>Questions</h1>
-<a [routerLink]="['../']">Back</a>
+<button md-raised-button color="secondary" [routerLink]="['../']" >
+  <md-icon>chevron_left</md-icon>
+</button>
 
-<ul>
-    <li *ngFor="let question of (questions$ | async) ; trackBy: trackByFn">
-        <app-question [question]="question"></app-question>
-    </li>
-</ul>
+<div *ngFor="let question of (questions$ | async) ; trackBy: trackByFn" class="question-container">
+    <app-question [question]="question"></app-question>
+</div>

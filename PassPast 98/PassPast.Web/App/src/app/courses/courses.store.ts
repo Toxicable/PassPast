@@ -5,15 +5,14 @@ import { CourseState, courseReducer } from './courses/course.reducer';
 import { QuestionState, questionReducer } from './questions/question.reducer';
 import { AnswerState, answerReducer } from './answers/answer.reducer';
 import { CommentState, commentReducer } from './comments/comment.reducer';
-import { Observable } from 'rxjs/Observable';
 
 export interface CoursesState {
-    course: CourseState,
-    paper: PaperState,
-    exam: ExamState,
-    question: QuestionState,
-    answer: AnswerState,
-  comment:
+    course: CourseState;
+    paper: PaperState;
+    exam: ExamState;
+    question: QuestionState;
+    answer: AnswerState;
+    comment: CommentState;
 }
 
 const reducers = {

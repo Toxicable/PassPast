@@ -1,5 +1,6 @@
 <md-toolbar [color]="primary">
   <span class="header-navigation">
+
     <span>
         <a [routerLink]="['/']" >
             Pass Past
@@ -28,6 +29,7 @@
         </a>
 
     </span>
+
   <span class="right">
     <span *ngIf="(loggedIn$ | async)" >
         Welcome {{username$ | async}}

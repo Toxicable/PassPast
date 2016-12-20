@@ -19,6 +19,6 @@ a:hover{
   cursor: pointer;
 }
 
-.can-click:hover{
+.highlight-background:hover{
   background:lightgrey
 }

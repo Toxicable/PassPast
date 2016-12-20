@@ -1,8 +1,10 @@
 <div>
-  <span md-line>
-       {{_question.incriment}}
-  </span>
-  <div>
+  <div (click)="showContent=!showContent" class="can-click highlight-background">
+    {{_question.incriment}}
+  </div>
+
+  <!--main content toggle-->
+  <div *ngIf="showContent">
     <!--Answers-->
     <div *ngFor="let answer of answers | async">
       <!--MCQ-->
@@ -37,12 +39,8 @@
 
     </span>
 
-
-  </div>
-  <ul>
-    <li *ngFor="let subQuestion of (subQuestions | async); trackBy: trackByFn">
+    <div *ngFor="let subQuestion of (subQuestions | async); trackBy: trackByFn" class="question-container">
       <app-question [question]="subQuestion"></app-question>
-    </li>
-  </ul>
-
+    </div>
+  </div>
 </div>
