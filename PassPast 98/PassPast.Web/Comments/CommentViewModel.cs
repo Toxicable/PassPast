@@ -11,5 +11,6 @@ namespace PassPast.Web.Comments
         public string content { get; set; }
         public int totalVotes { get; set; }
         public int questionId { get; set; }
+        public string createdAt { get; set; }
     }
 }

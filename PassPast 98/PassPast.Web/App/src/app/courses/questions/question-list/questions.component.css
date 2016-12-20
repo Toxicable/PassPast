@@ -5,11 +5,11 @@
 
 .mcq__progressbar--outer{
   width: 300px;
-  height:10px;
+  height:20px;
   background-color:green
 }
 .mcq__progressbar--inner{
-  height:10px;
+  height:20px;
   background-color:orange
 }
 

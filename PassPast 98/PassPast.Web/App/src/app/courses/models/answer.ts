@@ -6,4 +6,5 @@ export interface Answer{
     contentOrIncriment: string;
     totalVotes: number;
     questionId: number;
+    createdAt: string;
 }

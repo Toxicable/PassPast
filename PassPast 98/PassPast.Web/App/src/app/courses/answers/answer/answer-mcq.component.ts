@@ -11,12 +11,6 @@ export class AnswerMcqComponent {
   @Input() answer: Answer;
   @Input() totalAnswerVotes: number;
 
-  get foo() {
-    return {
-      foo: "bar"
-    }
-  }
-
   constructor(
     private examHub: ExamHubService
   ) { }

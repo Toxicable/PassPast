@@ -1,12 +1,14 @@
 <div>
   <div (click)="showContent=!showContent" class="can-click highlight-background">
-    {{_question.incriment}}
+    <h2>
+      {{_question.incriment}}
+    </h2>
   </div>
 
   <!--main content toggle-->
   <div *ngIf="showContent">
     <!--Answers-->
-    <div *ngFor="let answer of answers | async">
+    <div *ngFor="let answer of answers | async | orderByDate: 'createdAt'">
       <!--MCQ-->
       <div *ngIf="_question.type == 'Mcq'"  >
         <app-answer-mcq [totalAnswerVotes]="totalAnswerVotes" [answer]="answer"></app-answer-mcq>
@@ -30,7 +32,7 @@
 
       <!--Comments-->
       <span *ngIf="showComments">
-        <div *ngFor="let comment of comments | async">
+        <div *ngFor="let comment of comments | async | orderByDate: 'createdAt'">
           <app-comment [comment]="comment"></app-comment>
         </div>
         <!--New Comment-->

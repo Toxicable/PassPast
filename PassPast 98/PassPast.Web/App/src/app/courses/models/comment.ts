@@ -4,4 +4,5 @@ export interface Comment{
     id: number;
     content: string;
     totalVotes: Vote[];
+    createdAt: string;
 }
