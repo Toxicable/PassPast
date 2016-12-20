@@ -60,7 +60,6 @@ export class AuthHttp {
     }
 
     private getJson(res: Response) {
-        // check to see if it's an empty response
         if (res.text() !== '') {
             return res.json();
         }
