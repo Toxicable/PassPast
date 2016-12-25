@@ -4,7 +4,7 @@ import { ExamHubService } from '../../exam-hub.service';
 
 @Component({
   selector: 'app-answer-mcq',
-  templateUrl: 'answer-mcq.component.html',
+  templateUrl: './answer-mcq.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class AnswerMcqComponent {

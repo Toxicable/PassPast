@@ -12,7 +12,7 @@ import { trackByIdentity } from '../../../../util/track-by-id';
 
 @Component({
     selector: 'app-courses',
-    templateUrl: 'courses.component.html'
+    templateUrl: './courses.component.html'
 })
 export class CoursesComponent implements OnInit {
     private newCourseDialogRef: MdDialogRef<AddCourseComponent>;

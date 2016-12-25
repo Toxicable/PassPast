@@ -4,7 +4,7 @@ import { FormGroup, FormBuilder } from '@angular/forms';
 
 @Component({
   selector: 'app-new-answer',
-  templateUrl: 'new-answer.component.html',
+  templateUrl: './new-answer.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class NewAnswerComponent implements OnInit {

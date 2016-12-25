@@ -3,8 +3,8 @@ import { FormBuilder, Validators, FormGroup, FormArray } from '@angular/forms';
 
 @Component({
     selector: 'app-question-section',
-    templateUrl: 'question-section.component.html',
-    styleUrls: ['question-section.component.css']
+    templateUrl: './question-section.component.html',
+    styleUrls: ['./question-section.component.css']
 })
 export class QuestionSectionComponent{
     @Input() sectionForm: FormGroup;

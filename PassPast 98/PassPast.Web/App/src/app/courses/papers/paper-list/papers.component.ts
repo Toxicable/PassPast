@@ -13,7 +13,7 @@ import { trackByIdentity } from '../../../../util/track-by-id';
 
 @Component({
     selector: 'app-papers',
-    templateUrl: 'papers.component.html'
+    templateUrl: './papers.component.html'
 })
 export class PapersComponent implements OnInit {
     private newPaperDialogRef: MdDialogRef<AddPaperComponent>;

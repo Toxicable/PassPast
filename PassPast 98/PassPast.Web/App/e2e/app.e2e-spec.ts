@@ -1,10 +1,10 @@
-import { AngularStarterPage } from './app.po';
+import { PassPastPage } from './app.po';
 
-describe('angular-starter App', function() {
-  let page: AngularStarterPage;
+describe('pass-past App', function() {
+  let page: PassPastPage;
 
   beforeEach(() => {
-    page = new AngularStarterPage();
+    page = new PassPastPage();
   });
 
   it('should display message saying app works', () => {

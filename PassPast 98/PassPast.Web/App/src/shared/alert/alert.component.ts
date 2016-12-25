@@ -7,8 +7,8 @@ import { Store} from '@ngrx/store';
 
 @Component({
     selector: 'app-alerts',
-    templateUrl: 'alert.component.html',
-    styleUrls: ['alert.component.css']
+    templateUrl: './alert.component.html',
+    styleUrls: ['./alert.component.css']
 })
 export class AlertComponent implements OnInit {
     alerts: Observable<Alert[]>;

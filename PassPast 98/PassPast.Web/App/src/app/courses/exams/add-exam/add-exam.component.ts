@@ -11,7 +11,7 @@ import { ExamActions } from '../exam.actions';
 
 @Component({
   selector: 'add-exam',
-  templateUrl: 'add-exam.component.html'
+  templateUrl: './add-exam.component.html'
 })
 export class AddExamComponent implements OnInit {
   constructor(

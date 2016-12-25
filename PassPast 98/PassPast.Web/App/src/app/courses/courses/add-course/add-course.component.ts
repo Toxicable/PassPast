@@ -8,7 +8,7 @@ import { CourseActions } from '../course.actions';
 
 @Component({
   selector: 'add-course',
-  templateUrl: 'add-course.component.html'
+  templateUrl: './add-course.component.html'
 })
 export class AddCourseComponent implements OnInit {
   constructor(

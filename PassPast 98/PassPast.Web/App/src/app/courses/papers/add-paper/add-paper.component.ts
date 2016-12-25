@@ -8,7 +8,7 @@ import { PaperActions } from '../paper.actions';
 
 @Component({
   selector: 'add-paper',
-  templateUrl: 'add-paper.component.html'
+  templateUrl: './add-paper.component.html'
 })
 export class AddPaperComponent implements OnInit {
   constructor(

@@ -4,8 +4,8 @@ import { ExamHubService } from '../../exam-hub.service';
 
 @Component({
   selector: 'app-new-comment',
-  templateUrl: 'new-comment.component.html',
-  changeDetection: ChangeDetectionStrategy.Default
+  templateUrl: './new-comment.component.html',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class NewCommentComponent implements OnInit {
   newCommentForm: FormGroup;

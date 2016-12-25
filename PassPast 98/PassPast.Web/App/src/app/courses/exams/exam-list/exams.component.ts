@@ -10,7 +10,7 @@ import { trackByIdentity } from '../../../../util/track-by-id';
 
 @Component({
   selector: 'app-exams',
-  templateUrl: 'exams.component.html'
+  templateUrl: './exams.component.html'
 })
 export class ExamsComponent implements OnInit {
   private newExamDialogRef: MdDialogRef<AddExamComponent>;

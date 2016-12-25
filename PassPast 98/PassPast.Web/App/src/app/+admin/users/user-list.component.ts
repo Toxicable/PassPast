@@ -8,7 +8,7 @@ import { AppState } from '../../app-store';
 
 @Component({
     selector: 'app-user-list',
-    templateUrl: 'user-list.component.html',
+    templateUrl: './user-list.component.html',
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class UserListComponent implements OnInit {

@@ -15,7 +15,7 @@ import { trackByIdentity } from '../../../../util/track-by-id';
 
 @Component({
   selector: 'app-question',
-  templateUrl: 'question.component.html',
+  templateUrl: './question.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class QuestionComponent {

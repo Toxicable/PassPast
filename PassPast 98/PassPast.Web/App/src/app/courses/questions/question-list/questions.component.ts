@@ -13,7 +13,7 @@ import { trackByIdentity } from '../../../../util/track-by-id';
 
 @Component({
   selector: 'app-questions',
-  templateUrl: 'questions.component.html',
+  templateUrl: './questions.component.html',
   styleUrls: ['./questions.component.css'],
   encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush

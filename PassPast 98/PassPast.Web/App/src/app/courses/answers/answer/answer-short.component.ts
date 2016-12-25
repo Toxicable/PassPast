@@ -3,7 +3,7 @@ import { Answer } from '../../models/answer';
 
 @Component({
   selector: 'app-answer-short',
-  templateUrl: 'answer-short.component.html',
+  templateUrl: './answer-short.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class AnswerShortComponent {

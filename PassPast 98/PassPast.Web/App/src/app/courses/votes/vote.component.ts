@@ -3,8 +3,8 @@ import { ExamHubService } from '../exam-hub.service';
 
 @Component({
   selector: 'app-vote',
-  templateUrl: 'vote.component.html',
-  styleUrls: ['vote.component.css']
+  templateUrl: './vote.component.html',
+  styleUrls: ['./vote.component.css']
 })
 export class VoteComponent {
   @Input() type: string;
