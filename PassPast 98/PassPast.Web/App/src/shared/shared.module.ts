@@ -10,7 +10,7 @@ import { DefaultValuePipe } from './pipes/default-value/default-value.pipe';
 import { MaterialModule } from '@angular/material';
 import { MarkdownComponent } from './markdown/markdown.component';
 import { OrderByDatePipe } from './pipes/order-by-date/order-by-date.pipe';
-
+import { FlexLayoutModule } from '@angular/flex-layout';
 
 @NgModule({
   imports: [
@@ -18,6 +18,7 @@ import { OrderByDatePipe } from './pipes/order-by-date/order-by-date.pipe';
     CommonModule,
     HttpModule,
     MaterialModule.forRoot(),
+    FlexLayoutModule.forRoot()
   ],
   declarations: [
     DefaultValuePipe,

@@ -5,7 +5,7 @@ Web.Local.config
 Web.AppSettings.Local.config
 Web.ConnectionStrings.Local.config
 wwwroot
-
+.DS_Store
 # User-specific files
 *.suo
 *.user
