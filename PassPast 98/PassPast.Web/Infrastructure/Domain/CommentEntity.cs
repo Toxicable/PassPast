@@ -4,7 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
-using System.Web;
+
 using PassPast.Web.Infrastructure.Data;
 
 namespace PassPast.Data

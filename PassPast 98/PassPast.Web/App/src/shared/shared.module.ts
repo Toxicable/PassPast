@@ -1,46 +1,44 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { AlertComponent } from './alert/alert.component';
-import { ValidationSummaryComponent } from './form-validation/validation-summary.component';
 import { HttpModule } from '@angular/http';
 import { ReactiveFormsModule } from '@angular/forms';
-import { ControlMessagesComponent } from './form-validation/control-messages.component';
 import { LoadingBarComponent } from './loading-bar/loading-bar.component';
 import { DefaultValuePipe } from './pipes/default-value/default-value.pipe';
 import { MaterialModule } from '@angular/material';
 import { MarkdownComponent } from './markdown/markdown.component';
 import { OrderByDatePipe } from './pipes/order-by-date/order-by-date.pipe';
 import { FlexLayoutModule } from '@angular/flex-layout';
+import { ValidationMessagesModule } from 'angular-validators';
+
+const DECLARATIONS = [
+  DefaultValuePipe,
+  OrderByDatePipe,
+  LoadingBarComponent,
+  AlertComponent,
+  MarkdownComponent,
+];
+const IMPORTS = [
+  ReactiveFormsModule,
+  CommonModule,
+  HttpModule,
+  ValidationMessagesModule
+]
 
 @NgModule({
   imports: [
-    ReactiveFormsModule,
-    CommonModule,
-    HttpModule,
+    ...IMPORTS,
     MaterialModule.forRoot(),
-    FlexLayoutModule.forRoot()
+    FlexLayoutModule.forRoot(),
   ],
   declarations: [
-    DefaultValuePipe,
-    OrderByDatePipe,
-    LoadingBarComponent,
-    AlertComponent,
-    ControlMessagesComponent,
-    ValidationSummaryComponent,
-    MarkdownComponent,
+    ...DECLARATIONS,
   ],
   exports: [
-    OrderByDatePipe,
+    ...DECLARATIONS,
+    ...IMPORTS,
     MaterialModule,
-    DefaultValuePipe,
-    ReactiveFormsModule,
-    HttpModule,
-    LoadingBarComponent,
-    AlertComponent,
-    ControlMessagesComponent,
-    CommonModule,
-    ValidationSummaryComponent,
-    MarkdownComponent,
+    FlexLayoutModule,
   ]
 })
 export class SharedModule { }

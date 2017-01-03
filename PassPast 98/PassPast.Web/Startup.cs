@@ -14,7 +14,6 @@ using PassPast.Data;
 using PassPast.Web.Api.Courses;
 using PassPast.Web.Api.Papers;
 using IConfiguration = Microsoft.Extensions.Configuration.IConfiguration;
-using PassPast.Web.Controllers;
 using System;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Rewrite;
@@ -27,6 +26,7 @@ using PassPast.Web.Votes;
 using PassPast.Web.Comments.Hubs;
 using PassPast.Web.Comments;
 using PassPast.Data.Domain;
+
 
 namespace PassPast.Web
 {
@@ -96,7 +96,6 @@ namespace PassPast.Web
 
             services.AddMvc();
 
-        
 
             services.AddEntityFramework()
                 .AddDbContext<ApplicationDbContext>(options =>
@@ -106,7 +105,8 @@ namespace PassPast.Web
                 .AddEntityFrameworkStores<ApplicationDbContext>()
                 .AddDefaultTokenProviders();
 
-            var builder = services.AddOpenIddict<ApplicationDbContext>()
+            var builder = services.AddOpenIddict()
+                .AddEntityFrameworkCoreStores<ApplicationDbContext>()
                .AddMvcBinders()
                .EnableTokenEndpoint("/connect/token")
                .AllowPasswordFlow()
@@ -133,7 +133,6 @@ namespace PassPast.Web
 
         }
 
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
         {
             app.UseApplicationInsightsRequestTelemetry();
@@ -161,13 +160,15 @@ namespace PassPast.Web
                     config.AllowAnyOrigin();
                 });
 
-                apiApp.UseOAuthValidation(options => {
+                apiApp.UseOAuthValidation(options =>
+                {
                     options.Events = new OAuthValidationEvents
                     {
                         // Note: for SignalR connections, the default Authorization header does not work,
                         // because the WebSockets JS API doesn't allow setting custom parameters.
                         // To work around this limitation, the access token is retrieved from the query string.
-                        OnRetrieveToken = context => {
+                        OnRetrieveToken = context =>
+                        {
                             context.Token = context.Request.Query["access_token"];
 
                             return Task.FromResult(0);
@@ -224,7 +225,7 @@ namespace PassPast.Web
                 if (user == null) return;
 
                 //TODO: add me to the admin role
-                
+
 
                 context.SaveChanges();
 

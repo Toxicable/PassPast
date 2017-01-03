@@ -6,7 +6,7 @@ import { Store } from '@ngrx/store';
 import { Exam } from '../../models/exam';
 import { QuestionService } from '../../questions/question.service';
 import { AlertService } from '../../../../core/alert/alert.service';
-import { FormValidationService } from '../../../../core/services/form-validation.service';
+import { FormValidators } from 'angular-validators';
 import { ExamActions } from '../exam.actions';
 
 @Component({
@@ -20,7 +20,6 @@ export class AddExamComponent implements OnInit {
     private alert: AlertService,
     private store: Store<AppState>,
     private questions: QuestionService,
-    private formValidation: FormValidationService,
     private examActions: ExamActions,
   ) { }
 
@@ -28,8 +27,8 @@ export class AddExamComponent implements OnInit {
 
   ngOnInit(): void {
     this.newExamForm = this.formBuilder.group({
-      year: ['', [Validators.required, this.formValidation.yearRangeValidator]],
-      semester: ['', Validators.required],
+      year: ['', [FormValidators.required, FormValidators.range(2000, 3000)]],
+      semester: ['', FormValidators.required],
       sections: this.formBuilder.array([
         this.newSection()
       ])
@@ -50,9 +49,9 @@ export class AddExamComponent implements OnInit {
 
   newSection() {
     return this.formBuilder.group({
-      incrimentationScheme: ['', Validators.required],
-      count: ['', Validators.required],
-      type: ['', Validators.required],
+      incrimentationScheme: ['', FormValidators.required],
+      count: ['', FormValidators.required],
+      type: ['', FormValidators.required],
       subQuestions: this.formBuilder.array([])
     });
   }
@@ -64,21 +63,5 @@ export class AddExamComponent implements OnInit {
 
   onSubmit() {
     this.store.dispatch(this.examActions.add(this.newExamForm.value));
-    // this.store.select(state => state.courses.paper.selected.id)
-    //     .first()
-    //     .flatMap((paperId: number) => {
-    //         let newExam = Object.assign({}, {paperId}, this.newExamForm.value)
-    //         delete newExam['sections'];
-
-    //         return this.exams.create(newExam)
-    //             .flatMap((exam: Exam) => {
-    //                 let data = Object.assign({}, {examId: exam.id}, this.newExamForm.value);
-    //                 delete data['semester'];
-    //                 delete data['year'];
-    //                 return this.questions.create(data)
-    //             })
-
-    //     })
-    //     .subscribe(() => this.alert.sendSuccess('wow we actually did it :D'))
   }
 }

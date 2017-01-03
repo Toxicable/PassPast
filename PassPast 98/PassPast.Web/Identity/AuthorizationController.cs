@@ -1,20 +1,16 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Identity;
 using AspNet.Security.OpenIdConnect.Extensions;
 using Microsoft.AspNetCore.Authentication;
-using OpenIddict;
 using AspNet.Security.OpenIdConnect.Server;
 using Microsoft.AspNetCore.Http.Authentication;
 using System.Security.Claims;
 using Microsoft.Extensions.Configuration;
-using System.Net.Http;
-using Newtonsoft.Json.Linq;
-using Newtonsoft.Json;
 using AspNet.Security.OpenIdConnect.Primitives;
+using OpenIddict.Core;
 
 // For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -22,14 +18,12 @@ namespace PassPast.Web.Controllers
 {
     public class AuthorizationController : Controller
     {
-        private readonly OpenIddictApplicationManager<OpenIddictApplication> _applicationManager;
         private readonly SignInManager<ApplicationUser> _signInManager;
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly IConfiguration _configuration;
         private readonly IExternalAuthorizationManager _externalAuthManager;
 
         public AuthorizationController(
-            OpenIddictApplicationManager<OpenIddictApplication> applicationManager,
             SignInManager<ApplicationUser> signInManager,
             UserManager<ApplicationUser> userManager,
             IConfiguration configuration,
@@ -38,7 +32,6 @@ namespace PassPast.Web.Controllers
         {
             _externalAuthManager = externalAuthManager;
             _configuration = configuration;
-            _applicationManager = applicationManager;
             _signInManager = signInManager;
             _userManager = userManager;
         }

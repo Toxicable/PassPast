@@ -10,7 +10,7 @@ using System;
 
 namespace PassPast.Web
 {
-    public class ApplicationDbContext : OpenIddictDbContext<ApplicationUser>
+    public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
         public ApplicationDbContext(DbContextOptions options)
             : base(options) { }
@@ -29,10 +29,10 @@ namespace PassPast.Web
         {
             base.OnModelCreating(builder);
             //OpenIddict
-            builder.Entity<OpenIddictApplication>().ToTable("_AuthApplications");
-            builder.Entity<OpenIddictAuthorization>().ToTable("_AuthAuthorizations");
-            builder.Entity<OpenIddictScope>().ToTable("_AuthScopes");
-            builder.Entity<OpenIddictToken>().ToTable("_AuthTokens");
+            // builder.Entity<OpenIddictApplication>().ToTable("_AuthApplications");
+            // builder.Entity<OpenIddictAuthorization>().ToTable("_AuthAuthorizations");
+            // builder.Entity<OpenIddictScope>().ToTable("_AuthScopes");
+            // builder.Entity<OpenIddictToken>().ToTable("_AuthTokens");
             builder.Entity<ExternalAccount>().ToTable("_AuthExternalAccounts");
 
             //Identity

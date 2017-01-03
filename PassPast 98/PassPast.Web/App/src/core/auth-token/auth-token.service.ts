@@ -128,6 +128,7 @@ export class AuthTokenService {
             });
 
         this.refreshSubscription$ = source.subscribe(() => {
+          //TODO: change this to a flatMap....
             console.log('refresh fired');
             this.refreshTokens()
                 .subscribe( );

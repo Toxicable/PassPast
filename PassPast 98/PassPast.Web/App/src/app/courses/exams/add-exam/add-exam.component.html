@@ -1,26 +1,28 @@
-<form [formGroup]="newExamForm" (ngSubmit)="onSubmit()" >
-    <div>
-        <md-input placeholder="Year" formControlName="year"></md-input>
-        <app-control-messages [control]="newExamForm.controls.year"></app-control-messages>
-    </div>
+<form [formGroup]="newExamForm" (ngSubmit)="onSubmit()">
+  <div>
+    <md-input-container>
+      <input md-input placeholder="Year" formControlName="year">
+    </md-input-container>
+    <av-validation-messages [control]="newExamForm.controls.year"></av-validation-messages>
+  </div>
 
-    <div>
-        <md-button-toggle-group formControlName="semester">
-            <md-button-toggle value="S1" [checked]="true">S1</md-button-toggle>
-            <md-button-toggle value="S2">S2</md-button-toggle>
-            <md-button-toggle value="SS">SS</md-button-toggle>
-        </md-button-toggle-group>
-        <app-control-messages [control]="newExamForm.controls.semester"></app-control-messages>
-    </div>
+  <div>
+    <md-button-toggle-group formControlName="semester">
+      <md-button-toggle value="S1" [checked]="true">S1</md-button-toggle>
+      <md-button-toggle value="S2">S2</md-button-toggle>
+      <md-button-toggle value="SS">SS</md-button-toggle>
+    </md-button-toggle-group>
+    <av-validation-messages [control]="newExamForm.controls.semester"></av-validation-messages>
+  </div>
 
-    <button md-button (click)="newExamForm.reset()" type="button">Reset</button>
-    <button md-button (click)="addSection()" type="button">+ Add Section</button>
-    <ul>
-        <li *ngFor="let section of newExamForm.controls.sections.controls; let i=index">
-             <button md-button (click)="removeSection(i)" type="button">RemoveSection</button>
-            <app-question-section [sectionForm]="section"></app-question-section>
-        </li>
-    </ul>
+  <button md-button (click)="newExamForm.reset()" type="button">Reset</button>
+  <button md-button (click)="addSection()" type="button">+ Add Section</button>
+  <ul>
+    <li *ngFor="let section of newExamForm.controls.sections.controls; let i=index">
+      <button md-button (click)="removeSection(i)" type="button">RemoveSection</button>
+      <app-question-section [sectionForm]="section"></app-question-section>
+    </li>
+  </ul>
 
-    <button md-raised-button color="primary" type="submit" [disabled]="!newExamForm.valid" >Submit</button>
+  <button md-raised-button color="primary" type="submit" [disabled]="!newExamForm.valid">Submit</button>
 </form>

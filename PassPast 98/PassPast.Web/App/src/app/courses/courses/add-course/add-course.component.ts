@@ -5,6 +5,7 @@ import { AlertService } from '../../../../core/alert/alert.service';
 import { AppState } from '../../../app-store';
 import { Store } from '@ngrx/store';
 import { CourseActions } from '../course.actions';
+import { FormValidators } from 'angular-validators';
 
 @Component({
   selector: 'add-course',
@@ -23,8 +24,8 @@ export class AddCourseComponent implements OnInit {
 
   ngOnInit(): void {
     this.newCourseForm = this.formBuilder.group({
-      name: ['', [Validators.required]],
-      code: ['', [Validators.required]],
+      name: ['', [FormValidators.required]],
+      code: ['', [FormValidators.required]],
     });
   }
 

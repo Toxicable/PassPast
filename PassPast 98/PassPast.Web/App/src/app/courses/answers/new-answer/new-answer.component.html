@@ -1,4 +1,6 @@
 <form [formGroup]="newAnswerForm" novalidate (ngSubmit)="sendAnswer()">
-  <md-input placeholder="New Answer" formControlName="content"></md-input>
+      <md-input-container>
+      <input md-input placeholder="New Answer" formControlName="content">
+    </md-input-container>
 </form>
 

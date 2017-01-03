@@ -6,7 +6,6 @@ import { LocalStorageBackend, Storage, StorageBackend } from './storage';
 import { AlertService } from './alert/alert.service';
 import { ProfileService } from './profile/profile.service';
 import { HttpExceptionService } from './services/http-exceptions.service';
-import { FormValidationService } from './services/form-validation.service';
 import { AuthGuard } from './guards/auth-guard.service';
 import { ExternalAuthService } from './auth-token/external-auth.service';
 import { AuthTokenService } from './auth-token/auth-token.service';
@@ -30,7 +29,6 @@ import { AuthReadyActions } from './auth-store/auth-ready.actions';
         AuthenticatedAuthGuard,
         Title,
         HttpExceptionService,
-        FormValidationService,
         AuthGuard,
         AuthTokenService,
         AccountService,
