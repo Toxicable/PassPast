@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { LoadingBarService } from '../../../core/loading-bar/loading-bar.service';
+import { LoadingBarService } from '../../core';
 import { AppState } from '../../app-store';
-import { AuthHttp } from '../../../core/auth-http/auth-http.service';
+import { AuthHttp } from '../../core';
 import { Observable } from 'rxjs/Observable';
 import { Response } from '@angular/http';
 

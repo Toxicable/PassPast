@@ -3,7 +3,7 @@ import { Observable } from 'rxjs/Observable';
 import { Store } from '@ngrx/store';
 import { AppState } from '../../../app/app-store';
 import { Question } from '../models/question';
-import { AuthHttp } from '../../../core/auth-http/auth-http.service';
+import { AuthHttp } from '../../core';
 import { QuestionActions } from './question.actions';
 
 @Injectable()

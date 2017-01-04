@@ -9,7 +9,7 @@ import { normalize, Schema, arrayOf } from 'normalizr';
 import { getQuestions } from '../question.reducer';
 import { Dict } from '../../models/dict';
 import { NormQuestion } from '../../models/norm-question';
-import { trackByIdentity } from '../../../../util/track-by-id';
+import { trackByIdentity } from '../../../utilities';
 
 @Component({
   selector: 'app-questions',

@@ -4,5 +4,11 @@
 // The list of which env maps to which file can be found in `angular-cli.json`.
 
 export const environment = {
-  production: false
+  production: false,
+  //apiBaseUrl: 'http://localhost:5000/api',
+  apiBaseUrl: 'https://beta.passpast.net/api',
+  facebookAppId: '311510702571628',
+  googleClientId: '137170270322-3ik6cl5m55i4ft3ff6t7l9tm2f1abkvh.apps.googleusercontent.com',
+  //signalRUrl: 'http://localhost:5000/api/exam-hub',
+    signalRUrl: 'https://beta.passpast.net/api/exam-hub',
 };

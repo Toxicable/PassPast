@@ -1,6 +1,6 @@
 import { Action } from '@ngrx/store';
 import { Paper } from '../models/paper';
-import { type } from '../../../util/action-name-helper';
+import { type } from '../../utilities';
 import { Injectable } from '@angular/core';
 
 export const PaperActionTypes = {

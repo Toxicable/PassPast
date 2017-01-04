@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Observable }           from 'rxjs/Observable';
-import { AuthHttp } from '../../core/auth-http/auth-http.service';
+import { AuthHttp } from '../core';
 
 @Injectable()
 export class RoleService {

@@ -11,7 +11,7 @@ import { CourseActions } from './courses/course.actions';
 import { PaperActions } from './papers/paper.actions';
 import { ExamActions } from './exams/exam.actions';
 import { QuestionActions } from './questions/question.actions';
-import { SharedModule } from '../../shared/shared.module';
+import { SharedModule } from '../shared';
 import { QuestionSectionComponent } from './exams/add-exam/question-section.component';
 import { ActivateCourseService } from './courses/activate-courses.service';
 import { ActivatePaperService } from './papers/activate-papers.service';

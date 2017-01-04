@@ -3,7 +3,7 @@ import { Observable } from 'rxjs/Observable';
 import { Course } from '../models/course';
 import { Store } from '@ngrx/store';
 import { AppState } from '../../../app/app-store';
-import { AuthHttp } from '../../../core/auth-http/auth-http.service';
+import { AuthHttp } from '../../core';
 import { CourseActions } from './course.actions';
 import { Http } from '@angular/http';
 

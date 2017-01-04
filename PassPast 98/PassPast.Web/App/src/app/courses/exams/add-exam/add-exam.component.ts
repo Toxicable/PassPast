@@ -5,7 +5,7 @@ import { AppState } from '../../../../app/app-store';
 import { Store } from '@ngrx/store';
 import { Exam } from '../../models/exam';
 import { QuestionService } from '../../questions/question.service';
-import { AlertService } from '../../../../core/alert/alert.service';
+import { AlertService } from '../../../core';
 import { FormValidators } from 'angular-validators';
 import { ExamActions } from '../exam.actions';
 

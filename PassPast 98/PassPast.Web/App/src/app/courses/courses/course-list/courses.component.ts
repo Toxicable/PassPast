@@ -4,11 +4,11 @@ import { Observable } from 'rxjs/Observable';
 import { Course } from '../../models/course';
 import { AppState } from '../../../../app/app-store';
 import { Store } from '@ngrx/store';
-import { AlertService } from '../../../../core/alert/alert.service';
+import { AlertService } from '../../../core';
 import { MdDialogRef, MdDialog } from '@angular/material';
 import { AddCourseComponent } from './../add-course/add-course.component';
 import { CourseActions } from './../course.actions';
-import { trackByIdentity } from '../../../../util/track-by-id';
+import { trackByIdentity } from '../../../utilities/track-by-id';
 
 @Component({
     selector: 'app-courses',

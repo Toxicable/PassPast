@@ -1,7 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { AuthTokenService } from '../core/auth-token/auth-token.service';
+import { AuthTokenService, AlertService } from './core';
 import { Store } from '@ngrx/store';
-import { AlertService } from '../core/alert/alert.service';
 import { AppState } from './app-store';
 import { Router, NavigationEnd } from '@angular/router';
 import { Observable } from 'rxjs/Observable';
@@ -50,20 +49,9 @@ export class AppComponent implements OnInit, OnDestroy {
     });
 
 
-
     this.tokens.startupTokenRefresh()
-      .subscribe(
-      () => {
-        console.info('startup done');
-        // we manage to refresh the tokens so we can carry with the scheduleRefresh
-        this.tokens.scheduleRefresh();
-      }, error => {
-        console.error(error);
-        // keep it silent if there's nothing in storage
-        if (error !== 'No token in Storage') {
-          this.alert.sendWarning('error');
-        }
-      });
+      .do(() => this.tokens.scheduleRefresh())
+      .subscribe();
   }
 
 

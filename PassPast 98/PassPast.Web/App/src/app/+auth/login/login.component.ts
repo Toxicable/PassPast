@@ -1,9 +1,7 @@
 import { Component } from '@angular/core';
 import { OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { AlertService } from '../../../core/alert/alert.service';
-import { AccountService } from '../../../core/account/account.service';
-import { ExternalAuthService } from '../../../core/auth-token/external-auth.service';
+import { AlertService, AccountService, ExternalAuthService } from '../../core';
 import { FormValidators } from 'angular-validators';
 
 @Component({

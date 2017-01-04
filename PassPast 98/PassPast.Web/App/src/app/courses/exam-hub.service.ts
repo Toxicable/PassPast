@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { AppState } from '../app-store';
-import { AppSettings } from '../../app-settings';
+import { environment } from '../../environments/environment';
 import { AnswerActions } from './answers/answer.actions';
 import { Answer } from './models/answer';
 import { Dict } from './models/dict';
@@ -26,7 +26,7 @@ export class ExamHubService {
     private questionActions: QuestionActions,
     private commentActions: CommentActions,
   ) {
-    this.connection = new signalR.HubConnection(AppSettings.SignalRUrl);
+    this.connection = new signalR.HubConnection(environment.signalRUrl);
 
     this.connection.on('BroadcastAnswer', (answer: Answer) => {
       let dictAnswer: Dict<Answer> = { [answer.id]: answer };

@@ -1,6 +1,6 @@
 import { Action } from '@ngrx/store';
 import { Course } from '../models/course';
-import { type } from '../../../util/action-name-helper';
+import { type } from '../../utilities';
 
 export const CourseActionTypes = {
   LOAD: type('[Course] Load'),

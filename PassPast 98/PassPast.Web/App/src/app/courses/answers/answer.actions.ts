@@ -1,5 +1,5 @@
 import { Action } from '@ngrx/store';
-import { type } from '../../../util/action-name-helper';
+import { type } from '../../utilities/action-name-helper';
 import { Injectable } from '@angular/core';
 import { Answer } from '../models/answer';
 import { Dict } from '../models/dict';

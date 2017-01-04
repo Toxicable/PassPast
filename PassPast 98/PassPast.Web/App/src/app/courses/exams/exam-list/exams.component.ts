@@ -6,7 +6,7 @@ import { ExamService } from './../exam.service';
 import { Store } from '@ngrx/store';
 import { AddExamComponent } from './../add-exam/add-exam.component';
 import { MdDialog, MdDialogRef } from '@angular/material';
-import { trackByIdentity } from '../../../../util/track-by-id';
+import { trackByIdentity } from '../../../utilities/track-by-id';
 
 @Component({
   selector: 'app-exams',

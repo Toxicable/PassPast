@@ -3,8 +3,8 @@ import { NgModule } from '@angular/core';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 
 import { AppComponent } from './app.component';
-import { CoreModule } from '../core/core.module';
-import { SharedModule } from '../shared/shared.module';
+import { CoreModule } from './core';
+import { SharedModule } from './shared';
 import { NotFoundComponent } from './not-found/not-found.component';
 import { UnauthorizedComponent } from './unauthorized/unauthorized.component';
 import { appRouting } from './app.routing';
@@ -16,13 +16,13 @@ import { MaterialModule } from '@angular/material';
 
 @NgModule({
   declarations: [
-     AppComponent,
-     NotFoundComponent,
-     HeaderComponent,
-     UnauthorizedComponent,
+    AppComponent,
+    NotFoundComponent,
+    HeaderComponent,
+    UnauthorizedComponent,
   ],
   imports: [
-     BrowserModule,
+    BrowserModule,
     CoreModule,
     SharedModule,
     CourseModule,

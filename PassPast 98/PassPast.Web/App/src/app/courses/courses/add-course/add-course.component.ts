@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators, FormGroup } from '@angular/forms';
 import { CourseService } from '../course.service';
-import { AlertService } from '../../../../core/alert/alert.service';
+import { AlertService } from '../../../core';
 import { AppState } from '../../../app-store';
 import { Store } from '@ngrx/store';
 import { CourseActions } from '../course.actions';

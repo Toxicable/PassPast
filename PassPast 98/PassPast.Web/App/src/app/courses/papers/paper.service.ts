@@ -3,7 +3,7 @@ import { Observable } from 'rxjs/Observable';
 import { Store } from '@ngrx/store';
 import { AppState } from '../../../app/app-store';
 import { Paper } from '../models/paper';
-import { AuthHttp } from '../../../core/auth-http/auth-http.service';
+import { AuthHttp } from '../../core';
 import { PaperActions } from './paper.actions';
 
 @Injectable()

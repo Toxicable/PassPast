@@ -11,7 +11,7 @@ import { getAnswers } from '../../answers/answer.reducer';
 import { Answer } from '../../models/answer';
 import { getComments } from '../../comments/comment.reducer';
 import { Comment } from '../../models/comment';
-import { trackByIdentity } from '../../../../util/track-by-id';
+import { trackByIdentity } from '../../../utilities';
 
 @Component({
   selector: 'app-question',
