@@ -5,6 +5,7 @@ import { AppState } from './app-store';
 import { Router, NavigationEnd } from '@angular/router';
 import { Observable } from 'rxjs/Observable';
 import { Title } from '@angular/platform-browser';
+import { AuthActions } from './core';
 
 @Component({
   selector: 'app-root',
@@ -48,10 +49,11 @@ export class AppComponent implements OnInit, OnDestroy {
 
     });
 
+this.tokens.startupTokenRefresh()
+.subscribe();
 
-    this.tokens.startupTokenRefresh()
-      .do(() => this.tokens.scheduleRefresh())
-      .subscribe();
+    //this.store.dispatch(AuthActions.startupRefresh());
+
   }
 
 

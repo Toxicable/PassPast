@@ -6,18 +6,21 @@ import { LoadingBarService } from './loading-bar/loading-bar.service';
 import { AlertActions } from './alert/alert.actions';
 import { LoadingBarActions } from './loading-bar/loading-bar.actions';
 import { MaterialModule } from '@angular/material';
+import { EffectsModule } from '@ngrx/effects';
 import {
   AuthHttp,
   ExternalAuthService,
   AccountService,
   ProfileService,
-  AuthTokenService
+  AuthTokenService,
+  AuthEffects,
 } from './auth';
 
 
 import { FlexLayoutModule } from '@angular/flex-layout';
 @NgModule({
   imports: [
+    EffectsModule.run(AuthEffects),
     FlexLayoutModule.forRoot(),
     MaterialModule.forRoot(),
   ],

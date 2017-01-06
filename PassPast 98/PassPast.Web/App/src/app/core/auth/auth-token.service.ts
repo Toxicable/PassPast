@@ -20,10 +20,11 @@ export class AuthTokenService {
     private authHttp: AuthHttp,
     private store: Store<AppState>,
     private alert: AlertService,
+    private http: Http
   ) { }
 
 
-  getTokens(data: RefreshGrant | ExternalLoginModel, grantType: string): Observable<boolean> {
+  getTokens(data: RefreshGrant | ExternalLoginModel, grantType: string) {
     // data can be any since it can either be a refresh tokens or login details
     // The request for tokens must be x-www-form-urlencoded IE: parameter string, it cant be json
     let headers = new Headers({ 'Content-Type': 'application/x-www-form-urlencoded' });
@@ -31,24 +32,40 @@ export class AuthTokenService {
 
     Object.assign(data, {
       grant_type: grantType,
-      scope: ['openid offline_access']
+      scope: 'openid offline_access'
     });
+// let dataa = new FormData();
+// dataa.append('fff', 'sdf')
+//     Object.keys(data).forEach(key => dataa.append(key, (<any>data)[key]))
 
-    return this.authHttp.post('/connect/token', this.encodeObjectToParams(data), options)
-      .do((tokens: AuthTokenModel) => {
-        let now = new Date();
-        tokens.expiration_date = new Date(now.getTime() + tokens.expires_in * 1000).getTime().toString();
+debugger
 
-        this.store.dispatch(AuthActions.loadTokens(tokens));
-        this.store.dispatch(AuthActions.loggedIn());
+    let encodedData = Object.keys(data)
+      //TODO: fix this TS issue
+      .map(key => encodeURIComponent(key) + '=' + encodeURIComponent((<any>data)[key]))
+      .join('&');
 
-        let profile = this.jwtHelper.decodeToken(tokens.id_token) as ProfileModel;
-        this.store.dispatch(AuthActions.loadProfile(profile));
 
-        this.storage.setItem('auth-tokens', tokens);
-        this.store.dispatch(AuthActions.authReady());
-        return true;
-      });
+
+
+return this.http.post('https://beta.passpast.net/api/connect/token', encodedData, options)
+.do(() => {debugger})
+       //return this.authHttp.post('/connect/token', encodedData, options)
+      // .do(() => {debugger})
+      // .map((tokens: AuthTokenModel) => {
+      //   debugger
+      //   let now = new Date();
+      //   tokens.expiration_date = new Date(now.getTime() + tokens.expires_in * 1000).getTime().toString();
+
+      //   this.store.dispatch(AuthActions.loadTokens(tokens));
+      //   this.store.dispatch(AuthActions.loggedIn());
+
+      //   let profile = this.jwtHelper.decodeToken(tokens.id_token) as ProfileModel;
+      //   this.store.dispatch(AuthActions.loadProfile(profile));
+
+      //   this.storage.setItem('auth-tokens', tokens);
+      //   this.store.dispatch(AuthActions.authReady());
+      // });
   }
 
   deleteTokens() {
@@ -62,21 +79,18 @@ export class AuthTokenService {
     }
   }
 
-  refreshTokens(): Observable<Response> {
+  refreshTokens() {
     return this.store.select(state => state.auth.tokens)
       .first()
-      .flatMap(tokens => {
-        return this.getTokens(
-          { refresh_token: tokens.refresh_token } as RefreshGrant, 'refresh_token')
-          .catch(error => Observable.throw('Session Expired'));
-        //  pretty sure the only way this can fail is with a expired tokens
-      });
+      .flatMap(tokens => this.getTokens({ refresh_token: tokens.refresh_token }, 'refresh_token')
+        //.catch(error => Observable.throw('Session Expired'))
+      );
   }
 
   startupTokenRefresh() {
     return this.storage.getItem('auth-tokens')
       .flatMap((tokens: AuthTokenModel) => {
-        // check if the token is even if localStorage, if it isn't tell them it's not and return
+        // check if the token is even in localStorage, if it isn't tell them it's not and return
         if (!tokens) {
           this.store.dispatch(AuthActions.authReady());
           return Observable.throw('No token in Storage');
@@ -100,7 +114,6 @@ export class AuthTokenService {
       .catch(error => {
         this.store.dispatch(AuthActions.notLoggedIn());
         this.store.dispatch(AuthActions.authReady());
-        console.info(error);
         return Observable.throw(error);
       });
   }
@@ -118,13 +131,6 @@ export class AuthTokenService {
       .flatMap(() => this.refreshTokens())
       .subscribe();
   }
-
-  private encodeObjectToParams(obj: any): string {
-    return Object.keys(obj)
-      .map(key => encodeURIComponent(key) + '=' + encodeURIComponent(obj[key]))
-      .join('&');
-  }
-
 }
 export interface RefreshGrant {
   refresh_token: string;

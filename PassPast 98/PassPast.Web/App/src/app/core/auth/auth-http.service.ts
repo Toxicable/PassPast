@@ -3,7 +3,7 @@ import { Headers, Response, Http, RequestOptions } from '@angular/http';
 import { Observable } from 'rxjs';
 import { AppState } from '../../app-store';
 import { Store } from '@ngrx/store';
-import { AuthState, BadRequest, BadTokenRequest } from './models';
+import { AuthState, BadRequest, BadTokenRequest, AuthTokenModel } from './models';
 import { LoadingBarService } from '../loading-bar/loading-bar.service';
 import { environment } from '../../../environments/environment';
 
@@ -24,7 +24,7 @@ export class AuthHttp {
   private getHeaders(): Observable<Headers> {
     return this.store.select(state => state.auth)
       .first((auth: AuthState) => auth.authReady)
-      .map((auth: AuthState) => auth.tokens.access_token)
+      .map((auth: AuthState) => auth.tokens ? auth.tokens.access_token : '')
       .map((accessToken: string) => new Headers(Object.assign({},
         this.globalHeaders,
         {
@@ -34,29 +34,31 @@ export class AuthHttp {
   }
 
   get(url: string): Observable<any> {
-  //  return this.loadingBar.doWithLoader(
-      return this.getHeaders()
+    return this.loadingBar.doWithLoader(
+      this.getHeaders()
         .flatMap((headers: Headers) => {
           let options = new RequestOptions({ headers });
           return this.http.get(this.baseUrl + url, options)
             .map(this.checkForError)
             .catch(error => Observable.throw(error))
-            .map(res => this.getJson(res))
+            .map(res => this.getJson(res));
         })
-   // );
+    );
   }
 
-  post(url: string, data: any, requestionOptions?: RequestOptions): Observable<any> {
-    return this.loadingBar.doWithLoader(
-      this.getHeaders()
+  post(url: string, data: any, requestionOptions?: RequestOptions) {
+    //return this.loadingBar.doWithLoader(
+     return  this.getHeaders()
         .flatMap((headers: Headers) => {
-          let options = Object.assign(new RequestOptions({ headers }), requestionOptions);
+          let options = requestionOptions ? requestionOptions : new RequestOptions({ headers });
+          //Object.assign(new RequestOptions({ headers }), requestionOptions);
+
           return this.http.post(this.baseUrl + url, data, options)
             .map(this.checkForError)
             .catch(error => this.handleError(error))
             .map(this.getJson);
-        })
-    );
+       })
+    //);
   }
 
   private getJson(res: Response) {
@@ -74,38 +76,38 @@ export class AuthHttp {
     throw res;
   }
 
-      public handleError (res: Response) {
-        // TODO: add logging here
+  public handleError(res: Response) {
+    // TODO: add logging here
 
-        // const error = new Error(res.statusText);
-        // error['response'] = res;
+    // const error = new Error(res.statusText);
+    // error['response'] = res;
 
-        switch (res.status) {
-            case 400:
-                return this.handleBadRequest(res);
-            case 500:
-                return this.handleInternalServerError(res);
-            default:
-                return Observable.throw(['an Unhandled error occured' + res.status]);
-        }
+    switch (res.status) {
+      case 400:
+        return this.handleBadRequest(res);
+      case 500:
+        return this.handleInternalServerError(res);
+      default:
+        return Observable.throw(['an Unhandled error occured' + res.status]);
     }
+  }
 
-    public handleInternalServerError(res: Response) {
-        console.log(res);
-        return Observable.throw([res.text()]);
-    }
-    public handleTokenBadRequest(res: Response) {
-        let badRequest = res.json() as BadTokenRequest;
-        let error = badRequest.error_description;
+  public handleInternalServerError(res: Response) {
+    console.log(res);
+    return Observable.throw([res.text()]);
+  }
+  public handleTokenBadRequest(res: Response) {
+    let badRequest = res.json() as BadTokenRequest;
+    let error = badRequest.error_description;
 
-        // need to put it in an array since that's what's expected everywhere to kee pit consistant
-        return Observable.throw([error]);
-    }
+    // need to put it in an array since that's what's expected everywhere to kee pit consistant
+    return Observable.throw([error]);
+  }
 
-    private handleBadRequest(res: Response) {
-        let badRequest = res.json() as BadRequest;
-        let errors = badRequest.modelState[''];
+  private handleBadRequest(res: Response) {
+    let badRequest = res.json() as BadRequest;
+    let errors = badRequest.modelState[''];
 
-        return Observable.throw(errors);
-    }
+    return Observable.throw(errors);
+  }
 }

@@ -6,4 +6,4 @@ export { ExternalAuthService } from './external-auth.service';
 export { ProfileService } from './profile.service';
 export { AuthTokenService } from './auth-token.service';
 export { authReducer } from './auth.reducer';
-export { }
+export { AuthEffects } from './auth.effects'
