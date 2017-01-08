@@ -1,11 +1,10 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { AuthTokenService, AlertService } from './core';
+import { AlertService } from './core';
 import { Store } from '@ngrx/store';
 import { AppState } from './app-store';
 import { Router, NavigationEnd } from '@angular/router';
 import { Observable } from 'rxjs/Observable';
 import { Title } from '@angular/platform-browser';
-import { AuthActions } from './core';
 
 @Component({
   selector: 'app-root',
@@ -15,7 +14,6 @@ import { AuthActions } from './core';
 export class AppComponent implements OnInit, OnDestroy {
 
   constructor(
-    private tokens: AuthTokenService,
     private store: Store<AppState>,
     private alert: AlertService,
     private router: Router,
@@ -48,16 +46,9 @@ export class AppComponent implements OnInit, OnDestroy {
       }
 
     });
-
-this.tokens.startupTokenRefresh()
-.subscribe();
-
-    //this.store.dispatch(AuthActions.startupRefresh());
-
   }
 
 
   ngOnDestroy(): void {
-    this.tokens.unsubscribeRefresh();
   }
 }

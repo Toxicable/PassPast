@@ -10,11 +10,6 @@ const appRoutes: Routes = [
       pathMatch: 'full'
     },
     {
-        path: 'admin',
-        loadChildren: './+admin/admin.module#AdminModule',
-       // canLoad: [SuperAdminAuthGuard]
-    },
-    {
         path: 'auth',
         loadChildren: './+auth/auth.module#AuthModule'
     },

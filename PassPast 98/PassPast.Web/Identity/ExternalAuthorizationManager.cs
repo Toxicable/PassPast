@@ -18,8 +18,8 @@ namespace PassPast.Web
 
     public enum ExternalAuthProviders
     {
-        Facebook,
-        Google
+        facebook,
+        google
     }
 
     public class ExternalAuthorizationManager : IExternalAuthorizationManager
@@ -35,7 +35,7 @@ namespace PassPast.Web
 
         public async Task<ExternalProfileBindingModel> GetProfile(string accessToken, ExternalAuthProviders provider)
         {
-            if(provider == ExternalAuthProviders.Facebook)
+            if(provider == ExternalAuthProviders.facebook)
             {
                 var url = $"https://graph.facebook.com/me?fields=email,first_name,last_name&access_token={ accessToken }";
                 var client = new HttpClient();
@@ -52,7 +52,7 @@ namespace PassPast.Web
                 return null;
             }
 
-            if (provider == ExternalAuthProviders.Google)
+            if (provider == ExternalAuthProviders.google)
             {
                 var url = $"https://www.googleapis.com/oauth2/v1/userinfo?alt=json&access_token={ accessToken }";
                 var client = new HttpClient();
@@ -82,13 +82,13 @@ namespace PassPast.Web
         {
             var verifyEndpoint = string.Empty;
 
-            if (provider == ExternalAuthProviders.Facebook)
+            if (provider == ExternalAuthProviders.facebook)
             {
                 var appToken = _configuration["Authentication:External:Facebook:appToken"];
                 verifyEndpoint = $"https://graph.facebook.com/debug_token?input_token={ accessToken }&access_token={ appToken }";
             }
 
-            if (provider == ExternalAuthProviders.Google)
+            if (provider == ExternalAuthProviders.google)
             {
                 verifyEndpoint = $"https://www.googleapis.com/oauth2/v3/tokeninfo?access_token={ accessToken }";
             }
@@ -106,7 +106,7 @@ namespace PassPast.Web
             {
                 var content = await response.Content.ReadAsStringAsync();             
 
-                if (provider == ExternalAuthProviders.Facebook)
+                if (provider == ExternalAuthProviders.facebook)
                 {
                     var result = JsonConvert.DeserializeObject<FacebookDebugTokenBindingModel>(content);
 
@@ -116,7 +116,7 @@ namespace PassPast.Web
                     }
 
                 }
-                else if (provider == ExternalAuthProviders.Google)
+                else if (provider == ExternalAuthProviders.google)
                 {
                     var result = JsonConvert.DeserializeObject<GoogleTokenInfoBindingModel>(content);
                     

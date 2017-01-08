@@ -1,11 +1,10 @@
 import { Injectable } from '@angular/core';
 import { Headers, Response, Http, RequestOptions } from '@angular/http';
 import { Observable } from 'rxjs';
-import { AppState } from '../../app-store';
+import { AppState } from '../app-store';
 import { Store } from '@ngrx/store';
-import { AuthState, BadRequest, BadTokenRequest, AuthTokenModel } from './models';
-import { LoadingBarService } from '../loading-bar/loading-bar.service';
-import { environment } from '../../../environments/environment';
+import { environment } from '../../environments/environment';
+import { OpenIdClientService, AuthTokens} from '@toxicable/oidc';
 
 @Injectable()
 export class AuthHttp {
@@ -18,13 +17,12 @@ export class AuthHttp {
   constructor(
     private http: Http,
     private store: Store<AppState>,
-    private loadingBar: LoadingBarService
+    private oidc: OpenIdClientService
   ) { }
 
   private getHeaders(): Observable<Headers> {
-    return this.store.select(state => state.auth)
-      .first((auth: AuthState) => auth.authReady)
-      .map((auth: AuthState) => auth.tokens ? auth.tokens.access_token : '')
+    return this.oidc.tokens$
+      .map((tokens: AuthTokens) => tokens ? tokens.access_token : '')
       .map((accessToken: string) => new Headers(Object.assign({},
         this.globalHeaders,
         {
@@ -34,31 +32,27 @@ export class AuthHttp {
   }
 
   get(url: string): Observable<any> {
-    return this.loadingBar.doWithLoader(
-      this.getHeaders()
-        .flatMap((headers: Headers) => {
-          let options = new RequestOptions({ headers });
-          return this.http.get(this.baseUrl + url, options)
-            .map(this.checkForError)
-            .catch(error => Observable.throw(error))
-            .map(res => this.getJson(res));
-        })
-    );
+    return this.getHeaders()
+      .flatMap((headers: Headers) => {
+        let options = new RequestOptions({ headers });
+        return this.http.get(this.baseUrl + url, options)
+          .map(this.checkForError)
+          .catch(error => Observable.throw(error))
+          .map(res => this.getJson(res));
+      })
   }
 
   post(url: string, data: any, requestionOptions?: RequestOptions) {
-    //return this.loadingBar.doWithLoader(
-     return  this.getHeaders()
-        .flatMap((headers: Headers) => {
-          let options = requestionOptions ? requestionOptions : new RequestOptions({ headers });
-          //Object.assign(new RequestOptions({ headers }), requestionOptions);
+    return this.getHeaders()
+      .flatMap((headers: Headers) => {
+        let options = requestionOptions ? requestionOptions : new RequestOptions({ headers });
+        //Object.assign(new RequestOptions({ headers }), requestionOptions);
 
-          return this.http.post(this.baseUrl + url, data, options)
-            .map(this.checkForError)
-            .catch(error => this.handleError(error))
-            .map(this.getJson);
-       })
-    //);
+        return this.http.post(this.baseUrl + url, data, options)
+          .map(this.checkForError)
+          .catch(error => this.handleError(error))
+          .map(this.getJson);
+      })
   }
 
   private getJson(res: Response) {
@@ -96,13 +90,6 @@ export class AuthHttp {
     console.log(res);
     return Observable.throw([res.text()]);
   }
-  public handleTokenBadRequest(res: Response) {
-    let badRequest = res.json() as BadTokenRequest;
-    let error = badRequest.error_description;
-
-    // need to put it in an array since that's what's expected everywhere to kee pit consistant
-    return Observable.throw([error]);
-  }
 
   private handleBadRequest(res: Response) {
     let badRequest = res.json() as BadRequest;
@@ -110,4 +97,8 @@ export class AuthHttp {
 
     return Observable.throw(errors);
   }
+}
+export interface BadRequest {
+    message: string;
+    modelState: {'': string[]};
 }

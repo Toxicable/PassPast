@@ -96,10 +96,11 @@ namespace PassPast.Web
 
             services.AddMvc();
 
-
             services.AddEntityFramework()
-                .AddDbContext<ApplicationDbContext>(options =>
-                options.UseSqlServer(Configuration["ConnectionStrings:DefaultConnection"]));
+                .AddDbContext<ApplicationDbContext>(options => {
+                    options.UseSqlServer(Configuration["ConnectionStrings:DefaultConnection"]);
+                    options.UseOpenIddict();
+                    });
 
             services.AddIdentity<ApplicationUser, IdentityRole>()
                 .AddEntityFrameworkStores<ApplicationDbContext>()

@@ -1,6 +1,5 @@
 <md-toolbar [color]="primary">
   <span class="header-navigation">
-
     <span>
         <a [routerLink]="['/']" >
             Pass Past
@@ -30,17 +29,17 @@
 
     </span>
 
-  <span class="right">
-    <span *ngIf="(loggedIn$ | async)" >
-        Welcome {{username$ | async}}
-        <a [routerLink]="['/']" (click)="account.logout()">Logout</a>
+    <span class="right">
+      <span *ngIf="(loggedIn$ | async)" >
+          Welcome {{(profile$ | async)?.unique_name}}
+          <a (click)="logout()">Logout</a>
+      </span>
+    <span *ngIf="!(loggedIn$ | async)">
+          <a  class="header-navigation__link" [routerLink]="['/auth/login']">
+              Login
+          </a>
+      </span>
     </span>
-  <span *ngIf="!(loggedIn$ | async)">
-        <a  class="header-navigation__link" [routerLink]="['/auth/login']">
-            Login
-        </a>
-    </span>
-  </span>
   </span>
 </md-toolbar>
 <app-loading-bar></app-loading-bar>

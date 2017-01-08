@@ -4,10 +4,10 @@
     "OpenIddict": "1.0.0-*",
     "OpenIddict.Mvc": "1.0.0-*",
     "OpenIddict.EntityFrameworkCore": "1.0.0-*",
+    "AspNet.Security.OAuth.Introspection": "1.0.0-*",
+    "AspNet.Security.OAuth.Validation": "1.0.0-*",
+    "Microsoft.AspNetCore.SignalR": "1.0.0-preview1-22878",
     "AutoMapper": "5.1.1",
-    "Microsoft.NETCore.Platforms": "1.1.0",
-    "AspNet.Security.OAuth.Introspection": "1.0.0-alpha2-final",
-    "AspNet.Security.OAuth.Validation": "1.0.0-alpha2-final",
     "Microsoft.Extensions.Configuration.CommandLine": "1.1.0",
     "Microsoft.Extensions.Configuration.EnvironmentVariables": "1.1.0",
     "Microsoft.Extensions.Configuration.FileExtensions": "1.1.0",
@@ -28,13 +28,12 @@
     "Microsoft.AspNetCore.Rewrite": "1.0.0",
     //"Microsoft.AspNetCore.AzureAppServicesIntegration": "1.0.0",
     "Microsoft.EntityFrameworkCore": "1.1.0",
-    "Microsoft.AspNetCore.SignalR": "1.0.0-*",
     "Microsoft.EntityFrameworkCore.SqlServer": "1.1.0",
     "Microsoft.EntityFrameworkCore.Design": {
       "version": "1.1.0",
       "type": "build"
     },
-    "Microsoft.ApplicationInsights.AspNetCore": "1.0.0"
+    "Microsoft.ApplicationInsights.AspNetCore": "1.0.2"
   },
 
   "tools": {
