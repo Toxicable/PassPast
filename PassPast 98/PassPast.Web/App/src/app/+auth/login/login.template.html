@@ -5,8 +5,8 @@ Don't have an account yet? Sign up <a [routerLink]="['/auth/register']">here</a>
 </div>
 <div>
     <button md-raised-button color="primary" type="submit" (click)="googleAuthorize()"  >Login with Google</button>
-    <div id="my-signin2"></div>
 </div>
 
 
 
+<div (click)="authorizeExternal()">other</div>
