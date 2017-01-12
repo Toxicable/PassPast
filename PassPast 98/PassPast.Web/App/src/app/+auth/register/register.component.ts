@@ -20,7 +20,6 @@ export class RegisterComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.oidc.initExternal();
   }
 
   registerFacebook() {

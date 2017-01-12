@@ -154,12 +154,14 @@ namespace PassPast.Web
 
             app.Map("/api", apiApp =>
             {
-                apiApp.UseCors(config =>
+                if (env.IsDevelopment())
                 {
-                    config.AllowAnyMethod();
-                    config.AllowAnyHeader();
-                    config.AllowAnyOrigin();
-                });
+                    apiApp.UseCors(builder =>
+                       builder.WithOrigins("http://localhost:4200")
+                              .AllowAnyHeader()
+                              .AllowAnyMethod()
+                       );
+                }
 
                 apiApp.UseOAuthValidation(options =>
                 {

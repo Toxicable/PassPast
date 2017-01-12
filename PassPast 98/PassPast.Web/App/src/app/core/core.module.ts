@@ -11,16 +11,20 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 import { environment } from '../../environments/environment';
 import { AuthHttp } from './auth-http.service';
 
+const oidcConfig = {
+  tokenEndpoint: environment.apiBaseUrl + '/connect/token',
+  registerExternalEndpoint: environment.apiBaseUrl + '/account/registerexternal',
+  providersConfig: {
+    google: environment.googleAuthConfig,
+    facebook: environment.facebookAuthConfig
+  }
+}
+
 @NgModule({
   imports: [
     FlexLayoutModule.forRoot(),
     MaterialModule.forRoot(),
-    OpenIdClientModule.withConfig({
-      facebookAppId: environment.facebookAppId,
-      googleClientId: environment.googleClientId,
-      tokenEndpoint: 'api/connect/token',
-      registerExternalEndpoint: '/api/account/registerexternal'
-    })
+    OpenIdClientModule.withConfig(oidcConfig)
   ],
   providers: [
     LoadingBarService,

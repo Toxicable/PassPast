@@ -1,10 +1,11 @@
-<md-toolbar [color]="primary">
-  <span class="header-navigation">
-    <span>
-        <a [routerLink]="['/']" >
-            Pass Past
-        </a>
-
+<md-toolbar color="primary" >
+  <div fxLayout="row" fxLayoutAlign="space-between center" fxFlex="100%">
+      <span>
+        <h2>
+          <a [routerLink]="['/']" >Pass Past</a>
+        </h2>
+      </span>
+      <span>
         <a [routerLink]="['/courses']">Courses</a>
 
         <a >
@@ -27,30 +28,16 @@
           {{(currentExam$ | async)?.semester}}
         </a>
 
-    </span>
-
-    <span class="right">
+      </span>
+    <span>
       <span *ngIf="(loggedIn$ | async)" >
           Welcome {{(profile$ | async)?.unique_name}}
           <a (click)="logout()">Logout</a>
       </span>
-    <span *ngIf="!(loggedIn$ | async)">
-          <a  class="header-navigation__link" [routerLink]="['/auth/login']">
-              Login
-          </a>
+      <span *ngIf="!(loggedIn$ | async)">
+          <a  class="header-navigation__link" [routerLink]="['/auth/login']">Login</a>
       </span>
     </span>
-  </span>
+  </div>
 </md-toolbar>
 <app-loading-bar></app-loading-bar>
-
-<div>
-  <div class="left">
-    <a class="header-navigation__link" [routerLink]="['/admin']" routerLinkActive="active-router-link">Admin</a>
-    <!--
-        <a  class="header-navigation__link" [routerLink]="['/courses', 1]" routerLinkActive="active-router-link">Papers</a>
-        <a  class="header-navigation__link" [routerLink]="['/courses', 1, 2]" routerLinkActive="active-router-link">Exams</a>
-        <a  class="header-navigation__link" [routerLink]="['/courses', 1, 2, 1]" routerLinkActive="active-router-link">Questions</a>          -->
-
-  </div>
-</div>

@@ -26,7 +26,7 @@ export class HeaderComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.profile$ = this.oidc.profile$
+    this.profile$ = this.oidc.profile$;
 
     this.loggedIn$ = this.oidc.loggedIn$;
 
