@@ -1,11 +1,11 @@
 import { Component } from '@angular/core';
 import { OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { AlertService } from '../../core';
+import { AlertService, LoadingBarService } from '../../core';
 import { FormValidators } from 'angular-validators';
 import { OpenIdClientService } from '@toxicable/oidc';
 import { environment } from '../../../environments/environment';
-import { Observable } from 'rxjs'
+import { Observable } from 'rxjs/Observable';
 
 
 @Component({
@@ -19,6 +19,7 @@ export class LoginComponent implements OnInit {
   constructor(
     private alert: AlertService,
     private oidc: OpenIdClientService,
+    private loadingBar: LoadingBarService,
   ) { }
 
   ngOnInit(){
@@ -26,14 +27,14 @@ export class LoginComponent implements OnInit {
   }
 
   facebookAuthorize() {
-    this.oidc.login('facebook')
-      .subscribe(() => this.alert.sendSuccess('Successfully logged in'))
+    this.loadingBar.doWithLoader(this.oidc.loginExternal('facebook'))
+      .subscribe(x => this.alert.sendSuccess('Successfully logged in'));
 
   }
 
   googleAuthorize() {
-    this.oidc.login('google')
-      .subscribe(x => this.alert.sendSuccess('Successfully logged in4'));
+    this.loadingBar.doWithLoader(this.oidc.loginExternal('google'))
+      .subscribe(x => this.alert.sendSuccess('Successfully logged in'));
   }
 
 }

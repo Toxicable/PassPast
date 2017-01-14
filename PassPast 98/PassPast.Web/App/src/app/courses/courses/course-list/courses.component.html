@@ -1,5 +1,5 @@
 <h1>Courses</h1>
-<button type="button" md-raised-button color="primary" (click)="openDialog()">Add Course</button>
+<button *ngIf="loggedIn$ | async" type="button" md-raised-button color="primary" (click)="openDialog()">Add Course</button>
 
 <md-list>
     <md-list-item *ngFor="let course of courses$ | async; trackBy: trackByFn" [routerLink]="[course.id]" class="can-click highlight-background">

@@ -29,7 +29,7 @@
     "@ngrx/effects": "^2.0.0",
     "@ngrx/store": "2.2.1",
     "@ngrx/store-devtools": "~3.2.1",
-    "@toxicable/oidc": "0.0.0-alpha-13",
+    "@toxicable/oidc": "0.0.0-alpha-14",
     "angular-validators": "0.0.0-alpha-3",
     "core-js": "^2.4.1",
     "marked": "^0.3.6",
@@ -39,12 +39,11 @@
     "zone.js": "^0.7.2"
   },
   "devDependencies": {
-    "@types/marked": "0.0.28",
-    "ngrx-store-freeze": "^0.1.4",
     "@angular/compiler-cli": "^2.3.1",
     "@types/jasmine": "2.5.38",
+    "@types/marked": "0.0.28",
     "@types/node": "^6.0.42",
-    "angular-cli": "1.0.0-beta.24",
+    "angular-cli": "^1.0.0-beta.25.5",
     "codelyzer": "~2.0.0-beta.1",
     "jasmine-core": "2.5.2",
     "jasmine-spec-reporter": "2.5.0",
@@ -53,9 +52,10 @@
     "karma-cli": "^1.0.1",
     "karma-jasmine": "^1.0.2",
     "karma-remap-istanbul": "^0.2.1",
+    "ngrx-store-freeze": "^0.1.4",
     "protractor": "~4.0.13",
     "ts-node": "1.2.1",
-    "tslint": "^4.0.2",
+    "tslint": "^4.3.1",
     "typescript": "~2.0.3"
   }
 }

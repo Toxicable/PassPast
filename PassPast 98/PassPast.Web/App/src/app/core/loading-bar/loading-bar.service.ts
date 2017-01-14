@@ -23,8 +23,7 @@ export class LoadingBarService {
     return Observable
       .of(true)
       .do(() => this.load())
-      .flatMap(() => task
-        .do(() => this.done()))
-    // .finally( () => this.done());
+      .flatMap(() => task)
+      .finally( () => this.done());
   }
 }

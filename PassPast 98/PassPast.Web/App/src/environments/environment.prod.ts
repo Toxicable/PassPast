@@ -10,6 +10,6 @@ export const environment = {
   facebookAuthConfig: {
     redirect_uri: 'https://beta.passpast.net/signin-facebook',
     client_id: '311510702571628',
-    scopes: 'profile email'
+    scopes: 'email'
   },
 };

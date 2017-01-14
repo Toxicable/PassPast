@@ -3,7 +3,7 @@
 <button md-icon-button color="secondary" [routerLink]="['/courses']" >
   <md-icon>chevron_left</md-icon>
 </button>
-<button type="button" md-raised-button color="primary" (click)="openNewPaperDialog()">Add Paper</button>
+<button *ngIf="loggedIn$ | async" type="button" md-raised-button color="primary" (click)="openNewPaperDialog()">Add Paper</button>
 
 <md-list>
     <md-list-item *ngFor="let paper of papers$ | async; trackBy: trackByFn" [routerLink]="paper.id" class="can-click highlight-background" >

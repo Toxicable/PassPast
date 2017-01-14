@@ -1,12 +1,5 @@
 <h1>Login</h1>
-Don't have an account yet? Sign up <a [routerLink]="['/auth/register']">here</a>
 <div>
-    <button md-raised-button color="primary" type="submit" (click)="facebookAuthorize()"  >Login with Facebook</button>
+    <button md-raised-button color="primary" type="submit" (click)="facebookAuthorize()">Login with Facebook</button>
+    <button md-raised-button color="primary" type="submit" (click)="googleAuthorize()">Login with Google</button>
 </div>
-<div>
-    <button md-raised-button color="primary" type="submit" (click)="googleAuthorize()"  >Login with Google</button>
-</div>
-
-
-
-<div (click)="authorizeExternal()">other</div>

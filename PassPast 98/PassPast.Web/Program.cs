@@ -20,9 +20,8 @@ namespace PassPast.Web
                 .ConfigureLogging(options => options.AddDebug())
                 .UseConfiguration(configuration)
                 .UseContentRoot(Directory.GetCurrentDirectory())
-                //.UseIISIntegration()
+                .UseIISIntegration()
                 .UseKestrel()
-                //.UseAzureAppServices()
                 .UseStartup<Startup>()
                 .Build();
 
