@@ -22,6 +22,7 @@ export class AuthHttp {
 
   private getHeaders(): Observable<Headers> {
     return this.oidc.tokens$
+      .first()
       .map((tokens: AuthTokens) => tokens ? tokens.access_token : '')
       .map((accessToken: string) => new Headers(Object.assign({},
         this.globalHeaders,

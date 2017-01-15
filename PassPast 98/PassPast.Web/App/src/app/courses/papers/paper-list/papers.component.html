@@ -5,8 +5,12 @@
 </button>
 <button *ngIf="loggedIn$ | async" type="button" md-raised-button color="primary" (click)="openNewPaperDialog()">Add Paper</button>
 
-<md-list>
-    <md-list-item *ngFor="let paper of papers$ | async; trackBy: trackByFn" [routerLink]="paper.id" class="can-click highlight-background" >
-        <h3 md-line>{{paper.name}}</h3>
-    </md-list-item>
-</md-list>
+<div *ngIf="noPapers$ | async">
+  There are no Papers for this Course
+</div>
+
+<div fxLayout="row" fxLayoutWrap="wrap">
+    <md-card *ngFor="let paper of papers$ | async; trackBy: trackByFn" [routerLink]="paper.id" class="can-click highlight-background" >
+        <md-card-title>{{paper.name}}</md-card-title>
+    </md-card>
+</div>

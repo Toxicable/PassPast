@@ -3,12 +3,12 @@ import { Effect, Actions } from '@ngrx/effects';
 import { PaperService } from '../papers/paper.service';
 import { PaperActions } from '../papers/paper.actions';
 import { Store, Action } from '@ngrx/store';
-import { Observable, Observer } from 'rxjs';
+import { Observable } from 'rxjs/Observable';
 import { AppState } from '../../app-store';
 import { CourseActionTypes, CourseActions } from './course.actions';
 import { Course } from '../models/course';
 import { CourseService } from './course.service';
-import { Title } from '@angular/platform-browser';
+import { LoadingBarService } from '../../core';
 
 @Injectable()
 export class CourseEffects {
@@ -20,7 +20,7 @@ export class CourseEffects {
     private paperActions: PaperActions,
     private courseService: CourseService,
     private courseActions: CourseActions,
-    private title: Title,
+    private loadingBar: LoadingBarService
   ) { }
 
   @Effect()
@@ -62,9 +62,11 @@ export class CourseEffects {
           if (courses.length > 0) {
             return Observable.empty();
           }
-          return this.courseService.getCourses()
-            .map(fetchedCourses => this.courseActions.loadSuccess(fetchedCourses))
-        })
+          return this.loadingBar.doWithLoader(
+            this.courseService.getCourses()
+              .map(fetchedCourses => this.courseActions.loadSuccess(fetchedCourses))
+          );
+        });
     });
 
   @Effect()
@@ -74,6 +76,6 @@ export class CourseEffects {
     .flatMap((course: Course) =>
       this.courseService.create(course)
         .map(fetchedCourse => this.courseActions.addSuccess(fetchedCourse))
-      );
+    );
 
 }

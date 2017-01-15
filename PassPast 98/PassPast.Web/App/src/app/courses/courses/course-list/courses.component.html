@@ -1,9 +1,17 @@
 <h1>Courses</h1>
 <button *ngIf="loggedIn$ | async" type="button" md-raised-button color="primary" (click)="openDialog()">Add Course</button>
 
-<md-list>
+<!--<md-list>
     <md-list-item *ngFor="let course of courses$ | async; trackBy: trackByFn" [routerLink]="[course.id]" class="can-click highlight-background">
         <h3 md-line>{{course.name}}</h3>
         <span md-line>Code: {{course.code}}</span>
     </md-list-item>
-</md-list>
+</md-list>-->
+
+<div fxLayout="row" fxLayoutWrap="wrap">
+  <md-card *ngFor="let course of courses$ | async; trackBy: trackByFn" [routerLink]="[course.id]" class="can-click highlight-background">
+      <md-card-title>{{course.name}}</md-card-title>
+      <md-card-subtitle>Code: {{course.code}}</md-card-subtitle>
+  </md-card>
+</div>
+

@@ -18,6 +18,7 @@ export class ExamsComponent implements OnInit {
   exams$: Observable<Exam[]>;
   trackByFn = trackByIdentity;
   loggedIn$: Observable<boolean>;
+  noExams$: Observable<boolean>;
 
   constructor(
     private store: Store<AppState>,
@@ -29,6 +30,12 @@ export class ExamsComponent implements OnInit {
   ngOnInit() {
     this.exams$ = this.store.select(state => state.courses.exam.entities);
     this.loggedIn$ = this.oidc.loggedIn$;
+
+    this.noExams$ = this.store.select(state => state.loading)
+      .flatMap(loading => this.exams$
+        .map(papers => papers.length)
+        .map(length => length === 0 && !loading)
+      );
   }
   openNewExamDialog() {
     this.newExamDialogRef = this.dialog.open(AddExamComponent, {

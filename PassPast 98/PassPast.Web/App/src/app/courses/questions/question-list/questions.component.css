@@ -1,17 +1,3 @@
-.mcq{
-  display:flex;
-  align-items:center
-}
-
-.mcq__progressbar--outer{
-  width: 300px;
-  height:10px;
-  background-color:green
-}
-.mcq__progressbar--inner{
-  height:10px;
-  background-color:orange
-}
 
 .question-container{
     padding-left: 15px;

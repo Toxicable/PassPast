@@ -3,7 +3,7 @@ import { Effect, Actions } from '@ngrx/effects';
 import { PaperService } from '../papers/paper.service';
 import { PaperActions } from '../papers/paper.actions';
 import { Store, Action } from '@ngrx/store';
-import { Observable } from 'rxjs';
+import { Observable } from 'rxjs/Observable';
 import { AppState } from '../../app-store';
 import { PaperActionTypes } from './paper.actions';
 import { Paper } from '../models/paper';
@@ -11,6 +11,7 @@ import { ExamActions } from '../exams/exam.actions';
 import { Course } from '../models/course';
 import { Exam } from '../models/exam';
 
+import { LoadingBarService } from '../../core';
 @Injectable()
 export class PaperEffects {
 
@@ -20,7 +21,8 @@ export class PaperEffects {
     private store: Store<AppState>,
     private paperService: PaperService,
     private paperActions: PaperActions,
-    private examActions: ExamActions
+    private examActions: ExamActions,
+    private loadingBar: LoadingBarService
   ) { }
 
   @Effect()
@@ -60,27 +62,27 @@ export class PaperEffects {
       this.store.select(state => state.courses.paper.entities)
         .first()
         .flatMap(papers => {
-          let localPapers = papers.filter(paper => paper.courseId === courseId);
+          const localPapers = papers.filter(paper => paper.courseId === courseId);
           if (localPapers.length > 0) {
             return Observable.empty();
           }
-          return this.paperService.getRelatedPapers(courseId)
-            .map(fetchedPapers => this.paperActions.loadSuccess(fetchedPapers))
+          return this.loadingBar.doWithLoader(
+            this.paperService.getRelatedPapers(courseId)
+              .map(fetchedPapers => this.paperActions.loadSuccess(fetchedPapers))
+          );
         })
     )
 
   @Effect()
   add: Observable<Action> = this.actions$
     .ofType(PaperActionTypes.ADD)
-    .map(a => { debugger; return a;})
     .map(action => action.payload)
     .flatMap((paper: Paper) =>
       this.store.select(state => state.courses.course.selected)
         .flatMap(course => {
-          debugger
           paper.courseId = course.id;
           return this.paperService.create(paper)
-            .map(paper => this.paperActions.addSuccess(paper))
+            .map(fetchedPaper => this.paperActions.addSuccess(fetchedPaper))
         })
     )
 

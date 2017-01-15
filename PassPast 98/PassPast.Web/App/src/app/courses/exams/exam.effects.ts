@@ -12,6 +12,7 @@ import { QuestionActions } from '../questions/question.actions';
 import { Paper } from '../models/paper';
 import { Question } from '../models/question';
 import { QuestionService } from '../questions/question.service';
+import { LoadingBarService } from '../../core';
 
 @Injectable()
 export class ExamEffects {
@@ -22,6 +23,7 @@ export class ExamEffects {
     private examActions: ExamActions,
     private questionActions: QuestionActions,
     private questionService: QuestionService,
+    private loadingBar: LoadingBarService,
   ) { }
 
   @Effect()
@@ -33,7 +35,7 @@ export class ExamEffects {
         .first()
         .flatMap((cachedExams: Exam[]) => {
           //TODO: add in selected cache
-          let localExam = cachedExams.find(c => c.id === examId);
+          const localExam = cachedExams.find(c => c.id === examId);
           if (localExam) {
             return Observable.of(this.examActions.selectSuccess(localExam));
           }
@@ -43,7 +45,7 @@ export class ExamEffects {
                 return this.examActions.selectSuccess(exam);
               }
               return this.examActions.selectFailed();
-            })
+            });
         })
     );
 
@@ -62,37 +64,39 @@ export class ExamEffects {
       this.store.select(state => state.courses.exam.entities)
         .first()
         .flatMap(exams => {
-          let localExams = exams.filter(exam => exam.paperId === paperId);
+          const localExams = exams.filter(exam => exam.paperId === paperId);
           if (localExams.length > 0) {
             return Observable.empty();
           }
-          return this.examService.getRelatedExams(paperId)
-            .map(fetchedExams => {
-              this.store.dispatch(this.examActions.cache(fetchedExams));
-              return this.examActions.loadSuccess(fetchedExams);
-            });
+          return this.loadingBar.doWithLoader(
+            this.examService.getRelatedExams(paperId)
+              .map(fetchedExams => {
+                this.store.dispatch(this.examActions.cache(fetchedExams));
+                return this.examActions.loadSuccess(fetchedExams);
+              })
+          );
         })
     );
 
-  @Effect()
-  add: Observable<Action> = this.actions$
-    .ofType(ExamActionTypes.ADD)
-    .map(action => action.payload)
-    .flatMap((formData: any) =>
-      this.store.select(state => state.courses.paper.selected)
-        .flatMap(selectedPaper =>{
-          //make this a better method
-          let newExam = Object.assign({}, { paperId: selectedPaper.id }, formData)
-          delete newExam['sections'];
+@Effect()
+add: Observable < Action > = this.actions$
+  .ofType(ExamActionTypes.ADD)
+  .map(action => action.payload)
+  .flatMap((formData: any) =>
+    this.store.select(state => state.courses.paper.selected)
+      .flatMap(selectedPaper => {
+        //make this a better method
+        let newExam = Object.assign({}, { paperId: selectedPaper.id }, formData)
+        delete newExam['sections'];
 
-          return this.examService.create(newExam)
-            .flatMap(createdExam => {
-              let newPaperData = Object.assign({}, { examId: createdExam.id }, formData);
-              delete newPaperData['semester'];
-              delete newPaperData['year'];
-              return this.questionService.create(newPaperData);
-            })
-        })
-    )
+        return this.examService.create(newExam)
+          .flatMap(createdExam => {
+            let newPaperData = Object.assign({}, { examId: createdExam.id }, formData);
+            delete newPaperData['semester'];
+            delete newPaperData['year'];
+            return this.questionService.create(newPaperData);
+          })
+      })
+  )
 
 }

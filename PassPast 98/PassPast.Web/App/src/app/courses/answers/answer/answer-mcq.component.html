@@ -1,12 +1,10 @@
-<div class="mcq">
-  <span>
+<div fxLayout="row">
+  <span fxFlex="5">
     {{answer.contentOrIncriment}}
   </span>
 
-  <div class="mcq__progressbar--outer" (click)="sendVote()">
-    <div class="mcq__progressbar--inner" [style.width.%]="(answer.totalVotes/totalAnswerVotes) * 100">
-    </div>
-  </div>
+  <md-progress-bar mode="determinate" (click)="sendVote()" class="can-click" [value]="(answer.totalVotes/totalAnswerVotes) * 100"></md-progress-bar>
+
   <span>
     {{answer.totalVotes}}
   </span>
