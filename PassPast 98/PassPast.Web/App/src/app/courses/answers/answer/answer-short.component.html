@@ -1,11 +1,15 @@
 <div style="display:flex;">
   <span>
+    <app-vote type="answer" [id]="answer.id" [voteCount]="answer.totalVotes"></app-vote>
+  </span>
+  <span>
+    <div>
+      <strong>Some User Identifier</strong> <small>{{answer.createdAt | date}}</small>
+    </div>
     <markdown>
       {{answer.contentOrIncriment}}
     </markdown>
   </span>
 
-  <span>
-    <app-vote [type]="'answer'" [id]="answer.id" [voteCount]="answer.totalVotes"></app-vote>
-  </span>
+
 </div>

@@ -3,7 +3,7 @@ import { Effect, Actions } from '@ngrx/effects';
 import { PaperService } from '../papers/paper.service';
 import { PaperActions } from '../papers/paper.actions';
 import { Store, Action } from '@ngrx/store';
-import { Observable } from 'rxjs';
+import { Observable } from 'rxjs/Observable';
 import { AppState } from '../../app-store';
 import { Paper } from '../models/paper';
 import { ExamActions } from '../exams/exam.actions';
@@ -13,6 +13,7 @@ import { QuestionService } from './question.service';
 import { normalize, Schema, arrayOf } from 'normalizr';
 import { CommentActions } from '../comments/comment.actions';
 import { AnswerActions } from '../answers/answer.actions';
+import { LoadingBarService} from '../../core';
 
 @Injectable()
 export class QuestionEffects {
@@ -27,6 +28,7 @@ export class QuestionEffects {
     private questionService: QuestionService,
     private commentActions: CommentActions,
     private answerActions: AnswerActions,
+    private loadingBar: LoadingBarService,
   ) {
     this.questionSchema.define({
       answers: arrayOf(this.answerSchema),
@@ -49,16 +51,18 @@ export class QuestionEffects {
           // if (localQuestions.length > 0) {
           //   return Observable.of(this.questionActions.loadSuccess(localQuestions));
           // }
-          return this.questionService.getRelatedQuestions(examId)
+          return this.loadingBar.doWithLoader(
+            this.questionService.getRelatedQuestions(examId)
             .map(fetchedQuestions => {
-              let norm = normalize(fetchedQuestions, arrayOf(this.questionSchema))
+              const norm = normalize(fetchedQuestions, arrayOf(this.questionSchema))
 
               this.store.dispatch(this.answerActions.loadSuccess(norm.entities['answers'] ? norm.entities['answers'] : {}));
               this.store.dispatch(this.commentActions.loadSuccess(norm.entities['comments'] ? norm.entities['comments'] : {}));
               this.store.dispatch(this.questionActions.selectSuccess(norm.result));
 
               return this.questionActions.loadSuccess(norm.entities['questions']);
-            });
+            })
+          );
         })
     );
 }

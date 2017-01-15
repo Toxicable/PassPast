@@ -1,48 +1,43 @@
-<div>
-  <div (click)="showContent=!showContent" class="can-click highlight-background">
-    <h2>
-      {{_question.incriment}}
-    </h2>
-  </div>
+<md-card-title (click)="showContent=!showContent" class="can-click highlight-background">
+  {{_question.incriment}}
+</md-card-title>
 
-  <!--main content toggle-->
-  <div *ngIf="showContent">
-    <!--Answers-->
-    <div *ngFor="let answer of answers | async | orderByDate: 'createdAt'">
-      <!--MCQ-->
-      <div *ngIf="_question.type == 'Mcq'"  >
-        <app-answer-mcq [totalAnswerVotes]="totalAnswerVotes" [answer]="answer"></app-answer-mcq>
-      </div>
-
-      <!--Short -->
-      <div *ngIf="_question.type == 'Short'">
-        <app-answer-short [answer]="answer"></app-answer-short>
-      </div>
-
+<!--main content toggle-->
+<div *ngIf="showContent">
+  <!--Answers-->
+  <div *ngFor="let answer of answers | async | orderByDate: 'createdAt'">
+    <!--MCQ-->
+    <div *ngIf="_question.type == 'Mcq'">
+      <app-answer-mcq [totalAnswerVotes]="totalAnswerVotes" [answer]="answer"></app-answer-mcq>
     </div>
 
-    <!--makes sure this the is bottom level question-->
-    <span *ngIf="_question.subQuestions.length == 0 ">
-      <!--New Answer-->
-      <span *ngIf="_question.type == 'Short'">
-        <app-new-answer [questionId]="_question.id"></app-new-answer>
-      </span>
+    <!--Short -->
+    <div *ngIf="_question.type == 'Short'">
+      <app-answer-short [answer]="answer"></app-answer-short>
+    </div>
 
-      <button (click)="showComments = !showComments">Show Comments</button>
+  </div>
 
-      <!--Comments-->
-      <span *ngIf="showComments">
-        <div *ngFor="let comment of comments | async | orderByDate: 'createdAt'">
-          <app-comment [comment]="comment"></app-comment>
-        </div>
-        <!--New Comment-->
-        <app-new-comment [questionId]="_question.id"></app-new-comment>
-      </span>
+  <!--makes sure this the is bottom level question-->
+  <span *ngIf="_question.subQuestions.length == 0 ">
+    <!--New Answer-->
+    <span *ngIf="_question.type == 'Short'">
+      <app-new-answer [questionId]="_question.id"></app-new-answer>
+    </span>
+    <button (click)="showComments = !showComments">Show Comments</button>
 
+    <!--Comments-->
+    <span *ngIf="showComments">
+      <div *ngFor="let comment of comments | async | orderByDate: 'createdAt'">
+        <app-comment [comment]="comment"></app-comment>
+      </div>
+      <!--New Comment-->
+      <app-new-comment [questionId]="_question.id"></app-new-comment>
     </span>
 
-    <div *ngFor="let subQuestion of (subQuestions | async); trackBy: trackByFn" class="question-container">
-      <app-question [question]="subQuestion"></app-question>
-    </div>
-  </div>
+  </span>
+
+  <md-card *ngFor="let subQuestion of (subQuestions | async); trackBy: trackByFn">
+    <app-question [question]="subQuestion"></app-question>
+  </md-card>
 </div>

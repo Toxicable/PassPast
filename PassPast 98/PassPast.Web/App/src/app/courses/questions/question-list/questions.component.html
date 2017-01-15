@@ -3,6 +3,6 @@
   <md-icon>chevron_left</md-icon>
 </button>
 
-<div *ngFor="let question of (questions$ | async) ; trackBy: trackByFn" class="question-container">
+<md-card  *ngFor="let question of (questions$ | async); trackBy: trackByFn" fxFlex="75%">
     <app-question [question]="question"></app-question>
-</div>
+</md-card >

@@ -29,28 +29,28 @@ export class ExamHubService {
     this.connection = new signalR.HubConnection(environment.signalRUrl);
 
     this.connection.on('BroadcastAnswer', (answer: Answer) => {
-      let dictAnswer: Dict<Answer> = { [answer.id]: answer };
+      const dictAnswer: Dict<Answer> = { [answer.id]: answer };
 
       this.store.dispatch(this.questionActions.addAnswer(answer));
       this.store.dispatch(this.answerActions.addSuccess(dictAnswer));
     });
 
     this.connection.on('BroadcastComment', (comment: Comment) => {
-      let dictComment: Dict<Comment> = { [comment.id]: comment };
+      const dictComment: Dict<Comment> = { [comment.id]: comment };
 
       this.store.dispatch(this.questionActions.addComment(comment));
       this.store.dispatch(this.commentActions.addSuccess(dictComment));
     });
 
     this.connection.on('BroadcastAnswerVote', (answers: Answer[]) => {
-      let dicAnswers: Dict<Answer> = {};
+      const dicAnswers: Dict<Answer> = {};
       answers.forEach(a =>  dicAnswers[a.id] = a );
 
       this.store.dispatch(this.answerActions.updateVotes(dicAnswers));
     });
 
     this.connection.on('BroadcastCommentVote', (comment: Comment) => {
-      let dictComment: Dict<Comment> = { [comment.id]: comment };
+      const dictComment: Dict<Comment> = { [comment.id]: comment };
 
       this.store.dispatch(this.commentActions.updateVotes(dictComment));
     });
