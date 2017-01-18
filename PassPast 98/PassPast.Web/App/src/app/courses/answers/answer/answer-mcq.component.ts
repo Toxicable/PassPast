@@ -1,6 +1,7 @@
 import { Component, OnInit, Input, ChangeDetectionStrategy } from '@angular/core';
 import { Answer } from '../../models/answer';
 import { ExamHubService } from '../../exam-hub.service';
+import { OpenIdClientService } from '@toxicable/oidc';
 
 @Component({
   selector: 'app-answer-mcq',
@@ -22,11 +23,13 @@ export class AnswerMcqComponent {
   @Input() totalAnswerVotes: number;
 
   constructor(
-    private examHub: ExamHubService
+    private examHub: ExamHubService,
+    private oidc: OpenIdClientService
   ) { }
 
   sendVote() {
-    this.examHub.postAnswerVote(1, this.answer.id, 'mcq');
+    this.examHub.postAnswerVote(1, this.answer.id, 'mcq')
+    .subscribe();
   }
 
 }

@@ -9,6 +9,7 @@ import { FormGroup, FormBuilder } from '@angular/forms';
 })
 export class NewAnswerComponent implements OnInit {
   @Input() questionId: number;
+  @Input() loggedIn: boolean;
   newAnswerForm: FormGroup;
 
   constructor(

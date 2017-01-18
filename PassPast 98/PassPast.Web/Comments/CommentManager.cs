@@ -36,7 +36,7 @@ namespace PassPast.Web.Comments
         {
             var existingVote = await _context.Votes
                .Include(v => v.Comment)
-               .SingleOrDefaultAsync(v => v.AnswerId == vote.AnswerId && v.CreatedById == vote.CreatedById && !v.Deleted);
+               .SingleOrDefaultAsync(v => v.CommentId == vote.CommentId && v.CreatedById == vote.CreatedById && !v.Deleted);
 
             if (existingVote != null)
             {

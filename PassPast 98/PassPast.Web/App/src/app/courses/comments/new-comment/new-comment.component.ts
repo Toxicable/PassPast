@@ -11,6 +11,7 @@ export class NewCommentComponent implements OnInit {
   newCommentForm: FormGroup;
 
   @Input() questionId: number;
+  @Input() loggedIn: boolean;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -19,12 +20,13 @@ export class NewCommentComponent implements OnInit {
 
   ngOnInit() {
     this.newCommentForm = this.formBuilder.group({
-      content: ['']
+      content: {value: '', disabled: !this.loggedIn}
     });
   }
 
   sendComment(){
     this.examHub.postComment(this.newCommentForm.value['content'], this.questionId)
+    .subscribe();
     this.newCommentForm.reset();
   }
 }

@@ -9,6 +9,7 @@ import { QuestionActions } from './questions/question.actions';
 import { Observable } from 'rxjs/Observable';
 import { Comment } from './models/comment';
 import { CommentActions } from './comments/comment.actions';
+import { OpenIdClientService } from '@toxicable/oidc';
 
 declare let signalR: any;
 
@@ -25,6 +26,7 @@ export class ExamHubService {
     private answerActions: AnswerActions,
     private questionActions: QuestionActions,
     private commentActions: CommentActions,
+    private oidc: OpenIdClientService,
   ) {
     this.connection = new signalR.HubConnection(environment.signalRUrl);
 
@@ -72,19 +74,27 @@ export class ExamHubService {
   }
 
   postAnswer(questionId: number, content: string) {
-    this.connection.invoke('PostAnswer', this.groupId, { questionId, contentOrIncriment: content });
+    return this.getUserId()
+      .map(userId => this.connection.invoke('PostAnswer', this.groupId, { questionId, contentOrIncriment: content }, userId));
   }
 
   postAnswerVote(value: number, answerId: number, type: string) {
-    this.connection.invoke('PostAnswerVote', this.groupId, { value, answerId }, type);
+    return this.getUserId()
+      .map(userId => this.connection.invoke('PostAnswerVote', this.groupId, { value, answerId }, type, userId));
   }
 
   postCommentVote(value: number, commentId: number) {
-    this.connection.invoke('PostCommentVote', this.groupId, { value, commentId });
+    return this.getUserId()
+      .map(userId => this.connection.invoke('PostCommentVote', this.groupId, { value, commentId }, userId));
   }
 
   postComment(content: string, questionId: number) {
-    this.connection.invoke('PostComment', this.groupId, { content, questionId });
+    return this.getUserId()
+      .map(userId => this.connection.invoke('PostComment', this.groupId, { content, questionId }, userId));
+  }
+  private getUserId() {
+    return this.oidc.profile$
+      .map(profile => profile.sub);
   }
 }
 

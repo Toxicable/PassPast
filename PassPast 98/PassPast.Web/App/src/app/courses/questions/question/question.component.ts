@@ -3,6 +3,7 @@ import { Question } from '../../models/question';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { ExamHubService } from '../../exam-hub.service';
 import { Observable } from 'rxjs/Observable';
+import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { Store } from '@ngrx/store';
 import { AppState } from '../../../app-store';
 import { getQuestions } from '../question.reducer';
@@ -12,44 +13,62 @@ import { Answer } from '../../models/answer';
 import { getComments } from '../../comments/comment.reducer';
 import { Comment } from '../../models/comment';
 import { trackByIdentity } from '../../../utilities';
+import { OpenIdClientService } from '@toxicable/oidc';
 
 @Component({
   selector: 'app-question',
   templateUrl: './question.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class QuestionComponent {
-  _question: NormQuestion;
+export class QuestionComponent implements OnInit {
   totalAnswerVotes: number = 0;
   showComments: boolean = false;
+  trackByFn = trackByIdentity;
+  showContent = true;
+  _question: NormQuestion;
   subQuestions: Observable<NormQuestion[]>;
   answers: Observable<Answer[]>;
   comments: Observable<Comment[]>;
-  trackByFn = trackByIdentity;
-  showContent = true;
+  question$: BehaviorSubject<NormQuestion> = new BehaviorSubject<NormQuestion>(null);
+  loggedIn$: Observable<boolean>;
 
-  @Input()
-  set question(question: NormQuestion) {
-
-    this._question = question;
-    this.subQuestions = this.store.select(state => state.courses.question.entities)
-      .map(entities => getQuestions(question.subQuestions, entities ))
-
-    this.answers = this.store.select(state => state.courses.answer.entities)
-      .map(entities => getAnswers(question.answers, entities))
-      .do(answers => {
-        this.totalAnswerVotes = answers
-          .map(a => a.totalVotes)
-          .reduce((previousVote, currentVote) => previousVote + currentVote, 0);
-      });
-
-    this.comments = this.store.select(state => state.courses.comment.entities)
-      .map(entities => getComments(question.comments, entities));
-
-  }
   constructor(
     private examHub: ExamHubService,
     private store: Store<AppState>,
+    private oidc: OpenIdClientService
   ) { }
+
+  @Input()
+  set question(question: NormQuestion) {
+    this.question$.next(question);
+    this._question = question;
+  }
+
+  ngOnInit() {
+    this.loggedIn$ = this.oidc.loggedIn$;
+
+    this.subQuestions = Observable.combineLatest(
+      this.store.select(state => state.courses.question.entities),
+      this.question$.filter(q => !!q),
+      (entities, question) => getQuestions(question.subQuestions, entities)
+    );
+
+    this.answers = Observable.combineLatest(
+      this.store.select(state => state.courses.answer.entities),
+      this.question$.filter(q => !!q),
+      (entities, question) => getAnswers(question.answers, entities)
+    ).do(answers => {
+      this.totalAnswerVotes = answers
+        .map(a => a.totalVotes)
+        .reduce((previousVote, currentVote) => previousVote + currentVote, 0);
+    });
+
+    this.comments = Observable.combineLatest(
+      this.store.select(state => state.courses.comment.entities),
+      this.question$.filter(q => !!q),
+      (entities, question) => getComments(question.comments, entities)
+    );
+
+  }
 
 }

@@ -2,7 +2,7 @@
   <app-vote type="comment" [id]="comment.id" [voteCount]="comment.totalVotes"></app-vote>
   <div >
     <div>
-      <strong>Some User Identifier</strong> <small>{{comment.createdAt | date}}</small>
+      <strong>{{comment.createdBy.userName}}</strong> <small>{{comment.createdAt | date}}</small>
     </div>
     <div>
       {{comment.content}}

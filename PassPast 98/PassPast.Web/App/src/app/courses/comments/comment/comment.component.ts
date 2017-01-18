@@ -8,4 +8,5 @@ import { Comment } from '../../models/comment';
 })
 export class CommentComponent {
   @Input() comment: Comment;
+  @Input() loggedIn: boolean;
 }

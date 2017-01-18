@@ -16,20 +16,25 @@ export class VoteComponent {
   ) { }
 
   upVote() {
+    debugger
     if (this.type === 'answer') {
-      this.examHub.postAnswerVote(1, this.id, 'short');
+      this.examHub.postAnswerVote(1, this.id, 'short')
+        .subscribe();
     }
     if (this.type === 'comment') {
-      this.examHub.postCommentVote(1, this.id);
+      this.examHub.postCommentVote(1, this.id)
+        .subscribe();
     }
   }
 
   downVote() {
     if (this.type === 'answer') {
-      this.examHub.postAnswerVote(-1, this.id, 'short');
+      this.examHub.postAnswerVote(-1, this.id, 'short')
+        .subscribe();
     }
     if (this.type === 'comment') {
-      this.examHub.postCommentVote(-1, this.id);
+      this.examHub.postCommentVote(-1, this.id)
+        .subscribe();
     }
   }
 }

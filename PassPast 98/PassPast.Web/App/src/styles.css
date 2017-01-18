@@ -14,6 +14,10 @@ body{
   text-align: center;
 }
 
+md-card{
+  margin: 10px;
+}
+
 a{
   color: black;
   text-decoration: none;

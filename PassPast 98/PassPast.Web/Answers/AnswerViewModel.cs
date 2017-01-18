@@ -1,5 +1,6 @@
 ﻿using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
+using PassPast.Web.Users;
 using System;
 
 namespace PassPast.Web.Answers
@@ -12,5 +13,7 @@ namespace PassPast.Web.Answers
         public int questionId { get; set; }
         [JsonConverter(typeof(IsoDateTimeConverter))]
         public DateTimeOffset createdAt { get; set; }
+
+        public UserViewModel createdBy { get; set; }
     }
 }

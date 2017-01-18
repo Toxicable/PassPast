@@ -45,7 +45,6 @@ export class CoursesComponent implements OnInit {
 
     this.newCourseDialogRef.afterClosed()
       .subscribe(result => {
-        console.log('result: ' + result);
         this.newCourseDialogRef = null;
       });
   }

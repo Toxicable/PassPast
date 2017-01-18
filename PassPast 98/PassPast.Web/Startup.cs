@@ -26,7 +26,7 @@ using PassPast.Web.Votes;
 using PassPast.Web.Comments.Hubs;
 using PassPast.Web.Comments;
 using PassPast.Data.Domain;
-
+using PassPast.Web.Users;
 
 namespace PassPast.Web
 {
@@ -90,6 +90,8 @@ namespace PassPast.Web
                 x.CreateMap<CommentBindingModel, CommentEntity>();
 
                 x.CreateMap<VoteBindingModel, VoteEntity>();
+
+                x.CreateMap<ApplicationUser, UserViewModel>();
             });
 
             services.AddSingleton(sp => config.CreateMapper());

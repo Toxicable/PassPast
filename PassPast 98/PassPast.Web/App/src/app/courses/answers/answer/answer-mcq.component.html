@@ -3,7 +3,8 @@
     {{answer.contentOrIncriment}}
   </span>
 
-  <md-progress-bar mode="determinate" (click)="sendVote()" class="can-click" [value]="(answer.totalVotes/totalAnswerVotes) * 100"></md-progress-bar>
+  <md-progress-bar [mdTooltip]="(oidc.loggedIn$ | async) ? 'Click to vote' : 'You must be logged in to vote'" mdTooltipPosition="above"
+    mode="determinate" (click)="sendVote()" class="can-click" [value]="(answer.totalVotes/totalAnswerVotes) * 100"></md-progress-bar>
 
   <span>
     {{answer.totalVotes}}

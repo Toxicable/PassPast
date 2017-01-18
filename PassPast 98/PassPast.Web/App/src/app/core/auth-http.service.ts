@@ -88,7 +88,6 @@ export class AuthHttp {
   }
 
   public handleInternalServerError(res: Response) {
-    console.log(res);
     return Observable.throw([res.text()]);
   }
 

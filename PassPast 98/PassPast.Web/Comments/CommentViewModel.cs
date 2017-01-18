@@ -1,5 +1,6 @@
 ﻿using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
+using PassPast.Web.Users;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,5 +16,7 @@ namespace PassPast.Web.Comments
         public int questionId { get; set; }
         [JsonConverter(typeof(IsoDateTimeConverter))]
         public DateTimeOffset createdAt { get; set; }
+
+        public UserViewModel CreatedBy { get; set; }
     }
 }

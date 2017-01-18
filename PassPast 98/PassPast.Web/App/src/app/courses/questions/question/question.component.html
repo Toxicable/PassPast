@@ -22,17 +22,17 @@
   <span *ngIf="_question.subQuestions.length == 0 ">
     <!--New Answer-->
     <span *ngIf="_question.type == 'Short'">
-      <app-new-answer [questionId]="_question.id"></app-new-answer>
+      <app-new-answer [questionId]="_question.id" [loggedIn]="loggedIn$ | async"></app-new-answer>
     </span>
     <button (click)="showComments = !showComments">Show Comments</button>
 
     <!--Comments-->
     <span *ngIf="showComments">
       <div *ngFor="let comment of comments | async | orderByDate: 'createdAt'">
-        <app-comment [comment]="comment"></app-comment>
+        <app-comment [comment]="comment" ></app-comment>
       </div>
       <!--New Comment-->
-      <app-new-comment [questionId]="_question.id"></app-new-comment>
+      <app-new-comment [questionId]="_question.id" [loggedIn]="loggedIn$ | async" ></app-new-comment>
     </span>
 
   </span>

@@ -50,7 +50,7 @@ namespace PassPast.Web.Api.Courses
         public async Task<IEnumerable<CourseEntity>> GetAll()
         {
             var courses = await _context.Courses
-                .OrderByDescending(c => c.Name)
+                .OrderBy(c => c.Name)
                 .ToListAsync();
 
             return courses;

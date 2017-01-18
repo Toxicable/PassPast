@@ -44,6 +44,7 @@ namespace PassPast.Web.Api.Exams
                 .Where(q => q.ExamId == id)
                 .Include(q => q.Answers)
                 .Include(q => q.Comments)
+                    .ThenInclude(c => c.CreatedBy)
                 .ToListAsync())
                 .Where(q => q.ParentQuestionId == null)
                 .ToList();
