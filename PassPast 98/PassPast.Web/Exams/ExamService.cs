@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace PassPast.Web.Api.Exams
 {
-    public interface IExamManager
+    public interface IExamService
     {
         Task<ExamEntity> Get(int id);
         Task<IEnumerable<QuestionEntity>> GetQuestions(int id);
@@ -19,12 +19,12 @@ namespace PassPast.Web.Api.Exams
         Task Create(ExamEntity newExam);
     }
 
-    public class ExamManager: IExamManager
+    public class ExamService : IExamService
     {
         private ApplicationDbContext _context;
         private IMapper _mapper;
 
-        public ExamManager(ApplicationDbContext context, IMapper mapper)
+        public ExamService(ApplicationDbContext context, IMapper mapper)
         {
             _context = context;
             _mapper = mapper;

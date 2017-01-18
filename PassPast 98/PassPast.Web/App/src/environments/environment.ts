@@ -4,8 +4,8 @@
 // The list of which env maps to which file can be found in `angular-cli.json`.
 
 const baseUrl =
-'http://localhost:4200/';
-//'https://beta.passpast.net/';
+//'http://localhost:4200/';
+'https://beta.passpast.net/';
 
 export const environment = {
   production: false,

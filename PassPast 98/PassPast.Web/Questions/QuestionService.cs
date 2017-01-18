@@ -13,17 +13,17 @@ using PassPast.Web.Infrastructure.Domain;
 
 namespace PassPast.Web.Api.Questions
 {
-    public interface IQuestionManger
+    public interface IQuestionService
     {
         Task CreateFromSections(QuestionBindingModel question, string userId);
     }
 
-    public class QuestionManger : IQuestionManger
+    public class QuestionService : IQuestionService
     {
         private ApplicationDbContext _context;
         private IMapper _mapper;
 
-        public QuestionManger(ApplicationDbContext context, IMapper mapper)
+        public QuestionService(ApplicationDbContext context, IMapper mapper)
         {
             _context = context;
             _mapper = mapper;

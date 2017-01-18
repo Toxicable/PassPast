@@ -61,13 +61,13 @@ namespace PassPast.Web
             services.AddApplicationInsightsTelemetry(Configuration);
 
             services.AddSingleton<IConfiguration>(Configuration);
-            services.AddTransient<IExternalAuthorizationManager, ExternalAuthorizationManager>();
-            services.AddTransient<ICourseManager, CourseManager>();
-            services.AddTransient<IExamManager, ExamManager>();
-            services.AddTransient<IPaperManager, PaperManager>();
-            services.AddTransient<IQuestionManger, QuestionManger>();
-            services.AddTransient<IAnswerManager, AnswerManager>();
-            services.AddTransient<ICommentManager, CommentManager>();
+            services.AddTransient<IExternalAuthorizationService, ExternalAuthorizationService>();
+            services.AddTransient<ICourseService, CourseService>();
+            services.AddTransient<IExamService, ExamService>();
+            services.AddTransient<IPaperService, PaperService>();
+            services.AddTransient<IQuestionService, QuestionService>();
+            services.AddTransient<IAnswerService, AnswerService>();
+            services.AddTransient<ICommentService, CommentService>();
 
             var config = new MapperConfiguration(x =>
             {

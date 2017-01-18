@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace PassPast.Web
 {
-    public interface IExternalAuthorizationManager
+    public interface IExternalAuthorizationService
     {
         Task<ExternalProfileBindingModel> GetProfile(string accessToken, ExternalAuthProviders provider);
         Task<bool> VerifyExternalAccessToken(string accessToken, ExternalAuthProviders provider);
@@ -22,11 +22,11 @@ namespace PassPast.Web
         google
     }
 
-    public class ExternalAuthorizationManager : IExternalAuthorizationManager
+    public class ExternalAuthorizationService : IExternalAuthorizationService
     {
         private readonly IConfiguration _configuration;
 
-        public ExternalAuthorizationManager(
+        public ExternalAuthorizationService(
             IConfiguration configuration
             )
         {

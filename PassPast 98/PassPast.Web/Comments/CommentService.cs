@@ -8,16 +8,16 @@ using System.Threading.Tasks;
 
 namespace PassPast.Web.Comments
 {
-    public interface ICommentManager
+    public interface ICommentService
     {
         Task<CommentEntity> Create(CommentEntity comment);
         Task<CommentEntity> AddVote(VoteEntity vote);
     }
-    public class CommentManager: ICommentManager
+    public class CommentService: ICommentService
     {
         private readonly ApplicationDbContext _context;
 
-        public CommentManager(ApplicationDbContext context)
+        public CommentService(ApplicationDbContext context)
         {
             _context = context;
         }

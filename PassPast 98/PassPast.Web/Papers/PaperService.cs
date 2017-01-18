@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace PassPast.Web.Api.Papers
 {
-    public interface IPaperManager
+    public interface IPaperService
     {
         Task<PaperEntity> Get(int id);
         Task<PaperEntity> GetExams(int id);       
@@ -16,12 +16,12 @@ namespace PassPast.Web.Api.Papers
         Task Create(PaperEntity newPaper);
     }
 
-    public class PaperManager : IPaperManager
+    public class PaperService : IPaperService
     {
         private ApplicationDbContext _context;
         private IMapper _mapper;
 
-        public PaperManager(
+        public PaperService(
             ApplicationDbContext context, 
             IMapper mapper
             )

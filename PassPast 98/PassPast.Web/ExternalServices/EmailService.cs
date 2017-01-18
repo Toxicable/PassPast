@@ -17,8 +17,8 @@ namespace OAuthAPI.WebApi.Api.Services
         //    //MailMessage mailMsg = new MailMessage();
             //mailMsg.To.Add(new MailAddress(message.Destination));
             //// From
-            //var t = ConfigurationManager.AppSettings["email:username"];
-            //MailAddress mailAddress = new MailAddress(ConfigurationManager.AppSettings["email:username"], "OAuth Api mailer");
+            //var t = ConfigurationService.AppSettings["email:username"];
+            //MailAddress mailAddress = new MailAddress(ConfigurationService.AppSettings["email:username"], "OAuth Api mailer");
             //mailMsg.From = mailAddress;
 
             ////Content
@@ -29,7 +29,7 @@ namespace OAuthAPI.WebApi.Api.Services
             ////SmtpClient
             //SmtpClient smtpConnection = new SmtpClient("smtp-mail.outlook.com", 587);
             //smtpConnection.Credentials = new NetworkCredential(
-            //    ConfigurationManager.AppSettings["email:username"], ConfigurationManager.AppSettings["email:password"]);
+            //    ConfigurationService.AppSettings["email:username"], ConfigurationService.AppSettings["email:password"]);
 
             //smtpConnection.EnableSsl = true;
             //await smtpConnection.SendMailAsync(mailMsg);

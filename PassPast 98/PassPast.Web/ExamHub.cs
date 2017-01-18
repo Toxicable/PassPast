@@ -11,19 +11,19 @@ namespace PassPast.Web.Comments.Hubs
 {
     public class ExamHub : Hub
     {
-        private IAnswerManager _answerManager { get; set; }
+        private IAnswerService _answerService { get; set; }
         private IMapper _mapper { get; set; }
-        private ICommentManager _commentManager { get; set; }
+        private ICommentService _commentService { get; set; }
 
         public ExamHub(
-            IAnswerManager answerManager,
-            ICommentManager commentManager,
+            IAnswerService answerService,
+            ICommentService commentService,
             IMapper mapper
             )
         {
-            _commentManager = commentManager;
+            _commentService = commentService;
             _mapper = mapper;
-            _answerManager = answerManager;
+            _answerService = answerService;
         }
 
         public Task JoinGroup(int examId)
@@ -41,7 +41,7 @@ namespace PassPast.Web.Comments.Hubs
             var newVote = _mapper.Map<VoteEntity>(vote);
             newVote.CreatedById = userId;
 
-            var editedAnswer = (await _answerManager.AddVote(newVote, type))
+            var editedAnswer = (await _answerService.AddVote(newVote, type))
                 .Select(a => _mapper.Map<AnswerViewModel>(a))
                 .ToList();
             await Clients.Group(groupId.ToString()).InvokeAsync("BroadcastAnswerVote", editedAnswer);         
@@ -52,7 +52,7 @@ namespace PassPast.Web.Comments.Hubs
             var newVote = _mapper.Map<VoteEntity>(vote);
             newVote.CreatedById = userId;
 
-            var editedComment = _mapper.Map<CommentViewModel>(await _commentManager.AddVote(newVote));
+            var editedComment = _mapper.Map<CommentViewModel>(await _commentService.AddVote(newVote));
             await Clients.Group(groupId.ToString()).InvokeAsync("BroadcastCommentVote", editedComment);
         }
 
@@ -61,7 +61,7 @@ namespace PassPast.Web.Comments.Hubs
             var newAnswer = _mapper.Map<AnswerEntity>(answer);
             newAnswer.CreatedById = userId;
 
-            var createdAnswer = _mapper.Map<AnswerViewModel>(await _answerManager.Create(newAnswer));            
+            var createdAnswer = _mapper.Map<AnswerViewModel>(await _answerService.Create(newAnswer));            
             await Clients.Group(groupId.ToString()).InvokeAsync("BroadcastAnswer", createdAnswer);
         }
         
@@ -70,7 +70,7 @@ namespace PassPast.Web.Comments.Hubs
             var newComment = _mapper.Map<CommentEntity>(comment);
             newComment.CreatedById = userId;
 
-            var createdComment = _mapper.Map<CommentViewModel>(await _commentManager.Create(newComment));
+            var createdComment = _mapper.Map<CommentViewModel>(await _commentService.Create(newComment));
             await Clients.Group(groupId.ToString()).InvokeAsync("BroadcastComment", createdComment);
         }
     }

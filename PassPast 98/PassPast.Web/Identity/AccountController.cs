@@ -20,15 +20,15 @@ namespace PassPast.Web.Controllers
     {
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly ApplicationDbContext _applicationDbContext;
-        private readonly IExternalAuthorizationManager _externalAuthManager;
+        private readonly IExternalAuthorizationService _externalAuthService;
 
         public AccountController(
             UserManager<ApplicationUser> userManager,
             ApplicationDbContext applicationDbContext,
-            IExternalAuthorizationManager externalAuthManager
+            IExternalAuthorizationService externalAuthService
             )
         {
-            _externalAuthManager = externalAuthManager;
+            _externalAuthService = externalAuthService;
             _userManager = userManager;
             _applicationDbContext = applicationDbContext;
         }
@@ -60,7 +60,7 @@ namespace PassPast.Web.Controllers
         {
             if (ModelState.IsValid)
             {
-                var isValid = await _externalAuthManager.VerifyExternalAccessToken(model.AccessToken, model.Provider);
+                var isValid = await _externalAuthService.VerifyExternalAccessToken(model.AccessToken, model.Provider);
 
                 if (!isValid)
                 {
@@ -71,7 +71,7 @@ namespace PassPast.Web.Controllers
                     });
                 }
 
-                var profile = await _externalAuthManager.GetProfile(model.AccessToken, model.Provider);
+                var profile = await _externalAuthService.GetProfile(model.AccessToken, model.Provider);
 
                 var user = new ApplicationUser {
                     UserName = profile.email,

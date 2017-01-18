@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace PassPast.Web.Api.Courses
 {
-    public interface ICourseManager
+    public interface ICourseService
     {
         Task<CourseEntity> Get(int id);
         Task<CourseEntity> GetPapers(int id);
@@ -16,12 +16,12 @@ namespace PassPast.Web.Api.Courses
         Task Create(CourseEntity newCourse);
     }
 
-    public class CourseManager: ICourseManager
+    public class CourseService: ICourseService
     {
         private ApplicationDbContext _context;
         private IMapper _mapper;
 
-        public CourseManager(
+        public CourseService(
             ApplicationDbContext context,
             IMapper mapper
             )

@@ -18,22 +18,22 @@ namespace PassPast.Web.Controllers
 {
     public class AuthorizationController : Controller
     {
-        private readonly SignInManager<ApplicationUser> _signInManager;
-        private readonly UserManager<ApplicationUser> _userManager;
+        private readonly SignInManager<ApplicationUser> _signInService;
+        private readonly UserManager<ApplicationUser> _userService;
         private readonly IConfiguration _configuration;
-        private readonly IExternalAuthorizationManager _externalAuthManager;
+        private readonly IExternalAuthorizationService _externalAuthService;
 
         public AuthorizationController(
             SignInManager<ApplicationUser> signInManager,
             UserManager<ApplicationUser> userManager,
             IConfiguration configuration,
-            IExternalAuthorizationManager externalAuthManager
+            IExternalAuthorizationService externalAuthService
             )
         {
-            _externalAuthManager = externalAuthManager;
+            _externalAuthService = externalAuthService;
             _configuration = configuration;
-            _signInManager = signInManager;
-            _userManager = userManager;
+            _signInService = signInManager;
+            _userService = userManager;
         }
 
         [HttpPost("~/connect/token"), Produces("application/json")]
@@ -41,7 +41,7 @@ namespace PassPast.Web.Controllers
         {
             if (request.IsPasswordGrantType())
             {
-                var user = await _userManager.FindByNameAsync(request.Username);
+                var user = await _userService.FindByNameAsync(request.Username);
                 if (user == null)
                 {
                     return BadRequest(new OpenIdConnectResponse
@@ -52,7 +52,7 @@ namespace PassPast.Web.Controllers
                 }
 
                 // Ensure the user is allowed to sign in.
-                if (!await _signInManager.CanSignInAsync(user))
+                if (!await _signInService.CanSignInAsync(user))
                 {
                     return BadRequest(new OpenIdConnectResponse
                     {
@@ -62,7 +62,7 @@ namespace PassPast.Web.Controllers
                 }
 
                 // Reject the token request if two-factor authentication has been enabled by the user.
-                if (_userManager.SupportsUserTwoFactor && await _userManager.GetTwoFactorEnabledAsync(user))
+                if (_userService.SupportsUserTwoFactor && await _userService.GetTwoFactorEnabledAsync(user))
                 {
                     return BadRequest(new OpenIdConnectResponse
                     {
@@ -72,7 +72,7 @@ namespace PassPast.Web.Controllers
                 }
 
                 // Ensure the user is not already locked out.
-                if (_userManager.SupportsUserLockout && await _userManager.IsLockedOutAsync(user))
+                if (_userService.SupportsUserLockout && await _userService.IsLockedOutAsync(user))
                 {
                     return BadRequest(new OpenIdConnectResponse
                     {
@@ -82,11 +82,11 @@ namespace PassPast.Web.Controllers
                 }
 
                 // Ensure the password is valid.
-                if (!await _userManager.CheckPasswordAsync(user, request.Password))
+                if (!await _userService.CheckPasswordAsync(user, request.Password))
                 {
-                    if (_userManager.SupportsUserLockout)
+                    if (_userService.SupportsUserLockout)
                     {
-                        await _userManager.AccessFailedAsync(user);
+                        await _userService.AccessFailedAsync(user);
                     }
 
                     return BadRequest(new OpenIdConnectResponse
@@ -96,9 +96,9 @@ namespace PassPast.Web.Controllers
                     });
                 }
 
-                if (_userManager.SupportsUserLockout)
+                if (_userService.SupportsUserLockout)
                 {
-                    await _userManager.ResetAccessFailedCountAsync(user);
+                    await _userService.ResetAccessFailedCountAsync(user);
                 }
 
                 // Create a new authentication ticket.
@@ -133,7 +133,7 @@ namespace PassPast.Web.Controllers
                     });
                 };
 
-                var isValid = await _externalAuthManager.VerifyExternalAccessToken( request.Assertion, provider);
+                var isValid = await _externalAuthService.VerifyExternalAccessToken( request.Assertion, provider);
 
                 if (!isValid)
                 {
@@ -144,9 +144,9 @@ namespace PassPast.Web.Controllers
                     });
                 }
 
-                var profile = await _externalAuthManager.GetProfile(request.Assertion, provider);
+                var profile = await _externalAuthService.GetProfile(request.Assertion, provider);
 
-                var user = await  _userManager.FindByEmailAsync(profile.email);
+                var user = await  _userService.FindByEmailAsync(profile.email);
                 
                 if(user == null)
                 {
@@ -168,7 +168,7 @@ namespace PassPast.Web.Controllers
                     OpenIdConnectServerDefaults.AuthenticationScheme);
 
                 // Retrieve the user profile corresponding to the refresh token.
-                var user = await _userManager.GetUserAsync(info.Principal);
+                var user = await _userService.GetUserAsync(info.Principal);
                 if (user == null)
                 {
                     return BadRequest(new OpenIdConnectResponse
@@ -179,7 +179,7 @@ namespace PassPast.Web.Controllers
                 }
 
                 // Ensure the user is still allowed to sign in.
-                if (!await _signInManager.CanSignInAsync(user))
+                if (!await _signInService.CanSignInAsync(user))
                 {
                     return BadRequest(new OpenIdConnectResponse
                     {
@@ -207,7 +207,7 @@ namespace PassPast.Web.Controllers
         {
             // Create a new ClaimsPrincipal containing the claims that
             // will be used to create an id_token, a token or a code.
-            var principal = await _signInManager.CreateUserPrincipalAsync(user);
+            var principal = await _signInService.CreateUserPrincipalAsync(user);
             var identity = (ClaimsIdentity)principal.Identity;
             identity.AddClaim(new Claim(ClaimTypes.GivenName, user.FirstName ?? ""));
             // Note: by default, claims are NOT automatically included in the access and identity tokens.

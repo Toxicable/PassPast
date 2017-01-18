@@ -8,17 +8,17 @@ using System.Threading.Tasks;
 
 namespace PassPast.Web.Answers
 {
-    public interface IAnswerManager
+    public interface IAnswerService
     {
         Task<AnswerEntity> Create(AnswerEntity answer);
         Task<IEnumerable<AnswerEntity>> AddVote(VoteEntity vote, string type);
     }
 
-    public class AnswerManager : IAnswerManager
+    public class AnswerService : IAnswerService
     {
         private readonly ApplicationDbContext _context;
 
-        public AnswerManager(ApplicationDbContext context)
+        public AnswerService(ApplicationDbContext context)
         {
             _context = context;
         }

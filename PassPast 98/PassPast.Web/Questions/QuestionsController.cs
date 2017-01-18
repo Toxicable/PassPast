@@ -10,12 +10,12 @@ namespace PassPast.Web.Api.Questions
     [Route("[controller]")]
     public class QuestionsController : Controller
     {
-        private IQuestionManger _questionsManager;
+        private IQuestionService _questionsService;
         private readonly IMapper _mapper;
         private UserManager<ApplicationUser> _userManager;
 
         public QuestionsController(
-            IQuestionManger questionManager, 
+            IQuestionService questionService, 
             UserManager<ApplicationUser> userManager,
             IMapper mapper
             
@@ -23,7 +23,7 @@ namespace PassPast.Web.Api.Questions
         {
             _mapper = mapper;
             _userManager = userManager;
-            _questionsManager = questionManager;
+            _questionsService = questionService;
         }
 
         [HttpPost]
@@ -31,7 +31,7 @@ namespace PassPast.Web.Api.Questions
         {
             var userId = _userManager.GetUserId(User);
 
-            await _questionsManager.CreateFromSections(questions, userId);
+            await _questionsService.CreateFromSections(questions, userId);
             return Ok();
         }
     }

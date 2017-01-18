@@ -17,21 +17,21 @@ namespace PassPast.Web.Api.Exams
     [Route("[controller]")]
     public class ExamsController : Controller
     {
-        private IExamManager _examsManager;
+        private IExamService _examsService;
         private IMapper _mapper;
         private UserManager<ApplicationUser> _userManager;
 
-        public ExamsController(IMapper mapper, IExamManager examManger, UserManager<ApplicationUser> userManager)
+        public ExamsController(IMapper mapper, IExamService examManger, UserManager<ApplicationUser> userManager)
         {
             _userManager = userManager;
             _mapper = mapper;
-            _examsManager = examManger;
+            _examsService = examManger;
         }
 
         [HttpGet("{id}")]
         public async Task<ExamViewModel> Get(int id)
         {
-            var course = _mapper.Map<ExamViewModel>(await _examsManager.Get(id));
+            var course = _mapper.Map<ExamViewModel>(await _examsService.Get(id));
 
             return course;
         }
@@ -39,7 +39,7 @@ namespace PassPast.Web.Api.Exams
         [HttpGet]
         public async Task<ICollection<ExamViewModel>> Get()
         {
-            var courses = (await _examsManager.GetAll())
+            var courses = (await _examsService.GetAll())
                 .Select(e => _mapper.Map<ExamViewModel>(e))
                 .ToList();
 
@@ -49,7 +49,7 @@ namespace PassPast.Web.Api.Exams
         [HttpGet("{id}/questions")]
         public async Task<ICollection<QuestionViewModel>> GetQuestions(int id)
         {
-            var questions = (await _examsManager.GetQuestions(id))
+            var questions = (await _examsService.GetQuestions(id))
                 .Select(q => _mapper.Map<QuestionViewModel>(q))
                 .ToList();
 
@@ -67,7 +67,7 @@ namespace PassPast.Web.Api.Exams
 
             newCourse.CreatedById = userId;
 
-            await _examsManager.Create(newCourse);
+            await _examsService.Create(newCourse);
 
             var examToReturn = _mapper.Map<ExamViewModel>(newCourse);
 

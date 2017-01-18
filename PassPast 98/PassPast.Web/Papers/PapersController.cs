@@ -12,25 +12,25 @@ namespace PassPast.Web.Api.Papers
     [Route("[controller]")]
     public class PapersController : Controller
     {
-        private IPaperManager _papersManager;
+        private IPaperService _papersService;
         private IMapper _mapper;
         private readonly UserManager<ApplicationUser> _userManager;
 
         public PapersController(
             IMapper mapper,
-            IPaperManager paperManager,
+            IPaperService paperService,
             UserManager<ApplicationUser> userManager
             )
         {
             _userManager = userManager;
             _mapper = mapper;
-            _papersManager = paperManager;
+            _papersService = paperService;
         }
 
         [HttpGet("{id}")]
         public async Task<PaperViewModel> Get(int id)
         {
-            var papers = _mapper.Map<PaperViewModel>(await _papersManager.Get(id));
+            var papers = _mapper.Map<PaperViewModel>(await _papersService.Get(id));
 
             return papers;
         }
@@ -38,7 +38,7 @@ namespace PassPast.Web.Api.Papers
         [HttpGet]
         public async Task<ICollection<PaperViewModel>> Get()
         {
-            var papers = (await _papersManager.GetAll())
+            var papers = (await _papersService.GetAll())
                 .Select(p => _mapper.Map<PaperViewModel>(p))
                 .ToList();
 
@@ -48,7 +48,7 @@ namespace PassPast.Web.Api.Papers
         [HttpGet("{id}/exams")]
         public async Task<ICollection<ExamViewModel>> GetExams(int id)
         {
-            var papers = (await _papersManager.GetExams(id)).Exams
+            var papers = (await _papersService.GetExams(id)).Exams
                 .Select(p => _mapper.Map<ExamViewModel>(p))
                 .ToList();
 
@@ -60,7 +60,7 @@ namespace PassPast.Web.Api.Papers
         {
             var newPaper = _mapper.Map<PaperEntity>(course);
             newPaper.CreatedBy = await _userManager.GetUserAsync(User);
-            await _papersManager.Create(newPaper);
+            await _papersService.Create(newPaper);
 
             var paperToReturn = _mapper.Map<PaperViewModel>(newPaper);
 

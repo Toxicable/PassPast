@@ -14,25 +14,25 @@ namespace PassPast.Web.Api.Courses
     [Route("[controller]")]
     public class CoursesController : Controller
     {
-        private readonly ICourseManager _courseManager;
+        private readonly ICourseService courseService;
         private readonly IMapper _mapper;
         private readonly UserManager<ApplicationUser> _userManager;
 
         public CoursesController(
-            IMapper mapper, 
-            ICourseManager courseManager,
+            IMapper mapper,
+            ICourseService courseManager,
              UserManager<ApplicationUser> userManager
              )
         {
             _userManager = userManager;
             _mapper = mapper;
-            _courseManager = courseManager;
+            courseService = courseManager;
         }
 
         [HttpGet("{id}")]
         public async Task<CourseViewModel> Get(int id)
         {
-            var course = _mapper.Map<CourseViewModel>(await _courseManager.Get(id));                
+            var course = _mapper.Map<CourseViewModel>(await courseService.Get(id));                
 
             return course;
         }
@@ -40,7 +40,7 @@ namespace PassPast.Web.Api.Courses
         [HttpGet]
         public async Task<ICollection<CourseViewModel>> Get()
         {
-            var courses = (await _courseManager.GetAll())
+            var courses = (await courseService.GetAll())
                 .Select(c => _mapper.Map<CourseViewModel>(c))
                 .ToList();
 
@@ -50,7 +50,7 @@ namespace PassPast.Web.Api.Courses
         [HttpGet("{id}/papers")]
         public async Task<ICollection<PaperViewModel>> GetPapers(int id)
         {
-            var papers = (await _courseManager.GetPapers(id)).Papers
+            var papers = (await courseService.GetPapers(id)).Papers
                 .Select(p => _mapper.Map<PaperViewModel>(p))
                 .ToList();
 
@@ -65,7 +65,7 @@ namespace PassPast.Web.Api.Courses
 
             newCourse.CreatedBy = await _userManager.GetUserAsync(User);
 
-            await _courseManager.Create(newCourse);
+            await courseService.Create(newCourse);
 
             var courseToReturn = _mapper.Map<CourseViewModel>(newCourse);
 
