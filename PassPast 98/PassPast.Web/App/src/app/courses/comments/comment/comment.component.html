@@ -1,7 +1,8 @@
 <div fxLayout="column ">
-  <app-vote type="comment" [id]="comment.id" [voteCount]="comment.totalVotes"></app-vote>
+  <app-vote type="comment" [id]="comment.id" [voteCount]="comment.votesSum"></app-vote>
   <div >
     <div>
+      {{comment.hasVoted}}
       <strong>{{comment.createdBy.userName}}</strong> <small>{{comment.createdAt | date}}</small>
     </div>
     <div>
@@ -9,3 +10,4 @@
     <div>
   </div>
 </div>
+

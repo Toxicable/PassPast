@@ -27,7 +27,7 @@ export class CoursesComponent implements OnInit {
     private store: Store<AppState>,
     private dialog: MdDialog,
     private courseActions: CourseActions,
-    private oidc: OpenIdClientService
+    private oidc: OpenIdClientService,
   ) { }
 
   ngOnInit() {
@@ -36,6 +36,7 @@ export class CoursesComponent implements OnInit {
     this.store.dispatch(this.courseActions.load());
 
     this.loggedIn$ = this.oidc.loggedIn$;
+
   }
 
   openDialog() {

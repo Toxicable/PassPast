@@ -47,15 +47,16 @@ export class QuestionComponent implements OnInit {
   ngOnInit() {
     this.loggedIn$ = this.oidc.loggedIn$;
 
+    const question$ = this.question$.filter(q => !!q);
     this.subQuestions = Observable.combineLatest(
       this.store.select(state => state.courses.question.entities),
-      this.question$.filter(q => !!q),
+      question$,
       (entities, question) => getQuestions(question.subQuestions, entities)
     );
 
     this.answers = Observable.combineLatest(
       this.store.select(state => state.courses.answer.entities),
-      this.question$.filter(q => !!q),
+      question$,
       (entities, question) => getAnswers(question.answers, entities)
     ).do(answers => {
       this.totalAnswerVotes = answers
@@ -65,8 +66,8 @@ export class QuestionComponent implements OnInit {
 
     this.comments = Observable.combineLatest(
       this.store.select(state => state.courses.comment.entities),
-      this.question$.filter(q => !!q),
-      (entities, question) => getComments(question.comments, entities)
+      this.question$,
+      (comments, question) => comments.filter(c => c.questionId === question.id)
     );
 
   }

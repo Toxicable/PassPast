@@ -33,27 +33,6 @@ namespace PassPast.Web.Controllers
             _applicationDbContext = applicationDbContext;
         }
 
-        //
-        // POST: /Account/Register
-        [HttpPost("register")]
-        [AllowAnonymous]
-        public async Task<IActionResult> Register([FromForm]RegisterViewModel model)
-        {
-            if (ModelState.IsValid)
-            {
-                var user = new ApplicationUser { UserName = model.UserName, Email = model.UserName };
-                var result = await _userManager.CreateAsync(user, model.Password);
-                if (result.Succeeded)
-                {
-                    return Ok();
-                }
-                AddErrors(result);
-            }
-
-            // If we got this far, something failed.
-            return BadRequest(ModelState);
-        }
-
         [HttpPost("RegisterExternal")]
         [AllowAnonymous]
         public async Task<IActionResult> RegisterExternal([FromBody]RegisterExternalBindingModel model)

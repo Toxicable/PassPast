@@ -38,6 +38,8 @@ import { AnswerActions } from './answers/answer.actions';
 import { ExamHubService } from './exam-hub.service';
 import { AppState } from '../app-store';
 import { Store } from '@ngrx/store';
+import { CommentEffects } from './comments/comment.effects';
+import { CommentService } from './comments/comment.service';
 
 @NgModule({
   imports: [
@@ -46,7 +48,8 @@ import { Store } from '@ngrx/store';
     EffectsModule.run(CourseEffects),
     EffectsModule.run(PaperEffects),
     EffectsModule.run(ExamEffects),
-    EffectsModule.run(QuestionEffects)
+    EffectsModule.run(QuestionEffects),
+    EffectsModule.run(CommentEffects),
   ],
   declarations: [
     CoursesComponent,
@@ -71,6 +74,7 @@ import { Store } from '@ngrx/store';
     PaperService,
     ExamService,
     QuestionService,
+CommentService,
 
     CourseActions,
     PaperActions,

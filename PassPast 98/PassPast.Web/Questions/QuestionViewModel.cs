@@ -22,6 +22,5 @@ namespace PassPast.Web.Api.Questions
         public QuestionType Type { get; set; }
         public ICollection<QuestionViewModel> SubQuestions { get; set; }
         public ICollection<AnswerViewModel> Answers { get; set; }
-        public ICollection<CommentViewModel> Comments { get;set;}
     }
 }

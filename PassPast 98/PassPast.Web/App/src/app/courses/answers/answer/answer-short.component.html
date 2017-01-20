@@ -4,7 +4,7 @@
   </span>
   <span>
     <div>
-      <strong>{{answer.createdBy.userName}}</strong> <small>{{answer.createdAt | date}}</small>
+      <strong>{{answer.createdBy?.userName}}</strong> <small>{{answer.createdAt | date}}</small>
     </div>
     <markdown>
       {{answer.contentOrIncriment}}

@@ -6,12 +6,12 @@ import { CommentActionTypes } from './comment.actions';
 import { Dict } from '../models/dict';
 
 export interface CommentState {
-  entities: Dict<Comment>;
+  entities: Comment[];
 }
 
 const initalState: CommentState = {
-  entities: {},
-}
+  entities: [],
+};
 
 export function commentReducer(state = initalState, action: Action): CommentState {
   switch (action.type) {
@@ -19,7 +19,7 @@ export function commentReducer(state = initalState, action: Action): CommentStat
     case CommentActionTypes.UPDATE_VOTES:
     case CommentActionTypes.ADD_SUCCESS:
       return {
-        entities: Object.assign({}, state.entities, action.payload)
+        entities: [...state.entities, ...action.payload]
       };
 
     case CommentActionTypes.LOAD_SUCCESS:

@@ -12,11 +12,13 @@ namespace PassPast.Web.Comments
     {
         public int id { get; set; }
         public string content { get; set; }
-        public int totalVotes { get; set; }
         public int questionId { get; set; }
         [JsonConverter(typeof(IsoDateTimeConverter))]
         public DateTimeOffset createdAt { get; set; }
 
-        public UserViewModel CreatedBy { get; set; }
+        public bool hasVoted { get; set; }
+        public int votesSum { get; set; }
+
+        public UserViewModel createdBy { get; set; }
     }
 }

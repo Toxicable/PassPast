@@ -38,18 +38,17 @@ namespace PassPast.Web.Api.Exams
             return exam;
         }
 
-        public async Task<IEnumerable<QuestionEntity>> GetQuestions(int id)
+        public async Task<IEnumerable<QuestionEntity>> GetQuestions(int examId)
         {
-            var exams = (await _context.Questions
-                .Where(q => q.ExamId == id)
+            var questions = (await _context.Questions
+                .Where(q => q.ExamId == examId)
                 .Include(q => q.Answers)
-                .Include(q => q.Comments)
-                    .ThenInclude(c => c.CreatedBy)
+                    .ThenInclude(a => a.CreatedBy)
                 .ToListAsync())
                 .Where(q => q.ParentQuestionId == null)
                 .ToList();
 
-            return  exams;
+            return questions;
             
         }
 

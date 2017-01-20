@@ -5,7 +5,9 @@ import { User } from './user';
 export interface Comment{
     id: number;
     content: string;
-    totalVotes: Vote[];
+    questionId: number;
     createdAt: string;
+    hasVoted: boolean;
+    votesSum: number;
     createdBy: User;
 }

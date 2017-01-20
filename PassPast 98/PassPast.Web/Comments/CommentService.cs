@@ -10,6 +10,7 @@ namespace PassPast.Web.Comments
 {
     public interface ICommentService
     {
+        IQueryable<CommentViewModel> Get(IEnumerable<int> questionIds, string userId = "");
         Task<CommentEntity> Create(CommentEntity comment);
         Task<CommentEntity> AddVote(VoteEntity vote);
     }
@@ -20,6 +21,28 @@ namespace PassPast.Web.Comments
         public CommentService(ApplicationDbContext context)
         {
             _context = context;
+        }
+
+        public IQueryable<CommentViewModel> Get(IEnumerable<int> questionIds, string userId = "")
+        {
+            var comments = _context.Comments
+                .Where(c => questionIds.Contains(c.QuestionId))
+                .OrderByDescending(c => c.CreatedAt)
+                .Select(c => new CommentViewModel
+                {
+                    id = c.Id,
+                    hasVoted = c.Votes.Any(v => !v.Deleted && v.CreatedById == userId),
+                    votesSum = c.Votes.Where(v => !v.Deleted).Sum(v => v.Value),
+                    createdAt = c.CreatedAt,
+                    content = c.Content,
+                    questionId = c.QuestionId,
+                    createdBy = new Users.UserViewModel
+                    {
+                        id = c.CreatedBy.Id,
+                        userName = c.CreatedBy.UserName
+                    }
+                });
+            return comments;
         }
 
         public async Task<CommentEntity> Create(CommentEntity comment)
@@ -42,7 +65,7 @@ namespace PassPast.Web.Comments
             {
                 //delete and negate the old vote
                 existingVote.Deleted = true;
-                existingVote.Comment.TotalVotes += existingVote.Value == 1 ? -1 : 1;
+                //existingVote.Comment.TotalVotes += existingVote.Value == 1 ? -1 : 1;
 
                 if (vote.Value == existingVote.Value)
                 {
@@ -55,7 +78,7 @@ namespace PassPast.Web.Comments
 
             _context.Votes.Add(vote);
             var comment = await _context.Comments.FindAsync(vote.CommentId);
-            comment.TotalVotes += vote.Value;
+            //comment.TotalVotes += vote.Value;
 
             await _context.SaveChangesAsync();
             return comment;

@@ -13,13 +13,14 @@ import { QuestionService } from './question.service';
 import { normalize, Schema, arrayOf } from 'normalizr';
 import { CommentActions } from '../comments/comment.actions';
 import { AnswerActions } from '../answers/answer.actions';
-import { LoadingBarService} from '../../core';
+import { LoadingBarService } from '../../core';
+import { Dict } from '../models/dict';
+import { Answer } from '../models/answer';
 
 @Injectable()
 export class QuestionEffects {
   questionSchema = new Schema('questions');
   answerSchema = new Schema('answers');
-  commentSchema = new Schema('comments');
 
   constructor(
     private actions$: Actions,
@@ -32,12 +33,9 @@ export class QuestionEffects {
   ) {
     this.questionSchema.define({
       answers: arrayOf(this.answerSchema),
-      comments: arrayOf(this.commentSchema),
       subQuestions: arrayOf(this.questionSchema)
     });
   }
-
-
 
   @Effect()
   load: Observable<Action> = this.actions$
@@ -47,21 +45,20 @@ export class QuestionEffects {
       this.store.select(state => state.courses.question.entities)
         .first()
         .flatMap(questions => {
-          // let localQuestions = questions.filter(question => question.examId === examId);
-          // if (localQuestions.length > 0) {
-          //   return Observable.of(this.questionActions.loadSuccess(localQuestions));
-          // }
           return this.loadingBar.doWithLoader(
             this.questionService.getRelatedQuestions(examId)
-            .map(fetchedQuestions => {
-              const norm = normalize(fetchedQuestions, arrayOf(this.questionSchema))
+              .map(fetchedQuestions => {
+                const norm = normalize(fetchedQuestions, arrayOf(this.questionSchema))
 
-              this.store.dispatch(this.answerActions.loadSuccess(norm.entities['answers'] ? norm.entities['answers'] : {}));
-              this.store.dispatch(this.commentActions.loadSuccess(norm.entities['comments'] ? norm.entities['comments'] : {}));
-              this.store.dispatch(this.questionActions.selectSuccess(norm.result));
+                this.store.dispatch(this.answerActions.loadSuccess(norm.entities['answers'] ? norm.entities['answers'] : {}));
+                this.store.dispatch(this.questionActions.selectSuccess(norm.result));
+                const normQuestions = norm.entities['questions'];
+                //fetch comments
+                const questionIds = Object.keys(norm.entities['questions']).map(id => +id);
+                this.store.dispatch(this.commentActions.load(questionIds));
 
-              return this.questionActions.loadSuccess(norm.entities['questions']);
-            })
+                return this.questionActions.loadSuccess(normQuestions);
+              })
           );
         })
     );
