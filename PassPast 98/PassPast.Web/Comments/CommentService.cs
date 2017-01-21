@@ -1,6 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using PassPast.Data;
 using PassPast.Data.Domain;
+using PassPast.Web.Users;
+using PassPast.Web.Votes;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,9 +14,9 @@ namespace PassPast.Web.Comments
     {
         IQueryable<CommentViewModel> Get(IEnumerable<int> questionIds, string userId = "");
         Task<CommentEntity> Create(CommentEntity comment);
-        Task<CommentEntity> AddVote(VoteEntity vote);
+        Task<CommentViewModel> AddVote(VoteEntity vote);
     }
-    public class CommentService: ICommentService
+    public class CommentService : ICommentService
     {
         private readonly ApplicationDbContext _context;
 
@@ -31,18 +33,38 @@ namespace PassPast.Web.Comments
                 .Select(c => new CommentViewModel
                 {
                     id = c.Id,
-                    hasVoted = c.Votes.Any(v => !v.Deleted && v.CreatedById == userId),
-                    votesSum = c.Votes.Where(v => !v.Deleted).Sum(v => v.Value),
                     createdAt = c.CreatedAt,
                     content = c.Content,
                     questionId = c.QuestionId,
-                    createdBy = new Users.UserViewModel
-                    {
-                        id = c.CreatedBy.Id,
-                        userName = c.CreatedBy.UserName
-                    }
+                    userIdentifier = c.CreatedBy.UserName,
+                    votesSum = c.Votes.Where(v => !v.Deleted).Sum(v => v.Value),
+                    voteValue = c.Votes
+                        .Where(v => !v.Deleted && v.CreatedById == userId)
+                        .Select(v => v != null ? (int?)v.Value : null)
+                        .FirstOrDefault()
                 });
+
             return comments;
+        }
+
+        public async Task<CommentViewModel> Get(int id, string userId = "")
+        {
+            var comment = await _context.Comments
+            .Select(c => new CommentViewModel
+            {
+                id = c.Id,
+                createdAt = c.CreatedAt,
+                content = c.Content,
+                questionId = c.QuestionId,
+                userIdentifier = c.CreatedBy.UserName,
+                votesSum = c.Votes.Where(v => !v.Deleted).Sum(v => v.Value),
+                voteValue = c.Votes
+                    .Where(v => !v.Deleted && v.CreatedById == userId)
+                    .Select(v => v != null ? (int?)v.Value : null)
+                    .FirstOrDefault()
+            })
+            .SingleOrDefaultAsync(c => c.id == id);
+            return comment;
         }
 
         public async Task<CommentEntity> Create(CommentEntity comment)
@@ -51,11 +73,12 @@ namespace PassPast.Web.Comments
 
             _context.Comments.Add(comment);
             await _context.SaveChangesAsync();
+            _context.Users.Find(comment.CreatedById);
 
             return comment;
         }
 
-        public async Task<CommentEntity> AddVote(VoteEntity vote)
+        public async Task<CommentViewModel> AddVote(VoteEntity vote)
         {
             var existingVote = await _context.Votes
                .Include(v => v.Comment)
@@ -70,7 +93,7 @@ namespace PassPast.Web.Comments
                 if (vote.Value == existingVote.Value)
                 {
                     await _context.SaveChangesAsync();
-                    return existingVote.Comment;
+                    return await Get((int)vote.CommentId, vote.CreatedById);
                 }
             }
 
@@ -81,7 +104,7 @@ namespace PassPast.Web.Comments
             //comment.TotalVotes += vote.Value;
 
             await _context.SaveChangesAsync();
-            return comment;
+            return await Get(comment.Id, vote.CreatedById);
         }
     }
 }

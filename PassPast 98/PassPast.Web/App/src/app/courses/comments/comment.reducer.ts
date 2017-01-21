@@ -16,22 +16,23 @@ const initalState: CommentState = {
 export function commentReducer(state = initalState, action: Action): CommentState {
   switch (action.type) {
 
-    case CommentActionTypes.UPDATE_VOTES:
     case CommentActionTypes.ADD_SUCCESS:
+    case CommentActionTypes.LOAD_SUCCESS:
       return {
         entities: [...state.entities, ...action.payload]
       };
 
-    case CommentActionTypes.LOAD_SUCCESS:
+    case CommentActionTypes.UPDATE_VOTES:
+      const oldIndex = state.entities.findIndex(c => c.id === action.payload.id);
       return {
-        entities: action.payload,
+        entities: [
+          ...state.entities.slice(0, oldIndex),
+          action.payload,
+          ...state.entities.slice(oldIndex + 1)
+        ]
       };
 
     default:
       return state;
   }
-}
-
-export function getComments(answerIds: number[], questions: Dict<Comment>): Comment[] {
-  return answerIds.map(id => questions[id])
 }

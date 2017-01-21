@@ -9,14 +9,14 @@ import { ExamHubService } from '../exam-hub.service';
 export class VoteComponent {
   @Input() type: string;
   @Input() id: number;
-  @Input() voteCount: number;
+  @Input() votesSum: number;
+  @Input() voteValue: number;
   constructor(
     private examHub: ExamHubService
 
   ) { }
 
   upVote() {
-    debugger
     if (this.type === 'answer') {
       this.examHub.postAnswerVote(1, this.id, 'short')
         .subscribe();

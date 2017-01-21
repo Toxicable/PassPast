@@ -13,13 +13,13 @@ export const CommentActionTypes = {
 
 @Injectable()
 export class CommentActions {
-  updateVotes(payload: Dict<Comment>) {
+  updateVotes(payload: Comment) {
     return {
       type: CommentActionTypes.UPDATE_VOTES,
       payload
     }
   }
-  addSuccess(payload: Dict<Comment>) {
+  addSuccess(payload: Comment) {
     return {
       type: CommentActionTypes.ADD_SUCCESS,
       payload

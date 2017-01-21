@@ -31,8 +31,10 @@ namespace PassPast.Web.Comments
         [HttpGet("{ids}")]
         public async Task<IEnumerable<CommentViewModel>> Get(string ids,int? skip = null, int? take = null)
         {
+
             var questionIds = ids.Split(',').Select(a => int.Parse(a)).ToList();
             var userId = _userManager.GetUserId(User);
+            
             var comments = _commentService.Get(questionIds, userId);
                
             if(skip != null && take != null)
@@ -42,7 +44,8 @@ namespace PassPast.Web.Comments
                     .Take((int)take);
             }
 
-            return await comments.ToListAsync();
+            var t = await comments.ToListAsync();
+            return t;
         }
     }
 }

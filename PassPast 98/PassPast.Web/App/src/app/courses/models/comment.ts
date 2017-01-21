@@ -6,8 +6,8 @@ export interface Comment{
     id: number;
     content: string;
     questionId: number;
-    createdAt: string;
-    hasVoted: boolean;
+    voteValue: number;
     votesSum: number;
-    createdBy: User;
+    userIdentifier: string;
+    createdAt: string;
 }

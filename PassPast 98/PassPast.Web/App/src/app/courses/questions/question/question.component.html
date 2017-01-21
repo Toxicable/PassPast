@@ -28,11 +28,12 @@
 
     <!--Comments-->
     <span *ngIf="showComments">
-      <div *ngFor="let comment of comments | async | orderByDate: 'createdAt'">
-        <app-comment [comment]="comment" ></app-comment>
-      </div>
       <!--New Comment-->
       <app-new-comment [questionId]="_question.id" [loggedIn]="loggedIn$ | async" ></app-new-comment>
+
+      <div *ngFor="let comment of comments | async ">
+        <app-comment [comment]="comment" ></app-comment>
+      </div>
     </span>
 
   </span>

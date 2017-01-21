@@ -52,7 +52,7 @@ namespace PassPast.Web.Comments.Hubs
             var newVote = _mapper.Map<VoteEntity>(vote);
             newVote.CreatedById = userId;
 
-            var editedComment = _mapper.Map<CommentViewModel>(await _commentService.AddVote(newVote));
+            var editedComment = await _commentService.AddVote(newVote);
             await Clients.Group(groupId.ToString()).InvokeAsync("BroadcastCommentVote", editedComment);
         }
 

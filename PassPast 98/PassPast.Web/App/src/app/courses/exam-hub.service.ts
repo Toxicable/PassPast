@@ -38,10 +38,8 @@ export class ExamHubService {
     });
 
     this.connection.on('BroadcastComment', (comment: Comment) => {
-      const dictComment: Dict<Comment> = { [comment.id]: comment };
-
-      this.store.dispatch(this.questionActions.addComment(comment));
-      this.store.dispatch(this.commentActions.addSuccess(dictComment));
+      //this.store.dispatch(this.questionActions.addComment(comment));
+      this.store.dispatch(this.commentActions.addSuccess(comment));
     });
 
     this.connection.on('BroadcastAnswerVote', (answers: Answer[]) => {
@@ -52,9 +50,7 @@ export class ExamHubService {
     });
 
     this.connection.on('BroadcastCommentVote', (comment: Comment) => {
-      const dictComment: Dict<Comment> = { [comment.id]: comment };
-
-      this.store.dispatch(this.commentActions.updateVotes(dictComment));
+      this.store.dispatch(this.commentActions.updateVotes(comment));
     });
 
     this.connecting = this.connection.start();

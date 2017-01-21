@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, ChangeDetectionStrategy } from '@angular/core';
+import { Component, OnInit, Input, ChangeDetectionStrategy,  } from '@angular/core';
 import { Question } from '../../models/question';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { ExamHubService } from '../../exam-hub.service';
@@ -10,7 +10,6 @@ import { getQuestions } from '../question.reducer';
 import { NormQuestion } from '../../models/norm-question';
 import { getAnswers } from '../../answers/answer.reducer';
 import { Answer } from '../../models/answer';
-import { getComments } from '../../comments/comment.reducer';
 import { Comment } from '../../models/comment';
 import { trackByIdentity } from '../../../utilities';
 import { OpenIdClientService } from '@toxicable/oidc';
