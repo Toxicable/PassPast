@@ -1,14 +1,16 @@
 /* Globals */
 @import '~https://fonts.googleapis.com/icon?family=Material+Icons';
 /*@import '~@angular/material/core/theming/prebuilt/pink-bluegrey.css';*/
-/*@import '~@angular/material/core/theming/prebuilt/indigo-pink.css';*/
-@import '~@angular/material/core/theming/prebuilt/deeppurple-amber.css';
+@import '~@angular/material/core/theming/prebuilt/indigo-pink.css';
+/*@import '~@angular/material/core/theming/prebuilt/deeppurple-amber.css';*/
 /*@import '~@angular/material/core/theming/prebuilt/purple-green.css';*/
 
 body{
   font-family: Arial, serif;
   color: black;
+  margin: 0;
 }
+
 
 .center-text{
   text-align: center;
@@ -24,7 +26,7 @@ a{
 }
 
 a:hover{
-  color:blue;
+  color:greenyellow;
 }
 
 .can-click{

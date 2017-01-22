@@ -21,18 +21,6 @@ export class QuestionActions {
       type: QuestionActionTypes.DESELECT
     }
   }
-  addComment(payload: Comment){
-    return {
-      type: QuestionActionTypes.ADD_COMMENT,
-      payload
-    }
-  }
-  addAnswer(payload: Answer){
-    return {
-      type: QuestionActionTypes.ADD_ANSWER,
-      payload
-    }
-  }
   load(payload: number): Action {
     return {
       type: QuestionActionTypes.LOAD,

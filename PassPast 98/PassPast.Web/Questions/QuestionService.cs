@@ -38,7 +38,7 @@ namespace PassPast.Web.Api.Questions
                 {
                     CreatedById = userId,
                     CreatedAt = DateTimeOffset.Now,
-                    ContentOrIncriment = ToAlpha(index)
+                    ContentOrIncriment = Helpers.ToAlpha(index)
                     
                 });                
 
@@ -61,40 +61,19 @@ namespace PassPast.Web.Api.Questions
                 var incrimentationScheme = (IncrimentationScheme)Enum.Parse(typeof(IncrimentationScheme), question.Incriment);
                 question.Incriment =
                     incrimentationScheme == IncrimentationScheme.Numbered ? incriment.ToString() :
-                    incrimentationScheme == IncrimentationScheme.Alphabetical ? ToAlpha(incriment) :
-                    ToRoman(incriment);
+                    incrimentationScheme == IncrimentationScheme.Alphabetical ? Helpers.ToAlpha(incriment) :
+                    Helpers.ToRoman(incriment);
                 question.SubQuestions = numberOff(question.SubQuestions.ToList());
                 return questionst[incriment - 1];
 
-            }).ToList();            
-
+            }).ToList();  
 
             var mappedQuestions = questions.Sections.SelectMany( x => map(x).ToList()).ToList();
-
             var numberedOffQuestions = numberOff(mappedQuestions);
 
-
             _context.Questions.AddRange(numberedOffQuestions);
-
             await _context.SaveChangesAsync();
 
-        }
-
-        private string ToRoman(int number)
-        {
-            if ((number < 0) || (number > 39)) throw new ArgumentOutOfRangeException("insert value betwheen 1 and 39");
-            if (number < 1) return string.Empty;
-            if (number >= 10) return "x" + ToRoman(number - 10);
-            if (number >= 9) return "ix" + ToRoman(number - 9);
-            if (number >= 5) return "v" + ToRoman(number - 5);
-            if (number >= 4) return "iv" + ToRoman(number - 4);
-            if (number >= 1) return "i" + ToRoman(number - 1);
-            throw new ArgumentOutOfRangeException("something bad happened");
-        }
-        private string ToAlpha(int number)
-        {
-            if ((number < 1) || (number > 26)) throw new ArgumentOutOfRangeException("insert value betwheen 1 and 27");
-            return ((char)(number + 96)).ToString();
         }
     }
 }

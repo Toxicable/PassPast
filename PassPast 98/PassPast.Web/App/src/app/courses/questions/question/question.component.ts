@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, ChangeDetectionStrategy,  } from '@angular/core';
+import { Component, OnInit, Input, ChangeDetectionStrategy, } from '@angular/core';
 import { Question } from '../../models/question';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { ExamHubService } from '../../exam-hub.service';
@@ -13,6 +13,7 @@ import { Answer } from '../../models/answer';
 import { Comment } from '../../models/comment';
 import { trackByIdentity } from '../../../utilities';
 import { OpenIdClientService } from '@toxicable/oidc';
+import { orderByAlpha, orderByDate } from '../../../utilities/order-by-fns';
 
 @Component({
   selector: 'app-question',
@@ -55,19 +56,27 @@ export class QuestionComponent implements OnInit {
 
     this.answers = Observable.combineLatest(
       this.store.select(state => state.courses.answer.entities),
-      question$,
-      (entities, question) => getAnswers(question.answers, entities)
-    ).do(answers => {
-      this.totalAnswerVotes = answers
-        .map(a => a.totalVotes)
-        .reduce((previousVote, currentVote) => previousVote + currentVote, 0);
-    });
+      this.question$,
+      (answers, question) => {
+        return answers.filter(a => a.questionId === question.id)
+      }
+    )
+      .map(answers => orderByAlpha(answers, 'contentOrIncriment'))
+      .do(answers => {
+        this.totalAnswerVotes = answers
+          .map(a => a.votesSum)
+          .reduce((previousVote, currentVote) => previousVote + currentVote, 0);
+      });
 
     this.comments = Observable.combineLatest(
       this.store.select(state => state.courses.comment.entities),
       this.question$,
-      (comments, question) => comments.filter(c => c.questionId === question.id)
-    );
+      (comments, question) => {
+        debugger
+        let t =  comments.filter(c => c.questionId === question.id)
+        return t
+      }
+    ).map(comments => orderByDate(comments, 'createdAt'));
 
   }
 

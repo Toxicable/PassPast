@@ -9,11 +9,13 @@ namespace PassPast.Web.Answers
     {
         public int id { get; set; }        
         public string contentOrIncriment { get; set; }
-        public int totalVotes { get; set; }
         public int questionId { get; set; }
+
+        public int? voteValue { get; set; }
+        public int votesSum { get; set; }
+        public string userIdentifier { get; set; }
+
         [JsonConverter(typeof(IsoDateTimeConverter))]
         public DateTimeOffset createdAt { get; set; }
-
-        public UserViewModel createdBy { get; set; }
     }
 }

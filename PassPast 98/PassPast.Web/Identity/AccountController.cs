@@ -56,7 +56,8 @@ namespace PassPast.Web.Controllers
                     UserName = profile.email,
                     Email = profile.email,
                     FirstName = profile.first_name,
-                    LastName = profile.last_name
+                    LastName = profile.last_name,
+                    CreatedAt = DateTimeOffset.Now
                 };
                 var externalAccount = new ExternalAccount() {
                     Id = Guid.NewGuid().ToString(),

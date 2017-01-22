@@ -8,4 +8,5 @@ import { Answer } from '../../models/answer';
 })
 export class AnswerShortComponent {
   @Input() answer: Answer;
+  @Input() loggedIn: boolean;
 }

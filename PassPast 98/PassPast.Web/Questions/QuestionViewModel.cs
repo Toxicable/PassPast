@@ -20,7 +20,7 @@ namespace PassPast.Web.Api.Questions
         public int? ParentQuestionId { get; set; }
         [JsonConverter(typeof(StringEnumConverter))]
         public QuestionType Type { get; set; }
-        public ICollection<QuestionViewModel> SubQuestions { get; set; }
-        public ICollection<AnswerViewModel> Answers { get; set; }
+        public IEnumerable<QuestionViewModel> SubQuestions { get; set; }
+        public IEnumerable<AnswerViewModel> Answers { get; set; }
     }
 }

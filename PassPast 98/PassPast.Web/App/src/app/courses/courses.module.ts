@@ -40,6 +40,8 @@ import { AppState } from '../app-store';
 import { Store } from '@ngrx/store';
 import { CommentEffects } from './comments/comment.effects';
 import { CommentService } from './comments/comment.service';
+import { AnswerService } from './answers/answer.service';
+import { AnswerEffects } from './answers/answer.effects';
 
 @NgModule({
   imports: [
@@ -50,6 +52,7 @@ import { CommentService } from './comments/comment.service';
     EffectsModule.run(ExamEffects),
     EffectsModule.run(QuestionEffects),
     EffectsModule.run(CommentEffects),
+    EffectsModule.run(AnswerEffects),
   ],
   declarations: [
     CoursesComponent,
@@ -84,6 +87,7 @@ CommentService,
     AnswerActions,
 
     ExamHubService,
+    AnswerService,
 
 
 

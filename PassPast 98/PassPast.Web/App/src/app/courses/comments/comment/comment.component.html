@@ -1,12 +1,12 @@
 <div fxLayout="column ">
-  <app-vote type="comment" [id]="comment.id" [votesSum]="comment.votesSum" [voteValue]="comment.voteValue"></app-vote>
+  <app-vote type="comment" [id]="comment.id" [votesSum]="comment.votesSum" [voteValue]="comment.voteValue" [loggedIn]="loggedIn"></app-vote>
   <div >
     <div>
       <strong>{{comment.userIdentifier}}</strong> <small>{{comment.createdAt | date:'medium'}}</small>
     </div>
-    <div>
+    <markdown>
       {{comment.content}}
-    <div>
+    </markdown>
   </div>
 </div>
 

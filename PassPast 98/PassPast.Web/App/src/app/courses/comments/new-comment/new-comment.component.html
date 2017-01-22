@@ -1,11 +1,8 @@
 <div>
-  <form *ngIf="loggedIn" [formGroup]="newCommentForm" novalidate (ngSubmit)="sendComment()">
-    <md-input-container >
-      <input md-input  placeholder="new comment" formControlName="content">
+  <form [formGroup]="newCommentForm" novalidate (ngSubmit)="sendComment()">
+    <md-input-container  >
+      <input md-input="" [readOnly]="!loggedIn" [disabled]="!loggedIn" placeholder="new comment" formControlName="content">
     </md-input-container>
   </form>
-  <div *ngIf="!loggedIn">
-    You must be logged in to post a comment
-    </div>
 
 </div>

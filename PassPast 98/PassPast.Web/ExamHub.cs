@@ -1,4 +1,5 @@
-﻿using AutoMapper;
+﻿
+using AutoMapper;
 using Microsoft.AspNetCore.SignalR;
 using PassPast.Data;
 using PassPast.Data.Domain;
@@ -41,9 +42,8 @@ namespace PassPast.Web.Comments.Hubs
             var newVote = _mapper.Map<VoteEntity>(vote);
             newVote.CreatedById = userId;
 
-            var editedAnswer = (await _answerService.AddVote(newVote, type))
-                .Select(a => _mapper.Map<AnswerViewModel>(a))
-                .ToList();
+            var editedAnswer = await _answerService.AddVote(newVote, type);
+
             await Clients.Group(groupId.ToString()).InvokeAsync("BroadcastAnswerVote", editedAnswer);         
         }
 

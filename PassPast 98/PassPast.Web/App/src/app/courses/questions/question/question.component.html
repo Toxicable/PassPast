@@ -1,5 +1,5 @@
 <md-card-title (click)="showContent=!showContent" class="can-click highlight-background">
-  {{_question.incriment}}
+  {{_question.incriment}} <md-icon>expand_more</md-icon>
 </md-card-title>
 
 <!--main content toggle-->
@@ -8,12 +8,12 @@
   <div *ngFor="let answer of answers | async | orderByDate: 'createdAt'">
     <!--MCQ-->
     <div *ngIf="_question.type == 'Mcq'">
-      <app-answer-mcq [totalAnswerVotes]="totalAnswerVotes" [answer]="answer"></app-answer-mcq>
+      <app-answer-mcq [totalAnswerVotes]="totalAnswerVotes" [answer]="answer" [loggedIn]="loggedIn$ | async"></app-answer-mcq>
     </div>
 
     <!--Short -->
     <div *ngIf="_question.type == 'Short'">
-      <app-answer-short [answer]="answer"></app-answer-short>
+      <app-answer-short [answer]="answer" [loggedIn]="loggedIn$ | async"></app-answer-short>
     </div>
 
   </div>
@@ -32,7 +32,7 @@
       <app-new-comment [questionId]="_question.id" [loggedIn]="loggedIn$ | async" ></app-new-comment>
 
       <div *ngFor="let comment of comments | async ">
-        <app-comment [comment]="comment" ></app-comment>
+        <app-comment [comment]="comment" [loggedIn]="loggedIn$ | async"></app-comment>
       </div>
     </span>
 

@@ -5,8 +5,9 @@ import { User } from './user';
 export interface Answer{
     id: number;
     contentOrIncriment: string;
-    totalVotes: number;
     questionId: number;
+    voteValue: number;
+    votesSum: number;
+    userIdentifier: string;
     createdAt: string;
-    createdBy: User;
 }

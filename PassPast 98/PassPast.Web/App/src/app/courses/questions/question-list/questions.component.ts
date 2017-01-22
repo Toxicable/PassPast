@@ -5,7 +5,6 @@ import { QuestionService } from '../question.service';
 import { Observable } from 'rxjs/Observable';
 import { Question } from '../../models/question';
 import { ExamHubService } from '../../exam-hub.service';
-import { normalize, Schema, arrayOf } from 'normalizr';
 import { getQuestions } from '../question.reducer';
 import { Dict } from '../../models/dict';
 import { NormQuestion } from '../../models/norm-question';
@@ -15,7 +14,6 @@ import { trackByIdentity } from '../../../utilities';
   selector: 'app-questions',
   templateUrl: './questions.component.html',
   styleUrls: ['./questions.component.css'],
-  encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class QuestionsComponent implements OnInit {

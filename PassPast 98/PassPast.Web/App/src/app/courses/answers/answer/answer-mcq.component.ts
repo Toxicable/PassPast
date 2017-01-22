@@ -21,15 +21,17 @@ import { OpenIdClientService } from '@toxicable/oidc';
 export class AnswerMcqComponent {
   @Input() answer: Answer;
   @Input() totalAnswerVotes: number;
+  @Input() loggedIn: boolean;
 
   constructor(
     private examHub: ExamHubService,
-    private oidc: OpenIdClientService
   ) { }
 
   sendVote() {
-    this.examHub.postAnswerVote(1, this.answer.id, 'mcq')
-    .subscribe();
+    if (this.loggedIn) {
+      this.examHub.postAnswerVote(1, this.answer.id, 'mcq')
+        .subscribe();
+    }
   }
 
 }

@@ -11,11 +11,13 @@ namespace PassPast.Data
 {
     public class AnswerEntity : TrackedEntity
     {
+        public AnswerEntity()
+        {
+            Votes = new HashSet<VoteEntity>();
+        }
         [Required]
         public int QuestionId { get; set; }
         public QuestionEntity Question { get; set; }
-
-        public int TotalVotes { get; set; }
 
         public string ContentOrIncriment { get; set; }
 

@@ -5,7 +5,6 @@ import { environment } from '../../environments/environment';
 import { AnswerActions } from './answers/answer.actions';
 import { Answer } from './models/answer';
 import { Dict } from './models/dict';
-import { QuestionActions } from './questions/question.actions';
 import { Observable } from 'rxjs/Observable';
 import { Comment } from './models/comment';
 import { CommentActions } from './comments/comment.actions';
@@ -24,29 +23,22 @@ export class ExamHubService {
   constructor(
     private store: Store<AppState>,
     private answerActions: AnswerActions,
-    private questionActions: QuestionActions,
     private commentActions: CommentActions,
     private oidc: OpenIdClientService,
   ) {
     this.connection = new signalR.HubConnection(environment.signalRUrl);
 
     this.connection.on('BroadcastAnswer', (answer: Answer) => {
-      const dictAnswer: Dict<Answer> = { [answer.id]: answer };
 
-      this.store.dispatch(this.questionActions.addAnswer(answer));
-      this.store.dispatch(this.answerActions.addSuccess(dictAnswer));
+      this.store.dispatch(this.answerActions.addSuccess(answer));
     });
 
     this.connection.on('BroadcastComment', (comment: Comment) => {
-      //this.store.dispatch(this.questionActions.addComment(comment));
       this.store.dispatch(this.commentActions.addSuccess(comment));
     });
 
-    this.connection.on('BroadcastAnswerVote', (answers: Answer[]) => {
-      const dicAnswers: Dict<Answer> = {};
-      answers.forEach(a =>  dicAnswers[a.id] = a );
-
-      this.store.dispatch(this.answerActions.updateVotes(dicAnswers));
+    this.connection.on('BroadcastAnswerVote', (answer: Answer) => {
+      this.store.dispatch(this.answerActions.updateVotes(answer));
     });
 
     this.connection.on('BroadcastCommentVote', (comment: Comment) => {

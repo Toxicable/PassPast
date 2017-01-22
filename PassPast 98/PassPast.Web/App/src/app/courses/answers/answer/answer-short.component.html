@@ -1,10 +1,10 @@
 <div style="display:flex;">
   <span>
-    <app-vote type="answer" [id]="answer.id" [votesSum]="answer.totalVotes"></app-vote>
+    <app-vote type="answer" [id]="answer.id" [votesSum]="answer.votesSum" [voteValue]="answer.voteValue" [loggedIn]="loggedIn"></app-vote>
   </span>
   <span>
     <div>
-      <strong>{{answer.createdBy?.userName}}</strong> <small>{{answer.createdAt | date}}</small>
+      <strong>{{answer.userIdentifier}}</strong> <small>{{answer.createdAt | date}}</small>
     </div>
     <markdown>
       {{answer.contentOrIncriment}}

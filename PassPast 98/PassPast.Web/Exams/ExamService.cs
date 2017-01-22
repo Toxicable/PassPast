@@ -42,8 +42,6 @@ namespace PassPast.Web.Api.Exams
         {
             var questions = (await _context.Questions
                 .Where(q => q.ExamId == examId)
-                .Include(q => q.Answers)
-                    .ThenInclude(a => a.CreatedBy)
                 .ToListAsync())
                 .Where(q => q.ParentQuestionId == null)
                 .ToList();

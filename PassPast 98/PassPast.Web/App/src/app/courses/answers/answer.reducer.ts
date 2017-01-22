@@ -6,25 +6,33 @@ import { AnswerActionTypes } from './answer.actions';
 import { Dict } from '../models/dict';
 
 export interface AnswerState {
-  entities: Dict<Answer>;
+  entities: Answer[];
 }
 
 const initalState: AnswerState = {
-  entities: {},
+  entities: [],
 }
 
 export function answerReducer(state = initalState, action: Action): AnswerState {
   switch (action.type) {
-    case AnswerActionTypes.UPDATE_VOTES:
-    case AnswerActionTypes.ADD_SUCCESS:
-      return {
-        entities: Object.assign({}, state.entities, action.payload)
-      };
-
     case AnswerActionTypes.LOAD_SUCCESS:
       return {
-        entities: action.payload,
+        entities: action.payload
+      }
+    case AnswerActionTypes.ADD_SUCCESS:
+      return {
+        entities: [...state.entities, ...action.payload]
       };
+
+    case AnswerActionTypes.UPDATE_VOTES:
+      const oldArray = state.entities.filter(a => action.payload.find((ans: Answer) => ans.id === a.id) == null)
+      return {
+        entities: [
+          ...action.payload,
+          ...oldArray
+        ]
+      };
+
 
     default:
       return state;

@@ -20,7 +20,6 @@ import { Answer } from '../models/answer';
 @Injectable()
 export class QuestionEffects {
   questionSchema = new Schema('questions');
-  answerSchema = new Schema('answers');
 
   constructor(
     private actions$: Actions,
@@ -32,7 +31,6 @@ export class QuestionEffects {
     private loadingBar: LoadingBarService,
   ) {
     this.questionSchema.define({
-      answers: arrayOf(this.answerSchema),
       subQuestions: arrayOf(this.questionSchema)
     });
   }
@@ -50,11 +48,11 @@ export class QuestionEffects {
               .map(fetchedQuestions => {
                 const norm = normalize(fetchedQuestions, arrayOf(this.questionSchema))
 
-                this.store.dispatch(this.answerActions.loadSuccess(norm.entities['answers'] ? norm.entities['answers'] : {}));
                 this.store.dispatch(this.questionActions.selectSuccess(norm.result));
                 const normQuestions = norm.entities['questions'];
                 //fetch comments
                 const questionIds = Object.keys(norm.entities['questions']).map(id => +id);
+                this.store.dispatch(this.answerActions.load(questionIds));
                 this.store.dispatch(this.commentActions.load(questionIds));
 
                 return this.questionActions.loadSuccess(normQuestions);

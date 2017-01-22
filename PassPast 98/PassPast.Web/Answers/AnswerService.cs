@@ -11,7 +11,29 @@ namespace PassPast.Web.Answers
     public interface IAnswerService
     {
         Task<AnswerEntity> Create(AnswerEntity answer);
-        Task<IEnumerable<AnswerEntity>> AddVote(VoteEntity vote, string type);
+        Task<IEnumerable<AnswerViewModel>> AddVote(VoteEntity vote, string type);
+        Task<IEnumerable<AnswerViewModel>> Get(List<int> questionIds, string userId);
+        Task<IEnumerable<AnswerViewModel>> GetFromQuestionIds(List<int> questionIds, string userId);
+    }
+
+    public static class AnswerServiceExtentions
+    {
+        public static IQueryable<AnswerViewModel> Map(this IQueryable<AnswerEntity> src, string userId)
+        {
+            return src.Select(a => new AnswerViewModel
+            {
+                createdAt = a.CreatedAt,
+                id = a.Id,
+                questionId = a.QuestionId,
+                userIdentifier = a.CreatedBy.UserName,
+                contentOrIncriment = a.ContentOrIncriment,
+                votesSum = a.Votes.Where(v => !v.Deleted).Sum(v => v.Value),
+                voteValue = a.Votes
+                       .Where(v => !v.Deleted && v.CreatedById == userId)
+                       .Select(v => v != null ? (int?)v.Value : null)
+                       .FirstOrDefault(),
+            });
+        }
     }
 
     public class AnswerService : IAnswerService
@@ -33,11 +55,31 @@ namespace PassPast.Web.Answers
             return answer;
         }
 
-        public async Task<IEnumerable<AnswerEntity>> AddVote(VoteEntity vote, string type)
+        public async Task<IEnumerable<AnswerViewModel>> GetFromQuestionIds(List<int> questionIds, string userId)
+        {
+            var answers = await _context.Answers
+                .Where(a => questionIds.Contains(a.QuestionId))
+                .Map(userId)
+                .ToListAsync();
+
+            return answers;
+        }
+
+        public async Task<IEnumerable<AnswerViewModel>> Get(List<int> ids, string userId)
+        {
+            var answers = await _context.Answers
+                .Where(a => ids.Contains(a.Id))
+                .Map(userId)
+                .ToListAsync();
+
+            return answers;
+        }
+
+        public async Task<IEnumerable<AnswerViewModel>> AddVote(VoteEntity vote, string type)
         {
             vote.CreatedAt = DateTimeOffset.Now;
 
-            var result = new List<AnswerEntity>();
+            var result = new List<int>();
 
             var answer = await _context.Answers
                 .FirstOrDefaultAsync(a => a.Id == vote.AnswerId);
@@ -51,14 +93,14 @@ namespace PassPast.Web.Answers
             {
                 //delete and negate the old vote
                 existingVote.Deleted = true;
-                existingVote.Answer.TotalVotes += existingVote.Value == 1 ? -1 : 1;
+                //existingVote.Answer.TotalVotes += existingVote.Value == 1 ? -1 : 1;
 
                 if (vote.Value == existingVote.Value)
                 {
                     await _context.SaveChangesAsync();
 
-                    result.Add(existingVote.Answer);
-                    return result;
+                    result.Add(existingVote.Answer.Id);
+                    return await Get(result, vote.CreatedById);
                 }
             }
 
@@ -76,22 +118,22 @@ namespace PassPast.Web.Answers
 
                     //negate the old one
                     existingVote.Deleted = true;
-                    existingVote.Answer.TotalVotes += existingVote.Value == 1 ? -1 : 1;
+                    //existingVote.Answer.TotalVotes += existingVote.Value == 1 ? -1 : 1;
 
                     //add the other answer
-                    result.Add(existingVote.Answer);
+                    result.Add(existingVote.Answer.Id);
                 }
             }
 
             //add the clicked answer
-            result.Add(answer);
+            result.Add(answer.Id);
 
             _context.Votes.Add(vote);
-            answer.TotalVotes += vote.Value;
+            //answer.TotalVotes += vote.Value;
 
             await _context.SaveChangesAsync();
 
-            return result;
+            return await Get(result, vote.CreatedById); ;
         }
     }
 }

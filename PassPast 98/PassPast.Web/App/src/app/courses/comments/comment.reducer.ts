@@ -15,9 +15,13 @@ const initalState: CommentState = {
 
 export function commentReducer(state = initalState, action: Action): CommentState {
   switch (action.type) {
-
-    case CommentActionTypes.ADD_SUCCESS:
     case CommentActionTypes.LOAD_SUCCESS:
+      return {
+        entities: action.payload
+      }
+    case CommentActionTypes.ADD_SUCCESS:
+
+debugger
       return {
         entities: [...state.entities, ...action.payload]
       };
