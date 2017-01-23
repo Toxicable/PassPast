@@ -20,8 +20,6 @@ export function commentReducer(state = initalState, action: Action): CommentStat
         entities: action.payload
       }
     case CommentActionTypes.ADD_SUCCESS:
-
-debugger
       return {
         entities: [...state.entities, ...action.payload]
       };

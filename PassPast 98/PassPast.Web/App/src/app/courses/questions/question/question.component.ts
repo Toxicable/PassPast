@@ -71,11 +71,7 @@ export class QuestionComponent implements OnInit {
     this.comments = Observable.combineLatest(
       this.store.select(state => state.courses.comment.entities),
       this.question$,
-      (comments, question) => {
-        debugger
-        let t =  comments.filter(c => c.questionId === question.id)
-        return t
-      }
+      (comments, question) => comments.filter(c => c.questionId === question.id)
     ).map(comments => orderByDate(comments, 'createdAt'));
 
   }

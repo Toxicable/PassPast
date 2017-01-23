@@ -28,21 +28,21 @@
     "@ngrx/effects": "^2.0.0",
     "@ngrx/store": "2.2.1",
     "@ngrx/store-devtools": "~3.2.2",
-    "@toxicable/oidc": "0.0.0-alpha-16",
+    "@toxicable/oidc": "0.0.0-alpha-18",
     "angular-validators": "0.0.0-alpha-4",
     "core-js": "^2.4.1",
     "marked": "^0.3.6",
     "normalizr": "2.3.1",
     "rxjs": "^5.0.3",
     "ts-helpers": "^1.1.1",
-    "zone.js": "^0.7.4"
+    "zone.js": "^0.7.2"
   },
   "devDependencies": {
     "@angular/compiler-cli": "^2.3.1",
     "@types/jasmine": "2.5.38",
     "@types/marked": "0.0.28",
     "@types/node": "^6.0.42",
-    "angular-cli": "^1.0.0-beta.25.5",
+    "angular-cli": "1.0.0-beta.26",
     "codelyzer": "~2.0.0-beta.1",
     "jasmine-core": "2.5.2",
     "jasmine-spec-reporter": "2.5.0",
@@ -54,7 +54,7 @@
     "ngrx-store-freeze": "^0.1.4",
     "protractor": "~4.0.13",
     "ts-node": "1.2.1",
-    "tslint": "^4.3.1",
+    "tslint": "^4.3.0",
     "typescript": "~2.0.3"
   }
 }

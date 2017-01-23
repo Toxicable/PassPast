@@ -4,8 +4,8 @@
 // The list of which env maps to which file can be found in `angular-cli.json`.
 
 const baseUrl =
-//'http://localhost:4200/';
-'https://beta.passpast.net/';
+'http://localhost:4200/';
+//'https://beta.passpast.net/';
 
 export const environment = {
   production: false,
@@ -21,7 +21,7 @@ export const environment = {
   },
   // replaced props
   apiBaseUrl: baseUrl + 'api',
-  signalRUrl: baseUrl + 'api/exam-hub',
-//signalRUrl: 'http://localhost:5000/api/exam-hub',
+//  signalRUrl: baseUrl + 'api/exam-hub',
+signalRUrl: 'http://localhost:5000/api/exam-hub',
 
 };
