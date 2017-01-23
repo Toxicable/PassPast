@@ -75,5 +75,4 @@ export class QuestionComponent implements OnInit {
     ).map(comments => orderByDate(comments, 'createdAt'));
 
   }
-
 }

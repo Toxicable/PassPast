@@ -1,10 +1,11 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, ChangeDetectionStrategy } from '@angular/core';
 import { ExamHubService } from '../exam-hub.service';
 
 @Component({
   selector: 'app-vote',
   templateUrl: './vote.component.html',
-  styleUrls: ['./vote.component.css']
+  styleUrls: ['./vote.component.css'],
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class VoteComponent {
   @Input() type: string;

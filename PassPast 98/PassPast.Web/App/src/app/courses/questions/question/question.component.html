@@ -1,7 +1,6 @@
 <md-card-title (click)="showContent=!showContent" class="can-click highlight-background">
-  {{_question.incriment}} <md-icon>expand_more</md-icon>
+  {{_question.incriment}} <md-icon *ngIf="!showContent">expand_more</md-icon><md-icon *ngIf="showContent">expand_less</md-icon>
 </md-card-title>
-
 <!--main content toggle-->
 <div *ngIf="showContent">
   <!--Answers-->
@@ -24,7 +23,7 @@
     <span *ngIf="_question.type == 'Short'">
       <app-new-answer [questionId]="_question.id" [loggedIn]="loggedIn$ | async"></app-new-answer>
     </span>
-    <button (click)="showComments = !showComments">Show Comments</button>
+    <button (click)="showComments = !showComments">{{showComments ? 'Hide' : 'Show'}} comments</button>
 
     <!--Comments-->
     <span *ngIf="showComments">

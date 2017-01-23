@@ -1,13 +1,19 @@
 /* Globals */
-@import '~https://fonts.googleapis.com/icon?family=Material+Icons';
+ @import url('~https://fonts.googleapis.com/icon?family=Material+Icons');
+
 /*@import '~@angular/material/core/theming/prebuilt/pink-bluegrey.css';*/
-@import '~@angular/material/core/theming/prebuilt/indigo-pink.css';
+/*@import '~@angular/material/core/theming/prebuilt/indigo-pink.css';*/
 /*@import '~@angular/material/core/theming/prebuilt/deeppurple-amber.css';*/
 /*@import '~@angular/material/core/theming/prebuilt/purple-green.css';*/
+ @import './theme';
+//them colors
+//$app-primary
+//$app-accent
+//$app-warn
 
 body{
   font-family: Arial, serif;
-  color: black;
+  color: $black-87-opacity;
   margin: 0;
 }
 
@@ -21,13 +27,14 @@ md-card{
 }
 
 a{
-  color: black;
+  color: $black-87-opacity;
   text-decoration: none;
 }
 
 a:hover{
-  color:greenyellow;
+  color: md-color($app-accent)
 }
+
 
 .can-click{
   cursor: pointer;

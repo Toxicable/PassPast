@@ -21,7 +21,7 @@ export const environment = {
   },
   // replaced props
   apiBaseUrl: baseUrl + 'api',
-//  signalRUrl: baseUrl + 'api/exam-hub',
+  //signalRUrl: baseUrl + 'api/exam-hub',
 signalRUrl: 'http://localhost:5000/api/exam-hub',
 
 };
