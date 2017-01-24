@@ -185,8 +185,7 @@ namespace PassPast.Web
                 {
                     router.MapHub<ExamHub>("/exam-hub");
                 });
-
-                //apiApp.UseSignalR2();
+                
                 apiApp.UseOpenIddict();
                 apiApp.UseMvc(routes =>
                 {

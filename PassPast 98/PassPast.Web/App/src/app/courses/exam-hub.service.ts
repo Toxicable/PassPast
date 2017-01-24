@@ -29,7 +29,6 @@ export class ExamHubService {
     this.connection = new signalR.HubConnection(environment.signalRUrl);
 
     this.connection.on('BroadcastAnswer', (answer: Answer) => {
-
       this.store.dispatch(this.answerActions.addSuccess(answer));
     });
 
@@ -45,7 +44,10 @@ export class ExamHubService {
       this.store.dispatch(this.commentActions.updateVotes(comment));
     });
 
-    this.connecting = this.connection.start();
+    this.oidc.tokens$.first().subscribe(t => {
+      this.connecting = this.connection.start(!!t ? t.access_token : '');
+    });
+
   }
 
   joinRoom(roomNumber: number) {
@@ -53,7 +55,7 @@ export class ExamHubService {
       .then(() => {
         this.groupId = roomNumber;
         this.connection.invoke('JoinGroup', roomNumber);
-      })
+      });
   }
   leaveCurrentRoom() {
     if (this.groupId) {
@@ -62,27 +64,19 @@ export class ExamHubService {
   }
 
   postAnswer(questionId: number, content: string) {
-    return this.getUserId()
-      .map(userId => this.connection.invoke('PostAnswer', this.groupId, { questionId, contentOrIncriment: content }, userId));
+    this.connection.invoke('PostAnswer', this.groupId, { questionId, contentOrIncriment: content });
   }
 
   postAnswerVote(value: number, answerId: number, type: string) {
-    return this.getUserId()
-      .map(userId => this.connection.invoke('PostAnswerVote', this.groupId, { value, answerId }, type, userId));
+    this.connection.invoke('PostAnswerVote', this.groupId, { value, answerId }, type);
   }
 
   postCommentVote(value: number, commentId: number) {
-    return this.getUserId()
-      .map(userId => this.connection.invoke('PostCommentVote', this.groupId, { value, commentId }, userId));
+    this.connection.invoke('PostCommentVote', this.groupId, { value, commentId });
   }
 
   postComment(content: string, questionId: number) {
-    return this.getUserId()
-      .map(userId => this.connection.invoke('PostComment', this.groupId, { content, questionId }, userId));
-  }
-  private getUserId() {
-    return this.oidc.profile$
-      .map(profile => profile.sub);
+    this.connection.invoke('PostComment', this.groupId, { content, questionId });
   }
 }
 

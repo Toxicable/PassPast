@@ -30,7 +30,6 @@ export class AnswerMcqComponent {
   sendVote() {
     if (this.loggedIn) {
       this.examHub.postAnswerVote(1, this.answer.id, 'mcq')
-        .subscribe();
     }
   }
 

@@ -22,11 +22,9 @@ export class VoteComponent {
     if (this.loggedIn) {
       if (this.type === 'answer') {
         this.examHub.postAnswerVote(1, this.id, 'short')
-          .subscribe();
       }
       if (this.type === 'comment') {
         this.examHub.postCommentVote(1, this.id)
-          .subscribe();
       }
     }
   }
@@ -35,11 +33,9 @@ export class VoteComponent {
     if (this.loggedIn) {
       if (this.type === 'answer') {
         this.examHub.postAnswerVote(-1, this.id, 'short')
-          .subscribe();
       }
       if (this.type === 'comment') {
         this.examHub.postCommentVote(-1, this.id)
-          .subscribe();
       }
     }
   }

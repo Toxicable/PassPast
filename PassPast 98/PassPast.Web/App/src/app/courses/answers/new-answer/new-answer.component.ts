@@ -25,7 +25,6 @@ export class NewAnswerComponent implements OnInit {
 
   sendAnswer() {
     this.examHub.postAnswer(this.questionId, this.newAnswerForm.value['content'])
-    .subscribe();
     this.newAnswerForm.reset();
   }
 }

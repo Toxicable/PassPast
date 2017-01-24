@@ -26,7 +26,6 @@ export class NewCommentComponent implements OnInit {
 
   sendComment(){
     this.examHub.postComment(this.newCommentForm.value['content'], this.questionId)
-    .subscribe();
     this.newCommentForm.reset();
   }
 }

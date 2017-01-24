@@ -34,7 +34,7 @@
             return new HttpClient_1.HttpClient().get(`${this.url}/getid?${this.queryString}`)
                 .then(connectionId => {
                 this.connectionId = connectionId;
-                this.queryString = `id=${connectionId}&${this.connectionId}` + "&access_token=Bearer " + accessToken;
+                this.queryString = `id=${connectionId}&${this.connectionId}` + "&access_token=" + accessToken;
                 return this.transport.connect(this.url, this.queryString);
             })
                 .then(() => {
