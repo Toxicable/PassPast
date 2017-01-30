@@ -28,7 +28,7 @@
     "@ngrx/effects": "^2.0.0",
     "@ngrx/store": "2.2.1",
     "@ngrx/store-devtools": "~3.2.2",
-    "@toxicable/oidc": "0.0.0-alpha-18",
+    "@toxicable/oidc": "0.0.0-alpha-22",
     "angular-validators": "0.0.0-alpha-4",
     "core-js": "^2.4.1",
     "marked": "^0.3.6",
