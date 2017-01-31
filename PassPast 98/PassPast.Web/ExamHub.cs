@@ -65,7 +65,7 @@ namespace PassPast.Web.Comments.Hubs
             var newAnswer = _mapper.Map<AnswerEntity>(answer);
             newAnswer.CreatedById = _userManager.GetUserId(Context.User);
 
-            var createdAnswer = _mapper.Map<AnswerViewModel>(await _answerService.Create(newAnswer));            
+            var createdAnswer = await _answerService.Create(newAnswer);            
             await Clients.Group(groupId.ToString()).InvokeAsync("BroadcastAnswer", createdAnswer);
         }
         
@@ -74,7 +74,7 @@ namespace PassPast.Web.Comments.Hubs
             var newComment = _mapper.Map<CommentEntity>(comment);
             newComment.CreatedById = _userManager.GetUserId(Context.User);
 
-            var createdComment = _mapper.Map<CommentViewModel>(await _commentService.Create(newComment));
+            var createdComment = await _commentService.Create(newComment);
             await Clients.Group(groupId.ToString()).InvokeAsync("BroadcastComment", createdComment);
         }
     }

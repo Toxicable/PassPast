@@ -14,6 +14,8 @@ import { CourseModule } from './courses/courses.module';
 import { appReducer, AppState } from './app-store';
 import { MaterialModule } from '@angular/material';
 
+import 'hammerjs';
+
 @NgModule({
   declarations: [
     AppComponent,

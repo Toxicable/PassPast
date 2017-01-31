@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using AutoMapper;
+using Microsoft.EntityFrameworkCore;
 using PassPast.Data;
 using PassPast.Data.Domain;
 using PassPast.Web.Users;
@@ -13,16 +14,21 @@ namespace PassPast.Web.Comments
     public interface ICommentService
     {
         IQueryable<CommentViewModel> Get(IEnumerable<int> questionIds, string userId = "");
-        Task<CommentEntity> Create(CommentEntity comment);
+        Task<CommentViewModel> Create(CommentEntity comment);
         Task<CommentViewModel> AddVote(VoteEntity vote);
     }
     public class CommentService : ICommentService
     {
         private readonly ApplicationDbContext _context;
+        private readonly IMapper _mapper;
 
-        public CommentService(ApplicationDbContext context)
+        public CommentService(
+            ApplicationDbContext context,
+            IMapper mapper
+            )
         {
             _context = context;
+            _mapper = mapper;
         }
 
         public IQueryable<CommentViewModel> Get(IEnumerable<int> questionIds, string userId = "")
@@ -67,15 +73,16 @@ namespace PassPast.Web.Comments
             return comment;
         }
 
-        public async Task<CommentEntity> Create(CommentEntity comment)
+        public async Task<CommentViewModel> Create(CommentEntity comment)
         {
             comment.CreatedAt = DateTimeOffset.Now;
 
             _context.Comments.Add(comment);
             await _context.SaveChangesAsync();
-            _context.Users.Find(comment.CreatedById);
 
-            return comment;
+            var mapped = _mapper.Map<CommentViewModel>(await Get(comment.Id, comment.CreatedById));
+
+            return mapped;
         }
 
         public async Task<CommentViewModel> AddVote(VoteEntity vote)

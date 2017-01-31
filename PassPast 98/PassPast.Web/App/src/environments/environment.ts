@@ -4,11 +4,14 @@
 // The list of which env maps to which file can be found in `angular-cli.json`.
 
 const baseUrl =
-'http://localhost:4200/';
-//'https://beta.passpast.net/';
+ // 'http://localhost:4200/';
+'https://beta.passpast.net/';
 
 export const environment = {
   production: false,
+  apiBaseUrl: baseUrl + 'api',
+  signalRUrl: baseUrl + 'api/exam-hub',
+  //signalRUrl: 'http://localhost:5000/api/exam-hub',
   googleAuthConfig: {
     redirect_uri: baseUrl + 'signin-google',
     client_id: '137170270322-3ik6cl5m55i4ft3ff6t7l9tm2f1abkvh.apps.googleusercontent.com',
@@ -19,9 +22,20 @@ export const environment = {
     client_id: '311510702571628',
     scopes: 'email'
   },
-  // replaced props
-  apiBaseUrl: baseUrl + 'api',
-  //signalRUrl: baseUrl + 'api/exam-hub',
-signalRUrl: 'http://localhost:5000/api/exam-hub',
-
 };
+
+// export const environment = {
+//   production: false,
+//   apiBaseUrl: '/api',
+//   signalRUrl: 'http://localhost:5000/api/exam-hub',
+//   googleAuthConfig: {
+//     redirect_uri: 'http://localhost:4200/signin-google',
+//     client_id: '137170270322-3ik6cl5m55i4ft3ff6t7l9tm2f1abkvh.apps.googleusercontent.com',
+//     scopes: 'profile email'
+//   },
+//   facebookAuthConfig: {
+//     redirect_uri: 'http://localhost:4200/signin-facebook',
+//     client_id: '311510702571628',
+//     scopes: 'email'
+//   },
+// };

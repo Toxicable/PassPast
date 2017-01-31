@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using AutoMapper;
+using Microsoft.EntityFrameworkCore;
 using PassPast.Data;
 using PassPast.Data.Domain;
 using System;
@@ -10,7 +11,7 @@ namespace PassPast.Web.Answers
 {
     public interface IAnswerService
     {
-        Task<AnswerEntity> Create(AnswerEntity answer);
+        Task<AnswerViewModel> Create(AnswerEntity answer);
         Task<IEnumerable<AnswerViewModel>> AddVote(VoteEntity vote, string type);
         Task<IEnumerable<AnswerViewModel>> Get(List<int> questionIds, string userId);
         Task<IEnumerable<AnswerViewModel>> GetFromQuestionIds(List<int> questionIds, string userId);
@@ -39,20 +40,27 @@ namespace PassPast.Web.Answers
     public class AnswerService : IAnswerService
     {
         private readonly ApplicationDbContext _context;
+        private readonly IMapper _mapper;
 
-        public AnswerService(ApplicationDbContext context)
+        public AnswerService(
+            ApplicationDbContext context,
+            IMapper mapper
+            )
         {
+            _mapper = mapper;
             _context = context;
         }
 
-        public async Task<AnswerEntity> Create(AnswerEntity answer)
+        public async Task<AnswerViewModel> Create(AnswerEntity answer)
         {
             answer.CreatedAt = DateTimeOffset.Now;
 
             _context.Answers.Add(answer);
             await _context.SaveChangesAsync();
 
-            return answer;
+            var mapped = (await Get(new List<int> { answer.Id }, answer.CreatedById)).First();
+
+            return mapped;
         }
 
         public async Task<IEnumerable<AnswerViewModel>> GetFromQuestionIds(List<int> questionIds, string userId)

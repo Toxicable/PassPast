@@ -44,10 +44,17 @@ export class ExamHubService {
       this.store.dispatch(this.commentActions.updateVotes(comment));
     });
 
+    this.start();
+
+  }
+
+  start(){
     this.oidc.tokens$.first().subscribe(t => {
       this.connecting = this.connection.start(!!t ? t.access_token : '');
     });
-
+  }
+  stop(){
+    this.connection.stop();
   }
 
   joinRoom(roomNumber: number) {

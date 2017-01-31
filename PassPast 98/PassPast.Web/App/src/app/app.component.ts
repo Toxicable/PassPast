@@ -5,6 +5,7 @@ import { AppState } from './app-store';
 import { Router, NavigationEnd } from '@angular/router';
 import { Observable } from 'rxjs/Observable';
 import { Title } from '@angular/platform-browser';
+import { OpenIdClientService } from '@toxicable/oidc';
 
 @Component({
   selector: 'app-root',
@@ -18,9 +19,12 @@ export class AppComponent implements OnInit, OnDestroy {
     private alert: AlertService,
     private router: Router,
     private title: Title,
+    private oidc: OpenIdClientService
   ) { }
 
   ngOnInit(): void {
+    this.oidc.init().subscribe(() => {}, error => console.warn(error));
+
     let defaultTitle = 'Pass Past';
     Observable.combineLatest(
       this.store.select(state => state.courses.course.selected),

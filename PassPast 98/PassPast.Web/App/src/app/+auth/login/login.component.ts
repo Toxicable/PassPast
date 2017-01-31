@@ -1,17 +1,17 @@
 import { Component } from '@angular/core';
-import { OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AlertService, LoadingBarService } from '../../core';
 import { FormValidators } from 'angular-validators';
 import { OpenIdClientService } from '@toxicable/oidc';
 import { environment } from '../../../environments/environment';
 import { Observable } from 'rxjs/Observable';
+import { ExamHubService } from '../../courses/exam-hub.service';
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.template.html'
 })
-export class LoginComponent implements OnInit {
+export class LoginComponent {
   loginForm: FormGroup;
   errors: string[];
 
@@ -19,21 +19,26 @@ export class LoginComponent implements OnInit {
     private alert: AlertService,
     private oidc: OpenIdClientService,
     private loadingBar: LoadingBarService,
+    private examHub: ExamHubService,
   ) { }
 
-  ngOnInit() {
-
-  }
 
   facebookAuthorize() {
-    this.loadingBar.doWithLoader(this.oidc.loginExternal('facebook'))
-      .subscribe(x => this.alert.sendSuccess('Successfully logged in'));
+    this.login('facebook');
 
   }
 
   googleAuthorize() {
-    this.loadingBar.doWithLoader(this.oidc.loginExternal('google'))
+    this.login('google')
+  }
+  login(provider: string) {
+    this.loadingBar.doWithLoader(this.oidc.loginExternal(provider))
+      .do(() => {
+        this.examHub.stop();
+        this.examHub.start();
+      })
       .subscribe(x => this.alert.sendSuccess('Successfully logged in'));
+
   }
 
 }
