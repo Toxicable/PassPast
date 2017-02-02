@@ -1,0 +1,10 @@
+<form [formGroup]="newPaperForm" (ngSubmit)="onSubmit()" >
+
+    <md-input-container>
+      <input md-input placeholder="Name" formControlName="name">
+    </md-input-container>
+
+    <av-validation-messages [control]="newPaperForm.controls['name']"></av-validation-messages>
+
+    <button md-raised-button color="primary" type="submit" [disabled]="!newPaperForm.valid" >Submit</button>
+</form>

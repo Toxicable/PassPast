@@ -1,0 +1,16 @@
+<h1>Papers</h1>
+
+<button md-icon-button color="secondary" [routerLink]="['/courses']" >
+  <md-icon>chevron_left</md-icon>
+</button>
+<button  type="button" md-raised-button color="primary" (click)="openNewPaperDialog()">Add Paper</button>
+
+<div *ngIf="noPapers$ | async">
+  There are no Papers for this Course
+</div>
+
+<div fxLayout="row" fxLayoutWrap="wrap">
+    <md-card *ngFor="let paper of papers$ | async; trackBy: trackByFn" [routerLink]="paper.$key" class="can-click highlight-background" >
+        <md-card-title>{{paper.name}}</md-card-title>
+    </md-card>
+</div>

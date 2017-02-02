@@ -1,0 +1,17 @@
+<form [formGroup]="newCourseForm" (ngSubmit)="onSubmit()">
+  <div>
+    <md-input-container>
+      <input md-input placeholder="Name" formControlName="name">
+    </md-input-container>
+    <av-validation-messages [control]="newCourseForm.controls.name"></av-validation-messages>
+  </div>
+
+  <div>
+    <md-input-container>
+      <input md-input placeholder="Code" formControlName="code">
+    </md-input-container>
+    <av-validation-messages [control]="newCourseForm.controls.code"></av-validation-messages>
+  </div>
+
+  <button md-raised-button color="primary" type="submit" [disabled]="!newCourseForm.valid">Submit</button>
+</form>

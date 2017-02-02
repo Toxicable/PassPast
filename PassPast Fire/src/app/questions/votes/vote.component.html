@@ -1,0 +1,9 @@
+<span fxLayout="column">
+  <span>
+    <md-icon class="can-click"  [color]="voteValue === 1 ? 'accent': ''" (click)="upVote()" >expand_less</md-icon>
+  </span>
+  <span  class="center-text">
+    {{votesSum}}
+  </span>
+  <md-icon class="can-click"  [color]="voteValue === -1 ? 'accent': ''" (click)="downVote()">expand_more</md-icon>
+</span>

@@ -1,0 +1,12 @@
+<div fxLayout="row">
+  <span fxFlex="5">
+    {{answer.contentOrIncriment}}
+  </span>
+
+  <md-progress-bar [mdTooltip]="loggedIn ? 'Click to vote' : 'You must be logged in to vote'" mdTooltipPosition="above" [color]="answer.voteValue === 1 ? 'accent': 'primary'"
+    mode="determinate" (click)="sendVote()" class="can-click" [value]="(answer.votesSum/totalAnswerVotes) * 100"></md-progress-bar>
+
+  <span>
+    {{answer.votesSum}}
+  </span>
+</div>

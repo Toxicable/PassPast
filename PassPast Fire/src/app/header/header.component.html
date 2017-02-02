@@ -1,0 +1,42 @@
+<md-toolbar color="primary">
+  <div  fxFlex="100%" fxLayoutAlign="center center">
+    <span fxFlex="33%">
+      <h2>
+        <a [routerLink]="['/']" >Pass Past</a>
+      </h2>
+    </span>
+    <span fxFlex="33%" fxLayoutAlign="center center">
+      <a [routerLink]="['/courses']">Courses&nbsp;</a>
+
+      <a >
+      <!--[routerLink]="[ (currentCourse$ | async)?.id]">-->
+        {{(currentCourse$ | async)?.code}}
+      </a>
+
+      <a >
+      <!--[routerLink]="['/courses', {{(currentCourse$ | async)?.id}}, {{(currentCourse$ | async)?.id}}]">-->
+        {{(currentPaper$ | async)?.name}}
+      </a>
+
+      <a >
+      <!--[routerLink]="['/courses', {{(currentCourse$ | async)?.id}}, {{(currentCourse$ | async)?.id}}, {{(currentCourse$ | async)?.id}}]">-->
+        {{(currentExam$ | async)?.year}}
+      </a>
+
+      <a >
+      <!--[routerLink]="['/courses', {{(currentCourse$ | async)?.id}}]">-->
+        {{(currentExam$ | async)?.semester}}
+      </a>
+    </span>
+    <span fxFlex="33%" fxLayoutAlign="end end">
+      <span *ngIf="(loggedIn$ | async)" >
+        Welcome {{(profile$ | async)?.unique_name}}
+        <a class="can-click" (click)="logout()">Logout</a>
+      </span>
+      <span *ngIf="!(loggedIn$ | async)">
+        <a  class="header-navigation__link" [routerLink]="['/auth/login']">Login</a>
+      </span>
+    </span>
+  </div>
+</md-toolbar>
+<app-loading-bar></app-loading-bar>

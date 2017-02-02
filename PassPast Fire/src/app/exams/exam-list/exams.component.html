@@ -1,0 +1,20 @@
+<h1>Exams</h1>
+<button md-icon-button color="secondary" [routerLink]="['../']" >
+  <md-icon>chevron_left</md-icon>
+</button>
+
+<div *ngIf="loggedIn$ | async">
+  <button type="button" md-raised-button color="primary" (click)="openNewExamDialog()">Add Exam</button>
+  <a class="header-navigation__link" [routerLink]="['/courses', 1, 2, 'add-exam']" routerLinkActive="active-router-link">Add Exam</a>
+</div>
+
+<div *ngIf="noExams$ | async">
+  There are no Exams for this Paper
+</div>
+
+<div fxLayout="row" fxLayoutWrap="wrap">
+  <md-card *ngFor="let exam of exams$ | async; trackBy: trackByFn" [routerLink]="exam.id" class="can-click highlight-background" >
+    <md-card-title>{{exam.year}}</md-card-title>
+    <md-card-subtitle>Semester: {{exam.semester}}</md-card-subtitle>
+  </md-card>
+</div>

@@ -1,0 +1,8 @@
+<h1>Questions</h1>
+<button md-icon-button color="secondary" [routerLink]="['../']" >
+  <md-icon>chevron_left</md-icon>
+</button>
+
+<md-card  *ngFor="let question of (questions$ | async); trackBy: trackByFn" fxFlex="40%">
+    <app-question [question]="question"></app-question>
+</md-card >

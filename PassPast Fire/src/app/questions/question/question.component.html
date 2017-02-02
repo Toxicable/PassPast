@@ -1,0 +1,43 @@
+<md-card-title (click)="showContent=!showContent" class="can-click highlight-background">
+  {{_question.incriment}} <md-icon *ngIf="!showContent">expand_more</md-icon><md-icon *ngIf="showContent">expand_less</md-icon>
+</md-card-title>
+<!--main content toggle-->
+<div *ngIf="showContent">
+  <!--Answers-->
+  <div *ngFor="let answer of answers | async | orderByDate: 'createdAt'">
+    <!--MCQ-->
+    <div *ngIf="_question.type == 'Mcq'">
+      <app-answer-mcq [totalAnswerVotes]="totalAnswerVotes" [answer]="answer" [loggedIn]="loggedIn$ | async"></app-answer-mcq>
+    </div>
+
+    <!--Short -->
+    <div *ngIf="_question.type == 'Short'">
+      <app-answer-short [answer]="answer" [loggedIn]="loggedIn$ | async"></app-answer-short>
+    </div>
+
+  </div>
+
+  <!--makes sure this the is bottom level question-->
+  <span *ngIf="_question.subQuestions.length == 0 ">
+    <!--New Answer-->
+    <span *ngIf="_question.type == 'Short'">
+      <app-new-answer [questionId]="_question.id" [loggedIn]="loggedIn$ | async"></app-new-answer>
+    </span>
+    <button (click)="showComments = !showComments">{{showComments ? 'Hide' : 'Show'}} comments</button>
+
+    <!--Comments-->
+    <span *ngIf="showComments">
+      <!--New Comment-->
+      <app-new-comment [questionId]="_question.id" [loggedIn]="loggedIn$ | async" ></app-new-comment>
+
+      <div *ngFor="let comment of comments | async ">
+        <app-comment [comment]="comment" [loggedIn]="loggedIn$ | async"></app-comment>
+      </div>
+    </span>
+
+  </span>
+
+  <md-card *ngFor="let subQuestion of (subQuestions | async); trackBy: trackByFn">
+    <app-question [question]="subQuestion"></app-question>
+  </md-card>
+</div>

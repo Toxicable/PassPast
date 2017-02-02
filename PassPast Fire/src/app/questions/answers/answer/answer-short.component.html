@@ -1,0 +1,15 @@
+<div style="display:flex;">
+  <span>
+    <app-vote type="answer" [id]="answer.id" [votesSum]="answer.votesSum" [voteValue]="answer.voteValue" [loggedIn]="loggedIn"></app-vote>
+  </span>
+  <span>
+    <div>
+      <strong>{{answer.userIdentifier}}</strong> <small>{{answer.createdAt | date}}</small>
+    </div>
+    <markdown>
+      {{answer.contentOrIncriment}}
+    </markdown>
+  </span>
+
+
+</div>
