@@ -1,3 +1,4 @@
+import { AuthService } from './auth.service';
 import { NgModule, Optional, SkipSelf } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { AlertService } from './alert/alert.service';
@@ -21,6 +22,7 @@ import { environment } from '../../environments/environment';
     Title,
     AlertActions,
     LoadingBarActions,
+    AuthService,
   ]
 
 })

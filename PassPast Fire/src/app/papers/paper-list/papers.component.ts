@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { PaperService } from './../paper.service';
-import { Observable, Subject } from 'rxjs';
+import { Observable } from 'rxjs/Observable';
 import { Paper } from '../../models/paper';
 import { ActivatedRoute } from '@angular/router';
 import { AlertService } from '../../core';

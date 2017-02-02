@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, ChangeDetectionStrategy } from '@angular/core';
-import { Comment } from '../../models/comment';
+import { Comment } from '../../../models';
 
 @Component({
   selector: 'app-comment',

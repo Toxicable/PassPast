@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, ChangeDetectionStrategy } from '@angular/core';
-import { Answer } from '../../models/answer';
+import { Answer } from '../../../models';
 
 @Component({
   selector: 'app-answer-mcq',

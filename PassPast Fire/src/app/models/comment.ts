@@ -3,7 +3,7 @@ import { Vote } from './vote';
 import { User } from './user';
 
 export interface Comment{
-    id: number;
+    $key: string;
     content: string;
     questionId: number;
     voteValue: number;

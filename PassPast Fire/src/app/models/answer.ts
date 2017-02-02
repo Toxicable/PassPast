@@ -3,7 +3,7 @@ import { Vote } from './vote';
 import { User } from './user';
 
 export interface Answer{
-    id: number;
+    $key: string;
     contentOrIncriment: string;
     questionId: number;
     voteValue: number;

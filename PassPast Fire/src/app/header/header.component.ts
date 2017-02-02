@@ -1,7 +1,9 @@
+import { AuthProviders } from 'angularfire2';
+import { AuthService } from './../core';
 import { Component, OnInit } from '@angular/core';
 import { AppState } from '../app-store';
 import { Store } from '@ngrx/store';
-import { Observable } from 'rxjs';
+import { Observable } from 'rxjs/Observable';
 import { Course } from '../models/course';
 import { Paper } from '../models/paper';
 import { Exam } from '../models/exam';
@@ -9,23 +11,23 @@ import { Exam } from '../models/exam';
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
-  styleUrls: ['./header.component.css']
 })
 export class HeaderComponent implements OnInit {
   loggedIn$: Observable<boolean>;
-
+  profile$: Observable<any>;
   currentCourse$: Observable<Course>;
   currentPaper$: Observable<Paper>;
   currentExam$: Observable<Exam>;
 
   constructor(
+    private auth: AuthService
   ) { }
 
   ngOnInit(): void {
     // this.profile$ = this.oidc.profile$;
 
-    // this.loggedIn$ = this.oidc.loggedIn$;
-
+     this.loggedIn$ = this.auth.loggedIn$;
+     this.profile$ = this.auth.profile$;
     // this.currentExam$ = this.store.select(state => state.courses.exam.selected);
 
     // this.currentPaper$ = this.store.select(state => state.courses.paper.selected);
@@ -35,6 +37,9 @@ export class HeaderComponent implements OnInit {
   }
 
   logout() {
-    //this.oidc.logout();
+    this.auth.logout();
+  }
+  loginGoogle(){
+    this.auth.login(AuthProviders.Google);
   }
 }

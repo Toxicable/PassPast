@@ -2,7 +2,7 @@ import { Paper } from './paper';
 import { Question } from './question';
 
 export interface Exam{
-    id: number;
+    $key: string;
     year: number;
     semester: string;
     paperId: number;

@@ -9,14 +9,12 @@ import { MarkdownComponent } from './markdown/markdown.component';
 import { OrderByDatePipe } from './pipes/order-by-date/order-by-date.pipe';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { ValidationMessagesModule } from 'angular-validators';
-import { VoteComponent } from './votes/vote.component';
 
 const DECLARATIONS = [
   DefaultValuePipe,
   OrderByDatePipe,
   LoadingBarComponent,
   MarkdownComponent,
-  VoteComponent,
 ];
 const IMPORTS = [
   ReactiveFormsModule,

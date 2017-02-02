@@ -1,9 +1,8 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
-import { Course } from '../models/course';
 import { Store } from '@ngrx/store';
 import { Http } from '@angular/http';
-import { Answer } from '../models/answer';
+import { Answer, Course } from '../../models';
 
 @Injectable()
 export class AnswerService {

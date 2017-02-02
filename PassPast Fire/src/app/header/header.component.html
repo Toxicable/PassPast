@@ -6,7 +6,7 @@
       </h2>
     </span>
     <span fxFlex="33%" fxLayoutAlign="center center">
-      <a [routerLink]="['/courses']">Courses&nbsp;</a>
+      <!--<a [routerLink]="['/courses']">Courses&nbsp;</a>-->
 
       <a >
       <!--[routerLink]="[ (currentCourse$ | async)?.id]">-->
@@ -29,13 +29,17 @@
       </a>
     </span>
     <span fxFlex="33%" fxLayoutAlign="end end">
+
       <span *ngIf="(loggedIn$ | async)" >
-        Welcome {{(profile$ | async)?.unique_name}}
+        Welcome {{(profile$ | async)?.auth?.displayName}}
         <a class="can-click" (click)="logout()">Logout</a>
       </span>
+
       <span *ngIf="!(loggedIn$ | async)">
         <a  class="header-navigation__link" [routerLink]="['/auth/login']">Login</a>
+        <a (click)="loginGoogle()">Google Login</a>
       </span>
+
     </span>
   </div>
 </md-toolbar>

@@ -1,5 +1,7 @@
 export interface Course {
-    id: number;
+    $key: string;
     name: string;
     code: string;
+    createdAt: string;
+    createdBy: string;
 }

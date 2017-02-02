@@ -18,7 +18,6 @@ export class CoursesComponent implements OnInit {
   private newCourseDialogRef: MdDialogRef<AddCourseComponent>;
   courses$: Observable<Course[]>;
   trackByFn = trackByIdentity;
-  loggedIn$: Observable<boolean>;
 
   constructor(
     private courses: CourseService,
@@ -29,12 +28,7 @@ export class CoursesComponent implements OnInit {
 
   ngOnInit() {
     this.courses$ = this.af.database.list('courses');
-    //this.courses$ = this.store.select(state => state.courses.course.entities);
-
-    //this.store.dispatch(this.courseActions.load());
-
-    //this.loggedIn$ = this.oidc.loggedIn$;
-
+    this.courses$ = this.courses.getCourses();
   }
 
   openDialog() {

@@ -1,3 +1,8 @@
+import { QuestionModule } from './questions/questions.module';
+import { QuestionsComponent } from './questions/question-list/questions.component';
+import { ExamModule } from './exams/exams.module';
+import { PaperModule } from './papers/papers.module';
+import { CourseModule } from './courses/courses.module';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
@@ -12,22 +17,6 @@ import { HeaderComponent } from './header/header.component';
 import { MaterialModule } from '@angular/material';
 
 import { AngularFireModule, AuthProviders, AuthMethods } from 'angularfire2';
-
-import { PapersComponent } from './papers/paper-list/papers.component';
-import { ExamsComponent } from './exams/exam-list/exams.component';
-import { AddExamComponent } from './exams/add-exam/add-exam.component';
-import { QuestionsComponent } from './questions/question-list/questions.component';
-import { QuestionComponent } from './questions/question/question.component';
-
-
-import { AddPaperComponent } from './papers/add-paper/add-paper.component';
-import { QuestionSectionComponent } from './exams/add-exam/question-section.component';
-
-import { NewCommentComponent } from './comments/new-comment/new-comment.component';
-import { CommentComponent } from './comments/comment/comment.component';
-
-import { AnswersModule} from './answers/answers.module'
-import { CourseModule } from './courses/courses.module';
 
 import 'hammerjs';
 
@@ -50,23 +39,12 @@ const myFirebaseAuthConfig = {
     NotFoundComponent,
     HeaderComponent,
     UnauthorizedComponent,
-    PapersComponent,
-    ExamsComponent,
-    AddExamComponent,
-    QuestionsComponent,
-    AddPaperComponent,
-    QuestionSectionComponent,
-    QuestionComponent,
-
-  NewCommentComponent,
-    CommentComponent,
-  ],
-  entryComponents: [
-    AddPaperComponent
   ],
   imports: [
-    AnswersModule,
-CourseModule,
+    CourseModule,
+    PaperModule,
+    ExamModule,
+    QuestionModule,
 
     BrowserModule,
     CoreModule,

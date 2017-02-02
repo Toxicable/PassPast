@@ -4,10 +4,9 @@ import { CourseService } from '../course.service';
 import { AlertService } from '../../core';
 import { Store } from '@ngrx/store';
 import { FormValidators } from 'angular-validators';
-import { AngularFire } from 'angularfire2';
 
 @Component({
-  selector: 'add-course',
+  selector: 'app-add-course',
   templateUrl: './add-course.component.html'
 })
 export class AddCourseComponent implements OnInit {
@@ -15,7 +14,6 @@ export class AddCourseComponent implements OnInit {
     private formBuilder: FormBuilder,
     private courses: CourseService,
     private alert: AlertService,
-    private af: AngularFire,
   ) { }
 
   newCourseForm: FormGroup
@@ -28,8 +26,6 @@ export class AddCourseComponent implements OnInit {
   }
 
   onSubmit() {
-    this.af.database.list('/courses').push(this.newCourseForm.value)
-    //this.store.dispatch(this.courseActions.add(this.newCourseForm.value))
-
+    this.courses.create(this.newCourseForm.value);
   }
 }

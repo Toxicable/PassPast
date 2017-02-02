@@ -1,5 +1,5 @@
-import { User } from '../../+admin/models/user';
+
 export interface Vote{
-    id: number;
+    $key: string;
     value: number;
 }

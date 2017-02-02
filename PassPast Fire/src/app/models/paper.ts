@@ -1,7 +1,7 @@
 import { Course } from './course';
 import { Exam } from './exam';
 export interface Paper{
-    id: number;
+    $key: string;
     name: string;
     courseId: number;
 }

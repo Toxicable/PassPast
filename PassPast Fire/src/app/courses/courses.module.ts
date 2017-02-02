@@ -10,6 +10,9 @@ import { RouterModule } from '@angular/router';
     SharedModule,
     RouterModule.forChild([])
   ],
+  entryComponents: [
+    AddCourseComponent
+  ],
   declarations: [
     AddCourseComponent,
     CoursesComponent,
