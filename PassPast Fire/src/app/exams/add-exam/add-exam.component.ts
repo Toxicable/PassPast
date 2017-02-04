@@ -1,7 +1,8 @@
+import { ActivatedRoute } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators, FormGroup, FormArray } from '@angular/forms';
 import { ExamService } from '../exam.service';
-import { Store } from '@ngrx/store';
+
 import { Exam } from '../../models/exam';
 import { QuestionService } from '../../questions/question.service';
 import { AlertService } from '../../core';
@@ -18,11 +19,12 @@ export class AddExamComponent implements OnInit {
     private exams: ExamService,
     private alert: AlertService,
     private questions: QuestionService,
+    private route: ActivatedRoute,
     private af: AngularFire,
   ) { }
 
   newExamForm: FormGroup
-  paperId: string;
+  paperKey: string;
 
   ngOnInit(): void {
     this.newExamForm = this.formBuilder.group({
@@ -32,6 +34,10 @@ export class AddExamComponent implements OnInit {
         this.newSection()
       ])
     });
+  }
+
+  reset(){
+    this.newExamForm.reset();
   }
 
   addSection() {
@@ -48,7 +54,7 @@ export class AddExamComponent implements OnInit {
 
   newSection() {
     return this.formBuilder.group({
-      incrimentationScheme: ['', FormValidators.required],
+      incrimentType: ['', FormValidators.required],
       count: ['', FormValidators.required],
       type: ['', FormValidators.required],
       subQuestions: this.formBuilder.array([])
@@ -61,8 +67,6 @@ export class AddExamComponent implements OnInit {
   }
 
   onSubmit() {
-   // const exam =
-   // this.af.database.list('/exams').push()
-    //this.store.dispatch(this.examActions.add(this.newExamForm.value));
+    this.exams.create(this.newExamForm.value, this.paperKey);
   }
 }

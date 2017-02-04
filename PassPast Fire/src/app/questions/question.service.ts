@@ -1,24 +1,34 @@
+import { Subject } from 'rxjs/Subject';
+import { AngularFire } from 'angularfire2';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
-import { Store } from '@ngrx/store';
+
 import { Question } from '../models/question';
 
 @Injectable()
 export class QuestionService {
-    constructor(
 
-    ) { }
+  questions$: Observable<Question[]>;
+  private selectedExamKey: Subject<string>;
 
-    getRelatedQuestions(examId: number) {
-       // return this.authHttp.get(`/exams/${examId}/questions`)
-    }
+  constructor(
+    private af: AngularFire,
+  ) {
 
-    // todo: make this a proper model
-    create(course: any){
-        // return this.authHttp.post('/questions', course)
-        //     .do((newCourse: Question) => {
-        //         // let action = new courseActions.AddAction(newCourse);
-        //         // this.store.dispatch(action);
-        //     });
-    }
+    this.questions$ = this.af.database.list('/questions', {
+      query: {
+        orderByChild: 'examKey',
+        equalTo: this.selectedExamKey
+      }
+    });
+   }
+
+   selectExam(examKey: string){
+     this.selectedExamKey.next(examKey);
+   }
+
+  getRelatedQuestions(examId: number) {
+    // return this.authHttp.get(`/exams/${examId}/questions`)
+  }
+
 }

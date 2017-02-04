@@ -1,6 +1,5 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { AlertService } from './core';
-import { Store } from '@ngrx/store';
 import { Router, NavigationEnd } from '@angular/router';
 import { Observable } from 'rxjs/Observable';
 import { Title } from '@angular/platform-browser';
@@ -8,7 +7,6 @@ import { Title } from '@angular/platform-browser';
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css']
 })
 export class AppComponent {
 
@@ -19,6 +17,7 @@ export class AppComponent {
   ) { }
 
   ngOnInit(): void {
+
     // const defaultTitle = 'Pass Past';
     // Observable.combineLatest(
     //   this.store.select(state => state.courses.course.selected),

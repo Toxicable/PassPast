@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { PaperService } from '../paper.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Store } from '@ngrx/store';
+
 import { Observable } from 'rxjs/Observable';
 import { AlertService } from '../../core';
 import { ActivatedRoute } from '@angular/router';
@@ -15,7 +15,7 @@ import { AngularFire } from 'angularfire2';
 export class AddPaperComponent implements OnInit {
   loggedIn$: Observable<boolean>;
   newPaperForm: FormGroup
-  courseId: string;
+  courseKey: string;
   constructor(
     private papers: PaperService,
     private alert: AlertService,
@@ -32,12 +32,8 @@ export class AddPaperComponent implements OnInit {
   }
 
   onSubmit() {
-    debugger
-    let courseId = this.route.snapshot.params['courseId']
-    let paper =
-      Object.assign(this.newPaperForm.value,
-      {courseId: this.courseId})
-    this.af.database.list('/papers').push(paper)
+
+      this.papers.create(this.newPaperForm.value, this.courseKey);
     //this.store.dispatch(this.paperActions.add(this.newPaperForm.value))
   }
 }

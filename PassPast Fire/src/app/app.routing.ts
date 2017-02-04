@@ -16,19 +16,19 @@ const appRoutes: Routes = [
         component: CoursesComponent,
     },
     {
-        path: ':courseId',
+        path: ':courseKey',
         component: PapersComponent,
     },
     {
-        path: ':courseId/:paperId',
+        path: ':courseKey/:paperKey',
         component: ExamsComponent,
     },
     {
-        path: ':courseId/:paperId/add-exam',
+        path: ':courseKey/:paperKey/add-exam',
         component: AddExamComponent,
     },
     {
-        path: ':courseId/:paperId/:examId',
+        path: ':courseKey/:paperKey/:examKey',
         component: QuestionsComponent,
     },
     {

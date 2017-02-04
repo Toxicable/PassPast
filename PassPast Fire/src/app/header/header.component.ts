@@ -2,7 +2,7 @@ import { AuthProviders } from 'angularfire2';
 import { AuthService } from './../core';
 import { Component, OnInit } from '@angular/core';
 import { AppState } from '../app-store';
-import { Store } from '@ngrx/store';
+
 import { Observable } from 'rxjs/Observable';
 import { Course } from '../models/course';
 import { Paper } from '../models/paper';
@@ -41,5 +41,8 @@ export class HeaderComponent implements OnInit {
   }
   loginGoogle(){
     this.auth.login(AuthProviders.Google);
+  }
+  loginFacebook(){
+    this.auth.login(AuthProviders.Facebook);
   }
 }

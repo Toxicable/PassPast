@@ -6,10 +6,9 @@ import { ActivatedRoute } from '@angular/router';
 import { AlertService } from '../../core';
 import { MdDialogRef, MdDialog } from '@angular/material';
 import { AddPaperComponent } from './../add-paper/add-paper.component';
-import { Store } from '@ngrx/store';
+
 import { trackByIdentity } from '../../utilities/track-by-id';
 import { Router } from '@angular/router';
-import { AngularFire } from 'angularfire2';
 
 @Component({
   selector: 'app-papers',
@@ -20,31 +19,25 @@ export class PapersComponent implements OnInit {
   papers$: Observable<Paper[]>;
   trackByFn = trackByIdentity;
   loggedIn$: Observable<boolean>;
-  noPapers$: Observable<boolean>;
 
   constructor(
     private papers: PaperService,
     private alert: AlertService,
     private route: ActivatedRoute,
     private dialog: MdDialog,
-    private af: AngularFire,
     private router: Router,
   ) { }
 
   ngOnInit() {
-    this.papers$ = this.af.database.list('/papers', {
-      query: {
-        orderByChild: 'courseId',
-        equalTo: this.route.snapshot.params['courseId'],
-      }
-    });
+    this.papers$ = this.papers.papers$;
+    this.papers.selectCourse(this.route.snapshot.params['courseKey']);
   }
 
   openNewPaperDialog() {
     this.newPaperDialogRef = this.dialog.open(AddPaperComponent, {
       disableClose: false
     });
-    this.newPaperDialogRef.componentInstance.courseId = this.route.snapshot.params['courseId'];
+    this.newPaperDialogRef.componentInstance.courseKey = this.route.snapshot.params['courseKey'];
 
     this.newPaperDialogRef.afterClosed()
       .subscribe(result => {

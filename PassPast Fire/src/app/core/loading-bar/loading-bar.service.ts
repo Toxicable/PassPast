@@ -1,22 +1,26 @@
+import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable } from 'rxjs/Observable';
 import { AppState } from '../../app-store';
-import { Store } from '@ngrx/store';
-import { LoadingBarActions } from './loading-bar.actions';
+
 
 @Injectable()
 export class LoadingBarService {
-  constructor(
+  private isLoading:BehaviorSubject<boolean>;
+  isLoading$: Observable<boolean>;
 
-    private loadingBarActions: LoadingBarActions,
-  ) { }
+  constructor(
+  ) {
+    this.isLoading = new BehaviorSubject<boolean>(false);
+    this.isLoading$ = this.isLoading.asObservable();
+  }
 
   load() {
-   // this.store.dispatch(LoadingBarActions.start());
+    this.isLoading.next(true);
   }
 
   done() {
-   // this.store.dispatch(LoadingBarActions.done());
+    this.isLoading.next(false);
   }
 
   doWithLoader<T>(task: Observable<T>): Observable<T> {
@@ -24,6 +28,6 @@ export class LoadingBarService {
       .of(true)
       .do(() => this.load())
       .flatMap(() => task)
-      .finally( () => this.done());
+      .finally(() => this.done());
   }
 }

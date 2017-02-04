@@ -15,7 +15,7 @@
     <av-validation-messages [control]="newExamForm.controls.semester"></av-validation-messages>
   </div>
 
-  <button md-button (click)="newExamForm.reset()" type="button">Reset</button>
+  <button md-button (click)="reset()" type="button">Reset</button>
   <button md-button (click)="addSection()" type="button">+ Add Section</button>
   <ul>
     <li *ngFor="let section of newExamForm.controls.sections.controls; let i=index">

@@ -4,7 +4,7 @@
 <!--main content toggle-->
 <div *ngIf="showContent">
   <!--Answers-->
-  <div *ngFor="let answer of answers | async | orderByDate: 'createdAt'">
+  <div *ngFor="let answer of answers | async">
     <!--MCQ-->
     <div *ngIf="_question.type == 'Mcq'">
       <app-answer-mcq [totalAnswerVotes]="totalAnswerVotes" [answer]="answer" [loggedIn]="loggedIn$ | async"></app-answer-mcq>
@@ -18,17 +18,17 @@
   </div>
 
   <!--makes sure this the is bottom level question-->
-  <span *ngIf="_question.subQuestions.length == 0 ">
+  <span *ngIf="!_question.subQuestions">
     <!--New Answer-->
     <span *ngIf="_question.type == 'Short'">
-      <app-new-answer [questionId]="_question.id" [loggedIn]="loggedIn$ | async"></app-new-answer>
+      <app-new-answer [questionId]="_question.$key" [loggedIn]="loggedIn$ | async"></app-new-answer>
     </span>
     <button (click)="showComments = !showComments">{{showComments ? 'Hide' : 'Show'}} comments</button>
 
     <!--Comments-->
     <span *ngIf="showComments">
       <!--New Comment-->
-      <app-new-comment [questionId]="_question.id" [loggedIn]="loggedIn$ | async" ></app-new-comment>
+      <app-new-comment [questionId]="_question.$key" [loggedIn]="loggedIn$ | async" ></app-new-comment>
 
       <div *ngFor="let comment of comments | async ">
         <app-comment [comment]="comment" [loggedIn]="loggedIn$ | async"></app-comment>

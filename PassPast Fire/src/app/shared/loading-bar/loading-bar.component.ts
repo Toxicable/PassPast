@@ -1,3 +1,4 @@
+import { LoadingBarService } from './../../core/loading-bar/loading-bar.service';
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 
@@ -14,12 +15,12 @@ export class LoadingBarComponent implements OnInit {
   loading$: Observable<boolean>;
 
   constructor(
-
+    private loadingBar: LoadingBarService
   ) { }
 
 
   ngOnInit(): void {
-   // this.loading$ = this.store.select(state => state.loading);
+    this.loading$ = this.loadingBar.isLoading$;
   }
 }
 

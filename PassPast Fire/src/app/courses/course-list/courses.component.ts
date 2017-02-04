@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { CourseService } from './../course.service';
 import { Observable } from 'rxjs/Observable';
 import { Course } from '../../models/course';
-import { Store } from '@ngrx/store';
+
 import { AlertService } from '../../core';
 import { MdDialogRef, MdDialog } from '@angular/material';
 import { AddCourseComponent } from './../add-course/add-course.component';
@@ -27,8 +27,7 @@ export class CoursesComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.courses$ = this.af.database.list('courses');
-    this.courses$ = this.courses.getCourses();
+    this.courses$ = this.courses.courses$;
   }
 
   openDialog() {

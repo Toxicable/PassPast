@@ -6,13 +6,11 @@ import { LoadingBarComponent } from './loading-bar/loading-bar.component';
 import { DefaultValuePipe } from './pipes/default-value/default-value.pipe';
 import { MaterialModule } from '@angular/material';
 import { MarkdownComponent } from './markdown/markdown.component';
-import { OrderByDatePipe } from './pipes/order-by-date/order-by-date.pipe';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { ValidationMessagesModule } from 'angular-validators';
 
 const DECLARATIONS = [
   DefaultValuePipe,
-  OrderByDatePipe,
   LoadingBarComponent,
   MarkdownComponent,
 ];

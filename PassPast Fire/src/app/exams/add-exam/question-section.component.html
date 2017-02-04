@@ -1,7 +1,5 @@
 <div [formGroup]="sectionForm" class="new-question-section-form">
   <div>
-    <md-input></md-input>
-
     <md-input-container>
       <input md-input placeholder="Count" formControlName="count">
     </md-input-container>
@@ -12,20 +10,20 @@
     <div>
       Question Type:
       <md-button-toggle-group formControlName="type">
-        <md-button-toggle [checked]="true" value="Mcq">Mcq</md-button-toggle>
-        <md-button-toggle value="Short">Short Answer</md-button-toggle>
+        <md-button-toggle value="mcq">Mcq</md-button-toggle>
+        <md-button-toggle value="short">Short Answer</md-button-toggle>
       </md-button-toggle-group>
       <av-validation-messages [control]="sectionForm.controls.type"></av-validation-messages>
 
     </div>
     <div>
       Numbering?:
-      <md-button-toggle-group formControlName="incrimentationScheme">
-        <md-button-toggle [checked]="true" value="Numbered">Numbered: 1, 2, 3</md-button-toggle>
-        <md-button-toggle value="RomanNumerals">Roman Numerals: i, ii, iii</md-button-toggle>
-        <md-button-toggle value="Alphabetical">Alphabedical: a, b, c</md-button-toggle>
+      <md-button-toggle-group formControlName="incrimentType">
+        <md-button-toggle value="numbered">Numbered: 1, 2, 3</md-button-toggle>
+        <md-button-toggle value="roman">Roman Numerals: i, ii, iii</md-button-toggle>
+        <md-button-toggle value="alpha">Alphabedical: a, b, c</md-button-toggle>
       </md-button-toggle-group>
-      <av-validation-messages [control]="sectionForm.controls.incrimentationScheme"></av-validation-messages>
+      <av-validation-messages [control]="sectionForm.controls.incrimentType"></av-validation-messages>
     </div>
 
     <button md-button (click)="addSubQuestion(i)" type="button">+ Add Sub Question</button>

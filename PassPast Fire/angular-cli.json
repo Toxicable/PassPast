@@ -1,6 +1,6 @@
 {
   "project": {
-    "version": "1.0.0-beta.28.3",
+    "version": "1.0.0-beta.30",
     "name": "pass-past"
   },
   "apps": [
@@ -8,7 +8,8 @@
       "root": "src",
       "outDir": "dist",
       "assets": [
-        "assets"
+        "assets",
+        "assets/favicon.png"
       ],
       "index": "index.html",
       "main": "main.ts",

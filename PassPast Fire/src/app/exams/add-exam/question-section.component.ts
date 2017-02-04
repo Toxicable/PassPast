@@ -14,7 +14,7 @@ export class QuestionSectionComponent{
 
     newSection(){
         return this.formBuilder.group({
-                        incrimentationScheme: ['', Validators.required],
+                        incrimentType: ['', Validators.required],
                         count: ['', Validators.required],
                         type: ['', Validators.required],
                         subQuestions: this.formBuilder.array([])

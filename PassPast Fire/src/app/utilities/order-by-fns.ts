@@ -1,5 +1,6 @@
 export function orderByAlpha<T>(array: T[], fieldName) {
-  return array.sort((a, b) => {
+ return array === null ? null :
+    array.sort((a, b) => {
     if (a[fieldName] < b[fieldName]) {
       return -1;
     }
@@ -12,7 +13,8 @@ export function orderByAlpha<T>(array: T[], fieldName) {
 
 
 export function orderByDate<T>(array: T[], fieldName) {
-   return array.sort((a: T, b: T) => {
+ return array === null ? null :
+    array.sort((a: T, b: T) => {
       const aDate = new Date(a[fieldName]);
       const bDate = new Date(b[fieldName]);
       if (aDate > bDate) {

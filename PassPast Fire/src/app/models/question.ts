@@ -1,14 +1,13 @@
 import { Answer } from './answer';
-import { Comment } from './comment';
-
+import { QuestionType } from './question-type';
+import { IncrimentType } from './incriment-types';
 export interface Question {
-    $key: string;
-    examId: number;
-    incriment: string;
-    parentQuestionId: number;
-    type: string;
+    $key?: string;
+    examKey: string;
+    incriment: 'alpha' | 'numbered' | 'roman';
     answers: Answer[];
-    comments: Comment[]
     subQuestions: Question[];
-    totalAnswerVotes: number;
+    type: 'mcq' | 'short';
+    createdAt: string;
+    createdBy: string;
 }

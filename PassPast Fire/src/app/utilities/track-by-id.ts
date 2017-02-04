@@ -1,3 +1,3 @@
 export function trackByIdentity(index: number, item: any){
-  return item['id'];
+  return item['$key'];
 }

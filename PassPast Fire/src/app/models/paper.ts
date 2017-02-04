@@ -1,7 +1,7 @@
-import { Course } from './course';
-import { Exam } from './exam';
-export interface Paper{
-    $key: string;
-    name: string;
-    courseId: number;
+export interface Paper {
+  $key: string;
+  name: string;
+  courseKey: string;
+  createdAt: string;
+  createdBy: string;
 }

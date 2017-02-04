@@ -1,8 +1,9 @@
+import { AuthService } from './../../core/auth.service';
 import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { Exam } from '../../models/exam';
 import { ExamService } from './../exam.service';
-import { Store } from '@ngrx/store';
+
 import { AddExamComponent } from './../add-exam/add-exam.component';
 import { MdDialog, MdDialogRef } from '@angular/material';
 import { trackByIdentity } from '../../utilities/track-by-id';
@@ -25,31 +26,19 @@ export class ExamsComponent implements OnInit {
     private dialog: MdDialog,
     private af: AngularFire,
     private route: ActivatedRoute,
+    private auth: AuthService,
   ) { }
 
   ngOnInit() {
-
-    this.exams$ = this.af.database.list('/exams', {
-      query: {
-        orderByChild: 'paperId',
-        equalTo: this.route.snapshot.params['paperId'],
-      }
-    });
-
-    // this.exams$ = this.store.select(state => state.courses.exam.entities);
-    // this.loggedIn$ = this.oidc.loggedIn$;
-
-    // this.noExams$ = this.store.select(state => state.loading)
-    //   .flatMap(loading => this.exams$
-    //     .map(papers => papers.length)
-    //     .map(length => length === 0 && !loading)
-    //   );
+    this.loggedIn$ = this.auth.loggedIn$;
+    this.exams$ = this.exams.exams$;
+    this.exams.selectPaper(this.route.snapshot.params['paperKey']);
   }
   openNewExamDialog() {
     this.newExamDialogRef = this.dialog.open(AddExamComponent, {
       disableClose: false
     });
-
+    this.newExamDialogRef.componentInstance.paperKey = this.route.snapshot.params['paperKey'];
     this.newExamDialogRef.afterClosed().subscribe(result => {
       this.newExamDialogRef = null;
     });

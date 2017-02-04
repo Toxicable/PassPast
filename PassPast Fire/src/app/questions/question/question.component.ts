@@ -3,8 +3,7 @@ import { Question } from '../../models/question';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { Observable } from 'rxjs/Observable';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
-import { Store } from '@ngrx/store';
-import { NormQuestion } from '../../models/norm-question';
+
 import { Answer } from '../../models/answer';
 import { Comment } from '../../models/comment';
 import { trackByIdentity } from '../../utilities';
@@ -20,18 +19,18 @@ export class QuestionComponent implements OnInit {
   showComments: boolean = false;
   trackByFn = trackByIdentity;
   showContent = true;
-  _question: NormQuestion;
-  subQuestions: Observable<NormQuestion[]>;
+  _question: Question;
+  subQuestions: Observable<Question[]>;
   answers: Observable<Answer[]>;
   comments: Observable<Comment[]>;
-  question$: BehaviorSubject<NormQuestion> = new BehaviorSubject<NormQuestion>(null);
+  question$: BehaviorSubject<Question> = new BehaviorSubject<Question>(null);
   loggedIn$: Observable<boolean>;
 
   constructor(
   ) { }
 
   @Input()
-  set question(question: NormQuestion) {
+  set question(question: Question) {
     this.question$.next(question);
     this._question = question;
   }

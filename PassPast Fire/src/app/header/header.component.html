@@ -37,7 +37,8 @@
 
       <span *ngIf="!(loggedIn$ | async)">
         <a  class="header-navigation__link" [routerLink]="['/auth/login']">Login</a>
-        <a (click)="loginGoogle()">Google Login</a>
+        <a (click)="loginGoogle()">Google</a>
+        <a (click)="loginFacebook()">Facebook</a>
       </span>
 
     </span>

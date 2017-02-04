@@ -8,12 +8,11 @@
   <a class="header-navigation__link" [routerLink]="['/courses', 1, 2, 'add-exam']" routerLinkActive="active-router-link">Add Exam</a>
 </div>
 
-<div *ngIf="noExams$ | async">
+<div *ngIf="(exams$ | async)?.length == 0">
   There are no Exams for this Paper
 </div>
-
 <div fxLayout="row" fxLayoutWrap="wrap">
-  <md-card *ngFor="let exam of exams$ | async; trackBy: trackByFn" [routerLink]="exam.id" class="can-click highlight-background" >
+  <md-card *ngFor="let exam of exams$ | async; trackBy: trackByFn" [routerLink]="exam.$key" class="can-click highlight-background" >
     <md-card-title>{{exam.year}}</md-card-title>
     <md-card-subtitle>Semester: {{exam.semester}}</md-card-subtitle>
   </md-card>
