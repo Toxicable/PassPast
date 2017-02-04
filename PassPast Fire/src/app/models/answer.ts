@@ -3,6 +3,7 @@ export interface Answer {
     contentOrIncriment: string;
     voteValue: number;
     votesSum: number;
+    questionKey?: string;
     createdAt: string;
     createdBy: string;
 }

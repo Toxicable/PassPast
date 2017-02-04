@@ -1,43 +1,45 @@
 <md-card-title (click)="showContent=!showContent" class="can-click highlight-background">
-  {{_question.incriment}} <md-icon *ngIf="!showContent">expand_more</md-icon><md-icon *ngIf="showContent">expand_less</md-icon>
+  {{question.incriment}} <md-icon *ngIf="!showContent">expand_more</md-icon><md-icon *ngIf="showContent">expand_less</md-icon>
 </md-card-title>
+
 <!--main content toggle-->
 <div *ngIf="showContent">
   <!--Answers-->
-  <div *ngFor="let answer of answers | async">
+  <div *ngFor="let answer of answers$ | async">
     <!--MCQ-->
-    <div *ngIf="_question.type == 'Mcq'">
-      <app-answer-mcq [totalAnswerVotes]="totalAnswerVotes" [answer]="answer" [loggedIn]="loggedIn$ | async"></app-answer-mcq>
+    <div *ngIf="question.type == 'mcq'">
+      <app-answer-mcq [totalAnswerVotes]="answerVoteSum" [answer]="answer" [loggedIn]="loggedIn"></app-answer-mcq>
     </div>
 
     <!--Short -->
-    <div *ngIf="_question.type == 'Short'">
-      <app-answer-short [answer]="answer" [loggedIn]="loggedIn$ | async"></app-answer-short>
+    <div *ngIf="question.type == 'short'">
+      <app-answer-short [answer]="answer" [loggedIn]="loggedIn"></app-answer-short>
     </div>
 
   </div>
 
   <!--makes sure this the is bottom level question-->
-  <span *ngIf="!_question.subQuestions">
+  <span *ngIf="(subQuestions$ | async)?.length === 0">
     <!--New Answer-->
-    <span *ngIf="_question.type == 'Short'">
-      <app-new-answer [questionId]="_question.$key" [loggedIn]="loggedIn$ | async"></app-new-answer>
+    <span *ngIf="question.type == 'short'">
+      <app-new-answer [questionKey]="question.$key" [loggedIn]="loggedIn"></app-new-answer>
     </span>
-    <button (click)="showComments = !showComments">{{showComments ? 'Hide' : 'Show'}} comments</button>
+
+    <a (click)="showComments = !showComments">{{showComments ? 'Hide' : 'Show'}} comments</a>
 
     <!--Comments-->
     <span *ngIf="showComments">
       <!--New Comment-->
-      <app-new-comment [questionId]="_question.$key" [loggedIn]="loggedIn$ | async" ></app-new-comment>
+      <app-new-comment [questionKey]="question.$key" [loggedIn]="loggedIn" ></app-new-comment>
 
-      <div *ngFor="let comment of comments | async ">
-        <app-comment [comment]="comment" [loggedIn]="loggedIn$ | async"></app-comment>
+      <div *ngFor="let comment of comments$ | async">
+        <app-comment [comment]="comment" [loggedIn]="loggedIn"></app-comment>
       </div>
     </span>
 
   </span>
 
-  <md-card *ngFor="let subQuestion of (subQuestions | async); trackBy: trackByFn">
-    <app-question [question]="subQuestion"></app-question>
+  <md-card *ngFor="let subQuestion of subQuestions$ | async; trackBy: trackByFn">
+    <app-question [question]="subQuestion" [loggedIn]="loggedIn"></app-question>
   </md-card>
 </div>

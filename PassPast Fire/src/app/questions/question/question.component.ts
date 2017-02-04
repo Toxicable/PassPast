@@ -1,3 +1,7 @@
+import { CommentService } from './../comments/comment.service';
+import { AnswerService } from './../answers/answer.service';
+import { QuestionService } from './../question.service';
+import { AngularFire } from 'angularfire2';
 import { Component, OnInit, Input, ChangeDetectionStrategy, } from '@angular/core';
 import { Question } from '../../models/question';
 import { FormBuilder, FormGroup } from '@angular/forms';
@@ -15,55 +19,30 @@ import { orderByAlpha, orderByDate } from '../../utilities/order-by-fns';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class QuestionComponent implements OnInit {
-  totalAnswerVotes: number = 0;
-  showComments: boolean = false;
   trackByFn = trackByIdentity;
+  showComments = false;
   showContent = true;
-  _question: Question;
-  subQuestions: Observable<Question[]>;
-  answers: Observable<Answer[]>;
-  comments: Observable<Comment[]>;
-  question$: BehaviorSubject<Question> = new BehaviorSubject<Question>(null);
-  loggedIn$: Observable<boolean>;
+  answerVoteSum: number;
+  comments$: Observable<Comment[]>;
+  answers$: Observable<Answer[]>;
+  subQuestions$: Observable<Question[]>;
 
   constructor(
+    private af: AngularFire,
+    private questions: QuestionService,
+    private answers: AnswerService,
+    private comments: CommentService,
   ) { }
 
-  @Input()
-  set question(question: Question) {
-    this.question$.next(question);
-    this._question = question;
-  }
+  @Input() loggedIn: boolean;
+  @Input() question: Question;
 
   ngOnInit() {
-    //this.loggedIn$ = this.oidc.loggedIn$;
+    this.subQuestions$ = this.questions.questions$
+    .map(questions => questions.filter(q => q.parentKey === this.question.$key))
 
-    // const question$ = this.question$.filter(q => !!q);
-    // this.subQuestions = Observable.combineLatest(
-    //   this.store.select(state => state.courses.question.entities),
-    //   question$,
-    //   (entities, question) => getQuestions(question.subQuestions, entities)
-    // );
-
-    // this.answers = Observable.combineLatest(
-    //   this.store.select(state => state.courses.answer.entities),
-    //   this.question$,
-    //   (answers, question) => {
-    //     return answers.filter(a => a.questionId === question.id)
-    //   }
-    // )
-    //   .map(answers => orderByAlpha(answers, 'contentOrIncriment'))
-    //   .do(answers => {
-    //     this.totalAnswerVotes = answers
-    //       .map(a => a.votesSum)
-    //       .reduce((previousVote, currentVote) => previousVote + currentVote, 0);
-    //   });
-
-    // this.comments = Observable.combineLatest(
-    //   this.store.select(state => state.courses.comment.entities),
-    //   this.question$,
-    //   (comments, question) => comments.filter(c => c.questionId === question.id)
-    // ).map(comments => orderByDate(comments, 'createdAt'));
-
+    this.answers$ = this.answers.getAnswers(this.question.$key);
+    //this.answers$.map(answers => answers.reduce((a, b) => a.))
+    this.comments$ = this.comments.getComments(this.question.$key);
   }
 }

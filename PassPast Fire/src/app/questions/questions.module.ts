@@ -1,3 +1,5 @@
+import { CommentService } from './comments/comment.service';
+import { AnswerService } from './answers/answer.service';
 import { RouterModule } from '@angular/router';
 import { NgModule } from '@angular/core';
 import { NewCommentComponent } from './comments/new-comment/new-comment.component';
@@ -23,7 +25,9 @@ import { AnswerShortComponent } from './answers/answer/answer-short.component';
     NewCommentComponent,
   ],
   providers: [
-    QuestionService
+    QuestionService,
+    AnswerService,
+    CommentService,
   ],
   imports: [
     SharedModule,

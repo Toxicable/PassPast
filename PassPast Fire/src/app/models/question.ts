@@ -1,6 +1,4 @@
 import { Answer } from './answer';
-import { QuestionType } from './question-type';
-import { IncrimentType } from './incriment-types';
 export interface Question {
     $key?: string;
     examKey: string;
@@ -8,6 +6,7 @@ export interface Question {
     answers: Answer[];
     subQuestions: Question[];
     type: 'mcq' | 'short';
+    parentKey?: string;
     createdAt: string;
     createdBy: string;
 }

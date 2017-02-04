@@ -1,3 +1,4 @@
+import { AuthService } from './../../core/auth.service';
 import { Component, OnInit, ViewEncapsulation, ChangeDetectionStrategy } from '@angular/core';
 
 import { QuestionService } from '../question.service';
@@ -14,14 +15,16 @@ import { trackByIdentity } from '../../utilities';
 export class QuestionsComponent implements OnInit {
   questions$: Observable<Question[]>;
   trackByFn = trackByIdentity;
+  loggedIn$: Observable<boolean>;
 
   constructor(
     private questions: QuestionService,
-  ) { }
+    private auth: AuthService,
+  ) {
+    this.loggedIn$ = this.auth.loggedIn$;
+   }
 
   ngOnInit() {
-    this.questions$ = this.questions.questions$;
-    // this.questions$ = this.store.select(state => state.courses.question)
-    //   .map(q => getQuestions(q.selected, q.entities ))
+    this.questions$ = this.questions.questions$.map(questions => questions.filter(q => q.parentKey === ''));
   }
 }

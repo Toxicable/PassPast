@@ -1,3 +1,4 @@
+import { AnswerService } from './../answer.service';
 import { Component, OnInit, ChangeDetectionStrategy, Input } from '@angular/core';
 import { FormGroup, FormBuilder } from '@angular/forms';
 
@@ -7,12 +8,13 @@ import { FormGroup, FormBuilder } from '@angular/forms';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class NewAnswerComponent implements OnInit {
-  @Input() questionId: number;
+  @Input() questionKey: string;
   @Input() loggedIn: boolean;
   newAnswerForm: FormGroup;
 
   constructor(
     private formBuilder: FormBuilder,
+    private answers: AnswerService,
   ) { }
 
   ngOnInit() {
@@ -22,7 +24,7 @@ export class NewAnswerComponent implements OnInit {
   }
 
   sendAnswer() {
-    //this.examHub.postAnswer(this.questionId, this.newAnswerForm.value['content'])
+    this.answers.create(this.newAnswerForm.value, this.questionKey);
     this.newAnswerForm.reset();
   }
 }

@@ -17,11 +17,11 @@
 
     </div>
     <div>
-      Numbering?:
+      Numbering:
       <md-button-toggle-group formControlName="incrimentType">
-        <md-button-toggle value="numbered">Numbered: 1, 2, 3</md-button-toggle>
-        <md-button-toggle value="roman">Roman Numerals: i, ii, iii</md-button-toggle>
-        <md-button-toggle value="alpha">Alphabedical: a, b, c</md-button-toggle>
+        <md-button-toggle value="numbered">1, 2, 3</md-button-toggle>
+        <md-button-toggle value="alpha">a, b, c</md-button-toggle>
+        <md-button-toggle value="roman">i, ii, iii</md-button-toggle>
       </md-button-toggle-group>
       <av-validation-messages [control]="sectionForm.controls.incrimentType"></av-validation-messages>
     </div>

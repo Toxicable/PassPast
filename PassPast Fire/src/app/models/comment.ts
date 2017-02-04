@@ -1,6 +1,6 @@
 export interface Comment {
-    $key: string;
-    questionKey: number;
+    $key?: string;
+    questionKey: string;
     content: string;
     voteValue: number;
     votesSum: number;

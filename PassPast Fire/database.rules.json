@@ -3,25 +3,33 @@
     ".read": true,
     ".write": "auth != null",
     "courses": {
-      ".validate": "newData.hasChildren(['code', 'name', 'createdBy', 'createdAt'])"
     },
     "papers": {
       ".indexOn": [
         "courseKey"
-      ],
-      ".validate": "newData.hasChildren(['name', 'courseKey', 'createdBy', 'createdAt'])"
+      ]
     },
     "exams": {
       ".indexOn": [
         "paperKey"
-      ],
-      ".validate": "newData.hasChildren(['year', 'semester', 'paperKey','createdBy', 'createdAt'])"
+      ]
+
     },
     "questions": {
       ".indexOn": [
         "examKey"
-      ],
-      ".validate": "newData.hasChildren(['incriment', 'type', 'examKey', 'createdBy', 'createdAt'])"
+      ]
+
+    },
+    "comments": {
+      ".indexOn": [
+        "questionKey"
+      ]
+    },
+    "answers": {
+      ".indexOn": [
+        "questionKey"
+      ]
     }
   }
 }

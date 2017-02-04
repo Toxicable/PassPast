@@ -6,6 +6,4 @@ export { Paper } from './paper';
 export { Exam } from './exam';
 export { Comment } from './comment';
 export { Answer } from './answer';
-export { IncrimentType } from './incriment-types';
-export { QuestionType } from './question-type';
 export { SemesterType } from './semester-type';
