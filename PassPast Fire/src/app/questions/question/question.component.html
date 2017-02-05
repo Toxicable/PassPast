@@ -8,7 +8,7 @@
   <div *ngFor="let answer of answers$ | async">
     <!--MCQ-->
     <div *ngIf="question.type == 'mcq'">
-      <app-answer-mcq [totalAnswerVotes]="answerVoteSum" [answer]="answer" [loggedIn]="loggedIn"></app-answer-mcq>
+      <app-answer-mcq [totalAnswerVotes]="answerVoteSum | async" [answer]="answer" [loggedIn]="loggedIn"></app-answer-mcq>
     </div>
 
     <!--Short -->

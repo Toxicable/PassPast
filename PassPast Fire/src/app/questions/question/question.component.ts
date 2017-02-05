@@ -1,3 +1,4 @@
+import { VoteService } from './../votes/vote.service';
 import { CommentService } from './../comments/comment.service';
 import { AnswerService } from './../answers/answer.service';
 import { QuestionService } from './../question.service';
@@ -7,22 +8,23 @@ import { Question } from '../../models/question';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { Observable } from 'rxjs/Observable';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
-
-import { Answer } from '../../models/answer';
-import { Comment } from '../../models/comment';
+import { Comment, Answer } from '../../models';
 import { trackByIdentity } from '../../utilities';
 import { orderByAlpha, orderByDate } from '../../utilities/order-by-fns';
+
+import 'rxjs/add/operator/mergeMap'
+import 'rxjs/add/observable/combineLatest'
 
 @Component({
   selector: 'app-question',
   templateUrl: './question.component.html',
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.Default
 })
 export class QuestionComponent implements OnInit {
   trackByFn = trackByIdentity;
   showComments = false;
   showContent = true;
-  answerVoteSum: number;
+  answerVoteSum: Observable<number>;
   comments$: Observable<Comment[]>;
   answers$: Observable<Answer[]>;
   subQuestions$: Observable<Question[]>;
@@ -32,6 +34,7 @@ export class QuestionComponent implements OnInit {
     private questions: QuestionService,
     private answers: AnswerService,
     private comments: CommentService,
+    private votes: VoteService,
   ) { }
 
   @Input() loggedIn: boolean;
@@ -39,9 +42,18 @@ export class QuestionComponent implements OnInit {
 
   ngOnInit() {
     this.subQuestions$ = this.questions.questions$
-    .map(questions => questions.filter(q => q.parentKey === this.question.$key))
+      .map(questions => questions.filter(q => q.parentKey === this.question.$key))
 
-    this.answers$ = this.answers.getAnswers(this.question.$key);
+    this.answers$ = this.answers.getAnswers(this.question.$key)
+
+    if (this.question.type === 'mcq') {
+      this.answerVoteSum = this.answers$.flatMap(answers => {
+        const obs = answers.map(q => this.votes.getVote('answer', q.$key));
+        return Observable.combineLatest(...obs)
+          .map(votes => votes.reduce((a, b) => a + b.sum, 0))
+      });
+
+    }
     //this.answers$.map(answers => answers.reduce((a, b) => a.))
     this.comments$ = this.comments.getComments(this.question.$key);
   }

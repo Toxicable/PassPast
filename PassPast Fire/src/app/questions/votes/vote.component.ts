@@ -1,39 +1,34 @@
+import { Observable } from 'rxjs/Observable';
 import { Component, OnInit, Input, ChangeDetectionStrategy } from '@angular/core';
+import { VoteService } from './vote.service';
 
 @Component({
   selector: 'app-vote',
   templateUrl: './vote.component.html',
-    changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.Default
 })
-export class VoteComponent {
-  @Input() type: string;
-  @Input() id: number;
-  @Input() votesSum: number;
-  @Input() voteValue: number;
+export class VoteComponent implements OnInit {
+  @Input() type: 'comment' | 'answer';
+  @Input() key: string;
   @Input() loggedIn: boolean;
+  vote: Observable<{sum: number; userValue: number}>;
   constructor(
-
+    private votes: VoteService
   ) { }
+
+  ngOnInit(){
+    this.vote = this.votes.getVote(this.type, this.key)
+  }
 
   upVote() {
     if (this.loggedIn) {
-      if (this.type === 'answer') {
-      //  this.examHub.postAnswerVote(1, this.id, 'short')
-      }
-      if (this.type === 'comment') {
-      //  this.examHub.postCommentVote(1, this.id)
-      }
+      this.votes.create(1, this.type, this.key);
     }
   }
 
   downVote() {
     if (this.loggedIn) {
-      if (this.type === 'answer') {
-      //  this.examHub.postAnswerVote(-1, this.id, 'short')
-      }
-      if (this.type === 'comment') {
-     //   this.examHub.postCommentVote(-1, this.id)
-      }
+      this.votes.create(-1, this.type, this.key);
     }
   }
 }

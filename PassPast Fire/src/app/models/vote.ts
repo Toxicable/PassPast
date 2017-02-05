@@ -1,4 +1,5 @@
 export interface Vote {
-  $key: string;
-  value: number;
+  $key?: string;
+  value: 1 | -1;
+  updatedAt: string;
 }

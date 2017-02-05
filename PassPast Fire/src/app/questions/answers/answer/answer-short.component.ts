@@ -4,7 +4,7 @@ import { Answer } from '../../../models';
 @Component({
   selector: 'app-answer-short',
   templateUrl: './answer-short.component.html',
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.Default
 })
 export class AnswerShortComponent {
   @Input() answer: Answer;

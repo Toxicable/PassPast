@@ -1,9 +1,9 @@
 <span fxLayout="column">
   <span>
-    <md-icon class="can-click"  [color]="voteValue === 1 ? 'accent': ''" (click)="upVote()" >expand_less</md-icon>
+    <md-icon class="can-click"  [color]="(vote | async)?.userValue === 1 ? 'accent': ''" (click)="upVote()" >expand_less</md-icon>
   </span>
   <span  class="center-text">
-    {{votesSum}}
+    {{(vote | async)?.sum || 0}}
   </span>
-  <md-icon class="can-click"  [color]="voteValue === -1 ? 'accent': ''" (click)="downVote()">expand_more</md-icon>
+  <md-icon class="can-click"  [color]="(vote | async)?.userValue === -1 ? 'accent': ''" (click)="downVote()">expand_more</md-icon>
 </span>

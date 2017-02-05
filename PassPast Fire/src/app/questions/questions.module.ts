@@ -1,3 +1,4 @@
+import { VoteService } from './votes/vote.service';
 import { CommentService } from './comments/comment.service';
 import { AnswerService } from './answers/answer.service';
 import { RouterModule } from '@angular/router';
@@ -28,6 +29,7 @@ import { AnswerShortComponent } from './answers/answer/answer-short.component';
     QuestionService,
     AnswerService,
     CommentService,
+    VoteService,
   ],
   imports: [
     SharedModule,

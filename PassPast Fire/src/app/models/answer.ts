@@ -1,3 +1,4 @@
+import { Vote } from './vote';
 export interface Answer {
     $key?: string;
     contentOrIncriment: string;

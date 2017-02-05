@@ -27,7 +27,7 @@ export class AnswerService {
       contentOrIncriment: form.content,
       questionKey,
       voteValue: 0,
-      votesSum: 0
+      votesSum: 0,
     }
     this.af.database.list('/answers').push(answer);
   }
