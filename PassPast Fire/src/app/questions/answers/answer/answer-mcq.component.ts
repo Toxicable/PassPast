@@ -35,7 +35,7 @@ export class AnswerMcqComponent implements OnInit {
 
   sendVote() {
     if (this.loggedIn) {
-      this.votes.create(1, 'answer', this.answer.$key);
+      this.votes.create(1, 'answer', this.answer.$key, true);
     }
   }
 
