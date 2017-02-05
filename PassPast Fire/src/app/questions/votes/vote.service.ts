@@ -18,8 +18,8 @@ export class VoteService {
             .filter(voteKey => voteKey !== '$key' && voteKey !== '$exists' && voteKey !== '$value')
             .map(voteKey => votes[voteKey])
             .reduce((a, b) => a + b.value, 0)
-        }
-      })
+        };
+      });
   }
 
   create(value: 1 | -1, type: 'comment' | 'answer', key: string) {
@@ -28,17 +28,26 @@ export class VoteService {
       value: value,
       updatedAt: new Date().toISOString(),
     };
-    let object = this.af.database.object(`/votes/${type}/${key}/${userKey}`)
-    object.first()
-      .subscribe(v => {
-        if (!v.$exists()){
-          object.set(vote);
-        } else if (v.value !== vote.value) {
-          object.update(vote);
-        } else if (v.value === vote.value) {
-          object.remove();
-        }
-      })
+    const object = this.af.database.object(`/votes/${type}/${key}/${userKey}`);
+    if (type === 'comment') {
+      object.first()
+        .subscribe(v => {
+          if (!v.$exists()) {
+            object.set(vote);
+          } else if (v.value !== vote.value) {
+            object.update(vote);
+          } else if (v.value === vote.value) {
+            object.remove();
+          }
+        });
+    } else if (type === 'answer') {
+
+
+
+
+
+
+    }
   }
 
 }

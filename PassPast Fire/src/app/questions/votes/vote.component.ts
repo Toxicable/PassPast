@@ -11,13 +11,13 @@ export class VoteComponent implements OnInit {
   @Input() type: 'comment' | 'answer';
   @Input() key: string;
   @Input() loggedIn: boolean;
-  vote: Observable<{sum: number; userValue: number}>;
+  vote: Observable<{ sum: number; userValue: number }>;
   constructor(
     private votes: VoteService
   ) { }
 
-  ngOnInit(){
-    this.vote = this.votes.getVote(this.type, this.key)
+  ngOnInit() {
+    this.vote = this.votes.getVote(this.type, this.key);
   }
 
   upVote() {

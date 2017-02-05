@@ -11,15 +11,15 @@ export class CommentService {
     private af: AngularFire,
   ) { }
 
-  getComments(questionKey: string){
-   return this.af.database.list('/comments', {
+  getComments(questionKey: string) {
+    return this.af.database.list('/comments', {
       query: {
         orderByChild: 'questionKey',
         equalTo: questionKey
       }
-    })
+    });
   }
-  create(form: {content: string}, questionKey: string) {
+  create(form: { content: string }, questionKey: string) {
     const comment: Comment = {
       createdAt: new Date().toISOString(),
       createdBy: this.af.auth.getAuth().uid,
@@ -27,7 +27,7 @@ export class CommentService {
       questionKey,
       voteValue: 0,
       votesSum: 0
-    }
+    };
     this.af.database.list('/comments').push(comment);
   }
 }

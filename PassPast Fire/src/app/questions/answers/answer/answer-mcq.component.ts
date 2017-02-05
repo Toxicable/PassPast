@@ -18,7 +18,7 @@ import { Answer } from '../../../models';
     `
   ]
 })
-export class AnswerMcqComponent implements OnInit{
+export class AnswerMcqComponent implements OnInit {
   @Input() answer: Answer;
   @Input() totalAnswerVotes: number;
   @Input() loggedIn: boolean;
@@ -29,13 +29,13 @@ export class AnswerMcqComponent implements OnInit{
   ) {
   }
 
-  ngOnInit(){
+  ngOnInit() {
     this.vote = this.votes.getVote('answer', this.answer.$key);
   }
 
   sendVote() {
     if (this.loggedIn) {
-      this.votes.create(1, 'answer', this.answer.$key)
+      this.votes.create(1, 'answer', this.answer.$key);
     }
   }
 
