@@ -1,7 +1,8 @@
+import { Observable } from 'rxjs/Observable';
 import { AuthService } from './auth.service';
-import { AngularFire } from 'angularfire2';
+import { AngularFire, FirebaseListObservable } from 'angularfire2';
 import { Injectable } from '@angular/core';
-import { Role, UserRole } from '../models';
+import { Role, UserRole, Dict } from '../models';
 
 @Injectable()
 export class RolesService {
@@ -11,55 +12,39 @@ export class RolesService {
     private auth: AuthService,
   ) { }
 
-  getRoles() {
-    return this.af.database.list('/roles')
-      .map((roles: Role[]) => roles.map(role => {
-        const users = Object.keys(role.users).map(key => {
-          role.users[key].$key = key;
-          return role.users[key];
-        });
-        role.users = users;
-        return role;
-      }));
+  getRoles(): Observable<Role[]> {
+    return this.af.database.object('/roles')
+      .map((roles: Dict<Dict<UserRole>>) => {
+        return Object.keys(roles)
+          .filter(roleName => roleName !== '$exists' && roleName !== '$value' && roleName !== '$key')
+          .map(roleName => {
+            const role: any = roles[roleName];
+            role.users = Object.keys(role).map(userKey => {
+              const user: UserRole = role[userKey];
+              user.$key = userKey;
+              delete role[userKey];
+              return user;
+            });
+            role.name = roleName;
+            return role;
+          });
+      });
   }
 
-  addToRole(form: { userKey: string; roleKey: string; }) {
+  addToRole(form: { userKey: string; roleName: string; }) {
     this.auth.uid$.first().subscribe(uid => {
       const userRole: UserRole = {
         updatedAt: new Date().toISOString(),
         updatedBy: uid
-      }
-      this.af.database.object(`/roles/${form.roleKey}/users/${form.userKey}`).update(userRole);
-    })
-  }
-
-  create(form: { name: string }) {
-    this.auth.uid$.first().subscribe(uid => {
-      const newRole = {
-        name: form.name,
-        createdAt: new Date().toISOString(),
-        createdBy: uid
-      }
-      this.af.database.list('/roles').push(newRole);
-    })
+      };
+      this.af.database.object(`/roles/${form.roleName}/${form.userKey}`).set(userRole);
+    });
   }
 
   isInRole(roleName: string) {
     return this.auth.uid$.flatMap(uid => {
-      return this.af.database.list(`/roles`, {
-        query: {
-          orderByChild: 'name',
-          equalTo: roleName
-        }
-      }).first()
-      .map((roles: Role[]) => {
-          const role = roles[0];
-          if (!role || !role.users[uid]) {
-            return false;
-          }
-          return true;
-
-        });
+      return this.af.database.object(`/roles/${roleName}/${uid}`)
+        .map(result => result.$exists());
     });
   }
 }

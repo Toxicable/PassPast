@@ -18,7 +18,7 @@ export class AddUserRoleComponent implements OnInit {
 
   ngOnInit(): void {
     this.form = this.formBuilder.group({
-      roleKey: ['', [FormValidators.required]],
+      roleName: ['', [FormValidators.required]],
       userKey: ['', [FormValidators.required]],
     });
   }

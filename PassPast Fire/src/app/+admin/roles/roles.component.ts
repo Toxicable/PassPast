@@ -1,9 +1,9 @@
-import { AddRoleComponent } from './add-role.component';
+import { AddUserRoleComponent } from './add-user-role.component';
 import { MdDialogRef, MdDialog } from '@angular/material';
 import { RolesService } from './../../core/roles.service';
 import { Observable } from 'rxjs/Observable';
 import { AuthService } from './../../core/auth.service';
-import { Component} from '@angular/core';
+import { Component } from '@angular/core';
 
 @Component({
   selector: 'roles',
@@ -12,23 +12,22 @@ import { Component} from '@angular/core';
 export class RolesComponent {
 
   roles$: Observable<any>;
-  private dialogRef: MdDialogRef<AddRoleComponent>;
+  private dialogRef: MdDialogRef<AddUserRoleComponent>;
 
   constructor(
     private roles: RolesService,
     private dialog: MdDialog,
   ) {
     this.roles.isInRole('Admina')
-    .subscribe(a => console.log(a))
-
-   }
+      .subscribe(a => console.log(a));
+  }
 
   ngOnInit() {
     this.roles$ = this.roles.getRoles();
   }
 
   openDialog() {
-    this.dialogRef = this.dialog.open(AddRoleComponent, {
+    this.dialogRef = this.dialog.open(AddUserRoleComponent, {
       disableClose: false
     });
   }

@@ -1,6 +1,5 @@
 import { CurrentUsersComponent } from './current-users/current-users.component';
 import { AddUserRoleComponent } from './roles/add-user-role.component';
-import { AddRoleComponent } from './roles/add-role.component';
 import { RolesComponent } from './roles/roles.component';
 import { AdminComponent } from './admin.component';
 import { SharedModule } from './../shared/shared.module';
@@ -12,12 +11,12 @@ import { MdDialogModule, MaterialModule } from '@angular/material';
   declarations: [
     AdminComponent,
     RolesComponent,
-    AddRoleComponent,
     AddUserRoleComponent,
     CurrentUsersComponent,
   ],
   entryComponents: [
-    AddRoleComponent,
+
+    AddUserRoleComponent,
   ],
   imports: [
     MdDialogModule,

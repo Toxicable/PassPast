@@ -1,3 +1,4 @@
+import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { Subject } from 'rxjs/Subject';
 import { AngularFire } from 'angularfire2';
 import { Injectable } from '@angular/core';
@@ -9,12 +10,12 @@ import { Question } from '../models/question';
 export class QuestionService {
 
   questions$: Observable<Question[]>;
-  private selectedExamKey: Subject<string>;
+  private selectedExamKey: BehaviorSubject<string>;
 
   constructor(
     private af: AngularFire,
   ) {
-
+    this.selectedExamKey = new BehaviorSubject<string>(null);
     this.questions$ = this.af.database.list('/questions', {
       query: {
         orderByChild: 'examKey',
@@ -26,9 +27,5 @@ export class QuestionService {
    selectExam(examKey: string){
      this.selectedExamKey.next(examKey);
    }
-
-  getRelatedQuestions(examId: number) {
-    // return this.authHttp.get(`/exams/${examId}/questions`)
-  }
 
 }

@@ -10,7 +10,7 @@ import { Title } from '@angular/platform-browser';
   selector: 'app-root',
   templateUrl: './app.component.html',
 })
-export class AppComponent implements OnInit, OnDestroy {
+export class AppComponent implements OnInit {
 
   constructor(
     private alert: AlertService,
@@ -19,10 +19,6 @@ export class AppComponent implements OnInit, OnDestroy {
     private auth: AuthService,
     private currenUsers: CurrentUsersService,
   ) { }
-
-  ngOnDestroy() {
-    this.currenUsers.onDisconnect();
-  }
 
   ngOnInit(): void {
     this.currenUsers.onConnected();
