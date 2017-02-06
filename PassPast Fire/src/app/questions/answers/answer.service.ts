@@ -1,3 +1,4 @@
+import { AuthService } from './../../core/auth.service';
 import { AngularFire } from 'angularfire2';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
@@ -9,6 +10,7 @@ import { Answer, Course } from '../../models';
 export class AnswerService {
   constructor(
     private af: AngularFire,
+    private auth: AuthService,
   ) { }
 
   getAnswers(questionKey: string) {
@@ -17,18 +19,20 @@ export class AnswerService {
         orderByChild: 'questionKey',
         equalTo: questionKey
       }
-    })
+    });
   }
 
-  create(form: {content: string}, questionKey: string) {
-    const answer: Answer = {
-      createdAt: new Date().toISOString(),
-      createdBy: this.af.auth.getAuth().uid,
-      contentOrIncriment: form.content,
-      questionKey,
-      voteValue: 0,
-      votesSum: 0,
-    }
-    this.af.database.list('/answers').push(answer);
+  create(form: { content: string }, questionKey: string) {
+    this.auth.uid$.subscribe(uid => {
+      const answer: Answer = {
+        createdAt: new Date().toISOString(),
+        createdBy: uid,
+        contentOrIncriment: form.content,
+        questionKey,
+        voteValue: 0,
+        votesSum: 0,
+      };
+      this.af.database.list('/answers').push(answer);
+    });
   }
 }

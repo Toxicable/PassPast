@@ -1,3 +1,6 @@
+import { AdminAuthGuard } from './guards/admin-auth-guard.service';
+import { AuthGuard } from './guards/auth-guard.service';
+import { RolesService } from './roles.service';
 import { AuthService } from './auth.service';
 import { NgModule, Optional, SkipSelf } from '@angular/core';
 import { Title } from '@angular/platform-browser';
@@ -17,6 +20,9 @@ import { environment } from '../../environments/environment';
     AlertService,
     Title,
     AuthService,
+    RolesService,
+    AuthGuard,
+    AdminAuthGuard,
   ]
 
 })

@@ -5,6 +5,7 @@
         <a [routerLink]="['/']" >Pass Past</a>
       </h2>
     </span>
+    <a [routerLink]="['/admin/roles']" >Roles</a>
     <span fxFlex="33%" fxLayoutAlign="center center">
       <!--<a [routerLink]="['/courses']">Courses&nbsp;</a>-->
 
@@ -31,7 +32,7 @@
     <span fxFlex="33%" fxLayoutAlign="end end">
 
       <span *ngIf="(loggedIn$ | async)" >
-        Welcome {{(profile$ | async)?.auth?.displayName}}
+        Welcome {{(profile$ | async)?.displayName}}
         <a class="can-click" (click)="logout()">Logout</a>
       </span>
 

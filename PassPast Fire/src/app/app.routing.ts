@@ -1,3 +1,4 @@
+import { AdminAuthGuard } from './core/guards/admin-auth-guard.service';
 import { ModuleWithProviders } from '@angular/core';
 import { Routes, RouterModule, PreloadAllModules } from '@angular/router';
 import { NotFoundComponent } from './not-found/not-found.component';
@@ -9,38 +10,42 @@ import { ExamsComponent } from './exams/exam-list/exams.component';
 import { AddExamComponent } from './exams/add-exam/add-exam.component';
 import { QuestionsComponent } from './questions/question-list/questions.component';
 
-
 const appRoutes: Routes = [
-    {
-        path: '',
-        component: CoursesComponent,
-    },
-    {
-        path: ':courseKey',
-        component: PapersComponent,
-    },
-    {
-        path: ':courseKey/:paperKey',
-        component: ExamsComponent,
-    },
-    {
-        path: ':courseKey/:paperKey/add-exam',
-        component: AddExamComponent,
-    },
-    {
-        path: ':courseKey/:paperKey/:examKey',
-        component: QuestionsComponent,
-    },
-    {
-        path: 'unauthorized',
-        component: UnauthorizedComponent,
-    },
-    {
-        path: '**',
-        component: NotFoundComponent
-    }
+  {
+    path: 'admin',
+    loadChildren: './+admin/admin.module.ts#AdminModule',
+    canActivate: [AdminAuthGuard],
+  },
+  {
+    path: 'unauthorized',
+    component: UnauthorizedComponent,
+  },
+  {
+    path: '',
+    component: CoursesComponent,
+  },
+  {
+    path: ':courseKey',
+    component: PapersComponent,
+  },
+  {
+    path: ':courseKey/:paperKey',
+    component: ExamsComponent,
+  },
+  {
+    path: ':courseKey/:paperKey/add-exam',
+    component: AddExamComponent,
+  },
+  {
+    path: ':courseKey/:paperKey/:examKey',
+    component: QuestionsComponent,
+  },
+  {
+    path: '**',
+    component: NotFoundComponent
+  }
 ];
 
 export const appRouting: ModuleWithProviders = RouterModule.forRoot(appRoutes, {
-    preloadingStrategy: PreloadAllModules
+  preloadingStrategy: PreloadAllModules
 });

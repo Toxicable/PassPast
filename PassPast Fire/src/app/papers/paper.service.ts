@@ -1,3 +1,4 @@
+import { AuthService } from './../core/auth.service';
 import { LoadingBarService } from './../core/loading-bar/loading-bar.service';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { Subject } from 'rxjs/Subject';
@@ -16,6 +17,7 @@ export class PaperService {
   constructor(
     private af: AngularFire,
     private loadingBar: LoadingBarService,
+    private auth: AuthService,
   ) {
     this.selectedCourseId = new BehaviorSubject<string>(null);
     this.papers$ = this.af.database.list('/papers', {
@@ -23,8 +25,8 @@ export class PaperService {
         orderByChild: 'courseKey',
         equalTo: this.selectedCourseId,
       }
-    })
-    this.papers$.subscribe(p => p === null ? this.loadingBar.load() : this.loadingBar.done() );
+    });
+    this.papers$.subscribe(p => p === null ? this.loadingBar.load() : this.loadingBar.done());
   }
 
   selectCourse(courseId: string) {
@@ -34,8 +36,9 @@ export class PaperService {
   create(paper: Paper, courseKey: string) {
     paper.courseKey = courseKey;
     paper.createdAt = new Date().toISOString();
-    paper.createdBy = this.af.auth.getAuth().uid;
-    this.af.database.list('/papers').push(paper);
-    // return this.authHttp.post('/papers', paper);
+    this.auth.uid$.first().subscribe(uid => {
+      paper.createdBy = uid;
+      this.af.database.list('/papers').push(paper);
+    });
   }
 }

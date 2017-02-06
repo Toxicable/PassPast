@@ -6,4 +6,4 @@ export { Paper } from './paper';
 export { Exam } from './exam';
 export { Comment } from './comment';
 export { Answer } from './answer';
-export { SemesterType } from './semester-type';
+export { Role, UserRole } from './role';

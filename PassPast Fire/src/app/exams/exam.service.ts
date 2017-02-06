@@ -1,10 +1,11 @@
+import { AuthService } from './../core/auth.service';
 import { LoadingBarService } from './../core/loading-bar/loading-bar.service';
 import { QuestionSection } from './question-section';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { Subject } from 'rxjs/Subject';
 import { AngularFire } from 'angularfire2';
 import { Injectable } from '@angular/core';
-import { Exam, Question, SemesterType } from '../models'
+import { Exam, Question } from '../models';
 import { Observable } from 'rxjs/Observable';
 import { normalize, schema, Schema, } from 'normalizr';
 
@@ -17,6 +18,7 @@ export class ExamService {
   constructor(
     private af: AngularFire,
     private loadingBar: LoadingBarService,
+    private auth: AuthService,
   ) {
     this.questionSchema.define({
       subQuestions: new schema.Array(this.questionSchema)
@@ -36,9 +38,10 @@ export class ExamService {
     this.selectedPaperId$.next(paperId);
   }
 
-  create(form: { sections: QuestionSection[], year: number, semester: SemesterType }, paperKey: string) {
+  create(form: { sections: QuestionSection[], year: number, semester: 'S1' | 'S2' | 'SS' }, paperKey: string) {
+    this.auth.uid$.first().subscribe(uid => {
 
-    const userId = this.af.auth.getAuth().uid;
+    const userId = uid;
     const newExam: Exam = {
       createdBy: userId,
       createdAt: new Date().toISOString(),
@@ -80,7 +83,7 @@ export class ExamService {
           .map(incriment => {
             const question = questions[incriment];
             question.incriment = question.incriment === 'numbered' ? incriment + 1 :
-              question.incriment === 'alpha' ? this.toAlpha(incriment + 1) : this.toRoman(incriment + 1)
+              question.incriment === 'alpha' ? this.toAlpha(incriment + 1) : this.toRoman(incriment + 1);
             question.subQuestions = numberOff(question.subQuestions);
             return question;
           });
@@ -105,24 +108,10 @@ export class ExamService {
 
         const mappedQuestions = form.sections.map(x => mapSection(x)).reduce((a, b) => a.concat(b), []);
         const numberedOff = numberOff(mappedQuestions);
-        //const flattened = flatten(numberedOff);
 
-
-        add(numberedOff)
-        // mappedQuestions.forEach(question => {
-        //   const answers = question.answers;
-        //   delete question.answers;
-        //   this.af.database.list('/questions').push(question)
-        //     .then(questionResult => {
-        //       for (const answer of answers) {
-        //         answer.questionKey = result.key;
-        //         this.af.database.list('/answers').push(answer);
-        //       }
-        //     });
-
-        // });
-
+        add(numberedOff);
       });
+    });
   }
   private range(count): number[] {
     return Array.from(Array(count).keys());

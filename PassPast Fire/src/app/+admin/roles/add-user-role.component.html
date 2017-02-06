@@ -1,0 +1,18 @@
+<form [formGroup]="form" (ngSubmit)="onSubmit()">
+
+  <div>
+    <md-input-container>
+      <input md-input placeholder="Role Key"  formControlName="roleKey">
+    </md-input-container>
+    <av-validation-messages [control]="form.controls.roleKey"></av-validation-messages>
+  </div>
+
+  <div>
+    <md-input-container>
+      <input md-input placeholder="User Key" formControlName="userKey">
+    </md-input-container>
+    <av-validation-messages [control]="form.controls.userKey"></av-validation-messages>
+  </div>
+
+  <button md-raised-button color="primary" type="submit" [disabled]="!form.valid">Submit</button>
+</form>

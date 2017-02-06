@@ -2,7 +2,8 @@
   <span fxFlex="5">
     {{answer.contentOrIncriment}}
   </span>
-  <md-progress-bar [mdTooltip]="loggedIn ? 'Click to vote' : 'You must be logged in to vote'" mdTooltipPosition="above" [color]="(vote | async)?.userValue === 1 ? 'accent': 'primary'"
+  <!--[mdTooltip]="loggedIn ? 'Click to vote' : 'You must be logged in to vote'" mdTooltipPosition="above"-->
+  <md-progress-bar  [color]="(vote | async)?.userValue === 1 ? 'accent': 'primary'"
     mode="determinate" (click)="sendVote()" class="can-click" [value]="((vote | async)?.sum/totalAnswerVotes) * 100"></md-progress-bar>
 
   <span>

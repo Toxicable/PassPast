@@ -30,6 +30,11 @@
       ".indexOn": [
         "questionKey"
       ]
+    },
+    "roles": {
+      ".indexOn": [
+        "name"
+      ]
     }
   }
 }

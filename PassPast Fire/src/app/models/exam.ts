@@ -1,9 +1,7 @@
-import { SemesterType } from './semester-type';
-
 export interface Exam {
     $key?: string;
     year: number;
-    semester: SemesterType;
+    semester: 'S1' | 'S2' | 'SS';
     paperKey: string;
     createdAt: string;
     createdBy: string;

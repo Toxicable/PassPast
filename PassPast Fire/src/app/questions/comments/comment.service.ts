@@ -1,3 +1,4 @@
+import { AuthService } from './../../core/auth.service';
 import { AngularFire } from 'angularfire2';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
@@ -9,6 +10,7 @@ import { Comment, Course } from '../../models';
 export class CommentService {
   constructor(
     private af: AngularFire,
+    private auth: AuthService,
   ) { }
 
   getComments(questionKey: string) {
@@ -20,14 +22,16 @@ export class CommentService {
     });
   }
   create(form: { content: string }, questionKey: string) {
-    const comment: Comment = {
-      createdAt: new Date().toISOString(),
-      createdBy: this.af.auth.getAuth().uid,
-      content: form.content,
-      questionKey,
-      voteValue: 0,
-      votesSum: 0
-    };
-    this.af.database.list('/comments').push(comment);
+    this.auth.uid$.first().subscribe(uid => {
+      const comment: Comment = {
+        createdAt: new Date().toISOString(),
+        createdBy: uid,
+        content: form.content,
+        questionKey,
+        voteValue: 0,
+        votesSum: 0
+      };
+      this.af.database.list('/comments').push(comment);
+    })
   }
 }

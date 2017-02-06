@@ -1,0 +1,11 @@
+<form [formGroup]="form" (ngSubmit)="onSubmit()">
+
+  <div>
+    <md-input-container>
+      <input md-input placeholder="Name" formControlName="name">
+    </md-input-container>
+    <av-validation-messages [control]="form.controls.name"></av-validation-messages>
+  </div>
+
+  <button md-raised-button color="primary" type="submit" [disabled]="!form.valid">Submit</button>
+</form>
