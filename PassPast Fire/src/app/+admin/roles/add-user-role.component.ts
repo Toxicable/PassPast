@@ -24,7 +24,7 @@ export class AddUserRoleComponent implements OnInit {
   }
 
   onSubmit() {
-    this.roles.addUserToRole(this.form.value);
+    this.roles.addToRole(this.form.value);
     this.form.reset();
   }
 }

@@ -27,10 +27,11 @@ export class RolesComponent {
     this.roles$ = this.roles.getRoles();
   }
 
-  // openDialog() {
-  //   this.dialogRef = this.dialog.open(AddRoleComponent, {
-  //     disableClose: false
-  //   });
+  openDialog() {
+    this.dialogRef = this.dialog.open(AddRoleComponent, {
+      disableClose: false
+    });
+  }
 }
 
 

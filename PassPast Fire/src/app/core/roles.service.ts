@@ -12,14 +12,18 @@ export class RolesService {
   ) { }
 
   getRoles() {
-    return this.af.database.list('/roles');
+    return this.af.database.list('/roles')
+      .map((roles: Role[]) => roles.map(role => {
+        const users = Object.keys(role.users).map(key => {
+          role.users[key].$key = key;
+          return role.users[key];
+        });
+        role.users = users;
+        return role;
+      }));
   }
 
-  addToRole(uid: string, role: string) {
-
-  }
-
-  addUserToRole(form: { userKey: string; roleKey: string; }) {
+  addToRole(form: { userKey: string; roleKey: string; }) {
     this.auth.uid$.first().subscribe(uid => {
       const userRole: UserRole = {
         updatedAt: new Date().toISOString(),

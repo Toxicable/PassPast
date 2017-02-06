@@ -1,3 +1,4 @@
+import { RolesService } from './../core/roles.service';
 import { AuthProviders } from 'angularfire2';
 import { AuthService } from './../core';
 import { Component, OnInit } from '@angular/core';
@@ -7,6 +8,7 @@ import { Observable } from 'rxjs/Observable';
 import { Course } from '../models/course';
 import { Paper } from '../models/paper';
 import { Exam } from '../models/exam';
+import * as firebase from 'firebase';
 
 @Component({
   selector: 'app-header',
@@ -14,24 +16,24 @@ import { Exam } from '../models/exam';
 })
 export class HeaderComponent implements OnInit {
   loggedIn$: Observable<boolean>;
-  profile$: Observable<any>;
+  profile$: Observable<firebase.UserInfo>;
+  isAdmin$: Observable<boolean>;
   currentCourse$: Observable<Course>;
   currentPaper$: Observable<Paper>;
   currentExam$: Observable<Exam>;
 
   constructor(
-    private auth: AuthService
+    private auth: AuthService,
+    private roles: RolesService,
   ) { }
 
   ngOnInit(): void {
-    // this.profile$ = this.oidc.profile$;
+    this.isAdmin$ = this.roles.isInRole('Admin');
+    this.loggedIn$ = this.auth.loggedIn$;
+    this.profile$ = this.auth.profile$;
 
-     this.loggedIn$ = this.auth.loggedIn$;
-     this.profile$ = this.auth.profile$;
     // this.currentExam$ = this.store.select(state => state.courses.exam.selected);
-
     // this.currentPaper$ = this.store.select(state => state.courses.paper.selected);
-
     // this.currentCourse$ = this.store.select(state => state.courses.course.selected);
 
   }
@@ -39,10 +41,10 @@ export class HeaderComponent implements OnInit {
   logout() {
     this.auth.logout();
   }
-  loginGoogle(){
+  loginGoogle() {
     this.auth.login(AuthProviders.Google);
   }
-  loginFacebook(){
+  loginFacebook() {
     this.auth.login(AuthProviders.Facebook);
   }
 }

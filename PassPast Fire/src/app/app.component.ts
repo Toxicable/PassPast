@@ -1,3 +1,4 @@
+import { CurrentUsersService } from './core/current-users.service';
 import { AuthService } from './core/auth.service';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { AlertService } from './core';
@@ -9,17 +10,22 @@ import { Title } from '@angular/platform-browser';
   selector: 'app-root',
   templateUrl: './app.component.html',
 })
-export class AppComponent implements OnInit {
+export class AppComponent implements OnInit, OnDestroy {
 
   constructor(
     private alert: AlertService,
     private router: Router,
     private title: Title,
     private auth: AuthService,
+    private currenUsers: CurrentUsersService,
   ) { }
 
+  ngOnDestroy() {
+    this.currenUsers.onDisconnect();
+  }
+
   ngOnInit(): void {
-this.auth.uid$.subscribe(a => console.log(a));
+    this.currenUsers.onConnected();
     // const defaultTitle = 'Pass Past';
     // Observable.combineLatest(
     //   this.store.select(state => state.courses.course.selected),

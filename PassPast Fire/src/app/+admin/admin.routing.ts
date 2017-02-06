@@ -1,3 +1,4 @@
+import { CurrentUsersComponent } from './current-users/current-users.component';
 import { RolesComponent } from './roles/roles.component';
 import { AdminComponent } from './admin.component';
 import { ModuleWithProviders } from '@angular/core';
@@ -11,6 +12,10 @@ const adminRoutes: Routes = [
          {
             path: 'roles',
             component: RolesComponent,
+         },
+         {
+           path: 'current-users',
+           component: CurrentUsersComponent,
          }
         ]
     },
