@@ -1,40 +1,160 @@
 {
   "rules": {
-    ".read": true,
-    ".write": "auth != null",
-    "courses": {
-    },
-    "papers": {
+    "answers": {
+      ".read": true,
+      ".write": "auth != null",
       ".indexOn": [
-        "courseKey"
-      ]
-    },
-    "exams": {
-      ".indexOn": [
-        "paperKey"
-      ]
-
-    },
-    "questions": {
-      ".indexOn": [
-        "examKey"
-      ]
-
+        "questionKey"
+      ],
+      "$key": {
+        ".validate": "newData.hasChildren(['contentOrIncriment', 'questionKey', 'createdAt', 'createdBy'])",
+        "contentOrIncriment": {
+          ".validate": "newData.isString()"
+        },
+        "questionKey": {
+          ".validate": "newData.isString()"
+        },
+        "createdAt": {
+          ".validate": "newData.isString()"
+        },
+        "createdBy": {
+          ".validate": "newData.isString()"
+        }
+      }
     },
     "comments": {
+      ".read": true,
+      ".write": "auth != null",
       ".indexOn": [
         "questionKey"
-      ]
+      ],
+      "$key": {
+        ".validate": "newData.hasChildren(['content', 'questionKey', 'createdAt', 'createdBy'])",
+        "content": {
+          ".validate": "newData.isString()"
+        },
+        "questionKey": {
+          ".validate": "newData.isString()"
+        },
+        "createdAt": {
+          ".validate": "newData.isString()"
+        },
+        "createdBy": {
+          ".validate": "newData.isString()"
+        }
+      }
     },
-    "answers": {
+    "courses": {
+      ".read": true,
+      ".write": "auth != null",
+      "$key": {
+        ".validate": "newData.hasChildren(['code', 'name', 'createdAt', 'createdBy'])",
+        "code": {
+          ".validate": "newData.isString()"
+        },
+        "name": {
+          ".validate": "newData.isString()"
+        },
+        "createdAt": {
+          ".validate": "newData.isString()"
+        },
+        "createdBy": {
+          ".validate": "newData.isString()"
+        }
+      }
+    },
+    "current-users": {
+      ".read": "root.child('roles').child('Admin').child(auth.uid).val() != null",
+      ".write": true,
+      "$key": {
+        ".validate": "newData.hasChildren(['connectedAt', 'key'])",
+        "connectedAt": {
+          ".validate": "newData.isString()"
+        },
+        "key": {
+          ".validate": "newData.isString()"
+        }
+      }
+    },
+    "exams": {
+      ".read": true,
+      ".write": "auth != null",
       ".indexOn": [
-        "questionKey"
-      ]
+        "paperKey"
+      ],
+      "$key": {
+        ".validate": "newData.hasChildren(['paperKey', 'semester', 'year', 'createdAt', 'createdBy'])",
+        "paperKey": {
+          ".validate": "newData.isString()"
+        },
+        "semester": {
+          ".validate": "newData.isString()"
+        },
+        "year": {
+          ".validate": "newData.isNumber()"
+        },
+        "createdAt": {
+          ".validate": "newData.isString()"
+        },
+        "createdBy": {
+          ".validate": "newData.isString()"
+        }
+      }
+    },
+    "papers": {
+      ".read": true,
+      ".write": "auth != null",
+      ".indexOn": [
+        "courseKey"
+      ],
+      "$key": {
+        ".validate": "newData.hasChildren(['courseKey', 'name', 'createdAt', 'createdBy'])",
+        "courseKey": {
+          ".validate": "newData.isString()"
+        },
+        "name": {
+          ".validate": "newData.isString()"
+        },
+        "createdAt": {
+          ".validate": "newData.isString()"
+        },
+        "createdBy": {
+          ".validate": "newData.isString()"
+        }
+      }
+    },
+    "questions": {
+      ".read": true,
+      ".write": "auth != null",
+      ".indexOn": [
+        "examKey"
+      ],
+      "$key": {
+        ".validate": "newData.hasChildren(['examKey', 'incriment', 'parentKey', 'createdAt', 'createdBy'])",
+        "examKey": {
+          ".validate": "newData.isString()"
+        },
+        "incriment": {
+          ".validate": "newData.isString()"
+        },
+        "parentKey": {
+          ".validate": "newData.isString()"
+        },
+        "createdAt": {
+          ".validate": "newData.isString()"
+        },
+        "createdBy": {
+          ".validate": "newData.isString()"
+        }
+      }
     },
     "roles": {
-      ".indexOn": [
-        "name"
-      ]
+      ".read": "auth != null",
+      ".write": "root.child('roles').child('Admin').child(auth.uid).val() != null"
+    },
+    "votes": {
+      ".read": true,
+      ".write": "auth != null"
     }
   }
 }
