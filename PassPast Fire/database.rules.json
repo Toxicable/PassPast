@@ -91,7 +91,7 @@
           ".validate": "newData.isString()"
         },
         "year": {
-          ".validate": "newData.isNumber()"
+          ".validate": "newData.isString()"
         },
         "createdAt": {
           ".validate": "newData.isString()"
@@ -135,7 +135,7 @@
           ".validate": "newData.isString()"
         },
         "incriment": {
-          ".validate": "newData.isString()"
+          ".validate": "newData.isString() || newData.isNumber()"
         },
         "parentKey": {
           ".validate": "newData.isString()"

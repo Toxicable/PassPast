@@ -1,18 +1,12 @@
 
-<button type="button" md-raised-button color="primary" (click)="openDialog()">Add Role</button>
-<add-user-role></add-user-role>
+<button type="button" md-raised-button color="primary" (click)="openDialog()">Add User to Role</button>
 
-<md-list>
-  <h3 md-subheader>Roles</h3>
-  <md-list-item *ngFor="let role of roles$ |async">
-    <h4 md-line>{{role.name}}</h4>
-    <p md-line> {{role.$key}}</p>
-    <md-divider></md-divider>
-    <h3 md-subheader>Users</h3>
-    <md-list-item *ngFor="let user of role.users">
-      <h4 md-line>{{user.$key}}</h4>
-      <h4 md-line>{{user.updatedAt | date:'medium'}}</h4>
-    </md-list-item>
-  </md-list-item>
-</md-list>
-
+<h2>Roles</h2>
+<div *ngFor="let role of roles$ |async">
+  <div>{{role.name}}</div>
+  <h4>Users</h4>
+  <div *ngFor="let user of role.users">
+    <div md-line>{{user.$key}}</div>
+    <div md-line>{{user.updatedAt | date:'medium'}}</div>
+  </div>
+</div>

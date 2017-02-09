@@ -15,12 +15,10 @@ import { MdDialogModule, MaterialModule } from '@angular/material';
     CurrentUsersComponent,
   ],
   entryComponents: [
-
     AddUserRoleComponent,
   ],
   imports: [
-    MdDialogModule,
-    MaterialModule,
+    MdDialogModule.forRoot(),
     adminRouting,
     SharedModule,
 

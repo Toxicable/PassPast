@@ -16,7 +16,7 @@ export class CurrentUsersService {
     this.auth.uid$.first().subscribe(uid => {
       const user: CurrentUser = {
         key: uid || null,
-        connectedAt: new Date().toISOString()
+        connectedAt: new Date().toISOString(),
       }
 
       this.af.database.list('/current-users')
