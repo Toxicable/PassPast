@@ -42,7 +42,7 @@ export class AnswerService {
         createdBy: uid,
         contentOrIncriment: form.content,
         questionKey,
-        votes: [],
+        votes: {},
         voteSum: 0,
         userVoteValue: 0,
       };

@@ -1,3 +1,4 @@
+import { environment } from './../environments/environment';
 import { QuestionModule } from './questions/questions.module';
 import { QuestionsComponent } from './questions/question-list/questions.component';
 import { ExamModule } from './exams/exams.module';
@@ -26,7 +27,15 @@ export const firebaseConfig = {
   messagingSenderId: '137170270322'
 };
 
-const myFirebaseAuthConfig = {
+export const firebaseConfigDev = {
+  apiKey: 'AIzaSyA2hJW-dMxigmsP4-D4qGJeGPGhPW5CdkQ',
+  authDomain: 'pass-past-dev.firebaseapp.com',
+  databaseURL: 'https://pass-past-dev.firebaseio.com',
+  storageBucket: 'pass-past-dev.appspot.com',
+  messagingSenderId: '406000911823'
+};
+
+const firebaseAuthConfig = {
   provider: AuthProviders.Google,
   method: AuthMethods.Popup
 };
@@ -48,7 +57,7 @@ const myFirebaseAuthConfig = {
     CoreModule,
     SharedModule,
     appRouting,
-    AngularFireModule.initializeApp(firebaseConfig, myFirebaseAuthConfig),
+    AngularFireModule.initializeApp(environment.production ? firebaseConfig : firebaseConfigDev, firebaseAuthConfig),
   ],
   bootstrap: [AppComponent]
 })

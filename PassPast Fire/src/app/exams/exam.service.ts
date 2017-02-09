@@ -62,7 +62,7 @@ export class ExamService {
                 createdBy: userId,
                 createdAt: new Date().toISOString(),
                 contentOrIncriment: this.toAlpha(index + 1),
-                votes: [],
+                votes: {},
                 userVoteValue: 0,
                 voteSum: 0
               };

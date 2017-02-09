@@ -1,5 +1,6 @@
 {
   "projects": {
-    "default": "pass-past"
+    "default": "pass-past",
+    "dev": "pass-past-dev"
   }
 }

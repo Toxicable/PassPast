@@ -7,7 +7,7 @@ export interface Answer {
     questionKey?: string;
     createdAt: string;
     createdBy: string;
-    votes: Vote[] | Dict<Vote>;
+    votes: Dict<Vote>;
     userVoteValue: number;
     voteSum: number;
 }

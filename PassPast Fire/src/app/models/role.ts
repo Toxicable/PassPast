@@ -1,4 +1,5 @@
 import { Dict } from './dict';
+
 export interface Role {
   name: string;
   users: UserRole[];
