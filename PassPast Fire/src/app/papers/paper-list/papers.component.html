@@ -9,6 +9,8 @@
     There are no papers for this course
   </div>
 
+<md-spinner *ngIf="(papers$ | async) === null" color="accent"></md-spinner>
+
 <div fxLayout="row" fxLayoutWrap="wrap">
     <a [routerLink]="paper.$key" *ngFor="let paper of papers$ | async; trackBy: trackByFn" >
       <md-card  class="can-click highlight-background" >

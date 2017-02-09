@@ -26,6 +26,26 @@ export class QuestionService {
 
    selectExam(examKey: string){
      this.selectedExamKey.next(examKey);
+
+
+     var $key = {
+       type: 'mcq',
+       answers: {
+         $key: {
+           incriment: 1,
+           votes: {
+             $key: {
+               value: 1
+             }
+           }
+         },
+         votes: {
+           $key: {
+             value: 1
+           }
+         }
+       }
+     }
    }
 
 }

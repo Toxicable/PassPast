@@ -15,7 +15,7 @@ export class CurrentUsersService {
   onConnected(): void{
     this.auth.uid$.first().subscribe(uid => {
       const user: CurrentUser = {
-        key: uid,
+        key: uid || null,
         connectedAt: new Date().toISOString()
       }
 

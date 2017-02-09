@@ -1,12 +1,9 @@
 <div fxLayout="column ">
-  <app-vote type="comment" [key]="comment.$key" [loggedIn]="loggedIn"></app-vote>
-  <div >
-    <div>
-      <strong>{{comment.userIdentifier}}</strong> <small>{{comment.createdAt | date:'medium'}}</small>
-    </div>
-    <markdown>
-      {{comment.content}}
-    </markdown>
+  <div>
+    <strong>{{comment.userIdentifier}}</strong> <small>{{comment.createdAt | date:'medium'}}</small>
   </div>
+  <markdown>
+    {{comment.content}}
+  </markdown>
 </div>
 

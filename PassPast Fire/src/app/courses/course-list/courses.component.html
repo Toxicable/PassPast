@@ -7,6 +7,8 @@
     There are no courses
   </div>
 
+  <md-spinner *ngIf="(courses$ | async) === null" color="accent"></md-spinner>
+
   <a [routerLink]="['/' + course.$key]" *ngFor="let course of courses$ | async; trackBy: trackByFn" >
     <md-card class="can-click highlight-background">
       <md-card-title>{{course.name}}</md-card-title>

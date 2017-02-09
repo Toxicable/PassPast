@@ -1,6 +1,6 @@
 import { AuthService } from './../../core/auth.service';
 import { Observable } from 'rxjs/Observable';
-import { Vote, Answer } from './../../models';
+import { Vote, Answer, VoteType } from './../../models';
 import { AngularFire } from 'angularfire2';
 import { Injectable } from '@angular/core';
 @Injectable()
@@ -10,31 +10,13 @@ export class VoteService {
     private auth: AuthService,
   ) { }
 
-  getVote(type: 'comment' | 'answer', key: string) {
-    return this.af.database.object(`/votes/${type}/${key}`)
-      .flatMap((votes: { [key: string]: Vote }) => {
-        return this.auth.uid$.first().map(uid => {
-          const userKey = uid;
-
-          return {
-            userValue: votes[userKey] ? votes[userKey].value : null,
-            sum: Object.keys(votes)
-              .filter(voteKey => voteKey !== '$key' && voteKey !== '$exists' && voteKey !== '$value')
-              .map(voteKey => votes[voteKey])
-              .reduce((a, b) => a + b.value, 0)
-          };
-        });
-      });
-  }
-
-  create(value: 1 | -1, type: 'comment' | 'answer', key: string, isMcq = false) {
+  create(value: VoteType, answerKey: string, isMcq = false) {
     this.auth.uid$.first().subscribe(uid => {
-      const userKey = uid;
       const vote: Vote = {
         value: value,
         updatedAt: new Date().toISOString(),
       };
-      const existingVote = this.af.database.object(`/votes/${type}/${key}/${userKey}`);
+      const existingVote = this.af.database.object(`/answers/${answerKey}/votes/${uid}`);
 
       const sendVote = () => {
         existingVote.first()
@@ -51,7 +33,7 @@ export class VoteService {
       if (!isMcq) {
         sendVote();
       } else if (isMcq) {
-        this.af.database.object(`/answers/${key}`)
+        this.af.database.object(`/answers/${answerKey}`)
           .flatMap((answer: Answer) => {
             return this.af.database.list('/answers', {
               query: {
@@ -61,21 +43,18 @@ export class VoteService {
             });
           })
           .first().subscribe((answers: Answer[]) => {
-            answers.filter(a => a.$key !== key)
+            answers.filter(a => a.$key !== answerKey)
               .forEach(answer => {
-                // delete it with a call without retrieveing it
-                const answerObject = this.af.database.object(`/votes/answer/${answer.$key}/${userKey}`);
-                answerObject.first().subscribe(res => {
-                  if (res.$exists()) {
+                if (answer.votes && answer.votes[uid] != null) {
+                  const answerObject = this.af.database.object(`/answers/${answer.$key}/votes/${uid}`);
+                  answerObject.first().subscribe(res => {
                     answerObject.remove();
-                  }
-                });
+                  });
+                }
               });
-
             sendVote();
           });
       }
     });
   }
-
 }

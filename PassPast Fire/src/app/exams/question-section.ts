@@ -1,6 +1,8 @@
+import { IncrimentType, QuestionType } from '../models'
+
 export interface QuestionSection {
   count: number;
-  type: 'mcq' | 'short';
-  incrimentType: 'alpha' | 'numbered' | 'roman';
+  type: QuestionType;
+  incrimentType: IncrimentType;
   subQuestions: QuestionSection[];
 }

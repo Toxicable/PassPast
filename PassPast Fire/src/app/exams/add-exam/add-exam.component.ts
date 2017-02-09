@@ -36,7 +36,7 @@ export class AddExamComponent implements OnInit {
     });
   }
 
-  reset(){
+  reset() {
     this.newExamForm.reset();
   }
 

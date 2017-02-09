@@ -1,3 +1,4 @@
+import { Vote } from './../../models/vote';
 import { VoteService } from './../votes/vote.service';
 import { CommentService } from './../comments/comment.service';
 import { AnswerService } from './../answers/answer.service';
@@ -18,7 +19,7 @@ import 'rxjs/add/observable/combineLatest';
 @Component({
   selector: 'app-question',
   templateUrl: './question.component.html',
-  changeDetection: ChangeDetectionStrategy.Default
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class QuestionComponent implements OnInit {
   trackByFn = trackByIdentity;
@@ -47,11 +48,9 @@ export class QuestionComponent implements OnInit {
     this.answers$ = this.answers.getAnswers(this.question.$key);
 
     if (this.question.type === 'mcq') {
-      this.answerVoteSum = this.answers$.flatMap(answers => {
-        const obs = answers.map(q => this.votes.getVote('answer', q.$key));
-        return Observable.combineLatest(...obs)
-          .map(votes => votes.reduce((a, b) => a + b.sum, 0));
-      });
+      this.answerVoteSum = this.answers$.map(answers =>
+        answers.reduce((a, b) => a + b.voteSum, 0)
+      );
 
     }
     this.comments$ = this.comments.getComments(this.question.$key);

@@ -1,9 +1,10 @@
+import { Smester } from './question';
+
 export interface Exam {
     $key?: string;
     year: number;
-    semester: 'S1' | 'S2' | 'SS';
+    semester: Smester;
     paperKey: string;
     createdAt: string;
     createdBy: string;
 }
-

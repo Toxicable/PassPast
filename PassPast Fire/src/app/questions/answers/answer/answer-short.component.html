@@ -1,6 +1,6 @@
 <div style="display:flex;">
   <span>
-    <app-vote type="answer" [key]="answer.$key" [loggedIn]="loggedIn"></app-vote>
+    <app-vote type="answer" [key]="answer.$key" [loggedIn]="loggedIn" [sum]="answer.voteSum" [userVoteValue]="answer.userVoteValue"></app-vote>
   </span>
   <span>
     <div>

@@ -1,4 +1,6 @@
 export interface Vote {
-  value: 1 | -1;
+  value: VoteType;
   updatedAt: string;
 }
+
+export type VoteType = 1 | -1;

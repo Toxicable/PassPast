@@ -1,3 +1,4 @@
+import { AlertService } from './alert/alert.service';
 import { Observable } from 'rxjs/Observable';
 import { AngularFire, AuthProviders, AuthMethods } from 'angularfire2';
 import { Injectable } from '@angular/core';
@@ -7,6 +8,7 @@ import * as firebase from 'firebase';
 export class AuthService {
   constructor(
     private af: AngularFire,
+    private alert: AlertService,
   ) {
     this.loggedIn$ = this.af.auth.map(a => !!a);
     this.profile$ = this.af.auth.map(auth => {
@@ -37,7 +39,8 @@ export class AuthService {
     this.af.auth.login({
       provider,
       method: AuthMethods.Popup
-    });
+    })
+    .catch(error => this.alert.sendError('An error occured while logging in'));
   }
 
   logout() {

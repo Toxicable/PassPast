@@ -1,8 +1,8 @@
 export { Dict } from './dict';
 export { Course } from './course';
-export { Vote } from './vote';
+export { Vote, VoteType } from './vote';
 export { User } from './user';
-export { Question } from './question';
+export { Question, QuestionType, IncrimentType, Smester } from './question';
 export { Paper } from './paper';
 export { Exam } from './exam';
 export { Comment } from './comment';

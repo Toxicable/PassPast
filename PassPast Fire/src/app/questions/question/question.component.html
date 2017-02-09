@@ -5,10 +5,12 @@
 <!--main content toggle-->
 <div *ngIf="showContent">
   <!--Answers-->
+  <md-spinner *ngIf="(answers$ | async) === null" ></md-spinner>
+
   <div *ngFor="let answer of answers$ | async">
     <!--MCQ-->
     <div *ngIf="question.type == 'mcq'">
-      <app-answer-mcq [totalAnswerVotes]="answerVoteSum | async" [answer]="answer" [loggedIn]="loggedIn"></app-answer-mcq>
+      <app-answer-mcq [totalAnswerVotes]="answerVoteSum | async" [answer]="answer" [loggedIn]="loggedIn" ></app-answer-mcq>
     </div>
 
     <!--Short -->

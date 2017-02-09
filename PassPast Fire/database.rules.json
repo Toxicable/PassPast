@@ -67,7 +67,7 @@
       ".read": "root.child('roles').child('Admin').child(auth.uid).val() != null",
       ".write": true,
       "$key": {
-        ".validate": "newData.hasChildren(['connectedAt', 'key'])",
+        ".validate": "newData.hasChildren(['connectedAt'])",
         "connectedAt": {
           ".validate": "newData.isString()"
         },
@@ -149,7 +149,7 @@
       }
     },
     "roles": {
-      ".read": "auth != null",
+      ".read": true,
       ".write": "root.child('roles').child('Admin').child(auth.uid).val() != null"
     },
     "votes": {

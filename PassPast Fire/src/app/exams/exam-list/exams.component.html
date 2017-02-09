@@ -11,6 +11,9 @@
 <div *ngIf="(exams$ | async)?.length == 0">
   There are no Exams for this Paper
 </div>
+
+<md-spinner *ngIf="(exams$ | async) === null" color="accent"></md-spinner>
+
 <div fxLayout="row" fxLayoutWrap="wrap">
   <md-card *ngFor="let exam of exams$ | async; trackBy: trackByFn" [routerLink]="exam.$key" class="can-click highlight-background" >
     <md-card-title>{{exam.year}}</md-card-title>

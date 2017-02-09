@@ -4,7 +4,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 
 import { Http } from '@angular/http';
-import { Answer, Course } from '../../models';
+import { Answer, Course, Vote } from '../../models';
 
 @Injectable()
 export class AnswerService {
@@ -19,6 +19,19 @@ export class AnswerService {
         orderByChild: 'questionKey',
         equalTo: questionKey
       }
+    }).flatMap((answers: Answer[]) => {
+      return this.auth.uid$.map(uid => {
+        return answers.map(answer => {
+          answer.voteSum = 0;
+          Object.keys(answer.votes || {})
+            .forEach(voteKey => {
+              const vote: Vote = answer.votes[voteKey];
+              answer.userVoteValue = voteKey === uid ? vote.value : 0;
+              answer.voteSum += vote.value;
+            });
+          return answer;
+        });
+      })
     });
   }
 
@@ -29,8 +42,9 @@ export class AnswerService {
         createdBy: uid,
         contentOrIncriment: form.content,
         questionKey,
-        voteValue: 0,
-        votesSum: 0,
+        votes: [],
+        voteSum: 0,
+        userVoteValue: 0,
       };
       this.af.database.list('/answers').push(answer);
     });

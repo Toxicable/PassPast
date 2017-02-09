@@ -28,10 +28,8 @@ export class CommentService {
         createdBy: uid,
         content: form.content,
         questionKey,
-        voteValue: 0,
-        votesSum: 0
       };
       this.af.database.list('/comments').push(comment);
-    })
+    });
   }
 }

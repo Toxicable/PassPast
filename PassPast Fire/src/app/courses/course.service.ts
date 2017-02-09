@@ -14,13 +14,11 @@ export class CourseService {
     private af: AngularFire,
     private loadingBar: LoadingBarService,
     private auth: AuthService,
+
   ) {
-    this.courses = new BehaviorSubject<Course[]>(null);
-    this.courses$ = this.courses.asObservable();
-    this.af.database.list('/courses').subscribe(c => this.courses.next(c));
-    this.courses$.subscribe(c => !c ? this.loadingBar.load() : this.loadingBar.done());
+    this.courses$ = this.af.database.list('/courses')
   }
-  private courses: BehaviorSubject<Course[]>;
+      sub: any;
   courses$: Observable<Course[]>;
 
   create(course: Course) {

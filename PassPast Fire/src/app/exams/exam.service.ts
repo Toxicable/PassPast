@@ -1,3 +1,4 @@
+import { Answer } from './../models/answer';
 import { AuthService } from './../core/auth.service';
 import { LoadingBarService } from './../core/loading-bar/loading-bar.service';
 import { QuestionSection } from './question-section';
@@ -55,14 +56,15 @@ export class ExamService {
         const examKey: string = result.key;
 
         const mapSection = (section: QuestionSection): Question[] => {
-          const answersFactory = () => this.range(5)
+          const answersFactory = (): Answer[] => this.range(5)
             .map(index => {
               return {
                 createdBy: userId,
                 createdAt: new Date().toISOString(),
                 contentOrIncriment: this.toAlpha(index + 1),
-                voteValue: 0,
-                votesSum: 0
+                votes: [],
+                userVoteValue: 0,
+                voteSum: 0
               };
             });
 
@@ -74,7 +76,7 @@ export class ExamService {
               examKey: examKey,
               answers: section.type === 'mcq' && section.subQuestions.length === 0 ? answersFactory() : null,
               type: section.type,
-              incriment: section.incrimentType
+              incriment: section.incrimentType,
             };
           });
         };
