@@ -1,5 +1,5 @@
 <h1>Courses</h1>
-<button type="button" md-raised-button color="primary" (click)="openDialog()">Add Course</button>
+<button type="button" md-raised-button color="primary" *ngIf="isAdmin$ | async" (click)="openDialog()">Add Course</button>
 
 <div fxLayout="row" fxLayoutWrap="wrap">
 

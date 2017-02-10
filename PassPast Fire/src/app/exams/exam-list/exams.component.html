@@ -3,10 +3,10 @@
   <md-icon>chevron_left</md-icon>
 </button>
 
-<div *ngIf="loggedIn$ | async">
+<span *ngIf="loggedIn$ | async">
   <button type="button" md-raised-button color="primary" (click)="openNewExamDialog()">Add Exam</button>
   <a class="header-navigation__link" [routerLink]="['/courses', 1, 2, 'add-exam']" routerLinkActive="active-router-link">Add Exam</a>
-</div>
+</span>
 
 <div *ngIf="(exams$ | async)?.length == 0">
   There are no Exams for this Paper

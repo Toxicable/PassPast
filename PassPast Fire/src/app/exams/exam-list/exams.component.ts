@@ -1,3 +1,4 @@
+import { RolesService } from './../../core/roles.service';
 import { AuthService } from './../../core/auth.service';
 import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
@@ -20,6 +21,7 @@ export class ExamsComponent implements OnInit {
   trackByFn = trackByIdentity;
   loggedIn$: Observable<boolean>;
   noExams$: Observable<boolean>;
+  isAdmin$: Observable<boolean>;
 
   constructor(
     private exams: ExamService,
@@ -27,12 +29,14 @@ export class ExamsComponent implements OnInit {
     private af: AngularFire,
     private route: ActivatedRoute,
     private auth: AuthService,
+    private roles: RolesService,
   ) { }
 
   ngOnInit() {
     this.loggedIn$ = this.auth.loggedIn$;
     this.exams$ = this.exams.exams$;
     this.exams.selectPaper(this.route.snapshot.params['paperKey']);
+    this.isAdmin$ = this.roles.isInRole('Admin');
   }
   openNewExamDialog() {
     this.newExamDialogRef = this.dialog.open(AddExamComponent, {

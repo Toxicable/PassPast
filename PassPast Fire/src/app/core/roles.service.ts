@@ -41,7 +41,7 @@ export class RolesService {
     });
   }
 
-  isInRole(roleName: string) {
+  isInRole(roleName: string): Observable<boolean> {
     return this.auth.uid$.flatMap(uid => {
       return this.af.database.object(`/roles/${roleName}/${uid}`)
         .map(result => result.$exists());

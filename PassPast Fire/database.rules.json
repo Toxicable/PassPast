@@ -46,7 +46,7 @@
     },
     "courses": {
       ".read": true,
-      ".write": "auth != null",
+      ".write": "root.child('roles').child('Admin').child(auth.uid).val() != null",
       "$key": {
         ".validate": "newData.hasChildren(['code', 'name', 'createdAt', 'createdBy'])",
         "code": {
@@ -78,7 +78,7 @@
     },
     "exams": {
       ".read": true,
-      ".write": "auth != null",
+      ".write": "root.child('roles').child('Admin').child(auth.uid).val() != null",
       ".indexOn": [
         "paperKey"
       ],
@@ -103,7 +103,7 @@
     },
     "papers": {
       ".read": true,
-      ".write": "auth != null",
+      ".write": "root.child('roles').child('Admin').child(auth.uid).val() != null",
       ".indexOn": [
         "courseKey"
       ],
@@ -125,7 +125,7 @@
     },
     "questions": {
       ".read": true,
-      ".write": "auth != null",
+      ".write": "root.child('roles').child('Admin').child(auth.uid).val() != null",
       ".indexOn": [
         "examKey"
       ],

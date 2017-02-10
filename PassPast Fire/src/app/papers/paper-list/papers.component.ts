@@ -1,3 +1,4 @@
+import { RolesService } from './../../core/roles.service';
 import { Component, OnInit } from '@angular/core';
 import { PaperService } from './../paper.service';
 import { Observable } from 'rxjs/Observable';
@@ -19,6 +20,7 @@ export class PapersComponent implements OnInit {
   papers$: Observable<Paper[]>;
   trackByFn = trackByIdentity;
   loggedIn$: Observable<boolean>;
+  isAdmin$: Observable<boolean>;
 
   constructor(
     private papers: PaperService,
@@ -26,11 +28,13 @@ export class PapersComponent implements OnInit {
     private route: ActivatedRoute,
     private dialog: MdDialog,
     private router: Router,
+    private roles: RolesService
   ) { }
 
   ngOnInit() {
     this.papers$ = this.papers.papers$;
     this.papers.selectCourse(this.route.snapshot.params['courseKey']);
+    this.isAdmin$ = this.roles.isInRole('Admin');
   }
 
   openNewPaperDialog() {

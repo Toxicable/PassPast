@@ -13,7 +13,7 @@ import { environment } from '../../environments/environment';
 
 @NgModule({
   imports: [
-    FlexLayoutModule.forRoot(),
+    FlexLayoutModule,
     MaterialModule.forRoot(),
   ],
   providers: [

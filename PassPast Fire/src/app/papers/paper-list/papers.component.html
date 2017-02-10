@@ -3,7 +3,7 @@
 <button md-icon-button color="secondary" [routerLink]="['../']" >
   <md-icon>chevron_left</md-icon>
 </button>
-<button  type="button" md-raised-button color="primary" (click)="openNewPaperDialog()">Add Paper</button>
+<button  type="button" md-raised-button color="primary" (click)="openNewPaperDialog()" *ngIf="isAdmin$ | async">Add Paper</button>
 
 <div *ngIf="(papers$ | async)?.length == 0">
     There are no papers for this course
