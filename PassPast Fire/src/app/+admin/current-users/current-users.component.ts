@@ -26,7 +26,7 @@ export class CurrentUsersComponent implements OnInit {
         const then = new Date(user.connectedAt).getTime();
         const duration = new Date(now - then);
         duration.setHours(duration.getHours() - 13);
-        user.connectedFor = new Date(duration).toTimeString().replace(/.*(\d{2}:\d{2}:\d{2}).*/, "$1");
+        user.connectedFor = new Date(duration).toTimeString().replace(/.*(\d{2}:\d{2}:\d{2}).*/, '$1');
         return user;
       })
     );
