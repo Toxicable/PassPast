@@ -1,5 +1,6 @@
+import { AuthService } from './../../core/auth.service';
 import { RolesService } from './../../core/roles.service';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Inject, Optional} from '@angular/core';
 import { CourseService } from './../course.service';
 import { Observable } from 'rxjs/Observable';
 import { Course } from '../../models/course';
@@ -20,6 +21,7 @@ export class CoursesComponent implements OnInit {
   courses$: Observable<Course[]>;
   trackByFn = trackByIdentity;
   isAdmin$: Observable<boolean>;
+  loggedIn$: Observable<boolean>;
 
   constructor(
     private courses: CourseService,
@@ -27,19 +29,20 @@ export class CoursesComponent implements OnInit {
     private dialog: MdDialog,
     private af: AngularFire,
     private roles: RolesService,
+    private auth: AuthService,
   ) { }
 
   ngOnInit() {
     this.courses$ = this.courses.courses$;
-
+    this.loggedIn$ = this.auth.loggedIn$;
     this.isAdmin$ = this.roles.isInRole('Admin');
   }
 
-  openDialog() {
+  openDialog(isRequest = false) {
     this.newCourseDialogRef = this.dialog.open(AddCourseComponent, {
       disableClose: false
     });
-
+    this.newCourseDialogRef.componentInstance.isRequest = isRequest;
     this.newCourseDialogRef.afterClosed()
       .subscribe(result => {
         this.newCourseDialogRef = null;

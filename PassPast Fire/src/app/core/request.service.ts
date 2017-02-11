@@ -1,6 +1,8 @@
+import { Request, RequestType } from './../models';
 import { AuthService } from './auth.service';
 import { AngularFire } from 'angularfire2';
 import { Injectable } from '@angular/core';
+
 @Injectable()
 export class RequestService {
 
@@ -9,7 +11,7 @@ export class RequestService {
     private auth: AuthService,
   ) { }
 
-  createRquest(form: any, type: 'course' | 'paper' | '') {
+  create(form: any, type: RequestType) {
     this.auth.uid$.first().subscribe(uid => {
       const item = {
         data: form,

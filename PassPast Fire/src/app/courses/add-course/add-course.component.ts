@@ -1,5 +1,6 @@
+import { RequestService } from './../../core/request.service';
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, Validators, FormGroup } from '@angular/forms';
+import { FormBuilder, Validators, FormGroup, FormControl } from '@angular/forms';
 import { CourseService } from '../course.service';
 import { AlertService } from '../../core';
 
@@ -14,18 +15,29 @@ export class AddCourseComponent implements OnInit {
     private formBuilder: FormBuilder,
     private courses: CourseService,
     private alert: AlertService,
+    private requests: RequestService,
   ) { }
 
-  newCourseForm: FormGroup
+  newCourseForm: FormGroup;
+  isRequest: boolean;
 
   ngOnInit(): void {
     this.newCourseForm = this.formBuilder.group({
       name: ['', [FormValidators.required]],
       code: ['', [FormValidators.required]],
-    });
+    }, { asyncValidator: this.courseExistsValidator.bind(this) });
+  }
+
+  courseExistsValidator(group: FormGroup) {
+    return this.courses.checkExists(group.value)
+      .map(exists => exists ? { courseExists: true } : null);
   }
 
   onSubmit() {
-    this.courses.create(this.newCourseForm.value);
+    if (!this.isRequest) {
+      this.courses.create(this.newCourseForm.value);
+    } else {
+      this.requests.create(this.newCourseForm.value, 'course')
+    }
   }
 }

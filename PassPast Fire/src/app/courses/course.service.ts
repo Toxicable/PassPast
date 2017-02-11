@@ -18,7 +18,7 @@ export class CourseService {
   ) {
     this.courses$ = this.af.database.list('/courses')
   }
-      sub: any;
+  sub: any;
   courses$: Observable<Course[]>;
 
   create(course: Course) {
@@ -27,6 +27,30 @@ export class CourseService {
     this.auth.uid$.first().subscribe(uid => {
       course.createdBy = uid;
       this.af.database.list('/courses').push(course);
+    });
+  }
+
+  checkExists(course: Course): Observable<boolean> {
+    return this.af.database.list('/courses', {
+      query: {
+        orderByChild: 'name',
+        equalTo: course.name,
+        limitToFirst: 1
+      }
+    }).first().flatMap((nameFetchedCourses: any[]) => {
+      if (nameFetchedCourses.length > 0) {
+        return Observable.of(true);
+      } else {
+        return this.af.database.list('/courses', {
+          query: {
+            orderByChild: 'code',
+            equalTo: course.code,
+            limitToFirst: 1
+          }
+        }).first().map((codeFetchedCourses: any[]) => {
+          return codeFetchedCourses.length > 0;
+        });
+      }
     });
   }
 }

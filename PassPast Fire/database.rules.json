@@ -148,6 +148,10 @@
         }
       }
     },
+    "requests": {
+      ".read": "auth != null",
+      ".write": "auth != null"
+    },
     "roles": {
       ".read": true,
       ".write": "root.child('roles').child('Admin').child(auth.uid).val() != null"

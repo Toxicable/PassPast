@@ -8,3 +8,4 @@ export { Exam } from './exam';
 export { Comment } from './comment';
 export { Answer } from './answer';
 export { Role, UserRole } from './role';
+export { Request, RequestType } from './request';

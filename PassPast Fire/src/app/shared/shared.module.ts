@@ -18,14 +18,14 @@ const IMPORTS = [
   ReactiveFormsModule,
   CommonModule,
   HttpModule,
-  ValidationMessagesModule
+  MaterialModule,
+  FlexLayoutModule
 ]
 
 @NgModule({
   imports: [
     ...IMPORTS,
-    MaterialModule,
-    FlexLayoutModule,
+    ValidationMessagesModule
   ],
   declarations: [
     ...DECLARATIONS,
@@ -33,8 +33,7 @@ const IMPORTS = [
   exports: [
     ...DECLARATIONS,
     ...IMPORTS,
-    MaterialModule,
-    FlexLayoutModule,
+    ValidationMessagesModule,
   ]
 })
 export class SharedModule { }

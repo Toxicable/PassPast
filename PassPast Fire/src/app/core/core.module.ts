@@ -1,3 +1,4 @@
+import { RequestService } from './request.service';
 import { CurrentUsersService } from './current-users.service';
 import { AdminAuthGuard } from './guards/admin-auth-guard.service';
 import { AuthGuard } from './guards/auth-guard.service';
@@ -10,6 +11,7 @@ import { LoadingBarService } from './loading-bar/loading-bar.service';
 import { MaterialModule, MdSnackBarModule } from '@angular/material';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { environment } from '../../environments/environment';
+import { validationMessageMapper } from './validation-messages-mapper';
 
 @NgModule({
   imports: [
@@ -25,6 +27,8 @@ import { environment } from '../../environments/environment';
     AuthGuard,
     AdminAuthGuard,
     CurrentUsersService,
+    RequestService,
+    { provide: 'validationMessageMapper', useValue: validationMessageMapper },
   ]
 
 })
