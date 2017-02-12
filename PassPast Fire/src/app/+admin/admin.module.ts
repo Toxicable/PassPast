@@ -1,3 +1,4 @@
+import { RequestsComponent } from './requests/requests.compoent';
 import { CurrentUsersComponent } from './current-users/current-users.component';
 import { AddUserRoleComponent } from './roles/add-user-role.component';
 import { RolesComponent } from './roles/roles.component';
@@ -13,6 +14,7 @@ import { MdDialogModule, MaterialModule } from '@angular/material';
     RolesComponent,
     AddUserRoleComponent,
     CurrentUsersComponent,
+    RequestsComponent,
   ],
   entryComponents: [
     AddUserRoleComponent,

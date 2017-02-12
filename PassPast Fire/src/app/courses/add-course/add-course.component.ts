@@ -25,7 +25,11 @@ export class AddCourseComponent implements OnInit {
     this.newCourseForm = this.formBuilder.group({
       name: ['', [FormValidators.required]],
       code: ['', [FormValidators.required]],
-    }, { asyncValidator: this.courseExistsValidator.bind(this) });
+    }, {
+        asyncValidator: FormValidators.composeAsync(this.isRequest ?
+          [this.requestExistsValidator.bind(this), this.courseExistsValidator.bind(this)] :
+          [this.courseExistsValidator.bind(this)])
+      });
   }
 
   courseExistsValidator(group: FormGroup) {
@@ -33,11 +37,17 @@ export class AddCourseComponent implements OnInit {
       .map(exists => exists ? { courseExists: true } : null);
   }
 
+  requestExistsValidator(group: FormGroup) {
+    return this.requests.checkExisting(group.value).first()
+      .map(exists => exists ? { requestExists: true } : null);
+  }
+
   onSubmit() {
     if (!this.isRequest) {
       this.courses.create(this.newCourseForm.value);
     } else {
-      this.requests.create(this.newCourseForm.value, 'course')
+      this.requests.create(this.newCourseForm.value, 'course');
     }
+    this.newCourseForm.reset();
   }
 }

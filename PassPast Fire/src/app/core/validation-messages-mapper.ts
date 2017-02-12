@@ -14,7 +14,8 @@ export function validationMessageMapper(validatorName, validatorValue) {
         range: validatorValue.value + ' must be in the range: ' + validatorValue.min + '-' + validatorValue.max,
         min: validatorValue.value + ' must be greater than ' + validatorValue.min,
         max: validatorValue.value + ' must be less than than ' + validatorValue.max,
-        courseExists: `This course already exists`
+        courseExists: `This course already exists`,
+        requestExists: `You have already made a request for this course`
     };
     return config[validatorName];
 }

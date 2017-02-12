@@ -3,9 +3,10 @@ import { Paper } from './paper';
 import { Course } from './course';
 
 export interface Request {
+  $key?: string;
   type: RequestType;
   data: Course | Paper | Exam;
-  createdBy: string;
+  requestedBy: string[];
   createdAt: string;
 }
 

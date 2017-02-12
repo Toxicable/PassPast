@@ -1,0 +1,12 @@
+<h2>Requests</h2>
+
+<div *ngFor="let request of requests$ | async">
+  <div>
+    {{request.type}}
+  </div>
+  <div>
+    {{request.createdAt | date:'medium'}}
+  </div>
+  Count: {{request.requestedBy?.length || 0}}
+  <hr />
+</div>

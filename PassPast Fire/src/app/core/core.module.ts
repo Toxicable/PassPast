@@ -15,7 +15,6 @@ import { validationMessageMapper } from './validation-messages-mapper';
 
 @NgModule({
   imports: [
-    FlexLayoutModule,
     MaterialModule.forRoot(),
   ],
   providers: [

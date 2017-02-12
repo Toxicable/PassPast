@@ -1,3 +1,4 @@
+import { RequestsComponent } from './requests/requests.compoent';
 import { CurrentUsersComponent } from './current-users/current-users.component';
 import { RolesComponent } from './roles/roles.component';
 import { AdminComponent } from './admin.component';
@@ -16,6 +17,10 @@ const adminRoutes: Routes = [
          {
            path: 'current-users',
            component: CurrentUsersComponent,
+         },
+         {
+           path: 'requests',
+           component: RequestsComponent,
          }
         ]
     },
