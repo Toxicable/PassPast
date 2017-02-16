@@ -1,3 +1,4 @@
+import { AuthService } from './../../core/auth.service';
 import { RolesService } from './../../core/roles.service';
 import { Component, OnInit } from '@angular/core';
 import { PaperService } from './../paper.service';
@@ -28,20 +29,23 @@ export class PapersComponent implements OnInit {
     private route: ActivatedRoute,
     private dialog: MdDialog,
     private router: Router,
-    private roles: RolesService
+    private roles: RolesService,
+    private auth: AuthService,
   ) { }
 
   ngOnInit() {
-    this.papers$ = this.papers.papers$;
+    this.papers$ = this.papers.list$;
     this.papers.selectCourse(this.route.snapshot.params['courseKey']);
+    this.loggedIn$ = this.auth.loggedIn$;
     this.isAdmin$ = this.roles.isInRole('Admin');
   }
 
-  openNewPaperDialog() {
+  openNewPaperDialog(isRequest = false) {
     this.newPaperDialogRef = this.dialog.open(AddPaperComponent, {
       disableClose: false
     });
     this.newPaperDialogRef.componentInstance.courseKey = this.route.snapshot.params['courseKey'];
+    this.newPaperDialogRef.componentInstance.isRequest = isRequest;
 
     this.newPaperDialogRef.afterClosed()
       .subscribe(result => {

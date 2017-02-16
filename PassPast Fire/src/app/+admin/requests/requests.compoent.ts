@@ -15,6 +15,6 @@ export class RequestsComponent implements OnInit{
   ) { }
 
     ngOnInit(){
-      this.requests$ = this.requests.requests$;
+      this.requests$ = this.requests.list$;
     }
 }

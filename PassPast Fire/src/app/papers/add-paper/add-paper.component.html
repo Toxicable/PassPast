@@ -1,10 +1,15 @@
-<form [formGroup]="newPaperForm" (ngSubmit)="onSubmit()" >
+<form [formGroup]="newPaperForm" (ngSubmit)="onSubmit()" autocomplete="off">
 
-    <md-input-container>
-      <input md-input placeholder="Name" formControlName="name">
-    </md-input-container>
+  <md-input-container>
+    <input md-input placeholder="Name" formControlName="name">
+  </md-input-container>
 
+  <div>
     <av-validation-messages [control]="newPaperForm.controls['name']"></av-validation-messages>
-
-    <button md-raised-button color="primary" type="submit" [disabled]="!newPaperForm.valid" >Submit</button>
+    <av-validation-messages [control]="newPaperForm"></av-validation-messages>
+  </div>
+  {{newPaperForm.errors | json}}
+  {{newPaperForm.status | json}}
+  {{newPaperForm.touched | json}}
+  <button md-raised-button color="primary" type="submit" [disabled]="!newPaperForm.valid">Submit</button>
 </form>

@@ -1,8 +1,9 @@
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs';
 import { Request, RequestType } from './../models';
 import { AuthService } from './auth.service';
 import { AngularFire, FirebaseListObservable } from 'angularfire2';
 import { Injectable } from '@angular/core';
+
 
 @Injectable()
 export class RequestService {

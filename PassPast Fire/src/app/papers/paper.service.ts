@@ -11,7 +11,7 @@ import { Paper } from '../models/paper';
 
 @Injectable()
 export class PaperService {
-  papers$: Observable<Paper[]>;
+  list$: Observable<Paper[]>;
   selectedCourseId: BehaviorSubject<string>;
 
   constructor(
@@ -20,13 +20,13 @@ export class PaperService {
     private auth: AuthService,
   ) {
     this.selectedCourseId = new BehaviorSubject<string>(null);
-    this.papers$ = this.af.database.list('/papers', {
+    this.list$ = this.af.database.list('/papers', {
       query: {
         orderByChild: 'courseKey',
         equalTo: this.selectedCourseId,
       }
     });
-    this.papers$.subscribe(p => p === null ? this.loadingBar.load() : this.loadingBar.done());
+    this.list$.subscribe(p => p === null ? this.loadingBar.load() : this.loadingBar.done());
   }
 
   selectCourse(courseId: string) {
@@ -40,5 +40,12 @@ export class PaperService {
       paper.createdBy = uid;
       this.af.database.list('/papers').push(paper);
     });
+  }
+
+  checkExists(paper: Paper): Observable<boolean> {
+    return this.list$
+      .first()
+      .map(papers => papers.find(p => p.name === paper.name))
+      .map(p => !!p);
   }
 }
