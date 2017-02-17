@@ -2,8 +2,9 @@
   <span fxFlex="5">
     {{answer.contentOrIncriment}}
   </span>
-  <!--[mdTooltip]="loggedIn ? 'Click to vote' : 'You must be logged in to vote'" mdTooltipPosition="above"-->
+
   <md-progress-bar  [color]="answer.userVoteValue === 1 ? 'accent': 'primary'"
+  [mdTooltip]="loggedIn ? 'Click to vote' : 'You must be logged in to vote'" mdTooltipPosition="above"
     mode="determinate" (click)="sendVote()" class="can-click" [value]="(answer.voteSum/totalAnswerVotes) * 100"></md-progress-bar>
 
   <span>

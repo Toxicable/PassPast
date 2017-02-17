@@ -22,9 +22,7 @@ body{
   text-align: center;
 }
 
-md-card{
-  margin: 10px;
-}
+
 
 a{
   color: $black-87-opacity;
@@ -32,7 +30,7 @@ a{
 }
 
 a:hover{
-  color: md-color($app-accent)
+  color: mat-color($app-accent)
 }
 
 

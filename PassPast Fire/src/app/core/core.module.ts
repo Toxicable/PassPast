@@ -12,10 +12,11 @@ import { MaterialModule, MdSnackBarModule } from '@angular/material';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { environment } from '../../environments/environment';
 import { validationMessageMapper } from './validation-messages-mapper';
+import { VALIDATION_MESSAGE_MAPPER } from 'angular-validators';
 
 @NgModule({
   imports: [
-    MaterialModule.forRoot(),
+    MaterialModule,
   ],
   providers: [
     LoadingBarService,
@@ -27,7 +28,7 @@ import { validationMessageMapper } from './validation-messages-mapper';
     AdminAuthGuard,
     CurrentUsersService,
     RequestService,
-    { provide: 'validationMessageMapper', useValue: validationMessageMapper },
+    { provide: VALIDATION_MESSAGE_MAPPER, useValue: validationMessageMapper },
   ]
 
 })

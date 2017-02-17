@@ -1,7 +1,7 @@
 <div>
   <form [formGroup]="newCommentForm" novalidate (ngSubmit)="sendComment()">
     <md-input-container  >
-      <input md-input="" [readOnly]="!loggedIn" [disabled]="!loggedIn" placeholder="new comment" formControlName="content">
+      <input mdInput="" [readOnly]="!loggedIn" [disabled]="!loggedIn" placeholder="new comment" formControlName="content">
     </md-input-container>
   </form>
 

@@ -3,29 +3,29 @@
 
 // Include the base styles for Angular Material core. We include this here so that you only
 // have to load a single css file for Angular Material in your app.
-@include md-core();
+@include mat-core();
 
 // Define the palettes for your theme using the Material Design palettes available in palette.scss
 // (imported above). For each palette, you can optionally specify a default, lighter, and darker
 // hue.
-$primary: $md-amber;
-$accent: $md-red;
-$warn: $md-red;
+$primary: $mat-amber;
+$accent: $mat-red;
+$warn: $mat-red;
 
 
-$app-primary: md-palette($primary);
-$app-accent:  md-palette($accent, A200, A100, A400);
+$app-primary: mat-palette($primary);
+$app-accent:  mat-palette($accent, A200, A100, A400);
 
-// The warn palette is optional (defaults to red).
-$app-warn:    md-palette($warn);
+// // The warn palette is optional (defaults to red).
+ $app-warn:    mat-palette($warn);
 
-// Create the theme object (a Sass map containing all of the palettes).
-$app-theme: md-light-theme($app-primary, $app-accent, $app-warn);
+// // Create the theme object (a Sass map containing all of the palettes).
+ $app-theme: mat-light-theme($app-primary, $app-accent, $app-warn);
 
-// Include theme styles for core and each component used in your app.
-// Alternatively, you can import and @include the theme mixins for each component
-// that you are using.
-@include angular-material-theme($app-theme);
+// // Include theme styles for core and each component used in your app.
+// // Alternatively, you can import and @include the theme mixins for each component
+// // that you are using.
+ @include angular-material-theme($app-theme);
 
 
 // Color palettes from the Material Design spec.
@@ -40,22 +40,22 @@ $black-87-opacity: rgba(black, 0.87);
 $white-87-opacity: rgba(white, 0.87);
 
 //allowed colors
-// $md-red
-// $md-pink
-// $md-purple
-// $md-deep-purple
-// $md-indigo
-// $md-blue
-// $md-light-blue
-// $md-cyan
-// $md-teal
-// $md-green
-// $md-light-green
-// $md-lime
-// $md-yellow
-// $md-amber
-// $md-orange
-// $md-deep-orange
-// $md-brown
-// $md-grey
-// $md-blue-grey
+// $mat-red
+// $mat-pink
+// $mat-purple
+// $mat-deep-purple
+// $mat-indigo
+// $mat-blue
+// $mat-light-blue
+// $mat-cyan
+// $mat-teal
+// $mat-green
+// $mat-light-green
+// $mat-lime
+// $mat-yellow
+// $mat-amber
+// $mat-orange
+// $mat-deep-orange
+// $mat-brown
+// $mat-grey
+// $mat-blue-grey

@@ -1,14 +1,14 @@
 <form [formGroup]="newCourseForm" (ngSubmit)="onSubmit()" autocomplete="off">
   <div>
     <md-input-container>
-      <input md-input placeholder="Name" formControlName="name">
+      <input mdInput placeholder="Name" formControlName="name">
     </md-input-container>
     <av-validation-messages [control]="newCourseForm.controls.name"></av-validation-messages>
   </div>
 
   <div>
     <md-input-container>
-      <input md-input placeholder="Code" formControlName="code">
+      <input mdInput placeholder="Code" formControlName="code">
     </md-input-container>
     <av-validation-messages [control]="newCourseForm.controls.code"></av-validation-messages>
   </div>

@@ -1,7 +1,7 @@
 <form [formGroup]="newExamForm" (ngSubmit)="onSubmit()">
   <div>
     <md-input-container>
-      <input md-input placeholder="Year" formControlName="year">
+      <input mdInput placeholder="Year" formControlName="year">
     </md-input-container>
     <av-validation-messages [control]="newExamForm.controls.year"></av-validation-messages>
   </div>
