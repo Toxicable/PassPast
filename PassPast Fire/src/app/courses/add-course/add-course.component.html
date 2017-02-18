@@ -1,14 +1,17 @@
-<form [formGroup]="form" (ngSubmit)="onSubmit()" autocomplete="off">
-  <div>
-    <form-input [control]="form.get('name')" placeholder="Name" [group]="form"></form-input>
-  </div>
+<h2 md-dialog-title>New Course {{isRequest ? 'Request' : ''}}</h2>
+<md-dialog-content>
+  <form [formGroup]="form" (ngSubmit)="onSubmit()" autocomplete="off">
+    <div>
+      <form-input [control]="form.get('name')" placeholder="Name" [group]="form"></form-input>
+    </div>
 
-  <div>
-    <form-input [control]="form.get('code')" placeholder="Code" [group]="form"></form-input>
-  </div>
+    <div>
+      <form-input [control]="form.get('code')" placeholder="Code" [group]="form"></form-input>
+    </div>
 
-  <div>
-    <av-validation-messages [control]="form"></av-validation-messages>
-  </div>
-  <button md-raised-button color="primary" type="submit" [disabled]="!form.valid">Submit</button>
-</form>
+    <div>
+      <av-validation-messages [control]="form"></av-validation-messages>
+    </div>
+    <button md-raised-button color="primary" type="submit" [disabled]="!form.valid">Submit</button>
+  </form>
+</md-dialog-content>

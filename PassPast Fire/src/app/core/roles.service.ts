@@ -41,6 +41,10 @@ export class RolesService {
     });
   }
 
+  removeFromRole(roleName: string, userKey: string){
+    this.af.database.object(`/roles/${roleName}/${userKey}`).remove();
+  }
+
   isInRole(roleName: string): Observable<boolean> {
     return this.auth.uid$.flatMap(uid => {
       return this.af.database.object(`/roles/${roleName}/${uid}`)

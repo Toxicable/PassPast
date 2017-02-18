@@ -1,10 +1,11 @@
-<form [formGroup]="newPaperForm" (ngSubmit)="onSubmit()" autocomplete="off">
+<h2 md-dialog-title>New Paper {{isRequest ? 'Request' : ''}}</h2>
+<md-dialog-content>
+  <form [formGroup]="newPaperForm" (ngSubmit)="onSubmit()" autocomplete="off">
+    <form-input [control]="newPaperForm.get('name')" placeholder="Name" [group]="newPaperForm"></form-input>
 
-
-  <form-input [control]="newPaperForm.get('name')" placeholder="Name" [group]="newPaperForm"></form-input>
-
-  <div>
-    <av-validation-messages [control]="newPaperForm"></av-validation-messages>
-  </div>
-  <button md-raised-button color="primary" type="submit" [disabled]="!newPaperForm.valid">Submit</button>
-</form>
+    <div>
+      <av-validation-messages [control]="newPaperForm"></av-validation-messages>
+    </div>
+    <button md-raised-button color="primary" type="submit" [disabled]="!newPaperForm.valid">Submit</button>
+  </form>
+</md-dialog-content>

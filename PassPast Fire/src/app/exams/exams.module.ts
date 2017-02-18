@@ -11,6 +11,9 @@ import { NgModule } from '@angular/core';
     ExamsComponent,
     QuestionSectionComponent,
   ],
+  entryComponents: [
+    AddExamComponent,
+  ],
   providers: [
     ExamService,
   ],

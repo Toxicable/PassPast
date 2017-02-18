@@ -27,12 +27,15 @@
       <app-new-answer [questionKey]="question.$key" [loggedIn]="loggedIn"></app-new-answer>
     </span>
 
-    <a (click)="showComments = !showComments">{{showComments ? 'Hide' : 'Show'}} comments</a>
+    <a (click)="showComments = !showComments" class="can-click">{{showComments ? 'Hide' : 'Show'}} comments</a>
 
     <!--Comments-->
     <span *ngIf="showComments">
       <!--New Comment-->
       <app-new-comment [questionKey]="question.$key" [loggedIn]="loggedIn" ></app-new-comment>
+
+      <!--laoder-->
+      <md-spinner *ngIf="(comments$ | async) === null" ></md-spinner>
 
       <div *ngFor="let comment of comments$ | async">
         <app-comment [comment]="comment" [loggedIn]="loggedIn"></app-comment>

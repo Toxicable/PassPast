@@ -6,7 +6,11 @@
   <div>{{role.name}}</div>
   <h4>Users</h4>
   <div *ngFor="let user of role.users">
+    <button md-icon-button (click)="removeRole(role.name, user.$key)">
+      <md-icon>remove</md-icon>
+    </button>
     <div md-line>{{user.$key}}</div>
     <div md-line>{{user.updatedAt | date:'medium'}}</div>
+  <hr />
   </div>
 </div>

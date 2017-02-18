@@ -33,10 +33,6 @@ const appRoutes: Routes = [
     component: ExamsComponent,
   },
   {
-    path: ':courseKey/:paperKey/add-exam',
-    component: AddExamComponent,
-  },
-  {
     path: ':courseKey/:paperKey/:examKey',
     component: QuestionsComponent,
   },

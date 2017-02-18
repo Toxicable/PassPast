@@ -26,6 +26,10 @@ export class RolesComponent {
     this.roles$ = this.roles.getRoles();
   }
 
+  removeRole(role: string, userKey: string) {
+    this.roles.removeFromRole(role, userKey);
+  }
+
   openDialog() {
     this.dialogRef = this.dialog.open(AddUserRoleComponent, {
       disableClose: false

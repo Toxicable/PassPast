@@ -23,10 +23,11 @@ export class AnswerService {
       return this.auth.uid$.map(uid => {
         return answers.map(answer => {
           answer.voteSum = 0;
+          answer.userVoteValue = 0;
           Object.keys(answer.votes || {})
             .forEach(voteKey => {
               const vote: Vote = answer.votes[voteKey];
-              answer.userVoteValue = voteKey === uid ? vote.value : 0;
+              answer.userVoteValue = voteKey === uid ? vote.value : answer.userVoteValue;
               answer.voteSum += vote.value;
             });
           return answer;
@@ -43,8 +44,6 @@ export class AnswerService {
         contentOrIncriment: form.content,
         questionKey,
         votes: {},
-        voteSum: 0,
-        userVoteValue: 0,
       };
       this.af.database.list('/answers').push(answer);
     });

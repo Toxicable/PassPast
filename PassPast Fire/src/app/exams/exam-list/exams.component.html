@@ -5,12 +5,10 @@
 
 <span *ngIf="loggedIn$ | async">
   <button type="button" md-raised-button color="primary" (click)="openNewExamDialog(true)">Add Exam</button>
-  <a class="header-navigation__link" [routerLink]="['/courses', 1, 2, 'add-exam']" routerLinkActive="active-router-link">Add Exam</a>
 </span>
 
 <span *ngIf="isAdmin$ | async">
-  <button type="button" md-raised-button color="primary" (click)="openNewExamDialog()">Add Exam</button>
-  <a class="header-navigation__link" [routerLink]="['/courses', 1, 2, 'add-exam']" routerLinkActive="active-router-link">Add Exam</a>
+  <button type="button" md-raised-button color="primary" (click)="openNewExamDialog()">Request Exam to be Added</button>
 </span>
 
 <div *ngIf="(exams$ | async)?.length == 0">

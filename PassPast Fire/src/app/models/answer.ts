@@ -8,6 +8,6 @@ export interface Answer {
     createdAt: string;
     createdBy: string;
     votes: Dict<Vote>;
-    userVoteValue: number;
-    voteSum: number;
+    userVoteValue?: number;
+    voteSum?: number;
 }
