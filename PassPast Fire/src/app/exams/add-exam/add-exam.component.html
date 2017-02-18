@@ -1,9 +1,6 @@
-<form [formGroup]="newExamForm" (ngSubmit)="onSubmit()">
+<form [formGroup]="newExamForm" (ngSubmit)="onSubmit()" autocomplete="off">
   <div>
-    <md-input-container>
-      <input mdInput placeholder="Year" formControlName="year">
-    </md-input-container>
-    <av-validation-messages [control]="newExamForm.controls.year"></av-validation-messages>
+    <form-input [control]="newExamForm.get('year')" placeholder="Year" [group]="newExamForm"></form-input>
   </div>
 
   <div>
@@ -12,13 +9,13 @@
       <md-button-toggle value="S2">S2</md-button-toggle>
       <md-button-toggle value="SS">SS</md-button-toggle>
     </md-button-toggle-group>
-    <av-validation-messages [control]="newExamForm.controls.semester"></av-validation-messages>
+    <av-validation-messages [control]="newExamForm.get('semester')"></av-validation-messages>
   </div>
 
   <button md-button (click)="reset()" type="button">Reset</button>
   <button md-button (click)="addSection()" type="button">+ Add Section</button>
   <ul>
-    <li *ngFor="let section of newExamForm.controls.sections.controls; let i=index">
+    <li *ngFor="let section of newExamForm.get('sections')['controls']; let i=index">
       <button md-button (click)="removeSection(i)" type="button">RemoveSection</button>
       <app-question-section [sectionForm]="section"></app-question-section>
     </li>

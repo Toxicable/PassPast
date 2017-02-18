@@ -1,0 +1,8 @@
+<span [formGroup]="group">
+  <md-input-container  [dividerColor]="control.errors && control.dirty ? 'warn' : '' ">
+    <input mdInput [placeholder]="placeholder" [formControl]="control">
+    <md-hint align="end">
+      <av-validation-messages [control]="control"></av-validation-messages>
+    </md-hint>
+  </md-input-container>
+</span>

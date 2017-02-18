@@ -1,21 +1,14 @@
-<form [formGroup]="newCourseForm" (ngSubmit)="onSubmit()" autocomplete="off">
+<form [formGroup]="form" (ngSubmit)="onSubmit()" autocomplete="off">
   <div>
-    <md-input-container>
-      <input mdInput placeholder="Name" formControlName="name">
-    </md-input-container>
-    <av-validation-messages [control]="newCourseForm.controls.name"></av-validation-messages>
+    <form-input [control]="form.get('name')" placeholder="Name" [group]="form"></form-input>
   </div>
 
   <div>
-    <md-input-container>
-      <input mdInput placeholder="Code" formControlName="code">
-    </md-input-container>
-    <av-validation-messages [control]="newCourseForm.controls.code"></av-validation-messages>
+    <form-input [control]="form.get('code')" placeholder="Code" [group]="form"></form-input>
   </div>
 
   <div>
-    <av-validation-messages [control]="newCourseForm"></av-validation-messages>
+    <av-validation-messages [control]="form"></av-validation-messages>
   </div>
-
-  <button md-raised-button color="primary" type="submit" [disabled]="!newCourseForm.valid">Submit</button>
+  <button md-raised-button color="primary" type="submit" [disabled]="!form.valid">Submit</button>
 </form>

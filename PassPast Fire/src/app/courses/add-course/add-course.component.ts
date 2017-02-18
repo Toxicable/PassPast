@@ -18,11 +18,11 @@ export class AddCourseComponent implements OnInit {
     private requests: RequestService,
   ) { }
 
-  newCourseForm: FormGroup;
+  form: FormGroup;
   isRequest: boolean;
 
   ngOnInit(): void {
-    this.newCourseForm = this.formBuilder.group({
+    this.form = this.formBuilder.group({
       name: ['', [FormValidators.required]],
       code: ['', [FormValidators.required]],
     }, {
@@ -44,10 +44,10 @@ export class AddCourseComponent implements OnInit {
 
   onSubmit() {
     if (!this.isRequest) {
-      this.courses.create(this.newCourseForm.value);
+      this.courses.create(this.form.value);
     } else {
-      this.requests.create(this.newCourseForm.value, 'course');
+      this.requests.create(this.form.value, 'course');
     }
-    this.newCourseForm.reset();
+    this.form.reset();
   }
 }

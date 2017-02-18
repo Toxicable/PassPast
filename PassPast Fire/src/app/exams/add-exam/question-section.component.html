@@ -1,9 +1,6 @@
 <div [formGroup]="sectionForm" class="new-question-section-form">
   <div>
-    <md-input-container>
-      <input mdInput placeholder="Count" formControlName="count">
-    </md-input-container>
-    <av-validation-messages [control]="sectionForm.controls.count"></av-validation-messages>
+    <form-input [control]="sectionForm.get('count')" placeholder="Count" [group]="sectionForm"></form-input>
   </div>
 
   <div>
@@ -13,7 +10,7 @@
         <md-button-toggle value="mcq">Mcq</md-button-toggle>
         <md-button-toggle value="short">Short Answer</md-button-toggle>
       </md-button-toggle-group>
-      <av-validation-messages [control]="sectionForm.controls.type"></av-validation-messages>
+      <av-validation-messages [control]="sectionForm.get('type')"></av-validation-messages>
 
     </div>
     <div>
@@ -23,12 +20,13 @@
         <md-button-toggle value="alpha">a, b, c</md-button-toggle>
         <md-button-toggle value="roman">i, ii, iii</md-button-toggle>
       </md-button-toggle-group>
-      <av-validation-messages [control]="sectionForm.controls.incrimentType"></av-validation-messages>
+      <av-validation-messages [control]="sectionForm.get('incrimentType')"></av-validation-messages>
     </div>
 
-    <button md-button (click)="addSubQuestion(i)" type="button">+ Add Sub Question</button>
+    <button md-button (click)="addSubQuestion()" type="button">+ Add Sub Question</button>
+    {{i}}
     <ul>
-      <li *ngFor="let section of sectionForm.controls.subQuestions.controls; let i=index">
+      <li *ngFor="let section of sectionForm.get('subQuestions')['controls']; let i=index">
         <button md-button (click)="removeSection(i)" type="button">RemoveSection</button>
         <app-question-section [sectionForm]="section"></app-question-section>
       </li>

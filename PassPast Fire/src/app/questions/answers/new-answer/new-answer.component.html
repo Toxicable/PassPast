@@ -1,7 +1,5 @@
 <form *ngIf="loggedIn" [formGroup]="newAnswerForm" novalidate (ngSubmit)="sendAnswer()">
-      <md-input-container>
-      <input mdInput placeholder="New Answer" formControlName="content">
-    </md-input-container>
+    <form-input [control]="newAnswerForm.get('content')" placeholder="New Answer" [group]="newAnswerForm"></form-input>
 </form>
 <div *ngIf="!loggedIn">
 You must be logged in to post an answer

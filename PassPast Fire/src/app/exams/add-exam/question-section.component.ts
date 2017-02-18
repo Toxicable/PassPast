@@ -1,3 +1,4 @@
+import { FormValidators } from 'angular-validators';
 import { Component, OnInit, Input } from '@angular/core';
 import { FormBuilder, Validators, FormGroup, FormArray } from '@angular/forms';
 
@@ -15,7 +16,7 @@ export class QuestionSectionComponent {
   newSection() {
     return this.formBuilder.group({
       incrimentType: ['', Validators.required],
-      count: ['', Validators.required],
+      count: ['', [Validators.required, FormValidators.number]],
       type: ['', Validators.required],
       subQuestions: this.formBuilder.array([])
     });
@@ -27,7 +28,7 @@ export class QuestionSectionComponent {
   }
   addSection() {
     const control = <FormArray>this.sectionForm.controls['subQuestions'];
-    control.push(this.newSection())
+    control.push(this.newSection());
   }
 
   removeSection(i: number) {

@@ -1,17 +1,11 @@
-<form [formGroup]="form" (ngSubmit)="onSubmit()">
+<form [formGroup]="form" (ngSubmit)="onSubmit()" autocomplete="off">
 
   <div>
-    <md-input-container>
-      <input mdInput placeholder="Role Name"  formControlName="roleName">
-    </md-input-container>
-    <av-validation-messages [control]="form.controls.roleName"></av-validation-messages>
+    <form-input [control]="form.get('roleName')" placeholder="Role Name" [group]="form"></form-input>
   </div>
 
   <div>
-    <md-input-container>
-      <input mdInput placeholder="User Key" formControlName="userKey">
-    </md-input-container>
-    <av-validation-messages [control]="form.controls.userKey"></av-validation-messages>
+    <form-input [control]="form.get('userKey')" placeholder="User Key" [group]="form"></form-input>
   </div>
 
   <button md-raised-button color="primary" type="submit" [disabled]="!form.valid">Submit</button>

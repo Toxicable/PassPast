@@ -1,3 +1,4 @@
+import { FormInputComponent } from './form-input/form-input.component';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HttpModule } from '@angular/http';
@@ -13,6 +14,7 @@ const DECLARATIONS = [
   DefaultValuePipe,
   LoadingBarComponent,
   MarkdownComponent,
+  FormInputComponent,
 ];
 const IMPORTS = [
   ReactiveFormsModule,
