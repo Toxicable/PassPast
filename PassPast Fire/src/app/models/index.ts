@@ -1,11 +1,11 @@
 export { Dict } from './dict';
-export { Course } from './course';
+export { Course, CourseForm } from './course';
 export { Vote, VoteType } from './vote';
 export { User } from './user';
 export { Question, QuestionType, IncrimentType, Smester } from './question';
-export { Paper } from './paper';
-export { Exam } from './exam';
+export { Paper, PaperForm } from './paper';
+export { Exam, ExamForm, QuestionSection } from './exam';
 export { Comment } from './comment';
 export { Answer } from './answer';
 export { Role, UserRole } from './role';
-export { Request, RequestType } from './request';
+export { Request, RequestType, FormData } from './request';

@@ -1,3 +1,4 @@
+import { RequestService } from './../../core/request.service';
 import { ActivatedRoute } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators, FormGroup, FormArray } from '@angular/forms';
@@ -21,13 +22,15 @@ export class AddExamComponent implements OnInit {
     private questions: QuestionService,
     private route: ActivatedRoute,
     private af: AngularFire,
+    private request: RequestService,
   ) { }
 
-  newExamForm: FormGroup
+  form: FormGroup;
   paperKey: string;
+  isRequest: boolean;
 
   ngOnInit(): void {
-    this.newExamForm = this.formBuilder.group({
+    this.form = this.formBuilder.group({
       year: ['', [FormValidators.required, FormValidators.range(2000, 3000)]],
       semester: ['', FormValidators.required],
       sections: this.formBuilder.array([
@@ -37,16 +40,16 @@ export class AddExamComponent implements OnInit {
   }
 
   reset() {
-    this.newExamForm.reset();
+    this.form.reset({year: '', semester: '', sections: []});
   }
 
   addSection() {
-    const control = <FormArray>this.newExamForm.controls['sections']
+    const control = <FormArray>this.form.controls['sections']
     control.push(this.newSection());
   }
 
   addSubQuestion(i: number) {
-    const control = <FormArray>this.newExamForm.controls['sections']
+    const control = <FormArray>this.form.controls['sections']
     const group = <FormGroup>control.controls[i];
     const subQuestions = <FormArray>group.controls['subQuestions']
     subQuestions.push(this.newSection());
@@ -62,11 +65,16 @@ export class AddExamComponent implements OnInit {
   }
 
   removeSection(i: number) {
-    const control = <FormArray>this.newExamForm.controls['sections']
+    const control = <FormArray>this.form.controls['sections']
     control.removeAt(i);
   }
 
   onSubmit() {
-    this.exams.create(this.newExamForm.value, this.paperKey);
+    if(!this.request){
+      this.exams.create(this.form.value, this.paperKey);
+    } else {
+      this.request.create(Object.assign({}, this.form.value, {paperKey: this.paperKey }), 'exam');
+    }
+    this.reset();
   }
 }

@@ -1,5 +1,5 @@
-import { Observable } from 'rxjs';
-import { Request, RequestType } from './../models';
+import { Observable } from 'rxjs/Observable';
+import { Request, RequestType, CourseForm, PaperForm, FormData } from './../models';
 import { AuthService } from './auth.service';
 import { AngularFire, FirebaseListObservable } from 'angularfire2';
 import { Injectable } from '@angular/core';
@@ -18,7 +18,7 @@ export class RequestService {
     this.list$ = this.af.database.list('/requests');
   }
 
-  create(form: any, type: RequestType) {
+  create(form: FormData, type: RequestType) {
     this.get(form).flatMap((existingRequest: Request) => {
       return this.auth.uid$.first().map(uid => {
         if (existingRequest) {
@@ -38,13 +38,13 @@ export class RequestService {
 
   }
 
-  checkExisting(form: any) {
+  checkExisting(form: FormData) {
     return this.auth.uid$.first().flatMap(uid => {
       return this.get(form).map(request => request && request.requestedBy.includes(uid));
     });
   }
 
-  private get(data: any) {
+  private get(data: FormData) {
     return this.list$.first().map((reqs: Request[]) => {
       return reqs.filter(req => Object.keys(data)
         .every(key => data[key] === req.data[key])

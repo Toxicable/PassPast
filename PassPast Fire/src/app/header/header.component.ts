@@ -2,13 +2,10 @@ import { RolesService } from './../core/roles.service';
 import { AuthProviders } from 'angularfire2';
 import { AuthService } from './../core';
 import { Component, OnInit } from '@angular/core';
-import { AppState } from '../app-store';
-
 import { Observable } from 'rxjs/Observable';
 import { Course } from '../models/course';
 import { Paper } from '../models/paper';
 import { Exam } from '../models/exam';
-import * as firebase from 'firebase';
 
 @Component({
   selector: 'app-header',

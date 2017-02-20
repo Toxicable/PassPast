@@ -8,7 +8,7 @@
 </span>
 
 <span *ngIf="isAdmin$ | async">
-  <button type="button" md-raised-button color="primary" (click)="openNewExamDialog()">Request Exam to be Added</button>
+  <button type="button" md-raised-button color="primary" (click)="openNewExamDialog(true)">Request Exam to be Added</button>
 </span>
 
 <div *ngIf="(exams$ | async)?.length == 0">

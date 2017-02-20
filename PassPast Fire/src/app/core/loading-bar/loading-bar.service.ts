@@ -1,7 +1,6 @@
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
-import { AppState } from '../../app-store';
 
 
 @Injectable()

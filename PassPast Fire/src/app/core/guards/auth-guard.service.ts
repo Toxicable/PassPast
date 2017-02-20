@@ -2,8 +2,6 @@ import { RolesService } from './../roles.service';
 import { AuthService } from './../auth.service';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { AppState } from '../../app-store';
-
 import { Observable } from 'rxjs/Observable';
 import { AlertService } from '../alert';
 

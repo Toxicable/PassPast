@@ -38,11 +38,12 @@ export class ExamsComponent implements OnInit {
     this.exams.selectPaper(this.route.snapshot.params['paperKey']);
     this.isAdmin$ = this.roles.isInRole('Admin');
   }
-  openNewExamDialog() {
+  openNewExamDialog(isRequest = false) {
     this.newExamDialogRef = this.dialog.open(AddExamComponent, {
       disableClose: false
     });
     this.newExamDialogRef.componentInstance.paperKey = this.route.snapshot.params['paperKey'];
+    this.newExamDialogRef.componentInstance.isRequest = isRequest;
     this.newExamDialogRef.afterClosed().subscribe(result => {
       this.newExamDialogRef = null;
     });

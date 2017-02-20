@@ -5,3 +5,7 @@ export interface Paper {
   createdAt: string;
   createdBy: string;
 }
+
+export interface PaperForm {
+  name: string;
+}

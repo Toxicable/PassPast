@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { Alert } from './alert.model';
 import { AlertType } from './alert-types';
-import { AppState } from '../../app-store';
 import { MdSnackBar } from '@angular/material';
 
 @Injectable()
