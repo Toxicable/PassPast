@@ -10,4 +10,5 @@ export interface Answer {
     votes: Dict<Vote>;
     userVoteValue?: number;
     voteSum?: number;
+    userIdentifier?: string;
 }

@@ -37,13 +37,14 @@ export class AnswerService {
   }
 
   create(form: { content: string }, questionKey: string) {
-    this.auth.uid$.subscribe(uid => {
+    this.auth.profile$.subscribe(profile => {
       const answer: Answer = {
         createdAt: new Date().toISOString(),
-        createdBy: uid,
+        createdBy: profile.uid,
         contentOrIncriment: form.content,
         questionKey,
         votes: {},
+        userIdentifier: profile.displayName
       };
       this.af.database.list('/answers').push(answer);
     });

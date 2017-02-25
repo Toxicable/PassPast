@@ -6,8 +6,7 @@
     <div>
       <strong>{{answer.userIdentifier}}</strong> <small>{{answer.createdAt | date}}</small>
     </div>
-    <markdown>
-      {{answer.contentOrIncriment}}
+    <markdown [content]="answer.contentOrIncriment">
     </markdown>
   </span>
 

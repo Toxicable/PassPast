@@ -30,7 +30,6 @@ export class AnswerMcqComponent implements OnInit {
   }
 
   ngOnInit() {
-    console.log(this.answer)
   }
 
   sendVote() {

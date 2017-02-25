@@ -22,8 +22,6 @@ body{
   text-align: center;
 }
 
-
-
 a{
   color: $black-87-opacity;
   text-decoration: none;
@@ -40,4 +38,8 @@ a:hover{
 
 .highlight-background:hover{
   background:lightgrey
+}
+
+md-card{
+  margin: 10px;
 }

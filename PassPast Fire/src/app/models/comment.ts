@@ -7,4 +7,5 @@ export interface Comment {
     content: string;
     createdAt: string;
     createdBy: string;
+    userIdentifier: string;
 }

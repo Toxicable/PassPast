@@ -22,11 +22,12 @@ export class CommentService {
     });
   }
   create(form: { content: string }, questionKey: string) {
-    this.auth.uid$.first().subscribe(uid => {
+    this.auth.profile$.first().subscribe(profile => {
       const comment: Comment = {
         createdAt: new Date().toISOString(),
-        createdBy: uid,
+        createdBy: profile.uid,
         content: form.content,
+        userIdentifier: profile.displayName,
         questionKey,
       };
       this.af.database.list('/comments').push(comment);

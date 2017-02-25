@@ -29,10 +29,6 @@ export class HeaderComponent implements OnInit {
     this.loggedIn$ = this.auth.loggedIn$;
     this.profile$ = this.auth.profile$;
 
-    // this.currentExam$ = this.store.select(state => state.courses.exam.selected);
-    // this.currentPaper$ = this.store.select(state => state.courses.paper.selected);
-    // this.currentCourse$ = this.store.select(state => state.courses.course.selected);
-
   }
 
   logout() {
