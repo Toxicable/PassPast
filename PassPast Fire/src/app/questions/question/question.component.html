@@ -5,46 +5,61 @@
 <!--main content toggle-->
 <div *ngIf="showContent">
   <!--Answers-->
-  <md-spinner *ngIf="(answers$ | async) === null" ></md-spinner>
 
-  <div *ngFor="let answer of answers$ | async">
-    <!--MCQ-->
-    <div *ngIf="question.type == 'mcq'">
-      <app-answer-mcq [totalAnswerVotes]="answerVoteSum | async" [answer]="answer" [loggedIn]="loggedIn" ></app-answer-mcq>
+  <div *ngIf="answers$ | async; let answers; else answersLoading">
+    <div *ngFor="let answer of answers">
+      <!--MCQ-->
+      <div *ngIf="question.type == 'mcq'">
+        <app-answer-mcq [totalAnswerVotes]="answerVoteSum | async" [answer]="answer" [loggedIn]="loggedIn" ></app-answer-mcq>
+      </div>
+
+      <!--Short -->
+      <div *ngIf="question.type == 'short'">
+        <app-answer-short [answer]="answer" [loggedIn]="loggedIn"></app-answer-short>
+      </div>
+
     </div>
-
-    <!--Short -->
-    <div *ngIf="question.type == 'short'">
-      <app-answer-short [answer]="answer" [loggedIn]="loggedIn"></app-answer-short>
-    </div>
-
   </div>
 
-  <!--makes sure this the is bottom level question-->
-  <span *ngIf="(subQuestions$ | async)?.length === 0">
-    <!--New Answer-->
-    <span *ngIf="question.type == 'short'">
-      <app-new-answer [questionKey]="question.$key" [loggedIn]="loggedIn"></app-new-answer>
+  <ng-template #answersLoading>
+    <md-spinner ></md-spinner>
+  </ng-template>
+
+  <span *ngIf="subQuestions$ | async; let subQuestions">
+    <md-card *ngFor="let subQuestion of subQuestions; trackBy: trackByFn">
+      <app-question [question]="subQuestion" [loggedIn]="loggedIn"></app-question>
+    </md-card>
+
+      <!--makes sure this the is bottom level question-->
+    <span *ngIf="subQuestions?.length === 0">
+      <!--New Answer-->
+      <span *ngIf="question.type == 'short'">
+        <app-new-answer [questionKey]="question.$key" [loggedIn]="loggedIn"></app-new-answer>
+      </span>
+
+      <a (click)="showComments = !showComments" class="can-click">{{showComments ? 'Hide' : 'Show'}} comments</a>
+
+      <!--Comments-->
+      <span *ngIf="showComments">
+        <!--New Comment-->
+        <app-new-comment [questionKey]="question.$key" [loggedIn]="loggedIn" ></app-new-comment>
+
+        <div *ngIf="comments$ | async; else commentsLoading; let comments">
+          <div *ngFor="let comment of comments">
+            <app-comment [comment]="comment" [loggedIn]="loggedIn"></app-comment>
+          </div>
+
+          <div *ngIf="comments.length === 0">
+            There are no comments for this question
+          </div>
+
+        </div>
+
+        <ng-template #commentsLoading>
+          <md-spinner></md-spinner>
+        </ng-template>
+
+      </span>
     </span>
-
-    <a (click)="showComments = !showComments" class="can-click">{{showComments ? 'Hide' : 'Show'}} comments</a>
-
-    <!--Comments-->
-    <span *ngIf="showComments">
-      <!--New Comment-->
-      <app-new-comment [questionKey]="question.$key" [loggedIn]="loggedIn" ></app-new-comment>
-
-      <!--laoder-->
-      <md-spinner *ngIf="(comments$ | async) === null" ></md-spinner>
-
-      <div *ngFor="let comment of comments$ | async">
-        <app-comment [comment]="comment" [loggedIn]="loggedIn"></app-comment>
-      </div>
-    </span>
-
   </span>
-
-  <md-card *ngFor="let subQuestion of subQuestions$ | async; trackBy: trackByFn">
-    <app-question [question]="subQuestion" [loggedIn]="loggedIn"></app-question>
-  </md-card>
 </div>

@@ -30,15 +30,17 @@
     </span>
     <span fxFlex="33%" fxLayoutAlign="end end">
 
-      <span *ngIf="(loggedIn$ | async)" >
-        Welcome {{(profile$ | async)?.displayName}}
-        <a class="can-click" (click)="logout()">Logout</a>
-      </span>
+      <span *ngIf="loggedIn$ | async; let loggedIn" >
+        <span *ngIf="loggedIn">
+          Welcome {{(profile$ | async)?.displayName}}
+          <a class="can-click" (click)="logout()">Logout</a>
+        </span>
 
-    <span *ngIf="!(loggedIn$ | async)">
-        <a  class="header-navigation__link" [routerLink]="['/auth/login']">Login</a>
-        <a (click)="loginGoogle()" class="can-click">Google</a>
-        <a (click)="loginFacebook()" class="can-click">Facebook</a>
+        <span *ngIf="!loggedIn">
+          <a  class="header-navigation__link" [routerLink]="['/auth/login']">Login</a>
+          <a (click)="loginGoogle()" class="can-click">Google</a>
+          <a (click)="loginFacebook()" class="can-click">Facebook</a>
+        </span>
       </span>
 
     </span>

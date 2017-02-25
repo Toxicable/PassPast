@@ -7,16 +7,19 @@
 <button  type="button" md-raised-button color="primary" (click)="openNewPaperDialog(true)" *ngIf="loggedIn$ | async">Request Paper to be added</button>
 
 
-<div *ngIf="(papers$ | async)?.length == 0">
+<div fxLayout="row" fxLayoutWrap="wrap" *ngIf="papers$ | async; let papers">
+  <a [routerLink]="paper.$key" *ngFor="let paper of papers; trackBy: trackByFn" >
+    <md-card  class="can-click highlight-background" >
+      <md-card-title>{{paper.name}}</md-card-title>
+    </md-card>
+  </a>
+
+  <div *ngIf="papers.length == 0">
     There are no papers for this course
   </div>
-
-<md-spinner *ngIf="(papers$ | async) === null" color="accent"></md-spinner>
-
-<div fxLayout="row" fxLayoutWrap="wrap">
-    <a [routerLink]="paper.$key" *ngFor="let paper of papers$ | async; trackBy: trackByFn" >
-      <md-card  class="can-click highlight-background" >
-        <md-card-title>{{paper.name}}</md-card-title>
-      </md-card>
-    </a>
 </div>
+
+
+<ng-template>
+  <md-spinner color="accent"></md-spinner>
+</ng-template>
