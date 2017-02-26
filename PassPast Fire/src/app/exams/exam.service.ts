@@ -6,22 +6,17 @@ import { Subject } from 'rxjs/Subject';
 import { AngularFire } from 'angularfire2';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
-import { normalize, schema, Schema, } from 'normalizr';
 
 @Injectable()
 export class ExamService {
   exams$: Observable<Exam[]>;
   selectedPaperId$: BehaviorSubject<string>;
-  questionSchema = new schema.Entity('question');
 
   constructor(
     private af: AngularFire,
     private loadingBar: LoadingBarService,
     private auth: AuthService,
   ) {
-    this.questionSchema.define({
-      subQuestions: new schema.Array(this.questionSchema)
-    });
 
     this.selectedPaperId$ = new BehaviorSubject<string>(null);
     this.exams$ = this.af.database.list('/exams', {

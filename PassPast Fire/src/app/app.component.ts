@@ -13,15 +13,15 @@ import { Title } from '@angular/platform-browser';
 export class AppComponent implements OnInit {
 
   constructor(
-    private alert: AlertService,
-    private router: Router,
-    private title: Title,
-    private auth: AuthService,
-    private currenUsers: CurrentUsersService,
+    // private alert: AlertService,
+    // private router: Router,
+    // private title: Title,
+    // private auth: AuthService,
+    // private currenUsers: CurrentUsersService,
   ) { }
 
   ngOnInit(): void {
-    this.currenUsers.onConnected();
+   // this.currenUsers.onConnected();
     // const defaultTitle = 'Pass Past';
     // Observable.combineLatest(
     //   this.store.select(state => state.courses.course.selected),

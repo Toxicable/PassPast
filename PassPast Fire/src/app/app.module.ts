@@ -1,10 +1,9 @@
 import { environment } from './../environments/environment';
 import { QuestionModule } from './questions/questions.module';
-import { QuestionsComponent } from './questions/question-list/questions.component';
-import { ExamModule } from './exams/exams.module';
-import { PaperModule } from './papers/papers.module';
-import { CourseModule } from './courses/courses.module';
-import { BrowserModule } from '@angular/platform-browser';
+ import { ExamModule } from './exams/exams.module';
+ import { PaperModule } from './papers/papers.module';
+ import { CourseModule } from './courses/courses.module';
+ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { AppComponent } from './app.component';
 import { CoreModule } from './core';
@@ -13,7 +12,6 @@ import { NotFoundComponent } from './not-found/not-found.component';
 import { UnauthorizedComponent } from './unauthorized/unauthorized.component';
 import { appRouting } from './app.routing';
 import { HeaderComponent } from './header/header.component';
-import { MaterialModule } from '@angular/material';
 
 import { AngularFireModule, AuthProviders, AuthMethods } from 'angularfire2';
 
@@ -43,21 +41,21 @@ const firebaseAuthConfig = {
 @NgModule({
   declarations: [
     AppComponent,
-    NotFoundComponent,
-    HeaderComponent,
-    UnauthorizedComponent,
+     NotFoundComponent,
+     HeaderComponent,
+     UnauthorizedComponent,
   ],
   imports: [
-    CourseModule,
-    PaperModule,
-    ExamModule,
-    QuestionModule,
+     CourseModule,
+     PaperModule,
+     ExamModule,
+     QuestionModule,
 
-    BrowserModule,
-    CoreModule,
-    SharedModule,
-    appRouting,
-    AngularFireModule.initializeApp(environment.production ? firebaseConfig : firebaseConfigDev, firebaseAuthConfig),
+     BrowserModule,
+     CoreModule,
+     SharedModule,
+     appRouting,
+     AngularFireModule.initializeApp(environment.production ? firebaseConfig : firebaseConfigDev, firebaseAuthConfig),
   ],
   bootstrap: [AppComponent]
 })
