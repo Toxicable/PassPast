@@ -16,9 +16,9 @@ export class CourseService {
     private auth: AuthService,
 
   ) {
-    this.courses$ = this.af.database.list('/courses')
+    this.list$ = this.af.database.list('/courses')
   }
-  courses$: Observable<Course[]>;
+  list$: Observable<Course[]>;
 
   create(course: CourseForm) {
     const newCourse = <Course>course;

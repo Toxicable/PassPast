@@ -5,6 +5,7 @@ import { AlertService } from './core';
 import { Router, NavigationEnd } from '@angular/router';
 import { Observable } from 'rxjs/Observable';
 import { Title } from '@angular/platform-browser';
+import { Angulartics2GoogleAnalytics } from 'angulartics2';
 
 @Component({
   selector: 'app-root',
@@ -16,12 +17,24 @@ export class AppComponent implements OnInit {
     // private alert: AlertService,
     // private router: Router,
     // private title: Title,
-    // private auth: AuthService,
+    private auth: AuthService,
     // private currenUsers: CurrentUsersService,
+    private angulartics2GoogleAnalytics: Angulartics2GoogleAnalytics
   ) { }
 
   ngOnInit(): void {
-   // this.currenUsers.onConnected();
+    this.auth.profile$.subscribe(profile => {
+      if (profile) {
+        this.angulartics2GoogleAnalytics.setUsername(profile.displayName);
+      }
+    });
+
+    try {
+      throw new Error('testiong error');
+    } catch (err) {
+      this.angulartics2GoogleAnalytics.exceptionTrack(err);
+    }
+    // this.currenUsers.onConnected();
     // const defaultTitle = 'Pass Past';
     // Observable.combineLatest(
     //   this.store.select(state => state.courses.course.selected),

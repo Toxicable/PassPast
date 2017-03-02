@@ -1,5 +1,5 @@
 import { RequestService } from './../../core/request.service';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { FormBuilder, Validators, FormGroup, FormControl } from '@angular/forms';
 import { CourseService } from '../course.service';
 import { AlertService } from '../../core';
@@ -20,6 +20,8 @@ export class AddCourseComponent implements OnInit {
 
   form: FormGroup;
   isRequest: boolean;
+
+  @Output() submitted = new EventEmitter();
 
   ngOnInit(): void {
     this.form = this.formBuilder.group({
@@ -49,5 +51,6 @@ export class AddCourseComponent implements OnInit {
       this.requests.create(this.form.value, 'course');
     }
     this.form.reset();
+    this.submitted.emit(true);
   }
 }

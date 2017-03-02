@@ -6,8 +6,12 @@ import { environment } from './environments/environment';
 
 import 'rxjs/add/operator/mergeMap';
 
+declare const ga: any;
+
 if (environment.production) {
   enableProdMode();
 }
+
+ga('create', environment.gaTrackingId, environment.gaMode );
 
 platformBrowserDynamic().bootstrapModule(AppModule);

@@ -33,7 +33,7 @@ export class CoursesComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.courses$ = this.courses.courses$;
+    this.courses$ = this.courses.list$;
     this.loggedIn$ = this.auth.loggedIn$;
     this.isAdmin$ = this.roles.isInRole('Admin');
   }
@@ -43,6 +43,7 @@ export class CoursesComponent implements OnInit {
       disableClose: false
     });
     this.newCourseDialogRef.componentInstance.isRequest = isRequest;
+    this.newCourseDialogRef.componentInstance.submitted.subscribe(s => this.newCourseDialogRef.close());
     this.newCourseDialogRef.afterClosed()
       .subscribe(result => {
         this.newCourseDialogRef = null;
