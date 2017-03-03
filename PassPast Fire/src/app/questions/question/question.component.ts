@@ -13,8 +13,6 @@ import { Comment, Answer } from '../../models';
 import { trackByIdentity } from '../../utilities';
 import { orderByAlpha, orderByDate } from '../../utilities/order-by-fns';
 
-import 'rxjs/add/operator/mergeMap';
-import 'rxjs/add/observable/combineLatest';
 
 @Component({
   selector: 'app-question',
@@ -30,16 +28,16 @@ export class QuestionComponent implements OnInit {
   answers$: Observable<Answer[]>;
   subQuestions$: Observable<Question[]>;
 
+  @Input() loggedIn: boolean;
+  @Input() question: Question;
+
   constructor(
-    private af: AngularFire,
     private questions: QuestionService,
     private answers: AnswerService,
     private comments: CommentService,
     private votes: VoteService,
   ) { }
 
-  @Input() loggedIn: boolean;
-  @Input() question: Question;
 
   ngOnInit() {
     this.subQuestions$ = this.questions.questions$

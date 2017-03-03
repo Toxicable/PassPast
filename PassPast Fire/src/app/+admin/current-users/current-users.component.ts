@@ -3,7 +3,6 @@ import { CurrentUsersService } from './../../core/current-users.service';
 import { Observable } from 'rxjs/Observable';
 import { Component, OnInit } from '@angular/core';
 
-import 'rxjs/add/observable/interval';
 
 @Component({
   selector: 'current-users',

@@ -1,3 +1,4 @@
+import { CourseService } from './../../courses/course.service';
 import { AuthService } from './../../core/auth.service';
 import { RolesService } from './../../core/roles.service';
 import { Component, OnInit } from '@angular/core';
@@ -31,11 +32,12 @@ export class PapersComponent implements OnInit {
     private router: Router,
     private roles: RolesService,
     private auth: AuthService,
+    private courses: CourseService,
   ) { }
 
   ngOnInit() {
     this.papers$ = this.papers.list$;
-    this.papers.selectCourse(this.route.snapshot.params['courseKey']);
+    this.courses.select(this.route.snapshot.params['courseKey']);
     this.loggedIn$ = this.auth.loggedIn$;
     this.isAdmin$ = this.roles.isInRole('Admin');
   }

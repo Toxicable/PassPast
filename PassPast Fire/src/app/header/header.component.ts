@@ -1,3 +1,6 @@
+import { ExamService } from './../exams/exam.service';
+import { PaperService } from './../papers/paper.service';
+import { CourseService } from './../courses/course.service';
 import { RolesService } from './../core/roles.service';
 import { AuthProviders } from 'angularfire2';
 import { AuthService } from './../core';
@@ -22,6 +25,9 @@ export class HeaderComponent implements OnInit {
   constructor(
     private auth: AuthService,
     private roles: RolesService,
+    private courses: CourseService,
+    private papers: PaperService,
+    private exams: ExamService,
   ) { }
 
   ngOnInit(): void {
@@ -29,6 +35,9 @@ export class HeaderComponent implements OnInit {
     this.loggedIn$ = this.auth.loggedIn$;
     this.profile$ = this.auth.profile$;
 
+    this.currentCourse$ = this.courses.selected$;
+    this.currentPaper$ = this.papers.selected$;
+    this.currentExam$ = this.exams.selected$;
   }
 
   logout() {

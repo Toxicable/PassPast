@@ -10,15 +10,26 @@ import { AngularFire } from 'angularfire2';
 
 @Injectable()
 export class CourseService {
+
+  list$: Observable<Course[]>;
+  selected$: Observable<Course>;
+  selectedKey$: BehaviorSubject<string>;
+
   constructor(
     private af: AngularFire,
     private loadingBar: LoadingBarService,
     private auth: AuthService,
 
   ) {
-    this.list$ = this.af.database.list('/courses')
+    this.list$ = this.af.database.list('/courses');
+    this.selectedKey$ = new BehaviorSubject<string>(null);
+    this.selected$ = this.selectedKey$
+      .flatMap(key => this.af.database.object(`/courses/${key}`));
   }
-  list$: Observable<Course[]>;
+
+  select(courseId: string) {
+    this.selectedKey$.next(courseId);
+  }
 
   create(course: CourseForm) {
     const newCourse = <Course>course;

@@ -1,10 +1,11 @@
+import { AnaliticsErrorHandler } from './analitics-error-handler.service';
 import { RequestService } from './request.service';
 import { CurrentUsersService } from './current-users.service';
 import { AdminAuthGuard } from './guards/admin-auth-guard.service';
 import { AuthGuard } from './guards/auth-guard.service';
 import { RolesService } from './roles.service';
 import { AuthService } from './auth.service';
-import { NgModule, Optional, SkipSelf } from '@angular/core';
+import { NgModule, Optional, SkipSelf, ErrorHandler } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { AlertService } from './alert/alert.service';
 import { LoadingBarService } from './loading-bar/loading-bar.service';
@@ -29,6 +30,7 @@ import { VALIDATION_MESSAGE_MAPPER } from 'angular-validators';
     CurrentUsersService,
     RequestService,
     { provide: VALIDATION_MESSAGE_MAPPER, useValue: validationMessageMapper },
+    { provide: ErrorHandler, useClass: environment.production ? AnaliticsErrorHandler : ErrorHandler }
   ]
 
 })

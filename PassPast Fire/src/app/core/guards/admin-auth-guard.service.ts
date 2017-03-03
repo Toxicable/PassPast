@@ -14,4 +14,7 @@ export class AdminAuthGuard implements CanActivate {
   canActivate(): Observable<boolean> {
     return this.authGuard.isInRole(this.role);
   }
+  canLoad(): Observable<boolean> {
+    return this.authGuard.isInRole(this.role);
+  }
 }

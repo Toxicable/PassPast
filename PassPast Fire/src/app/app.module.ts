@@ -4,7 +4,7 @@ import { ExamModule } from './exams/exams.module';
 import { PaperModule } from './papers/papers.module';
 import { CourseModule } from './courses/courses.module';
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import { NgModule, Injectable } from '@angular/core';
 import { AppComponent } from './app.component';
 import { CoreModule } from './core';
 import { SharedModule } from './shared';
@@ -22,6 +22,7 @@ const firebaseAuthConfig = {
   provider: AuthProviders.Google,
   method: AuthMethods.Popup
 };
+
 
 @NgModule({
   declarations: [

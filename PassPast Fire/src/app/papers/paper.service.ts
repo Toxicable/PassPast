@@ -1,3 +1,4 @@
+import { CourseService } from './../courses/course.service';
 import { PaperForm, Paper } from './../models';
 import { AuthService } from './../core/auth.service';
 import { LoadingBarService } from './../core/loading-bar/loading-bar.service';
@@ -9,25 +10,30 @@ import { Observable } from 'rxjs/Observable';
 
 @Injectable()
 export class PaperService {
+
   list$: Observable<Paper[]>;
-  selectedCourseId: BehaviorSubject<string>;
+  selectedKey$: BehaviorSubject<string>;
+  selected$: Observable<Paper>;
 
   constructor(
     private af: AngularFire,
     private loadingBar: LoadingBarService,
     private auth: AuthService,
+    private courses: CourseService,
   ) {
-    this.selectedCourseId = new BehaviorSubject<string>(null);
     this.list$ = this.af.database.list('/papers', {
       query: {
         orderByChild: 'courseKey',
-        equalTo: this.selectedCourseId,
+        equalTo: this.courses.selectedKey$,
       }
     });
+    this.selectedKey$ = new BehaviorSubject<string>(null);
+    this.selected$ = this.selectedKey$
+      .flatMap(key => this.af.database.object(`/papers/${key}`));
   }
 
-  selectCourse(courseId: string) {
-    this.selectedCourseId.next(courseId);
+  select(paperId: string) {
+    this.selectedKey$.next(paperId);
   }
 
   create(paper: PaperForm, courseKey: string) {

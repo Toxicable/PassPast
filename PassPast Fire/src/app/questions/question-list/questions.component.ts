@@ -1,3 +1,4 @@
+import { ExamService } from './../../exams/exam.service';
 import { ActivatedRoute } from '@angular/router';
 import { AuthService } from './../../core/auth.service';
 import { Component, OnInit, ViewEncapsulation, ChangeDetectionStrategy } from '@angular/core';
@@ -22,12 +23,13 @@ export class QuestionsComponent implements OnInit {
     private questions: QuestionService,
     private auth: AuthService,
     private route: ActivatedRoute,
+    private exams: ExamService,
   ) {
     this.loggedIn$ = this.auth.loggedIn$;
    }
 
   ngOnInit() {
-    this.questions.selectExam(this.route.snapshot.params['examKey']);
+    this.exams.select(this.route.snapshot.params['examKey']);
     this.questions$ = this.questions.questions$.map(questions => questions.filter(q => q.parentKey === ''));
   }
 }

@@ -1,3 +1,4 @@
+import { PaperService } from './../../papers/paper.service';
 import { RolesService } from './../../core/roles.service';
 import { AuthService } from './../../core/auth.service';
 import { Component, OnInit } from '@angular/core';
@@ -25,6 +26,7 @@ export class ExamsComponent implements OnInit {
 
   constructor(
     private exams: ExamService,
+    private papers: PaperService,
     private dialog: MdDialog,
     private af: AngularFire,
     private route: ActivatedRoute,
@@ -35,7 +37,7 @@ export class ExamsComponent implements OnInit {
   ngOnInit() {
     this.loggedIn$ = this.auth.loggedIn$;
     this.exams$ = this.exams.exams$;
-    this.exams.selectPaper(this.route.snapshot.params['paperKey']);
+    this.papers.select(this.route.snapshot.params['paperKey']);
     this.isAdmin$ = this.roles.isInRole('Admin');
   }
   openNewExamDialog(isRequest = false) {

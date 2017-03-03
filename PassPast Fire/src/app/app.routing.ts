@@ -15,6 +15,7 @@ const appRoutes: Routes = [
     path: 'admin',
     loadChildren: './+admin/admin.module.ts#AdminModule',
     canActivate: [AdminAuthGuard],
+    canLoad: [AdminAuthGuard],
   },
   {
     path: 'unauthorized',
