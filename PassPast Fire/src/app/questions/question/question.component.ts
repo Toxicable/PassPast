@@ -52,6 +52,6 @@ export class QuestionComponent implements OnInit {
 
     }
     this.comments$ = this.comments.getComments(this.question.$key)
-    .map(comments => orderByDate(comments, (a: Comment) => new Date(a.createdAt)))
+      .map(comments => orderByDate(comments, (a: Comment) => new Date(a.createdAt)))
   }
 }

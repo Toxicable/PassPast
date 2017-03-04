@@ -4,7 +4,7 @@
 </button>
 
 <span *ngIf="loggedIn$ | async">
-  <button type="button" md-raised-button color="primary" (click)="openNewExamDialog(true)">Add Exam</button>
+  <button type="button" md-raised-button color="primary" (click)="openNewExamDialog(false)">Add Exam</button>
 </span>
 
 <span *ngIf="isAdmin$ | async">

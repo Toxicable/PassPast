@@ -28,7 +28,6 @@ export class ExamsComponent implements OnInit {
     private exams: ExamService,
     private papers: PaperService,
     private dialog: MdDialog,
-    private af: AngularFire,
     private route: ActivatedRoute,
     private auth: AuthService,
     private roles: RolesService,

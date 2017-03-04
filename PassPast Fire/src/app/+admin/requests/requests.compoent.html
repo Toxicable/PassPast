@@ -1,12 +1,15 @@
 <h2>Requests</h2>
 
 <div *ngFor="let request of requests$ | async">
-  <div>
+  <div class="capital">
     {{request.type}}
   </div>
   <div>
     {{request.createdAt | date:'medium'}}
   </div>
   Count: {{request.requestedBy?.length || 0}}
+  <pre>
+    {{request.data | json}}
+  </pre>
   <hr />
 </div>

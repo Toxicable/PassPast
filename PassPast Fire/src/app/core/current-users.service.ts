@@ -12,7 +12,7 @@ export class CurrentUsersService {
     private auth: AuthService,
   ) { }
 
-  onConnected(): void{
+  onConnected(): void {
     this.auth.uid$.first().subscribe(uid => {
       const user: CurrentUser = {
         key: uid || null,

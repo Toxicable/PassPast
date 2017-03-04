@@ -70,7 +70,8 @@ export class AddExamComponent implements OnInit {
   }
 
   onSubmit() {
-    if(!this.request){
+    debugger
+    if(!this.isRequest){
       this.exams.create(this.form.value, this.paperKey);
     } else {
       this.request.create(Object.assign({}, this.form.value, {paperKey: this.paperKey }), 'exam');

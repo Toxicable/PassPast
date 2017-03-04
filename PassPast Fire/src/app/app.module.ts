@@ -23,7 +23,6 @@ const firebaseAuthConfig = {
   method: AuthMethods.Popup
 };
 
-
 @NgModule({
   declarations: [
     AppComponent,

@@ -6,6 +6,11 @@ import * as firebase from 'firebase';
 
 @Injectable()
 export class AuthService {
+
+  loggedIn$: Observable<boolean>;
+  uid$: Observable<string>;
+  profile$: Observable<firebase.UserInfo>;
+
   constructor(
     private af: AngularFire,
     private alert: AlertService,
@@ -25,15 +30,10 @@ export class AuthService {
       .map(auth => {
         if (auth) {
           return auth.uid;
-        } else {
-          console.warn('you are not logged in');
         }
       });
   }
 
-  loggedIn$: Observable<boolean>;
-  uid$: Observable<string>;
-  profile$: Observable<firebase.UserInfo>;
 
   login(provider: AuthProviders) {
     this.af.auth.login({

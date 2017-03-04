@@ -7,25 +7,25 @@
     </span>
     <span fxFlex="33%" fxLayoutAlign="center center">
 
-      <a >
-      <!--[routerLink]="[ (currentCourse$ | async)?.id]">-->
-        {{(currentCourse$ | async)?.code}}
-      </a>
+      <span *ngIf="currentCourse$ | async; let currentCourse">
+        <a [routerLink]="[currentCourse.$key]">
+          {{currentCourse.code}}
+        </a>
 
-      <a >
-      <!--[routerLink]="['/courses', {{(currentCourse$ | async)?.id}}, {{(currentCourse$ | async)?.id}}]">-->
-        {{(currentPaper$ | async)?.name}}
-      </a>
+        <span *ngIf="currentPaper$ | async; let currentPaper">
+          <a [routerLink]="[currentPaper.$key, currentPaper.$key]">
+            {{currentPaper.name}}
+          </a>
 
-      <a >
-      <!--[routerLink]="['/courses', {{(currentCourse$ | async)?.id}}, {{(currentCourse$ | async)?.id}}, {{(currentCourse$ | async)?.id}}]">-->
-        {{(currentExam$ | async)?.year}}
-      </a>
+          <span *ngIf="currentExam$ | async; let currentExam">
+            <a [routerLink]="[currentExam.$key, currentPaper.$key, currentExam.$key]">
+              {{currentExam.year}}
+              {{currentExam.semester}}
+            </a>
+          </span>
+        </span>
+      </span>
 
-      <a >
-      <!--[routerLink]="['/courses', {{(currentCourse$ | async)?.id}}]">-->
-        {{(currentExam$ | async)?.semester}}
-      </a>
     </span>
     <span fxFlex="33%" fxLayoutAlign="end end">
 
@@ -35,7 +35,10 @@
     </span>
 
     <ng-template #notLoggedIn>
+      Login:
+      &nbsp;
       <a (click)="loginGoogle()" class="can-click">Google</a>
+      &nbsp;
       <a (click)="loginFacebook()" class="can-click">Facebook</a>
     </ng-template>
 
@@ -45,9 +48,7 @@
 <app-loading-bar></app-loading-bar>
 
 <div *ngIf="isAdmin$ | async">
-  <a [routerLink]="['/admin/roles']">Roles</a>
-  |
-  <a [routerLink]="['/admin/current-users']">Current Users</a>
-  |
+  <a [routerLink]="['/admin/roles']">Roles</a> |
+  <a [routerLink]="['/admin/current-users']">Current Users</a> |
   <a [routerLink]="['/admin/requests']">Requests</a>
 </div>

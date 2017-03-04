@@ -9,8 +9,7 @@ import { NgModule, Optional, SkipSelf, ErrorHandler } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { AlertService } from './alert/alert.service';
 import { LoadingBarService } from './loading-bar/loading-bar.service';
-import { MaterialModule, MdSnackBarModule } from '@angular/material';
-import { FlexLayoutModule } from '@angular/flex-layout';
+import { MaterialModule } from '@angular/material';
 import { environment } from '../../environments/environment';
 import { validationMessageMapper } from './validation-messages-mapper';
 import { VALIDATION_MESSAGE_MAPPER } from 'angular-validators';
@@ -30,7 +29,7 @@ import { VALIDATION_MESSAGE_MAPPER } from 'angular-validators';
     CurrentUsersService,
     RequestService,
     { provide: VALIDATION_MESSAGE_MAPPER, useValue: validationMessageMapper },
-    { provide: ErrorHandler, useClass: environment.production ? AnaliticsErrorHandler : ErrorHandler }
+    //{ provide: ErrorHandler, useClass: environment.production ? AnaliticsErrorHandler : ErrorHandler }
   ]
 
 })

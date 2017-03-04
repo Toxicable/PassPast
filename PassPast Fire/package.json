@@ -9,6 +9,7 @@
     "test": "ng test",
     "deploy": "npm run build && firebase use default && firebase deploy",
     "deploy:dev": "ng build --prod --aot --env=dev && firebase use dev && firebase deploy",
+    "deploy:staging": "ng build --prod --aot --env=staging && firebase use dev && firebase deploy",
     "clean": "rimraf src/**/*.js"
   },
   "dependencies": {
