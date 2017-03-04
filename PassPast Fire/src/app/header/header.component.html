@@ -8,17 +8,17 @@
     <span fxFlex="33%" fxLayoutAlign="center center">
 
       <span *ngIf="currentCourse$ | async; let currentCourse">
-        <a [routerLink]="[currentCourse.$key]">
+        <a [routerLink]="['/' + currentCourse.$key]">
           {{currentCourse.code}}
         </a>
 
         <span *ngIf="currentPaper$ | async; let currentPaper">
-          <a [routerLink]="[currentPaper.$key, currentPaper.$key]">
+          <a [routerLink]="['/' + currentCourse.$key, currentPaper.$key]">
             {{currentPaper.name}}
           </a>
 
           <span *ngIf="currentExam$ | async; let currentExam">
-            <a [routerLink]="[currentExam.$key, currentPaper.$key, currentExam.$key]">
+            <a [routerLink]="['/' + currentCourse.$key, currentPaper.$key, currentExam.$key]">
               {{currentExam.year}}
               {{currentExam.semester}}
             </a>

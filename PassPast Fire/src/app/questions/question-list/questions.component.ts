@@ -22,14 +22,11 @@ export class QuestionsComponent implements OnInit {
   constructor(
     private questions: QuestionService,
     private auth: AuthService,
-    private route: ActivatedRoute,
-    private exams: ExamService,
   ) {
     this.loggedIn$ = this.auth.loggedIn$;
    }
 
   ngOnInit() {
-    this.exams.select(this.route.snapshot.params['examKey']);
     this.questions$ = this.questions.questions$.map(questions => questions.filter(q => q.parentKey === ''));
   }
 }

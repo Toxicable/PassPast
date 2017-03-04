@@ -1,3 +1,4 @@
+import { CurrentDataService } from './core/current-data.service';
 import { AdminAuthGuard } from './core/guards/admin-auth-guard.service';
 import { ModuleWithProviders } from '@angular/core';
 import { Routes, RouterModule, PreloadAllModules } from '@angular/router';
@@ -19,23 +20,27 @@ const appRoutes: Routes = [
   },
   {
     path: 'unauthorized',
-    component: UnauthorizedComponent,
+    component: UnauthorizedComponent
   },
   {
     path: '',
     component: CoursesComponent,
+    canActivate: [CurrentDataService],
   },
   {
     path: ':courseKey',
     component: PapersComponent,
+    canActivate: [CurrentDataService],
   },
   {
     path: ':courseKey/:paperKey',
     component: ExamsComponent,
+    canActivate: [CurrentDataService],
   },
   {
     path: ':courseKey/:paperKey/:examKey',
     component: QuestionsComponent,
+    canActivate: [CurrentDataService],
   },
   {
     path: '**',

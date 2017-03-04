@@ -1,3 +1,4 @@
+import { CurrentDataService } from './current-data.service';
 import { AnaliticsErrorHandler } from './analitics-error-handler.service';
 import { RequestService } from './request.service';
 import { CurrentUsersService } from './current-users.service';
@@ -28,6 +29,7 @@ import { VALIDATION_MESSAGE_MAPPER } from 'angular-validators';
     AdminAuthGuard,
     CurrentUsersService,
     RequestService,
+    CurrentDataService,
     { provide: VALIDATION_MESSAGE_MAPPER, useValue: validationMessageMapper },
     //{ provide: ErrorHandler, useClass: environment.production ? AnaliticsErrorHandler : ErrorHandler }
   ]

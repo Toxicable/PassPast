@@ -25,9 +25,7 @@ export class CoursesComponent implements OnInit {
 
   constructor(
     private courses: CourseService,
-    private alert: AlertService,
     private dialog: MdDialog,
-    private af: AngularFire,
     private roles: RolesService,
     private auth: AuthService,
   ) { }

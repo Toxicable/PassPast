@@ -26,18 +26,14 @@ export class PapersComponent implements OnInit {
 
   constructor(
     private papers: PaperService,
-    private alert: AlertService,
     private route: ActivatedRoute,
     private dialog: MdDialog,
-    private router: Router,
     private roles: RolesService,
     private auth: AuthService,
-    private courses: CourseService,
   ) { }
 
   ngOnInit() {
     this.papers$ = this.papers.list$;
-    this.courses.select(this.route.snapshot.params['courseKey']);
     this.loggedIn$ = this.auth.loggedIn$;
     this.isAdmin$ = this.roles.isInRole('Admin');
   }
