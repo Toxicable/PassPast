@@ -1,7 +1,6 @@
 import { AuthService } from './../../core/auth.service';
 import { AngularFire } from 'angularfire2';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs/Observable';
 
 import { Http } from '@angular/http';
 import { Answer, Course, Vote } from '../../models';
@@ -32,7 +31,7 @@ export class AnswerService {
             });
           return answer;
         });
-      })
+      });
     });
   }
 

@@ -2,8 +2,8 @@
   <span>
     <md-icon class="can-click"  [color]="userVoteValue === 1 ? 'accent': ''" (click)="upVote()" >expand_less</md-icon>
   </span>
-  <span  class="center-text">
-    {{sum || 0}}
+  <span class="center-text">
+    {{sum}}
   </span>
   <md-icon class="can-click"  [color]="userVoteValue === -1 ? 'accent': ''" (click)="downVote()">expand_more</md-icon>
 </span>

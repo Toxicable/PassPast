@@ -1,3 +1,4 @@
+import { FooterComponent } from './footer/footer.component';
 import { environment } from './../environments/environment';
 import { QuestionModule } from './questions/questions.module';
 import { ExamModule } from './exams/exams.module';
@@ -29,6 +30,7 @@ const firebaseAuthConfig = {
     NotFoundComponent,
     HeaderComponent,
     UnauthorizedComponent,
+    FooterComponent,
   ],
   imports: [
     Angulartics2Module.forRoot([Angulartics2GoogleAnalytics]),

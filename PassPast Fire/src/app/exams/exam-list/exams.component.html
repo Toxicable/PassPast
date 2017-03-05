@@ -12,10 +12,12 @@
 </span>
 
 <div fxLayout="row" fxLayoutWrap="wrap" *ngIf="exams$ | async; else loading; let exams">
-  <md-card *ngFor="let exam of exams; trackBy: trackByFn" [routerLink]="exam.$key" class="can-click highlight-background" >
-    <md-card-title>{{exam.year}}</md-card-title>
-    <md-card-subtitle>Semester: {{exam.semester}}</md-card-subtitle>
-  </md-card>
+  <a *ngFor="let exam of exams; trackBy: trackByFn" [routerLink]="exam.$key">
+    <md-card class="can-click highlight-background" >
+      <md-card-title>{{exam.year}}</md-card-title>
+      <md-card-subtitle>Semester: {{exam.semester}}</md-card-subtitle>
+    </md-card>
+  </a>
 
   <div *ngIf="exams.length == 0">
     There are no Exams for this Paper
@@ -25,7 +27,7 @@
 
 
 <ng-template #loading>
-  <md-spinner color="accent"></md-spinner>
+  <md-spinner></md-spinner>
 </ng-template>
 
 

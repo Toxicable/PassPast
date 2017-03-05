@@ -1,4 +1,4 @@
-<md-card-title (click)="showContent=!showContent" class="can-click highlight-background" >
+<md-card-title (click)="showContent=!showContent" class="clickable" >
   {{question.incriment}} <md-icon *ngIf="!showContent">expand_more</md-icon><md-icon *ngIf="showContent">expand_less</md-icon>
 </md-card-title>
 
@@ -31,7 +31,7 @@
     </md-card>
 
       <!--makes sure this the is bottom level question-->
-    <span *ngIf="subQuestions?.length === 0">
+    <span *ngIf="subQuestions.length === 0">
       <!--New Answer-->
       <span *ngIf="question.type == 'short'">
         <app-new-answer [questionKey]="question.$key" [loggedIn]="loggedIn"></app-new-answer>

@@ -1,11 +1,17 @@
-<div class="md-app-background">
-  <app-header></app-header>
+<div class="md-app-background" style="min-height: 100vh" fxLayout="column">
+  <div fxFlex="1">
+    <app-header></app-header>
+    <div fxLayout="row">
+      <span fxFlexOffset="20%" fxFlex="100%">
+        <router-outlet></router-outlet>
+      </span>
+    </div>
+  </div>
 
-  <div fxLayout="row" >
+  <div >
+    <footer>
 
-    <span fxFlexOffset="20%" fxFlex="100%">
-      <router-outlet></router-outlet>
-    </span>
+    </footer>
   </div>
 
 </div>
