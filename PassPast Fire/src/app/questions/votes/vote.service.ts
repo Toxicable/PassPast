@@ -30,9 +30,13 @@ export class VoteService {
             }
           });
       };
+
+      // go away with your judging eyes, if you think it's bad then you fix it
+
       if (!isMcq) {
         sendVote();
       } else if (isMcq) {
+        // with mcq we need to delete any other votes that have been made for this question
         this.af.database.object(`/answers/${answerKey}`)
           .flatMap((answer: Answer) => {
             return this.af.database.list('/answers', {

@@ -21,9 +21,9 @@
     </div>
   </div>
 
-  <!--<ng-template #answersLoading>
-    <md-spinner ></md-spinner>
-  </ng-template>-->
+  <ng-template #answersLoading>
+    Placeholder :D
+  </ng-template>
 
   <span *ngIf="subQuestions$ | async; let subQuestions">
     <md-card *ngFor="let subQuestion of subQuestions; trackBy: trackByFn">
