@@ -22,7 +22,8 @@
   </div>
 
   <ng-template #answersLoading>
-    <div style="height:90px">
+    <div *ngIf="question.type === 'mcq'">
+      <div style="height:90px"></div>
     </div>
   </ng-template>
 
