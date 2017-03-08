@@ -1,4 +1,4 @@
-<md-card-title (click)="showContent=!showContent" class="clickable" >
+<md-card-title (click)="showContent=!showContent" class="can-click highlight-background" >
   {{question.incriment}} <md-icon *ngIf="!showContent">expand_more</md-icon><md-icon *ngIf="showContent">expand_less</md-icon>
 </md-card-title>
 
@@ -22,7 +22,8 @@
   </div>
 
   <ng-template #answersLoading>
-    Placeholder :D
+    <div style="height:90px">
+    </div>
   </ng-template>
 
   <span *ngIf="subQuestions$ | async; let subQuestions">

@@ -1,6 +1,6 @@
 <div fxLayout="column ">
   <div>
-    <strong>{{comment.userIdentifier}}</strong> <small>{{comment.createdAt | date:'medium'}}</small>
+    <strong>{{comment.userIdentifier}}</strong> <small class="gray-text">{{comment.createdAt | date:'medium'}}</small>
 
     <markdown [content]="comment.content">
     </markdown>
