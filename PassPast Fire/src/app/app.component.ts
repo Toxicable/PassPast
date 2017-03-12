@@ -4,7 +4,7 @@ import { PaperService } from './papers/paper.service';
 import { CourseService } from './courses/course.service';
 import { CurrentUsersService } from './core/current-users.service';
 import { AuthService } from './core/auth.service';
-import { Component, OnInit, OnDestroy, RendererV2 } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { AlertService } from './core';
 import { Router, NavigationEnd, ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs/Observable';
