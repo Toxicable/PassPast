@@ -17,6 +17,10 @@ body{
   margin: 0;
 }
 
+html {
+  overflow-y:scroll;
+}
+
 .login-icon{
   padding: 7px;
   height: 30px;
