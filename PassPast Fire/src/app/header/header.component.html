@@ -27,20 +27,25 @@
       </span>
 
     </span>
-    <span fxFlex="33%" fxLayoutAlign="end end">
+    <span fxFlex="33%" fxLayoutAlign="end end" class="center-text">
 
-    <span *ngIf="loggedIn$ | async; else notLoggedIn">
-      Welcome {{(profile$ | async)?.displayName}}
-      <a class="can-click" (click)="logout()">Logout</a>
-    </span>
+      <span *ngIf="loggedIn$ | async; else notLoggedIn" >
+        Welcome {{(profile$ | async)?.displayName}}
+        <a class="can-click" (click)="logout()">Logout</a>
+      </span>
 
-    <ng-template #notLoggedIn>
-      Login:
-      &nbsp;
-      <a (click)="loginGoogle()" class="can-click">Google</a>
-      &nbsp;
-      <a (click)="loginFacebook()" class="can-click">Facebook</a>
-    </ng-template>
+      <ng-template #notLoggedIn>
+        <span >
+          Login:
+        </span>
+
+        <img (click)="loginGoogle()" class="can-click login-icon"
+          src="//www.gstatic.com/mobilesdk/160512_mobilesdk/auth_service_google.svg" />
+
+        <img (click)="loginFacebook()" class="can-click login-icon"
+          src="//www.gstatic.com/mobilesdk/160409_mobilesdk/images/auth_service_facebook.svg" />
+
+      </ng-template>
 
     </span>
   </div>
