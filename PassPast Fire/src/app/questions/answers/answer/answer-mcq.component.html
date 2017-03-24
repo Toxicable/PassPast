@@ -3,9 +3,8 @@
     {{answer.contentOrIncriment}}
   </span>
   <md-progress-bar [color]="answer.userVoteValue === 1 ? 'accent': 'primary'"
-  [mdTooltip]="loggedIn ? 'Click to vote' : 'You must be logged in to vote'" mdTooltipPosition="right"
+   mdTooltipPosition="right" [mdTooltip]="loggedIn ? 'Click to vote' : 'You must be logged in to vote'"
     mode="determinate" (click)="sendVote()" class="can-click" [value]="(answer.voteSum/totalAnswerVotes) * 100"></md-progress-bar>
-
   <span>
     {{answer.voteSum || 0}}
   </span>

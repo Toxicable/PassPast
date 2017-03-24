@@ -31,7 +31,7 @@ import { VALIDATION_MESSAGE_MAPPER } from 'angular-validators';
     RequestService,
     CurrentDataService,
     { provide: VALIDATION_MESSAGE_MAPPER, useValue: validationMessageMapper },
-    //{ provide: ErrorHandler, useClass: environment.production ? AnaliticsErrorHandler : ErrorHandler }
+   // { provide: ErrorHandler, useClass: environment.production ? AnaliticsErrorHandler : ErrorHandler }
   ]
 
 })
