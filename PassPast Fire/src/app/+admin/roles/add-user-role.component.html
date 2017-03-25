@@ -1,11 +1,11 @@
 <form [formGroup]="form" (ngSubmit)="onSubmit()" autocomplete="off">
 
   <div>
-    <form-input [control]="form.get('roleName')" placeholder="Role Name" [group]="form"></form-input>
+    <form-input controlName="roleName" placeholder="Role Name" [group]="form"></form-input>
   </div>
 
   <div>
-    <form-input [control]="form.get('userKey')" placeholder="User Key" [group]="form"></form-input>
+    <form-input controlName="userKey" placeholder="User Key" [group]="form"></form-input>
   </div>
 
   <button md-raised-button color="primary" type="submit" [disabled]="!form.valid">Submit</button>

@@ -1,6 +1,6 @@
 <div>
   <form [formGroup]="newCommentForm" novalidate (ngSubmit)="sendComment()">
-    <form-input [control]="newCommentForm.get('content')" placeholder="New Comment" [group]="newCommentForm"></form-input>
+    <form-input controlName="content" placeholder="New Comment" [group]="newCommentForm"></form-input>
   </form>
 
 </div>

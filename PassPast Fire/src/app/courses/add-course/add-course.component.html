@@ -2,11 +2,11 @@
 <md-dialog-content>
   <form [formGroup]="form" (ngSubmit)="onSubmit()" autocomplete="off">
     <div>
-      <form-input [control]="form.get('name')" placeholder="Name" [group]="form"></form-input>
+      <form-input controlName="name" placeholder="Name" [group]="form"></form-input>
     </div>
 
     <div>
-      <form-input [control]="form.get('code')" placeholder="Code" [group]="form"></form-input>
+      <form-input controlName="code" placeholder="Code" [group]="form"></form-input>
     </div>
 
     <div>

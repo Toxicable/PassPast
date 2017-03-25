@@ -1,6 +1,6 @@
 <div [formGroup]="sectionForm" class="new-question-section-form">
   <div>
-    <form-input [control]="sectionForm.get('count')" placeholder="Count" [group]="sectionForm"></form-input>
+    <form-input controlName="count" placeholder="Count" [group]="sectionForm"></form-input>
   </div>
 
   <div>
@@ -22,7 +22,7 @@
     </div>
 
     <button md-button (click)="addSubQuestion()" type="button">+ Add Sub Question</button>
-    {{i}}
+
     <ul>
       <li *ngFor="let section of sectionForm.get('subQuestions')['controls']; let i=index">
         <button md-button (click)="removeSection(i)" type="button">RemoveSection</button>

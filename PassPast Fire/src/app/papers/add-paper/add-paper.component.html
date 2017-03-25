@@ -1,7 +1,7 @@
 <h2 md-dialog-title>New Paper {{isRequest ? 'Request' : ''}}</h2>
 <md-dialog-content>
   <form [formGroup]="newPaperForm" (ngSubmit)="onSubmit()" autocomplete="off">
-    <form-input [control]="newPaperForm.get('name')" placeholder="Name" [group]="newPaperForm"></form-input>
+    <form-input controlName="name" placeholder="Name" [group]="newPaperForm"></form-input>
 
     <div>
       <av-validation-messages [control]="newPaperForm"></av-validation-messages>
