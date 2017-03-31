@@ -21,13 +21,13 @@ const IMPORTS = [
   CommonModule,
   HttpModule,
   MaterialModule,
-  FlexLayoutModule
+  FlexLayoutModule,
+  ValidationMessagesModule
 ]
 
 @NgModule({
   imports: [
     ...IMPORTS,
-    ValidationMessagesModule
   ],
   declarations: [
     ...DECLARATIONS,
@@ -35,7 +35,6 @@ const IMPORTS = [
   exports: [
     ...DECLARATIONS,
     ...IMPORTS,
-    ValidationMessagesModule,
   ]
 })
 export class SharedModule { }

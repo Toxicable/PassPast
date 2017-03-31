@@ -8,7 +8,7 @@ import { RouterModule } from '@angular/router';
 @NgModule({
   imports: [
     SharedModule,
-    RouterModule.forChild([])
+    RouterModule
   ],
   entryComponents: [
     AddCourseComponent

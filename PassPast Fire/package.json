@@ -3,8 +3,8 @@
   "version": "0.0.0",
   "license": "MIT",
   "scripts": {
-    "start": "ng serve",
-    "start:aot": "ng serve --aot",
+    "start": "ng s -o",
+    "start:aot": "ng s -o --aot",
     "build": "ng build --prod --aot",
     "test": "ng test",
     "deploy": "npm run build && firebase use default && firebase deploy",
