@@ -1,4 +1,4 @@
-# [Pass Past](http://passpast.net)  
+# Pass Past
 http://passpast.net
 
 Current version: Pass Past Fire
